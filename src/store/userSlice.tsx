@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
-
 /**
  * Simple Redux Store Counter Example . . .
  * when you want to use this Store ...

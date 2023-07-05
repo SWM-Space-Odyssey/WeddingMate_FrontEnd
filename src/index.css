@@ -2,7 +2,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-#registRoot {
+.registRoot {
   display: flex;
   flex-direction: column;
 }
