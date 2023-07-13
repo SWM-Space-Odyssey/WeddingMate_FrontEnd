@@ -12,31 +12,37 @@ import type { RootState } from "./store";
  *
  */
 interface userState {
-  value: number;
+  nickname: string;
 }
 
 const initialState: userState = {
-  value: 0,
+  nickname: "init",
 };
 
 export const userSlice = createSlice({
-  name: "counter",
+  name: "nicknameChanger",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    ReduxLogin: (state) => {
+      console.log("REDUX Login" + state);
+      state.nickname = "Logined";
     },
-    decrement: (state) => {
-      state.value -= 1;
+    ReduxLogout: (state) => {
+      console.log("Redux Logout", +state);
+      state.nickname = "EMPTY";
     },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    },
+
+    // decrement: (state) => {
+    //   state.value -= 1;
+    // },
+    // incrementByAmount: (state, action: PayloadAction<number>) => {
+    //   state.value += action.payload;
+    // },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = userSlice.actions;
+export const { ReduxLogin, ReduxLogout } = userSlice.actions;
 
-export const selectUsers = (state: RootState) => state.counter.value;
+export const selectUsers = (state: RootState) => state.user.nickname;
 
 export default userSlice.reducer;
