@@ -1,16 +1,34 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Button } from "@mui/material";
 import BottomButton from "../Units/BottomButton";
 import RegistUserType from "./RegistUserType";
-
+import RegistUserInfo from "./RegistUserInfo";
+type body = {
+  type: string;
+  nickname: string | null;
+  location: string | null;
+  company?: string | null;
+  grade?: string | null;
+};
 const RegistComponent = () => {
   const [userType, setUserType] = useState<string>("");
-  const [userName, setUserName] = useState<string>("");
-  const [userLocation, setUserLocation] = useState<string>("");
-  const [userDate, setUserDate] = useState<string>("");
-  const [userExperience, setUserExperience] = useState<number>(0);
-  const [userCompany, setUserCompany] = useState<string>("");
+  const Nickname = useRef<HTMLInputElement>(null);
+  const Company = useRef<HTMLInputElement>(null);
+  const Grade = useRef<HTMLInputElement>(null);
+  const [Location, setLocation] = useState<string>("");
+  const [body, setBody] = useState<body>({
+    type: userType,
+    nickname: "",
+    location: "",
+  });
+  const updateBody = () => {};
 
+  const userInfoState: userInfoRef = {
+    Nickname: Nickname,
+    Company: Company,
+    Grade: Grade,
+    Location: [Location, setLocation],
+  };
   return (
     <>
       <Button
@@ -18,17 +36,22 @@ const RegistComponent = () => {
         onClick={() => {
           console.log(
             userType,
-            userName,
-            userLocation,
-            userDate,
-            userExperience,
-            userCompany
+            // userNickname,
+            // userLocation,
+            // userDate,
+            // userGrade,
+            // userCompany
+            Nickname.current!.value,
+            Company.current!.value,
+            Grade.current!.value,
+            Location
           );
         }}
       >
         TEST
       </Button>
-      <RegistUserType state={[userType, setUserType]} />
+      {/* <RegistUserType Type={[userType, setUserType]} /> */}
+      <RegistUserInfo userInfoState={userInfoState} />
     </>
   );
 };

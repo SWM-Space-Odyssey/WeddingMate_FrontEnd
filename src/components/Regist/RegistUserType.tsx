@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import BottomButton from "../Units/BottomButton";
 import { Button, Radio, Stack } from "@mui/material";
 
-type Props = { state: [string, React.Dispatch<React.SetStateAction<string>>] };
+type Props = { Type: [string, React.Dispatch<React.SetStateAction<string>>] };
 
 const RegistUserType = (props: Props) => {
-  const [userType, setUserType] = props.state;
+  const [userType, setUserType] = props.Type;
 
   // 사용되는 상수구역
   const GuideText = "본인의 신분을 선택해주세요";
