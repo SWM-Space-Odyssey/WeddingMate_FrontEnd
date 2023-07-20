@@ -19,12 +19,12 @@ const RegistComponent = () => {
     <div className='px-4 flex flex-col h-full justify-between'>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* <RegistUserType useFormFunctions={useFormFunctions} /> */}
-        {/* <RegistUserInfo useFormFunctions={useFormFunctions} /> */}
+        <RegistUserInfo useFormFunctions={useFormFunctions} />
         {/* <RegistUserTag
           useFormFunctions={useFormFunctions}
           formElement={"PlannerTag"}
         /> */}
-        <RegistSuccess />
+        {/* <RegistSuccess /> */}
         <Button sx={{ position: "absolute" }} type='submit'>
           CHECK FORM
         </Button>

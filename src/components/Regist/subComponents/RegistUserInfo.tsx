@@ -1,4 +1,5 @@
 import { CountryList } from "../../../store/CountryLIst";
+import InputComponent from "../../Units/InputComponent";
 
 import TagComponent from "../../Units/TagComponent";
 
@@ -54,9 +55,15 @@ const RegistUserInfo = (props: Props) => {
   return (
     <>
       <div className='flex flex-col mt-7 gap-y-7'>
-        {inputComponent(stateMapping.userNickname)}
-        {inputComponent(stateMapping.userCompany)}
-        {inputComponent(stateMapping.userGrade)}
+        <InputComponent
+          content={stateMapping.userNickname}
+          register={register}
+        />
+        <InputComponent
+          content={stateMapping.userCompany}
+          register={register}
+        />
+        <InputComponent content={stateMapping.userGrade} register={register} />
         <div>
           <div className='font-bold mb-1'>지역</div>
           <TagComponent

@@ -16,24 +16,25 @@ const TagUnit = (props: Props) => {
   const text = props.text;
   const formElement = props.formElement;
   const tagCountMax = props.tagCountMax;
+
   const onClickHandler = () => {
-    // setValue(text);
+    let newValue = [];
     if (value.length < tagCountMax) {
-      setValue([...value, text]);
+      newValue = [...value, text];
     } else {
       if (value.includes(text)) return;
-      setValue([...value.splice(1), text]);
+      newValue = [...value.splice(1), text];
     }
-    register(formElement, { value: [...value] });
+    register(formElement, { value: [...newValue] });
+    setValue([...newValue]);
   };
-  const selected = "font-bold";
   return (
     <Chip
       label={text}
       onClick={() => {
         onClickHandler();
       }}
-      className={`${value.includes(text) ? selected : ""}`}
+      className={`${value.includes(text) ? "font-bold" : ""}`}
     />
   );
 };
