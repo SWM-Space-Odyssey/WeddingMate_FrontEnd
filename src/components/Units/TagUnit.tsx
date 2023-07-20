@@ -1,27 +1,35 @@
-import React from "react";
+import { Chip } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
 
 type Props = {
   text: string;
-  flag: boolean;
-  setState: React.Dispatch<React.SetStateAction<string>>;
+  // flag: boolean;
+  register: UseFormRegister<FormInput>;
+  tagState: [string, React.Dispatch<React.SetStateAction<string>>];
+  formElement: stateStrings;
+  // watch: UseFormWatch<globalThis.FormInput>;
 };
 
 // selected logic, text, state function
 const TagUnit = (props: Props) => {
-  const setUnitValue = props.setState;
+  const [value, setValue] = props.tagState;
+  const register = props.register;
   const text = props.text;
-  const selected = "border-2 font-bold";
+  const formElement = props.formElement;
+  const onClickHandler = () => {
+    setValue(text);
+    register(formElement, { value: text });
+  };
+  const selected = "font-bold";
   return (
-    <button
+    <Chip
+      label={text}
       onClick={() => {
-        setUnitValue(text);
+        onClickHandler();
       }}
-      className={`text-sm w-fit border ml-1.5 mb-1.5 px-3 py-2.5 rounded-[40px] ${
-        props.flag ? selected : ""
-      }`}
-    >
-      {text}
-    </button>
+      className={`${value === text ? selected : ""}`}
+    />
   );
 };
 

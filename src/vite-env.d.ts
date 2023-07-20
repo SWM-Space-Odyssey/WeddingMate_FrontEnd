@@ -23,3 +23,23 @@ type userInfoRef = {
   Grade: ReactRefType;
   Location: [string, React.Dispatch<React.SetStateAction<string>>];
 };
+
+interface FormInput {
+  Type: string;
+  Nickname: string;
+  Company: string;
+  Grade: string;
+  Location: string;
+  PlannerTag?: string;
+}
+type stateStrings =
+  | "Type"
+  | "Nickname"
+  | "Company"
+  | "Grade"
+  | "Location"
+  | "PlannerTag";
+
+type useFormFuctnionType = {
+  register: UseFormRegister<FormInput>;
+};

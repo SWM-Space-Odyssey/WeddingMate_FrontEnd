@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BottomButton from "../Units/BottomButton";
+import BottomButton from "../../Units/BottomButton";
 import { Button, Radio, Stack } from "@mui/material";
 
 type Props = { Type: [string, React.Dispatch<React.SetStateAction<string>>] };

@@ -1,8 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
 import { Button } from "@mui/material";
 import BottomButton from "../Units/BottomButton";
-import RegistUserType from "./RegistUserType";
-import RegistUserInfo from "./RegistUserInfo";
+import RegistUserType from "./subComponents/RegistUserType";
+import RegistUserInfo from "./subComponents/RegistUserInfo";
+import RegistUserTag from "./subComponents/RegistUserTag";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 type body = {
   type: string;
   nickname: string | null;
@@ -10,49 +12,29 @@ type body = {
   company?: string | null;
   grade?: string | null;
 };
-const RegistComponent = () => {
-  const [userType, setUserType] = useState<string>("");
-  const Nickname = useRef<HTMLInputElement>(null);
-  const Company = useRef<HTMLInputElement>(null);
-  const Grade = useRef<HTMLInputElement>(null);
-  const [Location, setLocation] = useState<string>("");
-  const [body, setBody] = useState<body>({
-    type: userType,
-    nickname: "",
-    location: "",
-  });
-  const updateBody = () => {};
 
-  const userInfoState: userInfoRef = {
-    Nickname: Nickname,
-    Company: Company,
-    Grade: Grade,
-    Location: [Location, setLocation],
+const RegistComponent = () => {
+  const { register, handleSubmit } = useForm<FormInput>();
+  const onSubmit: SubmitHandler<FormInput> = (data) =>
+    alert(JSON.stringify(data));
+
+  const useFormFunctions: useFormFuctnionType = {
+    register: register,
   };
   return (
-    <>
-      <Button
-        sx={{ position: "absolute" }}
-        onClick={() => {
-          console.log(
-            userType,
-            // userNickname,
-            // userLocation,
-            // userDate,
-            // userGrade,
-            // userCompany
-            Nickname.current!.value,
-            Company.current!.value,
-            Grade.current!.value,
-            Location
-          );
-        }}
-      >
-        TEST
-      </Button>
-      {/* <RegistUserType Type={[userType, setUserType]} /> */}
-      <RegistUserInfo userInfoState={userInfoState} />
-    </>
+    <div className='px-4 flex flex-col h-full justify-between'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <RegistUserType Type={[userType, setUserType]} /> */}
+        {/* <RegistUserInfo useFormFunctions={useFormFunctions} /> */}
+        <RegistUserTag
+          useFormFunctions={useFormFunctions}
+          formElement={"PlannerTag"}
+        />
+        <Button sx={{ position: "absolute" }} type='submit'>
+          SUBMIT
+        </Button>
+      </form>
+    </div>
   );
 };
 
