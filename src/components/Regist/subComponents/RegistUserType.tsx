@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import BottomButton from "../../Units/BottomButton";
 import { Button, Radio, Stack } from "@mui/material";
 
-type Props = { Type: [string, React.Dispatch<React.SetStateAction<string>>] };
-
+type Props = {
+  useFormFunctions: useFormFuctnionType;
+};
 const RegistUserType = (props: Props) => {
-  const [userType, setUserType] = props.Type;
-
+  const register = props.useFormFunctions.register;
+  const [userType, setUserType] = useState("");
   // 사용되는 상수구역
   const GuideText = "본인의 신분을 선택해주세요";
   const CoupleString = "couple";
@@ -17,6 +18,10 @@ const RegistUserType = (props: Props) => {
   };
   const buttonClass = "text-sm w-full";
 
+  const onClickHandler = (type: typeof CoupleString | typeof PlannerString) => {
+    setUserType(type);
+    register("Type", { value: type });
+  };
   // userType에서만 사용되는 Component여서 따로 Unit화 하지 않았습니다.
   const buttonComponent = (
     str: typeof CoupleString | typeof PlannerString
@@ -25,7 +30,7 @@ const RegistUserType = (props: Props) => {
       <Button
         className={buttonClass}
         variant='outlined'
-        onClick={() => setUserType(str)}
+        onClick={() => onClickHandler(str)}
         sx={{
           display: "flex",
           fontWeight: `${userType === str ? 700 : 400}`,

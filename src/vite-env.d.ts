@@ -11,6 +11,7 @@ type ReactStringStateType = [
   )
 ];
 type ReactRefType = React.RefObject<HTMLInputElement>;
+
 type userInfoState = {
   Nickname: ReactStringStateType;
   Company: ReactStringStateType;
@@ -30,7 +31,7 @@ interface FormInput {
   Company: string;
   Grade: string;
   Location: string;
-  PlannerTag?: string;
+  PlannerTag?: string[];
 }
 type stateStrings =
   | "Type"
