@@ -12,11 +12,19 @@ import type { RootState } from "./store";
  *
  */
 interface userState {
-  nickname: string;
+  type: string | null;
+  nickname: string | null;
+  company?: string | null;
+  grade?: string | null;
+  location?: string | null;
 }
 
 const initialState: userState = {
-  nickname: "init",
+  type: null,
+  nickname: null,
+  company: null,
+  grade: null,
+  location: null,
 };
 
 export const userSlice = createSlice({
@@ -31,7 +39,6 @@ export const userSlice = createSlice({
       console.log("Redux Logout", +state);
       state.nickname = "EMPTY";
     },
-
     // decrement: (state) => {
     //   state.value -= 1;
     // },

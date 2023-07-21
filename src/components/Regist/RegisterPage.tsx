@@ -10,7 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { ReactNode, useState } from "react";
-import { CountryList } from "../store/CountryLIst";
+import { CountryList } from "../../store/CountryLIst";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -56,6 +56,8 @@ const SelectUserTypeList: ReactNode[] = Object.keys(typeWord).map(
 const MenuItemMaxHeightProps = {
   PaperProps: { style: { maxHeight: "15rem" } },
 };
+
+// 더이상 사용되지 않는 Page이지만, 다른 Component 작성할 때 참고용으로 남겨둠
 
 const RegisterPage = (props: Props) => {
   const [userType, setUserType] = useState<string>("");
