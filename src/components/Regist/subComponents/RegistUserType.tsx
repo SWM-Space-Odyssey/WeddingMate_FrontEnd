@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import BottomButton from "../../Units/BottomButton";
 import { Button, Radio, Stack } from "@mui/material";
+import { NextPage } from "../../../store/dataSlice";
+import { useDispatch } from "react-redux";
 
 type Props = {
   useFormFunctions: useFormFuctnionType;
 };
 const RegistUserType = (props: Props) => {
+  const dispatch = useDispatch();
   const register = props.useFormFunctions.register;
   const [userType, setUserType] = useState("");
   // 사용되는 상수구역
@@ -52,7 +54,22 @@ const RegistUserType = (props: Props) => {
           {buttonComponent(PlannerString)}
         </Stack>
       </div>
-      <BottomButton text='선택 완료' flag={userType ? false : true} />
+      {/* <BottomButton
+        text='선택 완료'
+        flag={userType ? false : true}
+        function={buttonFunction}
+      /> */}
+      <Button
+        className='h-11 w-full'
+        variant='outlined'
+        sx={{ fontSize: "1rem", my: 1 }}
+        disabled={userType ? false : true}
+        onClick={() => {
+          dispatch(NextPage());
+        }}
+      >
+        선택 완료
+      </Button>
     </div>
   );
 };

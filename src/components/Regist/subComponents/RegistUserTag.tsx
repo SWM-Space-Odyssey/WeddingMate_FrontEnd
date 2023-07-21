@@ -1,15 +1,19 @@
 import TagComponent from "../../Units/TagComponent";
 import { PlannerTagList } from "../../../store/TagList";
+import { useDispatch } from "react-redux";
+import { NextPage } from "../../../store/dataSlice";
+import { Button } from "@mui/material";
 
 type Props = {
   useFormFunctions: useFormFuctnionType;
   formElement: stateStrings;
 };
 const RegistUserTag = (props: Props) => {
+  const dispatch = useDispatch();
   const register = props.useFormFunctions.register;
   const formElement = props.formElement;
   return (
-    <>
+    <div className='px-4 flex flex-col h-full justify-between'>
       <div className='mt-10'>
         <div className='font-bold text-2xl'>키워드를 2개 선택해 주세요</div>
 
@@ -27,8 +31,17 @@ const RegistUserTag = (props: Props) => {
           />
         </div>
       </div>
-      {/* <BottomButton text='가입완료' flag={false} /> */}
-    </>
+      <Button
+        className='h-11 w-full'
+        variant='outlined'
+        sx={{ fontSize: "1rem", my: 1 }}
+        onClick={() => {
+          dispatch(NextPage());
+        }}
+      >
+        다음
+      </Button>
+    </div>
   );
 };
 

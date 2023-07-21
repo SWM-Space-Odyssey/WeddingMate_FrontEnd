@@ -1,7 +1,10 @@
+import { useDispatch } from "react-redux";
 import { CountryList } from "../../../store/CountryLIst";
 import InputComponent from "../../Units/InputComponent";
 
 import TagComponent from "../../Units/TagComponent";
+import { Button } from "@mui/material";
+import { NextPage } from "../../../store/dataSlice";
 
 type inputComponentContentType = {
   state: stateStrings;
@@ -21,6 +24,7 @@ type Props = {
 };
 const RegistUserInfo = (props: Props) => {
   const register = props.useFormFunctions.register;
+  const dispatch = useDispatch();
 
   const inputComponent = (content: inputComponentContentType) => {
     return (
@@ -53,7 +57,7 @@ const RegistUserInfo = (props: Props) => {
     },
   };
   return (
-    <>
+    <div className='px-4 flex flex-col h-full justify-between'>
       <div className='flex flex-col mt-7 gap-y-7'>
         <InputComponent
           content={stateMapping.userNickname}
@@ -73,7 +77,17 @@ const RegistUserInfo = (props: Props) => {
           />
         </div>
       </div>
-    </>
+      <Button
+        className='h-11 w-full'
+        variant='outlined'
+        sx={{ fontSize: "1rem", my: 1 }}
+        onClick={() => {
+          dispatch(NextPage());
+        }}
+      >
+        다음
+      </Button>
+    </div>
   );
 };
 

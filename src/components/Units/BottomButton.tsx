@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import React from "react";
 
 type props = {
   text: string;
@@ -13,6 +12,7 @@ const BottomButton = (props: props) => {
       variant='outlined'
       sx={{ fontSize: "1rem", my: 1 }}
       disabled={props.flag}
+      onClick={() => {}}
     >
       {props.text}
     </Button>
