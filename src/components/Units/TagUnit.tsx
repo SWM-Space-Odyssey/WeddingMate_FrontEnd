@@ -1,26 +1,19 @@
 import { Chip } from "@mui/material";
 import React from "react";
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-interface Props<
-  T extends registStateStrings | portfolioStateStrings,
-  R extends portfolioFormRegister | registFormRegister
-> {
+interface Props<T extends registStateStrings | portfolioStateStrings> {
   text: string;
-  register: UseFormRegister<R>;
   tagState: [string[], React.Dispatch<React.SetStateAction<string[]>>];
   formElement: T;
   tagCountMax: number;
 }
 
-const TagUnit = <
-  T extends registStateStrings | portfolioStateStrings,
-  R extends portfolioFormRegister | registFormRegister
->(
-  props: Props<T, R>
+const TagUnit = <T extends registStateStrings | portfolioStateStrings>(
+  props: Props<T>
 ) => {
+  const { register } = useFormContext();
   const [value, setValue] = props.tagState;
-  const register = props.register;
   const text = props.text;
   const formElement = props.formElement;
   const tagCountMax = props.tagCountMax;
@@ -28,12 +21,23 @@ const TagUnit = <
   const onClickHandler = () => {
     let newValue = [];
     if (value.length < tagCountMax) {
-      newValue = [...value, text];
+      if (value.includes(text)) {
+        const targetIndex = value.indexOf(text);
+        value.splice(targetIndex, 1);
+        newValue = [...value];
+      } else {
+        newValue = [...value, text];
+      }
     } else {
-      if (value.includes(text)) return;
-      newValue = [...value.splice(1), text];
+      if (value.includes(text)) {
+        const targetIndex = value.indexOf(text);
+        value.splice(targetIndex, 1);
+        newValue = [...value];
+      } else {
+        newValue = [...value.slice(1), text];
+      }
     }
-    register(formElement as any, { value: [...newValue] } as any);
+    register(formElement, { value: [...newValue] } as any);
     setValue([...newValue]);
   };
   return (
@@ -47,4 +51,4 @@ const TagUnit = <
   );
 };
 
-export default React.memo(TagUnit);
+export default TagUnit;

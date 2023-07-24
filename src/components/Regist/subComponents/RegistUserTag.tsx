@@ -5,12 +5,10 @@ import { NextPage } from "../../../store/dataSlice";
 import { Button } from "@mui/material";
 
 type Props = {
-  useFormFunctions: registRegisterType;
   formElement: registStateStrings;
 };
 const RegistUserTag = (props: Props) => {
   const dispatch = useDispatch();
-  const register = props.useFormFunctions.register;
   const formElement = props.formElement;
   return (
     <div className='px-4 flex flex-col h-full justify-between'>
@@ -25,7 +23,6 @@ const RegistUserTag = (props: Props) => {
         <div className='mt-10'>
           <TagComponent
             spreadValues={PlannerTagList}
-            register={register}
             formElement={formElement}
             tagCountMax={2}
           />

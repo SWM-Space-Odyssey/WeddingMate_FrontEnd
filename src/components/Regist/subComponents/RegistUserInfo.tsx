@@ -6,32 +6,24 @@ import TagComponent from "../../Units/TagComponent";
 import { Button } from "@mui/material";
 import { NextPage } from "../../../store/dataSlice";
 
-type Props = {
-  useFormFunctions: registRegisterType;
-};
-const RegistUserInfo = (props: Props) => {
-  const register = props.useFormFunctions.register;
+const RegistUserInfo = () => {
   const dispatch = useDispatch();
-
   const stateMapping: MappingInterface<registStateStrings, registFormRegister> =
     {
       userNickname: {
         state: "Nickname",
         title: "닉네임",
         placeholder: "사용할 닉네임을 입력해주세요",
-        register: register,
       },
       userCompany: {
         state: "Company",
         title: "소속",
         placeholder: "웨딩 플래너님의 소속을 입력해주세요",
-        register: register,
       },
       userGrade: {
         state: "Grade",
         title: "직급",
         placeholder: "사원, 대리, 과장 등",
-        register: register,
       },
     };
 
@@ -43,11 +35,7 @@ const RegistUserInfo = (props: Props) => {
         <InputComponent content={stateMapping.userGrade} />
         <div>
           <div className='font-bold mb-1'>지역</div>
-          <TagComponent
-            spreadValues={CountryList}
-            register={register}
-            formElement={"Location"}
-          />
+          <TagComponent spreadValues={CountryList} formElement={"Location"} />
         </div>
       </div>
       <Button

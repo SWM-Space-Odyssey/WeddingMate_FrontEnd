@@ -20,7 +20,6 @@ interface MappingInterface<T, I> {
     state: T;
     title: string;
     placeholder: string;
-    register: UseFormRegister<I>;
   };
 }
 // ========================================================================≈≈
