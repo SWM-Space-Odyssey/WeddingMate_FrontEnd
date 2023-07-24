@@ -10,11 +10,11 @@ import { RootState } from "../../store/store";
 const RegistComponent = () => {
   const page = useSelector((state: RootState) => state.data.page);
   const prevPage = useSelector((state: RootState) => state.data.prevPage);
-  const { register, handleSubmit } = useForm<FormInput>();
-  const onSubmit: SubmitHandler<FormInput> = (data) =>
+  const { register, handleSubmit } = useForm<registFormRegister>();
+  const onSubmit: SubmitHandler<registFormRegister> = (data) =>
     alert(JSON.stringify(data));
 
-  const useFormFunctions: useFormFuctnionType = {
+  const useFormFunctions: registRegisterType = {
     register: register,
   };
   const transitionClass = "absolute w-full h-full";

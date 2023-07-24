@@ -2,15 +2,23 @@ import { Chip } from "@mui/material";
 import React from "react";
 import { UseFormRegister } from "react-hook-form";
 
-type Props = {
+interface Props<
+  T extends registStateStrings | portfolioStateStrings,
+  R extends portfolioFormRegister | registFormRegister
+> {
   text: string;
-  register: UseFormRegister<FormInput>;
+  register: UseFormRegister<R>;
   tagState: [string[], React.Dispatch<React.SetStateAction<string[]>>];
-  formElement: stateStrings;
+  formElement: T;
   tagCountMax: number;
-};
+}
 
-const TagUnit = (props: Props) => {
+const TagUnit = <
+  T extends registStateStrings | portfolioStateStrings,
+  R extends portfolioFormRegister | registFormRegister
+>(
+  props: Props<T, R>
+) => {
   const [value, setValue] = props.tagState;
   const register = props.register;
   const text = props.text;
@@ -25,7 +33,7 @@ const TagUnit = (props: Props) => {
       if (value.includes(text)) return;
       newValue = [...value.splice(1), text];
     }
-    register(formElement, { value: [...newValue] });
+    register(formElement as any, { value: [...newValue] } as any);
     setValue([...newValue]);
   };
   return (

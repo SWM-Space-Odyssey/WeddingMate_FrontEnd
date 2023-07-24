@@ -5,8 +5,8 @@ import { NextPage } from "../../../store/dataSlice";
 import { Button } from "@mui/material";
 
 type Props = {
-  useFormFunctions: useFormFuctnionType;
-  formElement: stateStrings;
+  useFormFunctions: registRegisterType;
+  formElement: registStateStrings;
 };
 const RegistUserTag = (props: Props) => {
   const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { NextPage } from "../../../store/dataSlice";
 import { useDispatch } from "react-redux";
 
 type Props = {
-  useFormFunctions: useFormFuctnionType;
+  useFormFunctions: registRegisterType;
 };
 const RegistUserType = (props: Props) => {
   const dispatch = useDispatch();

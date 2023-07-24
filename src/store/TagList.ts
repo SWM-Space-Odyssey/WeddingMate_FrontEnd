@@ -8,3 +8,14 @@ export const PlannerTagList: string[] = [
   "센스있는",
   "외향적인",
 ];
+
+export const MoodTagList: string[] = [
+  "우아한",
+  "러블리",
+  "화려한",
+  "풍성한",
+  "깔끔한",
+  "독특한",
+  "단아한",
+  "고급스러운",
+];

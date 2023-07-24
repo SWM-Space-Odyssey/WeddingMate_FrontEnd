@@ -1,15 +1,24 @@
 import { UseFormRegister } from "react-hook-form";
 
-type Props = {
+interface Props<
+  T extends registStateStrings | portfolioStateStrings,
+  R extends portfolioFormRegister | registFormRegister
+> {
   content: {
-    state: stateStrings;
+    state: T;
     title: string;
     placeholder: string;
+    register: UseFormRegister<R>;
   };
-  register: UseFormRegister<FormInput>;
-};
+}
 
-const InputComponent = (props: Props) => {
+const InputComponent = <
+  T extends registStateStrings | portfolioStateStrings,
+  R extends portfolioFormRegister | registFormRegister
+>(
+  props: Props<T, R>
+) => {
+  const register = props.content.register;
   return (
     <div>
       <div className='font-bold mb-1'>{props.content.title}</div>
@@ -17,7 +26,8 @@ const InputComponent = (props: Props) => {
         className='border rounded-sm w-full py-2.5 px-3'
         placeholder={props.content.placeholder}
         type='text'
-        {...props.register(props.content.state)}
+        // ㅠㅠ 더이상 시간 할애 불가능 나중에 꼭 고치기
+        {...register(props.content.state as any)}
       />
     </div>
   );

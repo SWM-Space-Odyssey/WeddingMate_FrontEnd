@@ -2,14 +2,22 @@ import { useState } from "react";
 import { UseFormRegister } from "react-hook-form";
 import TagUnit from "./TagUnit";
 
-type Props = {
+interface Props<
+  T extends registStateStrings | portfolioStateStrings,
+  R extends portfolioFormRegister | registFormRegister
+> {
+  formElement: T;
+  register: UseFormRegister<R>;
   spreadValues: string[];
-  register: UseFormRegister<FormInput>;
-  formElement: stateStrings;
   tagCountMax?: number;
-};
+}
 
-const TagComponent = (props: Props) => {
+const TagComponent = <
+  T extends registStateStrings | portfolioStateStrings,
+  R extends portfolioFormRegister | registFormRegister
+>(
+  props: Props<T, R>
+) => {
   const spreadValues = props.spreadValues;
   const register = props.register;
   const formElement = props.formElement;
@@ -21,7 +29,7 @@ const TagComponent = (props: Props) => {
         <TagUnit
           key={index}
           text={item}
-          register={register}
+          register={register as any}
           formElement={formElement}
           tagCountMax={tagCountMax}
           tagState={[componentValue, setComponentValue]}
