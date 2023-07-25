@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Button, Radio, Stack } from "@mui/material";
-import { NextPage } from "../../../store/dataSlice";
+import { NextPage } from "../../../../store/dataSlice";
 import { useDispatch } from "react-redux";
+import { useFormContext } from "react-hook-form";
 
-type Props = {
-  useFormFunctions: useFormFuctnionType;
-};
-const RegistUserType = (props: Props) => {
+const RegistUserType = () => {
   const dispatch = useDispatch();
-  const register = props.useFormFunctions.register;
+  const { register } = useFormContext();
   const [userType, setUserType] = useState("");
   // 사용되는 상수구역
   const GuideText = "본인의 신분을 선택해주세요";

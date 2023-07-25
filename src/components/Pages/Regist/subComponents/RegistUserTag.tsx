@@ -1,16 +1,14 @@
-import TagComponent from "../../Units/TagComponent";
-import { PlannerTagList } from "../../../store/TagList";
+import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import { PlannerTagList } from "../../../../store/TagList";
 import { useDispatch } from "react-redux";
-import { NextPage } from "../../../store/dataSlice";
+import { NextPage } from "../../../../store/dataSlice";
 import { Button } from "@mui/material";
 
 type Props = {
-  useFormFunctions: useFormFuctnionType;
-  formElement: stateStrings;
+  formElement: registStateStrings;
 };
 const RegistUserTag = (props: Props) => {
   const dispatch = useDispatch();
-  const register = props.useFormFunctions.register;
   const formElement = props.formElement;
   return (
     <div className='px-4 flex flex-col h-full justify-between'>
@@ -23,9 +21,8 @@ const RegistUserTag = (props: Props) => {
           줄 수 있어요
         </div>
         <div className='mt-10'>
-          <TagComponent
+          <CustomTagBlock
             spreadValues={PlannerTagList}
-            register={register}
             formElement={formElement}
             tagCountMax={2}
           />

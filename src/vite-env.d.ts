@@ -3,29 +3,20 @@
 //   Kakao: any;
 // }
 
-type ReactStringStateType = [
-  string,
-  (
-    | React.Dispatch<React.SetStateAction<string>>
-    | ((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void)
-  )
-];
-type ReactRefType = React.RefObject<HTMLInputElement>;
-
-type userInfoState = {
-  Nickname: ReactStringStateType;
-  Company: ReactStringStateType;
-  Grade: ReactStringStateType;
-  Location: ReactStringStateType;
-};
-type userInfoRef = {
-  Nickname: ReactRefType;
-  Company: ReactRefType;
-  Grade: ReactRefType;
-  Location: [string, React.Dispatch<React.SetStateAction<string>>];
-};
-
-interface FormInput {
+// ========================================================================≈≈
+// GLOBAL============================================================≈≈
+// ========================================================================≈≈
+interface MappingInterface<T, I> {
+  [key: string]: {
+    state: T;
+    title: string;
+    placeholder: string;
+  };
+}
+// ========================================================================≈≈
+// UserRegist============================================================≈≈
+// ========================================================================≈≈
+interface registFormRegister {
   Type: string;
   Nickname: string;
   Company: string;
@@ -33,7 +24,7 @@ interface FormInput {
   Location: string;
   PlannerTag?: string[];
 }
-type stateStrings =
+type registStateStrings =
   | "Type"
   | "Nickname"
   | "Company"
@@ -41,6 +32,36 @@ type stateStrings =
   | "Location"
   | "PlannerTag";
 
-type useFormFuctnionType = {
-  register: UseFormRegister<FormInput>;
+type registRegisterType = {
+  register: UseFormRegister<registFormRegister>;
+};
+
+type RegistInputComponentProp = {
+  state: registStateStrings;
+  title: string;
+  placeholder: string;
+  register: UseFormRegister<registFormRegister>;
+};
+// ========================================================================≈≈
+// PortFolio===============================================================≈≈
+// ========================================================================≈≈
+
+interface portfolioFormRegister {
+  Title: string;
+  Mood: string[];
+  Location: string;
+  Picture: File[];
+}
+
+type portfolioRegisterType = {
+  register: UseFormRegister<portfolioFormRegister>;
+};
+
+type portfolioStateStrings = "Title" | "Mood" | "Location" | "Picture";
+
+type RegistInputComponentProp = {
+  state: portfolioStateStrings;
+  title: string;
+  placeholder: string;
+  register: UseFormRegister<portfolioFormRegister>;
 };
