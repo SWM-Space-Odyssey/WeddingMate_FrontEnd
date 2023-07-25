@@ -8,7 +8,7 @@ interface Props<T extends registStateStrings | portfolioStateStrings> {
   };
 }
 
-const InputComponent = <T extends registStateStrings | portfolioStateStrings>(
+const CustomInput = <T extends registStateStrings | portfolioStateStrings>(
   props: Props<T>
 ) => {
   const { register } = useFormContext();
@@ -26,4 +26,4 @@ const InputComponent = <T extends registStateStrings | portfolioStateStrings>(
   );
 };
 
-export default InputComponent;
+export default CustomInput;

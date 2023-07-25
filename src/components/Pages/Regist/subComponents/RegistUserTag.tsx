@@ -1,7 +1,7 @@
-import TagComponent from "../../Units/TagComponent";
-import { PlannerTagList } from "../../../store/TagList";
+import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import { PlannerTagList } from "../../../../store/TagList";
 import { useDispatch } from "react-redux";
-import { NextPage } from "../../../store/dataSlice";
+import { NextPage } from "../../../../store/dataSlice";
 import { Button } from "@mui/material";
 
 type Props = {
@@ -21,7 +21,7 @@ const RegistUserTag = (props: Props) => {
           줄 수 있어요
         </div>
         <div className='mt-10'>
-          <TagComponent
+          <CustomTagBlock
             spreadValues={PlannerTagList}
             formElement={formElement}
             tagCountMax={2}

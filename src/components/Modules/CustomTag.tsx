@@ -8,8 +8,7 @@ interface Props<T extends registStateStrings | portfolioStateStrings> {
   formElement: T;
   tagCountMax: number;
 }
-
-const TagUnit = <T extends registStateStrings | portfolioStateStrings>(
+const CustomTag = <T extends registStateStrings | portfolioStateStrings>(
   props: Props<T>
 ) => {
   const { register } = useFormContext();
@@ -51,4 +50,4 @@ const TagUnit = <T extends registStateStrings | portfolioStateStrings>(
   );
 };
 
-export default TagUnit;
+export default CustomTag;

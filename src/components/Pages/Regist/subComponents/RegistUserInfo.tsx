@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { CountryList } from "../../../store/CountryLIst";
-import InputComponent from "../../Units/InputComponent";
+import { CountryList } from "../../../../store/CountryLIst";
+import CustomInput from "../../../Modules/CustumInput";
 
-import TagComponent from "../../Units/TagComponent";
+import CustomTagBlock from "../../../Modules/CustomTagBlock";
 import { Button } from "@mui/material";
-import { NextPage } from "../../../store/dataSlice";
+import { NextPage } from "../../../../store/dataSlice";
 
 const RegistUserInfo = () => {
   const dispatch = useDispatch();
@@ -30,12 +30,12 @@ const RegistUserInfo = () => {
   return (
     <div className='px-4 flex flex-col h-full justify-between'>
       <div className='flex flex-col mt-7 gap-y-7'>
-        <InputComponent content={stateMapping.userNickname} />
-        <InputComponent content={stateMapping.userCompany} />
-        <InputComponent content={stateMapping.userGrade} />
+        <CustomInput content={stateMapping.userNickname} />
+        <CustomInput content={stateMapping.userCompany} />
+        <CustomInput content={stateMapping.userGrade} />
         <div>
           <div className='font-bold mb-1'>지역</div>
-          <TagComponent spreadValues={CountryList} formElement={"Location"} />
+          <CustomTagBlock spreadValues={CountryList} formElement={"Location"} />
         </div>
       </div>
       <Button

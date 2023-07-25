@@ -5,7 +5,7 @@ import RegistUserInfo from "./subComponents/RegistUserInfo";
 import RegistUserType from "./subComponents/RegistUserType";
 import RegistSuccess from "./subComponents/RegistSuccess";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { RootState } from "../../../store/store";
 
 const RegistComponent = () => {
   const page = useSelector((state: RootState) => state.data.page);

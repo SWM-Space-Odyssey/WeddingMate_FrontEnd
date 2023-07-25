@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { UseFormRegister, useFormContext } from "react-hook-form";
-import TagUnit from "./TagUnit";
+import CustomTag from "./CustomTag";
 
 interface Props<T extends registStateStrings | portfolioStateStrings> {
   formElement: T;
@@ -10,7 +9,7 @@ interface Props<T extends registStateStrings | portfolioStateStrings> {
   TagCount?: boolean;
 }
 
-const TagComponent = <T extends registStateStrings | portfolioStateStrings>(
+const CustomTagBlock = <T extends registStateStrings | portfolioStateStrings>(
   props: Props<T>
 ) => {
   const spreadValues = props.spreadValues;
@@ -18,7 +17,7 @@ const TagComponent = <T extends registStateStrings | portfolioStateStrings>(
   const tagCountMax = props.tagCountMax ? props.tagCountMax : 1;
   const [componentValue, setComponentValue] = useState<string[]>([]);
   return (
-    <>
+    <div>
       {props.title && (
         <div>
           {props.title}
@@ -31,7 +30,7 @@ const TagComponent = <T extends registStateStrings | portfolioStateStrings>(
       )}
       <div className='flex flex-wrap gap-1.5'>
         {spreadValues.map((item, index) => (
-          <TagUnit
+          <CustomTag
             key={index}
             text={item}
             formElement={formElement}
@@ -40,8 +39,8 @@ const TagComponent = <T extends registStateStrings | portfolioStateStrings>(
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
-export default TagComponent;
+export default CustomTagBlock;

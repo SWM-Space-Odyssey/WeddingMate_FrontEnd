@@ -3,15 +3,6 @@
 //   Kakao: any;
 // }
 
-// type ReactRefType = React.RefObject<HTMLInputElement>;
-
-// type userInfoRef = {
-//   Nickname: ReactRefType;
-//   Company: ReactRefType;
-//   Grade: ReactRefType;
-//   Location: [string, React.Dispatch<React.SetStateAction<string>>];
-// };
-
 // ========================================================================≈≈
 // GLOBAL============================================================≈≈
 // ========================================================================≈≈
@@ -59,7 +50,7 @@ interface portfolioFormRegister {
   Title: string;
   Mood: string[];
   Location: string;
-  Picture: string;
+  Picture: File[];
 }
 
 type portfolioRegisterType = {

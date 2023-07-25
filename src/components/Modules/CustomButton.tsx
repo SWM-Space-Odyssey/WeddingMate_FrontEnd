@@ -5,7 +5,7 @@ type props = {
   flag: boolean;
   bottom?: number;
 };
-const BottomButton = (props: props) => {
+const CustomButton = (props: props) => {
   return (
     <Button
       className='h-11 w-full'
@@ -19,4 +19,4 @@ const BottomButton = (props: props) => {
   );
 };
 
-export default BottomButton;
+export default CustomButton;

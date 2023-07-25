@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import Header from "./Header/Header";
+import Header from "../Header/Header";
 import RegistComponent from "./Regist/RegistComponent";
-import PortfolioCreateComponent from "./Portfolio/PortfolioCreateComponent";
+import PortfolioCreate from "./Portfolio/PortfolioCreate";
 
 type Props = {};
 
@@ -10,8 +10,8 @@ const LandingPage = (props: Props) => {
     <Box className='h-full flex flex-col '>
       <Header />
       <div className='flex-1 relative'>
-        {/* <RegistComponent /> */}
-        <PortfolioCreateComponent />
+        <RegistComponent />
+        {/* <PortfolioCreate /> */}
         {/* <SocialLogin />
       <SocialLogout /> */}
         {/* <Typography>REDUX Value : {user}</Typography>

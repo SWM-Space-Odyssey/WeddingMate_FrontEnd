@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LandingPage";
-import RegisterPage from "./components/Regist/RegisterPage";
-import AuthenticationPage from "./components/SocialLogin/AuthenticationPage";
+import LandingPage from "./components/Pages/LandingPage";
+import RegisterPage from "./components/Pages/Regist/RegisterPage";
+import AuthenticationPage from "./components/Pages/SocialLogin/AuthenticationPage";
 function App() {
   return (
     <BrowserRouter>

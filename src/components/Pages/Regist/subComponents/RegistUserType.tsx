@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Radio, Stack } from "@mui/material";
-import { NextPage } from "../../../store/dataSlice";
+import { NextPage } from "../../../../store/dataSlice";
 import { useDispatch } from "react-redux";
 import { useFormContext } from "react-hook-form";
 

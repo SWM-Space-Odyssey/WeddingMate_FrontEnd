@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import InputComponent from "../Units/InputComponent";
+import CustomInput from "../../Modules/CustumInput";
 import {
   FormProvider,
   SubmitHandler,
@@ -8,10 +8,11 @@ import {
   useForm,
   useWatch,
 } from "react-hook-form";
-import TagComponent from "../Units/TagComponent";
-import { MoodTagList } from "../../store/TagList";
-import { CountryList } from "../../store/CountryLIst";
+import CustomTagBlock from "../../Modules/CustomTagBlock";
+import { MoodTagList } from "../../../store/TagList";
+import { CountryList } from "../../../store/CountryLIst";
 import { Button } from "@mui/material";
+import ImageUpload from "../../Modules/ImageUpload";
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -20,40 +21,49 @@ interface PortfolioInputContentType {
   placeholder: string;
 }
 
-const PortfolioCreateComponent = (props: Props) => {
+const PortfolioCreate = (props: Props) => {
   const methods = useForm<portfolioFormRegister>();
 
   const onSubmit: SubmitHandler<portfolioFormRegister> = (data) => {
-    alert(JSON.stringify(data));
+    console.log("=====Submit Test=======");
+    console.log(JSON.stringify(data));
+    console.log(data);
+    console.log("========================");
   };
   const InputContent: PortfolioInputContentType = {
     state: "Title",
     title: "타이틀",
     placeholder: "제목을 입력해 주세요",
   };
-  useEffect(() => {
-    console.log("hoihihi");
-  }, [methods.watch("Mood")]);
 
   return (
-    <div>
+    <div className='h-full'>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputComponent content={InputContent} />
-          <TagComponent
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className='flex flex-col gap-6 h-full '
+        >
+          <CustomInput content={InputContent} />
+          <CustomTagBlock
             title='MOOD'
             TagCount={true}
             spreadValues={MoodTagList}
             formElement='Mood'
             tagCountMax={3}
           />
-          <TagComponent
+          <CustomTagBlock
             title='Location'
             spreadValues={CountryList}
             formElement='Location'
           />
-          <Button type='submit' sx={{ fontSize: "1rem" }} className='w-full'>
-            웨딩 사진 보러가기
+          <ImageUpload title='image' maxCount={5} />
+          <Button
+            type='submit'
+            sx={{ fontSize: "1rem", bottom: 0 }}
+            className='w-full'
+            variant='contained'
+          >
+            추가
           </Button>
         </form>
       </FormProvider>
@@ -61,4 +71,4 @@ const PortfolioCreateComponent = (props: Props) => {
   );
 };
 
-export default PortfolioCreateComponent;
+export default PortfolioCreate;
