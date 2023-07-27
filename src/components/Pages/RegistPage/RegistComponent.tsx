@@ -10,8 +10,8 @@ import { RootState } from "../../../store/store";
 const RegistComponent = () => {
   const page = useSelector((state: RootState) => state.data.page);
   const prevPage = useSelector((state: RootState) => state.data.prevPage);
-  const methods = useForm<registFormRegister>();
-  const onSubmit: SubmitHandler<registFormRegister> = (data) =>
+  const methods = useForm<registRegister>();
+  const onSubmit: SubmitHandler<registRegister> = (data) =>
     alert(JSON.stringify(data));
   const transitionClass = "absolute w-full h-full";
   return (

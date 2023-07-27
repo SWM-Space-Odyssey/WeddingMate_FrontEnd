@@ -4,8 +4,10 @@ type props = {
   text: string;
   flag: boolean;
   bottom?: number;
+  buttonType?: "button" | "submit";
 };
 const CustomButton = (props: props) => {
+  const type = props?.buttonType;
   return (
     <Button
       className='h-11 w-full'
@@ -13,6 +15,7 @@ const CustomButton = (props: props) => {
       sx={{ fontSize: "1rem", my: 1 }}
       disabled={props.flag}
       onClick={() => {}}
+      type={type}
     >
       {props.text}
     </Button>

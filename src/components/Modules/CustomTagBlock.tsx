@@ -1,27 +1,45 @@
 import { useState } from "react";
 import CustomTag from "./CustomTag";
+import { Chip } from "@mui/material";
 
-interface Props<T extends registStateStrings | portfolioStateStrings> {
-  formElement: T;
+interface Props<T extends registStates | portfolioStates | itemStates> {
   spreadValues: string[];
-  tagCountMax?: number;
+  formState?: T;
+  maxTag?: number;
   title?: string;
-  TagCount?: boolean;
+  countRender?: boolean;
+  addAble?: boolean;
 }
 
-const CustomTagBlock = <T extends registStateStrings | portfolioStateStrings>(
+const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
   props: Props<T>
 ) => {
   const spreadValues = props.spreadValues;
-  const formElement = props.formElement;
-  const tagCountMax = props.tagCountMax ? props.tagCountMax : 1;
+  const formElement = props?.formState;
+  const tagCountMax = props.maxTag ? props.maxTag : 1;
   const [componentValue, setComponentValue] = useState<string[]>([]);
+  const [addFormSwitch, setAddFormSwitch] = useState<boolean>(false);
+  const [addTag, setAddTag] = useState<string>("");
+
+  const addFormDisplay = () => {
+    if (addFormSwitch) return;
+    setAddFormSwitch(true);
+  };
+
+  const onClickAdd = () => {
+    if (addTag) {
+      spreadValues.push(addTag);
+    }
+    setAddTag("");
+    return setAddFormSwitch(false);
+  };
+
   return (
     <div>
       {props.title && (
         <div>
-          {props.title}
-          {props.TagCount ? (
+          <span className='font-bold text-sm'>{props.title}</span>
+          {props.countRender ? (
             <span>{` ${componentValue.length} / ${tagCountMax}`}</span>
           ) : (
             ""
@@ -32,12 +50,26 @@ const CustomTagBlock = <T extends registStateStrings | portfolioStateStrings>(
         {spreadValues.map((item, index) => (
           <CustomTag
             key={index}
-            text={item}
-            formElement={formElement}
+            text={`#${item}`}
+            formState={formElement}
             tagCountMax={tagCountMax}
             tagState={[componentValue, setComponentValue]}
           />
         ))}
+        {props.addAble && (
+          <Chip label={`추가`} onClick={() => addFormDisplay()} />
+        )}
+      </div>
+      <div className={`${addFormSwitch ? "block" : "hidden"}`}>
+        <input
+          type='text'
+          className='border'
+          value={addTag}
+          onChange={(e) => setAddTag(e.currentTarget.value)}
+        />
+        <button type='button' onClick={() => onClickAdd()}>
+          입력
+        </button>
       </div>
     </div>
   );

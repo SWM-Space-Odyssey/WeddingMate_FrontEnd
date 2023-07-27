@@ -22,9 +22,9 @@ interface PortfolioInputContentType {
 }
 
 const PortfolioCreate = (props: Props) => {
-  const methods = useForm<portfolioFormRegister>();
+  const methods = useForm<portfolioRegister>();
 
-  const onSubmit: SubmitHandler<portfolioFormRegister> = (data) => {
+  const onSubmit: SubmitHandler<portfolioRegister> = (data) => {
     console.log("=====Submit Test=======");
     console.log(JSON.stringify(data));
     console.log(data);
@@ -46,15 +46,15 @@ const PortfolioCreate = (props: Props) => {
           <CustomInput content={InputContent} />
           <CustomTagBlock
             title='MOOD'
-            TagCount={true}
+            countRender={true}
             spreadValues={MoodTagList}
-            formElement='Mood'
-            tagCountMax={3}
+            formState='Mood'
+            maxTag={3}
           />
           <CustomTagBlock
             title='Location'
             spreadValues={CountryList}
-            formElement='Location'
+            formState='Location'
           />
           <ImageUpload title='image' maxCount={5} />
           <Button

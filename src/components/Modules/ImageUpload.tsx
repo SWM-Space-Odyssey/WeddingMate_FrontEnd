@@ -2,6 +2,7 @@ import { Add, Clear } from "@mui/icons-material";
 import { Badge, Button, Input } from "@mui/material";
 import React, { useState } from "react";
 import { useController, useFormContext, useWatch } from "react-hook-form";
+import CustomText from "./CustomText";
 
 type Props = {
   title: string;
@@ -73,8 +74,8 @@ const ImageUpload = (props: Props) => {
   return (
     <div className='flex flex-col gap-1.5'>
       <div>
-        <span>사진</span>
-        <span className='tracking-widest'>
+        <CustomText type='Title' text='사진' />
+        <span className='tracking-widest font-bold text-sm'>
           ({pictures?.length ?? 0}/{maxCount})
         </span>
       </div>
