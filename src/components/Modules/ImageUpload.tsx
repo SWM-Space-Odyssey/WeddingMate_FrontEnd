@@ -13,7 +13,7 @@ const ImageUpload = (props: Props) => {
   const { control } = useFormContext();
 
   const { field } = useController({
-    name: "Picture",
+    name: "pictures",
     control,
     rules: { required: true },
   });
@@ -22,7 +22,7 @@ const ImageUpload = (props: Props) => {
 
   const pictures: File[] = useWatch({
     control,
-    name: "Picture",
+    name: "pictures",
   });
 
   const imageSpread = () => {
@@ -85,7 +85,7 @@ const ImageUpload = (props: Props) => {
             <Add fontSize='large' />
           </div>
           <input
-            id='Picture'
+            id='pictures'
             type='file'
             accept='image/*'
             multiple={true}

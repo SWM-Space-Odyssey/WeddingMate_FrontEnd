@@ -51,14 +51,14 @@ interface portfolioRegister {
   Title: string;
   Mood: string[];
   Location: string;
-  Picture: File[];
+  pictures: File[];
 }
 
 type portfolioRegisterType = {
   register: UseFormRegister<portfolioRegister>;
 };
 
-type portfolioStates = "Title" | "Mood" | "Location" | "Picture";
+type portfolioStates = "Title" | "Mood" | "Location" | "pictures";
 
 type RegistInputProp = {
   state: portfolioStates;
@@ -72,11 +72,11 @@ type RegistInputProp = {
 // ========================================================================≈≈
 interface itemRegister {
   categoryContent: string;
-  Picture: File[];
+  pictures: File[];
   itemTagList: string[];
   itemRecord: string;
-  date: string;
-  company: string;
+  date?: string;
+  company?: string;
 }
 type itemRegisterType = {
   register: UseFormRegister<itemRegister>;
@@ -84,7 +84,7 @@ type itemRegisterType = {
 
 type itemStates =
   | "categoryContent"
-  | "Picture"
+  | "pictures"
   | "itemTagList"
   | "itemRecord"
   | "date"

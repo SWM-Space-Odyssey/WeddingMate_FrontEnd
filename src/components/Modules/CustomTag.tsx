@@ -57,7 +57,7 @@ const CustomTag = <T extends registStates | portfolioStates | itemStates>(
     );
   }
 
-  return <Chip label={`#${text}`} sx={{ fontSize: "12px", height: "26px" }} />;
+  return <Chip label={`${text}`} sx={{ fontSize: "12px", height: "26px" }} />;
 };
 
 export default CustomTag;

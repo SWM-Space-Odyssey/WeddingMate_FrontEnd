@@ -5,7 +5,7 @@ import CustomText from "../../../Modules/CustomText";
 
 interface itemFormRegister {
   Title: string;
-  Picture: File[];
+  pictures: File[];
   Tags: string[];
   Comment: string;
   Date: string;
@@ -24,9 +24,10 @@ const ItemCategories = (props: Props) => {
   const selectHandler = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
-    console.log(e);
+    console.log(e.currentTarget);
     const value = e.currentTarget.value;
-    setSelectValue(value);
+    if (selectValue !== "직접입력" || e.currentTarget.type === "select-one")
+      setSelectValue(value);
     register("categoryContent", { value: value });
   };
   return (
@@ -37,9 +38,11 @@ const ItemCategories = (props: Props) => {
       <div className='flex flex-row gap-2 transition-all'>
         <input
           type='text'
-          className={`border ${selectValue === "beta" ? "flex-1" : "hidden"}`}
-          disabled={selectValue !== "beta"}
-          value={selectValue}
+          className={`border ${
+            selectValue === "직접입력" ? "flex-1" : "hidden"
+          }`}
+          disabled={selectValue !== "직접입력"}
+          placeholder={selectValue}
           onChange={(e) => selectHandler(e)}
         />
         <select
@@ -51,7 +54,7 @@ const ItemCategories = (props: Props) => {
           <option value={"드레스"}>드레스</option>
           <option value={"메이크업"}>메이크업</option>
           <option value={"스튜디오"}>스튜디오</option>
-          <option value={"직접 입력"}>직접 입력</option>
+          <option value={"직접입력"}>직접 입력</option>
         </select>
       </div>
       <CustomText type='Description' text='제목에 노출됩니다!' />

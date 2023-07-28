@@ -23,7 +23,7 @@ interface PortfolioInputContentType {
 
 const PortfolioCreate = (props: Props) => {
   const methods = useForm<portfolioRegister>();
-
+  const values = useWatch();
   const onSubmit: SubmitHandler<portfolioRegister> = (data) => {
     console.log("=====Submit Test=======");
     console.log(JSON.stringify(data));
