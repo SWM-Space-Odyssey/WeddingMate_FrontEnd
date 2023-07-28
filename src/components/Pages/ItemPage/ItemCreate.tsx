@@ -6,9 +6,13 @@ import ItemTags from "./subComponent/ItemTags";
 import CustomInput from "../../Modules/CustumInput";
 import CustomDatePicker from "../../Modules/CustomDatePicker";
 import CustomButton from "../../Modules/CustomButton";
+import { Slide } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { useDispatch } from "react-redux";
+import { PrevPage } from "../../../store/viewSlice";
 
 type Props = {
-  close: React.Dispatch<React.SetStateAction<boolean>>;
   adjust?: itemRegister;
 };
 interface itemRegister {
@@ -22,32 +26,15 @@ interface itemRegister {
 
 const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
+  const view = useSelector((state: RootState) => state.view.currentView);
+  const dispatch = useDispatch();
   const setClose = () => {
     console.log("setC : ", methods.watch());
-    props.close(false);
+    dispatch(PrevPage());
   };
   const onSubmit: SubmitHandler<itemRegister> = (data) => {
     console.log(data);
   };
-  // if props.adjust is not null, setValue all of them
-  // if (props.adjust) {
-  //   const { adjust } = props;
-  //   const { setValue } = methods;
-  //   const {
-  //     categoryContent,
-  //     itemTagList,
-  //     itemRecord,
-  //     pictures,
-  //     date,
-  //     company,
-  //   } = adjust;
-  //   setValue("categoryContent", categoryContent);
-  //   setValue("itemTagList", itemTagList);
-  //   setValue("itemRecord", itemRecord);
-  //   setValue("pictures", pictures);
-  //   setValue("date", date);
-  //   setValue("company", company);
-  // }
   const itemRecord = {
     state: "itemRecord" as const,
     title: "일정 기록",
@@ -61,22 +48,26 @@ const ItemCreate = (props: Props) => {
     placeholder: "업체명을 기입해주세요",
   };
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <ItemCategories />
-        <ImageUpload title='image' maxCount={5} />
-        <ItemTags formState='itemTagList' />
-        <CustomInput content={itemRecord} />
-        <CustomDatePicker state='date' />
-        <CustomInput content={company} />
-        <CustomButton
-          text='아이템 추가'
-          flag={false}
-          buttonType='submit'
-          customFunc={setClose}
-        />
-      </form>
-    </FormProvider>
+    <Slide direction='left' in={view === "ItemCreate"}>
+      <div className='absolute w-full px-4'>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <ItemCategories />
+            <ImageUpload title='image' maxCount={5} />
+            <ItemTags formState='itemTagList' />
+            <CustomInput content={itemRecord} />
+            <CustomDatePicker state='date' />
+            <CustomInput content={company} />
+            <CustomButton
+              text='아이템 추가'
+              flag={false}
+              buttonType='submit'
+              customFunc={setClose}
+            />
+          </form>
+        </FormProvider>
+      </div>
+    </Slide>
   );
 };
 

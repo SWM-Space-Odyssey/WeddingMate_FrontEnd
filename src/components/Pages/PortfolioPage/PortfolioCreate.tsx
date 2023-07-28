@@ -9,10 +9,12 @@ import {
   useWatch,
 } from "react-hook-form";
 import CustomTagBlock from "../../Modules/CustomTagBlock";
-import { MoodTagList } from "../../../store/TagList";
-import { CountryList } from "../../../store/CountryLIst";
-import { Button } from "@mui/material";
+import { MoodTagList } from "../../../common/TagList";
+import { CountryList } from "../../../common/CountryLIst";
+import { Button, Slide } from "@mui/material";
 import ImageUpload from "../../Modules/ImageUpload";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -22,8 +24,8 @@ interface PortfolioInputContentType {
 }
 
 const PortfolioCreate = (props: Props) => {
+  const view = useSelector((state: RootState) => state.view.currentView);
   const methods = useForm<portfolioRegister>();
-  const values = useWatch();
   const onSubmit: SubmitHandler<portfolioRegister> = (data) => {
     console.log("=====Submit Test=======");
     console.log(JSON.stringify(data));
@@ -37,37 +39,39 @@ const PortfolioCreate = (props: Props) => {
   };
 
   return (
-    <div className='h-full'>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className='flex flex-col gap-6 h-full '
-        >
-          <CustomInput content={InputContent} />
-          <CustomTagBlock
-            title='MOOD'
-            countRender={true}
-            spreadValues={MoodTagList}
-            formState='Mood'
-            maxTag={3}
-          />
-          <CustomTagBlock
-            title='Location'
-            spreadValues={CountryList}
-            formState='Location'
-          />
-          <ImageUpload title='image' maxCount={5} />
-          <Button
-            type='submit'
-            sx={{ fontSize: "1rem", bottom: 0 }}
-            className='w-full'
-            variant='contained'
+    <Slide direction='left' in={view === "PortfolioCreate"}>
+      <div className='absolute h-full px-4'>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className='flex flex-col gap-6 h-full '
           >
-            추가
-          </Button>
-        </form>
-      </FormProvider>
-    </div>
+            <CustomInput content={InputContent} />
+            <CustomTagBlock
+              title='MOOD'
+              renderCounter={true}
+              spreadValues={MoodTagList}
+              formState='Mood'
+              maxTag={3}
+            />
+            <CustomTagBlock
+              title='Location'
+              spreadValues={CountryList}
+              formState='Location'
+            />
+            <ImageUpload title='image' maxCount={5} />
+            <Button
+              type='submit'
+              sx={{ fontSize: "1rem", bottom: 0 }}
+              className='w-full'
+              variant='contained'
+            >
+              추가
+            </Button>
+          </form>
+        </FormProvider>
+      </div>
+    </Slide>
   );
 };
 

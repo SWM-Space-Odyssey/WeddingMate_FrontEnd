@@ -7,8 +7,8 @@ interface Props<T extends registStates | portfolioStates | itemStates> {
   formState?: T;
   maxTag?: number;
   title?: string;
-  countRender?: boolean;
-  addAble?: boolean;
+  renderCounter?: boolean;
+  isAddable?: boolean;
 }
 
 const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
@@ -39,7 +39,7 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
       {props.title && (
         <div>
           <span className='font-bold text-sm'>{props.title}</span>
-          {props.countRender ? (
+          {props.renderCounter ? (
             <span>{` ${componentValue.length} / ${tagCountMax}`}</span>
           ) : (
             ""
@@ -56,7 +56,7 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
             tagState={[componentValue, setComponentValue]}
           />
         ))}
-        {props.addAble && (
+        {props.isAddable && (
           <Chip label={`추가`} onClick={() => addFormDisplay()} />
         )}
       </div>

@@ -8,84 +8,87 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 
 const RegistComponent = () => {
-  const page = useSelector((state: RootState) => state.data.page);
-  const prevPage = useSelector((state: RootState) => state.data.prevPage);
+  const view = useSelector((state: RootState) => state.view.currentView);
+  const page = useSelector((state: RootState) => state.view.page);
+  const prevPage = useSelector((state: RootState) => state.view.prevPage);
   const methods = useForm<registRegister>();
   const onSubmit: SubmitHandler<registRegister> = (data) =>
     alert(JSON.stringify(data));
-  const transitionClass = "absolute w-full h-full";
+  const transitionClass = "absolute left-0 right-0 h-full";
   return (
-    <div className='flex flex-col w-full h-full justify-between'>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Slide
-            direction={
-              page === 0
-                ? prevPage < 0
+    <Slide direction='left' in={view === "Regist"}>
+      <div className='absolute flex flex-col w-full h-full justify-between'>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <Slide
+              direction={
+                page === 0
+                  ? prevPage < 0
+                    ? "left"
+                    : "right"
+                  : prevPage < 0
                   ? "left"
                   : "right"
-                : prevPage < 0
-                ? "left"
-                : "right"
-            }
-            in={page === 0}
-          >
-            <div className={transitionClass}>
-              <RegistUserType />
-            </div>
-          </Slide>
-          <Slide
-            direction={
-              page === 1
-                ? prevPage < 1
-                  ? "left"
-                  : "right"
-                : page > 1
-                ? "right"
-                : "left"
-            }
-            in={page === 1}
-          >
-            <div className={transitionClass}>
-              <RegistUserInfo />
-            </div>
-          </Slide>
+              }
+              in={page === 0}
+            >
+              <div className={transitionClass}>
+                <RegistUserType />
+              </div>
+            </Slide>
+            <Slide
+              direction={
+                page === 1
+                  ? prevPage < 1
+                    ? "left"
+                    : "right"
+                  : page > 1
+                  ? "right"
+                  : "left"
+              }
+              in={page === 1}
+            >
+              <div className={transitionClass}>
+                <RegistUserInfo />
+              </div>
+            </Slide>
 
-          <Slide
-            direction={
-              page === 2
-                ? prevPage < 2 // 들어올 때
+            <Slide
+              direction={
+                page === 2
+                  ? prevPage < 2 // 들어올 때
+                    ? "left"
+                    : "right"
+                  : page > 2 // 나갈 때
+                  ? "right"
+                  : "left"
+              }
+              in={page === 2}
+            >
+              <div className={transitionClass}>
+                <RegistUserTag formElement={"PlannerTag"} />
+              </div>
+            </Slide>
+            <Slide
+              direction={
+                page === 3
+                  ? prevPage < 3
+                    ? "left"
+                    : "right"
+                  : page < 3
                   ? "left"
                   : "right"
-                : page > 2 // 나갈 때
-                ? "right"
-                : "left"
-            }
-            in={page === 2}
-          >
-            <div className={transitionClass}>
-              <RegistUserTag formElement={"PlannerTag"} />
-            </div>
-          </Slide>
-          <Slide
-            direction={
-              page === 3
-                ? prevPage < 3
-                  ? "left"
-                  : "right"
-                : page < 3
-                ? "left"
-                : "right"
-            }
-            in={page === 3}
-          >
-            <div className={transitionClass}>
-              <RegistSuccess />
-            </div>
-          </Slide>
-        </form>
-      </FormProvider>
-    </div>
+              }
+              in={page === 3}
+            >
+              <div className={transitionClass}>
+                <RegistSuccess />
+              </div>
+            </Slide>
+          </form>
+        </FormProvider>
+      </div>
+    </Slide>
   );
 };
 

@@ -1,7 +1,7 @@
 import CustomTagBlock from "../../../Modules/CustomTagBlock";
-import { PlannerTagList } from "../../../../store/TagList";
+import { PlannerTagList } from "../../../../common/TagList";
 import { useDispatch } from "react-redux";
-import { NextPage } from "../../../../store/dataSlice";
+import { NextPage } from "../../../../store/viewSlice";
 import { Button } from "@mui/material";
 
 type Props = {

@@ -3,38 +3,36 @@ import PortfolioHeader from "./subComponents/PortfolioHeader";
 import { Button, Slide } from "@mui/material";
 import ItemCreate from "../ItemPage/ItemCreate";
 import PortfolioItemCard from "./subComponents/PortfolioItemCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { useDispatch } from "react-redux";
+import { intoItemCreatePage } from "../../../store/viewSlice";
 
 type Props = {};
 
 const PortfolioPage = (props: Props) => {
-  const [createIn, setCreateIn] = useState(false);
+  const dispatch = useDispatch();
+  const view = useSelector((state: RootState) => state.view.currentView);
   return (
-    <div className='relative w-full'>
-      <Slide direction='right' in={!createIn}>
-        <div className='absolute w-full'>
-          <div>
-            <PortfolioHeader />
-          </div>
-          <div className='mt-12'>
-            <Button
-              onClick={() => setCreateIn(true)}
-              sx={{ height: "38px", width: "100%" }}
-              variant='outlined'
-            >
-              아이템 추가하기
-            </Button>
-          </div>
-          <div className='mt-3'>
-            <PortfolioItemCard />
-          </div>
+    <Slide direction='left' in={view === "Portfolio"}>
+      <div className='absolute w-full px-4'>
+        <div>
+          <PortfolioHeader />
         </div>
-      </Slide>
-      <Slide direction='left' in={createIn}>
-        <div className='absolute w-full'>
-          <ItemCreate close={setCreateIn} />
+        <div className='mt-12'>
+          <Button
+            onClick={() => dispatch(intoItemCreatePage())}
+            sx={{ height: "38px", width: "100%" }}
+            variant='outlined'
+          >
+            아이템 추가하기
+          </Button>
         </div>
-      </Slide>
-    </div>
+        <div className='mt-3'>
+          <PortfolioItemCard />
+        </div>
+      </div>
+    </Slide>
   );
 };
 

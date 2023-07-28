@@ -15,7 +15,7 @@ const ItemTags = (props: Props) => {
         spreadValues={ITEM_TAGS}
         formState={formState}
         title='아이템 태그'
-        addAble={true}
+        isAddable={true}
       />
     </div>
   );

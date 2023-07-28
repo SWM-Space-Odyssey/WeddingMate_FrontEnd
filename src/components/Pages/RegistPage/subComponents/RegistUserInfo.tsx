@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { CountryList } from "../../../../store/CountryLIst";
+import { CountryList } from "../../../../common/CountryLIst";
 import CustomInput from "../../../Modules/CustumInput";
 
 import CustomTagBlock from "../../../Modules/CustomTagBlock";
 import { Button } from "@mui/material";
-import { NextPage } from "../../../../store/dataSlice";
+import { NextPage } from "../../../../store/viewSlice";
 
 const RegistUserInfo = () => {
   const dispatch = useDispatch();
