@@ -1,11 +1,10 @@
 import { Box, Button, Grid } from "@mui/material";
 import React from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
 import { PrevPage } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { Settings } from "@mui/icons-material";
+import { ArrowBackIos, Settings } from "@mui/icons-material";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ const Header = () => {
       <Grid className='h-10 items-center' container>
         <Grid item className='w-10 flex justify-center' xs={1}>
           <button onClick={() => dispatch(PrevPage())}>
-            <ArrowBackIcon />
+            <ArrowBackIos />
           </button>
         </Grid>
         <Grid item xs={10}>

@@ -19,6 +19,11 @@ const tagList = ["비즈", "펜던트", "귀걸이"];
 
 const ItemPage = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
+  const viewId = useSelector((state: RootState) => state.view.requestParam);
+  if (viewId) {
+    console.log(viewId);
+  }
+
   const defaultClassName = "flex flex-col gap-1";
 
   return (
@@ -38,7 +43,7 @@ const ItemPage = (props: Props) => {
         </div>
         <div className={defaultClassName}>
           <CustomText type='Title' text='일정 기록' />
-          <CustomText type='Content' text='2021.01.01 ~ 2021.01.01' />
+          <CustomText type='Content' text='2021.01.01' />
         </div>
       </div>
     </Slide>

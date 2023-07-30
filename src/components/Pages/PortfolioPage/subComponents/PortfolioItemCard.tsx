@@ -1,5 +1,7 @@
 import React from "react";
 import CustomText from "../../../Modules/CustomText";
+import { useDispatch } from "react-redux";
+import { intoView } from "../../../../store/viewSlice";
 
 type Props = {};
 interface itemAdjustStates {
@@ -23,12 +25,20 @@ type cardData = {
   date?: string;
 };
 const PortfolioItemCard = (props: Props) => {
+  const dispatch = useDispatch();
+
   const getItemCard = (mockData: cardData[]) => {
     return mockData.map((item, index) => {
       return (
-        <div className='flex flex-col gap-1.5' key={index}>
+        <div className='flex flex-col gap-1.5' key={index} onClick={() => {}}>
           <CustomText type='Title-base' text={item.categoryContent} />
-          <div className='relative rounded border shadow-md p-4' key={index}>
+          <div
+            onClick={() =>
+              dispatch(intoView({ view: "Item", requestParam: item.itemId }))
+            }
+            className='relative rounded border shadow-md p-4 hover:cursor-pointer'
+            key={index}
+          >
             <div>
               <div>{item?.date}</div>
               <div>{item.itemRecord}</div>

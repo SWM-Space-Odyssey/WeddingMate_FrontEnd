@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { BottomNavigation, Box, Button } from "@mui/material";
 import Header from "../Header/Header";
 import RegistComponent from "./RegistPage/RegistComponent";
 import PortfolioCreate from "./PortfolioPage/PortfolioCreate";
@@ -30,9 +30,9 @@ const MainPage = (props: Props) => {
   // console.log(searchParmas.get("accessToken"));
 
   return (
-    <Box className='h-full flex flex-col '>
+    <Box className='h-full flex flex-col mainpage'>
       <Header />
-      <div className='flex-1 relative flex'>
+      <div className='flex-1 relative flex overflow-y-scroll'>
         <RegistComponent />
         <PortfolioCreate />
         <PortfolioPage />
@@ -48,43 +48,46 @@ const MainPage = (props: Props) => {
         >
           <Button
             variant='contained'
-            onClick={() => dispatch(intoView("Regist"))}
+            onClick={() => dispatch(intoView({ view: "Regist" }))}
           >
             RegistPage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoView("PortfolioCreate"))}
+            onClick={() => dispatch(intoView({ view: "PortfolioCreate" }))}
           >
             PortfolioCreatePage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoView("Portfolio"))}
+            onClick={() => dispatch(intoView({ view: "Portfolio" }))}
           >
             PortfolioPage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoView("Item"))}
+            onClick={() => dispatch(intoView({ view: "Item" }))}
           >
             ItemPage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoView("ItemCreate"))}
+            onClick={() => dispatch(intoView({ view: "ItemCreate" }))}
           >
             ItemCreatePage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoView("Planner"))}
+            onClick={() =>
+              dispatch(intoView({ view: "Planner", requestParam: "1" }))
+            }
           >
             PlannerPage
           </Button>
           <Button href={KAKAO_LOGIN_URL}>just-href</Button>
         </div>
       </div>
+      <BottomNavigation />
     </Box>
   );
 };
