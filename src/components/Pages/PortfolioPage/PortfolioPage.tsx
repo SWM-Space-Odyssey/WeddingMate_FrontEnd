@@ -26,7 +26,7 @@ const PortfolioPage = (props: Props) => {
         </div>
         <div className='mt-12'>
           <Button
-            onClick={() => dispatch(intoView("ItemCreate"))}
+            onClick={() => dispatch(intoView({ view: "ItemCreate" }))}
             sx={{ height: "38px", width: "100%" }}
             variant='outlined'
           >

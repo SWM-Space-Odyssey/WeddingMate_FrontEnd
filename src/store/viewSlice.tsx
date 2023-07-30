@@ -11,10 +11,19 @@ import type { RootState } from "./store";
  * }
  *
  */
+type Pagelst =
+  | "Regist"
+  | "LandingPage"
+  | "PortfolioCreate"
+  | "Portfolio"
+  | "Item"
+  | "ItemCreate"
+  | "Planner";
 
 interface viewState {
-  currentView: string;
-  viewStack: string[];
+  currentView: Pagelst;
+  viewStack: Pagelst[];
+  requestParam: string | number;
   page: number;
   prevPage: number;
 }
@@ -22,6 +31,7 @@ interface viewState {
 const initialState: viewState = {
   currentView: "LandingPage",
   viewStack: [],
+  requestParam: "",
   page: 0,
   prevPage: 0,
 };
@@ -48,10 +58,21 @@ export const viewSlice = createSlice({
         state.currentView = prevPage;
       }
     },
-    intoView: (state, action: PayloadAction<string>) => {
+    intoView: (
+      state,
+      action: PayloadAction<{ view: Pagelst; requestParam?: string | number }>
+    ) => {
+      console.log("REDUX", action.payload);
       state.viewStack.push(state.currentView);
-      state.currentView = action.payload;
+      state.currentView = action.payload.view;
+      state.requestParam = action.payload.requestParam ?? "";
     },
+    // i want to take 2 parameter in intoView function and second parameter is optional
+    // intoView: (state, action: PayloadAction<string, string>) => {
+    //   state.viewStack.push(state.currentView);
+    //   state.currentView = action.payload;
+    //   state.viewId = action.payload2;
+    // },
   },
 });
 
