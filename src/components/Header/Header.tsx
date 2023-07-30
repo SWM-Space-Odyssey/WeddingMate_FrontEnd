@@ -2,10 +2,15 @@ import { Box, Button, Grid } from "@mui/material";
 import React from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
-import { PrevPage } from "../../store/dataSlice";
+import { PrevPage } from "../../store/viewSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { Settings } from "@mui/icons-material";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const view = useSelector((state: RootState) => state.view.viewStack);
+  const title = view[view.length - 1] ?? "LandingPage";
   return (
     <div className='h-12 py-1 px-2 justify-center'>
       <Grid className='h-10 items-center' container>
@@ -15,10 +20,12 @@ const Header = () => {
           </button>
         </Grid>
         <Grid item xs={10}>
-          <div>로그인</div>
+          <div>{title}</div>
         </Grid>
         <Grid item xs={1}>
-          <div>IC</div>
+          <button onClick={() => console.log("특수키")}>
+            <Settings />
+          </button>
         </Grid>
       </Grid>
     </div>

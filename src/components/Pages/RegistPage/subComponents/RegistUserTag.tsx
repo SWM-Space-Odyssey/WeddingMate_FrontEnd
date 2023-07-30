@@ -1,11 +1,11 @@
 import CustomTagBlock from "../../../Modules/CustomTagBlock";
-import { PlannerTagList } from "../../../../store/TagList";
+import { PlannerTagList } from "../../../../common/TagList";
 import { useDispatch } from "react-redux";
-import { NextPage } from "../../../../store/dataSlice";
+import { NextPage } from "../../../../store/viewSlice";
 import { Button } from "@mui/material";
 
 type Props = {
-  formElement: registStateStrings;
+  formElement: registStates;
 };
 const RegistUserTag = (props: Props) => {
   const dispatch = useDispatch();
@@ -23,8 +23,8 @@ const RegistUserTag = (props: Props) => {
         <div className='mt-10'>
           <CustomTagBlock
             spreadValues={PlannerTagList}
-            formElement={formElement}
-            tagCountMax={2}
+            formState={formElement}
+            maxTag={2}
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Radio, Stack } from "@mui/material";
-import { NextPage } from "../../../../store/dataSlice";
+import { NextPage } from "../../../../store/viewSlice";
 import { useDispatch } from "react-redux";
 import { useFormContext } from "react-hook-form";
 
@@ -44,7 +44,7 @@ const RegistUserType = () => {
   };
 
   return (
-    <div className='px-4 flex flex-col h-full justify-between'>
+    <div className='flex flex-col px-4 h-full justify-between'>
       <div className='mt-10'>
         <div className='font-bold text-2xl'>{GuideText}</div>
         <Stack spacing={1} className='mt-10'>

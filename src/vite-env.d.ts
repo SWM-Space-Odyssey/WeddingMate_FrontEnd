@@ -13,18 +13,19 @@ interface MappingInterface<T, I> {
     placeholder: string;
   };
 }
+type stateLiteral = registStates | portfolioStates | itemStates;
 // ========================================================================≈≈
 // UserRegist============================================================≈≈
 // ========================================================================≈≈
-interface registFormRegister {
+interface registRegister {
   Type: string;
   Nickname: string;
   Company: string;
   Grade: string;
-  Location: string;
+  Location: string[];
   PlannerTag?: string[];
 }
-type registStateStrings =
+type registStates =
   | "Type"
   | "Nickname"
   | "Company"
@@ -33,35 +34,58 @@ type registStateStrings =
   | "PlannerTag";
 
 type registRegisterType = {
-  register: UseFormRegister<registFormRegister>;
+  register: UseFormRegister<registRegister>;
 };
 
-type RegistInputComponentProp = {
-  state: registStateStrings;
+type RegistInputProp = {
+  state: registStates;
   title: string;
   placeholder: string;
-  register: UseFormRegister<registFormRegister>;
+  register: UseFormRegister<registRegister>;
 };
 // ========================================================================≈≈
 // PortFolio===============================================================≈≈
 // ========================================================================≈≈
 
-interface portfolioFormRegister {
+interface portfolioRegister {
   Title: string;
   Mood: string[];
-  Location: string;
-  Picture: File[];
+  Location: string[];
+  pictures: File[];
 }
 
 type portfolioRegisterType = {
-  register: UseFormRegister<portfolioFormRegister>;
+  register: UseFormRegister<portfolioRegister>;
 };
 
-type portfolioStateStrings = "Title" | "Mood" | "Location" | "Picture";
+type portfolioStates = "Title" | "Mood" | "Location" | "pictures";
 
-type RegistInputComponentProp = {
-  state: portfolioStateStrings;
+type RegistInputProp = {
+  state: portfolioStates;
   title: string;
   placeholder: string;
-  register: UseFormRegister<portfolioFormRegister>;
+  register: UseFormRegister<portfolioRegister>;
 };
+
+// ========================================================================≈≈
+// Item ===============================================================≈≈
+// ========================================================================≈≈
+interface itemRegister {
+  categoryContent: string;
+  pictures: File[];
+  itemTagList: string[];
+  itemRecord: string;
+  date?: string;
+  company?: string;
+}
+type itemRegisterType = {
+  register: UseFormRegister<itemRegister>;
+};
+
+type itemStates =
+  | "categoryContent"
+  | "pictures"
+  | "itemTagList"
+  | "itemRecord"
+  | "date"
+  | "company";
