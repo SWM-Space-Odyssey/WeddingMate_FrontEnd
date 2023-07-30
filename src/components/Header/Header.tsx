@@ -2,7 +2,7 @@ import { Box, Button, Grid } from "@mui/material";
 import React from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
-import { PrevPage, intoItemCreatePage } from "../../store/viewSlice";
+import { PrevPage } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Settings } from "@mui/icons-material";
@@ -23,7 +23,7 @@ const Header = () => {
           <div>{title}</div>
         </Grid>
         <Grid item xs={1}>
-          <button onClick={() => dispatch(intoItemCreatePage())}>
+          <button onClick={() => console.log("특수키")}>
             <Settings />
           </button>
         </Grid>

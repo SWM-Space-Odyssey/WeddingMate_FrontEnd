@@ -27,7 +27,7 @@ const PortfolioItemCard = (props: Props) => {
     return mockData.map((item, index) => {
       return (
         <div className='flex flex-col gap-1.5' key={index}>
-          <CustomText type='Title-large' text={item.categoryContent} />
+          <CustomText type='Title-base' text={item.categoryContent} />
           <div className='relative rounded border shadow-md p-4' key={index}>
             <div>
               <div>{item?.date}</div>

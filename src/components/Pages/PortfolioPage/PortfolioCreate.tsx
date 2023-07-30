@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../../Modules/CustumInput";
 import {
   FormProvider,
@@ -26,20 +26,39 @@ interface PortfolioInputContentType {
 const PortfolioCreate = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
   const methods = useForm<portfolioRegister>();
+  const [initMood, setInitMood] = useState<string[]>([]);
+  const [initLocation, setInitLocation] = useState<string[]>([]);
   const onSubmit: SubmitHandler<portfolioRegister> = (data) => {
     console.log("=====Submit Test=======");
     console.log(JSON.stringify(data));
     console.log(data);
     console.log("========================");
   };
+
   const InputContent: PortfolioInputContentType = {
     state: "Title",
     title: "타이틀",
     placeholder: "제목을 입력해 주세요",
   };
 
+  //Adjust Fuction
+  const testReset = () => {
+    methods.reset({
+      Title: "감사합니다",
+      Mood: ["우아한", "러블리"],
+      Location: ["서울"],
+    });
+    setInitMood(["우아한", "러블리"]);
+    setInitLocation(["서울"]);
+  };
+
   return (
-    <Slide direction='left' in={view === "PortfolioCreate"}>
+    <Slide
+      direction='left'
+      in={view === "PortfolioCreate"}
+      mountOnEnter
+      unmountOnExit
+    >
       <div className='absolute h-full px-4'>
         <FormProvider {...methods}>
           <form
@@ -53,11 +72,13 @@ const PortfolioCreate = (props: Props) => {
               spreadValues={MoodTagList}
               formState='Mood'
               maxTag={3}
+              initValue={initMood}
             />
             <CustomTagBlock
               title='Location'
               spreadValues={CountryList}
               formState='Location'
+              initValue={initLocation}
             />
             <ImageUpload title='image' maxCount={5} />
             <Button

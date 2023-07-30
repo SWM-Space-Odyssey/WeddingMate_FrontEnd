@@ -60,4 +60,4 @@ const CustomTag = <T extends registStates | portfolioStates | itemStates>(
   return <Chip label={`${text}`} sx={{ fontSize: "12px", height: "26px" }} />;
 };
 
-export default CustomTag;
+export default React.memo(CustomTag);

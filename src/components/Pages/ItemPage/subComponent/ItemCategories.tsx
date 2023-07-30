@@ -32,13 +32,13 @@ const ItemCategories = (props: Props) => {
   };
   return (
     <div>
-      <div className='mb-1'>
+      <div className='mb-1 w-full'>
         <CustomText type='Title' text='카테고리' />
       </div>
-      <div className='flex flex-row gap-2 transition-all'>
+      <div className='flex flex-row gap-2 transition-all h-11'>
         <input
           type='text'
-          className={`border ${
+          className={`border p-2.5 ${
             selectValue === "직접입력" ? "flex-1" : "hidden"
           }`}
           disabled={selectValue !== "직접입력"}
@@ -46,8 +46,8 @@ const ItemCategories = (props: Props) => {
           onChange={(e) => selectHandler(e)}
         />
         <select
-          className={`border rounded-md text-sm ${
-            selectValue === "alpha" ? "flex-1" : "flex-2"
+          className={`border rounded-md text-sm p-2.5 ${
+            selectValue === "직접입력" ? "flex-2" : "flex-1"
           }`}
           onChange={(e) => selectHandler(e)}
         >

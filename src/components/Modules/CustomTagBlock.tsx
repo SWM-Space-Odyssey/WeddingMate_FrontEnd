@@ -1,10 +1,12 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomTag from "./CustomTag";
 import { Chip } from "@mui/material";
+import { useFormContext, useWatch } from "react-hook-form";
 
 interface Props<T extends registStates | portfolioStates | itemStates> {
   spreadValues: string[];
   formState?: T;
+  initValue?: string[];
   maxTag?: number;
   title?: string;
   renderCounter?: boolean;
@@ -17,15 +19,20 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
   const spreadValues = props.spreadValues;
   const formElement = props?.formState;
   const tagCountMax = props.maxTag ? props.maxTag : 1;
+  const initValue = props.initValue;
   const [componentValue, setComponentValue] = useState<string[]>([]);
   const [addFormSwitch, setAddFormSwitch] = useState<boolean>(false);
   const [addTag, setAddTag] = useState<string>("");
-
   const addFormDisplay = () => {
     if (addFormSwitch) return;
     setAddFormSwitch(true);
   };
-
+  if (initValue) {
+    useEffect(() => {
+      console.log("UseEffectCall, initValue: ", initValue);
+      setComponentValue([...initValue]);
+    }, [initValue]);
+  }
   const onClickAdd = () => {
     if (addTag) {
       spreadValues.push(addTag);
@@ -33,6 +40,12 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
     setAddTag("");
     return setAddFormSwitch(false);
   };
+  useEffect(() => {
+    console.log("TAGBLOCK MOUNT");
+    return () => {
+      console.log("TAGBLOCK UNMOUNT");
+    };
+  }, []);
 
   return (
     <div>
@@ -50,7 +63,7 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
         {spreadValues.map((item, index) => (
           <CustomTag
             key={index}
-            text={`#${item}`}
+            text={`${formElement ? "" : "#"}${item}`}
             formState={formElement}
             tagCountMax={tagCountMax}
             tagState={[componentValue, setComponentValue]}
@@ -75,4 +88,4 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
   );
 };
 
-export default CustomTagBlock;
+export default React.memo(CustomTagBlock);

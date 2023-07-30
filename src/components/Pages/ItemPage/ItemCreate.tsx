@@ -28,10 +28,10 @@ const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
   const view = useSelector((state: RootState) => state.view.currentView);
   const dispatch = useDispatch();
-  const setClose = () => {
-    console.log("setC : ", methods.watch());
-    dispatch(PrevPage());
-  };
+  // const setClose = () => {
+  //   console.log("setC : ", methods.watch());
+  //   dispatch(PrevPage());
+  // };
   const onSubmit: SubmitHandler<itemRegister> = (data) => {
     console.log(data);
   };
@@ -48,10 +48,18 @@ const ItemCreate = (props: Props) => {
     placeholder: "업체명을 기입해주세요",
   };
   return (
-    <Slide direction='left' in={view === "ItemCreate"}>
+    <Slide
+      direction='left'
+      in={view === "ItemCreate"}
+      mountOnEnter
+      unmountOnExit
+    >
       <div className='absolute w-full px-4'>
         <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className='flex flex-col gap-6 h-full'
+          >
             <ItemCategories />
             <ImageUpload title='image' maxCount={5} />
             <ItemTags formState='itemTagList' />
@@ -62,7 +70,7 @@ const ItemCreate = (props: Props) => {
               text='아이템 추가'
               flag={false}
               buttonType='submit'
-              customFunc={setClose}
+              // customFunc={setClose}
             />
           </form>
         </FormProvider>

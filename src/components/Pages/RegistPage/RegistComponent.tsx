@@ -16,7 +16,7 @@ const RegistComponent = () => {
     alert(JSON.stringify(data));
   const transitionClass = "absolute left-0 right-0 h-full";
   return (
-    <Slide direction='left' in={view === "Regist"}>
+    <Slide direction='left' in={view === "Regist"} mountOnEnter unmountOnExit>
       <div className='absolute flex flex-col w-full h-full justify-between'>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>

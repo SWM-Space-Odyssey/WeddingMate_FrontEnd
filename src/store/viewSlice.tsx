@@ -48,38 +48,14 @@ export const viewSlice = createSlice({
         state.currentView = prevPage;
       }
     },
-    intoItemCreatePage: (state) => {
+    intoView: (state, action: PayloadAction<string>) => {
       state.viewStack.push(state.currentView);
-      state.currentView = "ItemCreate";
-    },
-    intoRegistPage: (state) => {
-      state.viewStack.push(state.currentView);
-      state.currentView = "Regist";
-    },
-    intoPortfolioCreatePage: (state) => {
-      state.viewStack.push(state.currentView);
-      state.currentView = "PortfolioCreate";
-    },
-    intoPortfolioPage: (state) => {
-      state.viewStack.push(state.currentView);
-      state.currentView = "Portfolio";
-    },
-    intoItemPage: (state) => {
-      state.viewStack.push(state.currentView);
-      state.currentView = "Item";
+      state.currentView = action.payload;
     },
   },
 });
 
-export const {
-  NextPage,
-  PrevPage,
-  intoItemCreatePage,
-  intoRegistPage,
-  intoPortfolioCreatePage,
-  intoPortfolioPage,
-  intoItemPage,
-} = viewSlice.actions;
+export const { NextPage, PrevPage, intoView } = viewSlice.actions;
 
 export const selectUsers = (state: RootState) => state.user;
 

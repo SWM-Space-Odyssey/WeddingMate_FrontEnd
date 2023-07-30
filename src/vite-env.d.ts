@@ -22,7 +22,7 @@ interface registRegister {
   Nickname: string;
   Company: string;
   Grade: string;
-  Location: string;
+  Location: string[];
   PlannerTag?: string[];
 }
 type registStates =
@@ -50,7 +50,7 @@ type RegistInputProp = {
 interface portfolioRegister {
   Title: string;
   Mood: string[];
-  Location: string;
+  Location: string[];
   pictures: File[];
 }
 

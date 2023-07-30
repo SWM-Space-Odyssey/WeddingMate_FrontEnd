@@ -6,21 +6,29 @@ import PortfolioPage from "./PortfolioPage/PortfolioPage";
 import ItemPage from "./ItemPage/ItemPage";
 import ItemCreate from "./ItemPage/ItemCreate";
 import { useDispatch } from "react-redux";
-import {
-  intoItemCreatePage,
-  intoItemPage,
-  intoPortfolioCreatePage,
-  intoPortfolioPage,
-  intoRegistPage,
-} from "../../store/viewSlice";
+import { intoView } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import axios from "axios";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import PlannerPage from "./PlannerPage/PlannerPage";
 
 type Props = {};
+const KAKAO_LOGIN_URL =
+  "http://ec2-3-39-119-130.ap-northeast-2.compute.amazonaws.com/oauth2/authorization/kakao";
 
-const LandingPage = (props: Props) => {
+const MainPage = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParmas] = useSearchParams();
+  if (searchParmas.get("accessToken")) {
+    console.log(searchParmas.get("accessToken"));
+    navigate("http://localhost:5173");
+  }
+
+  // console.log(searchParmas.get("accessToken"));
+
   return (
     <Box className='h-full flex flex-col '>
       <Header />
@@ -29,6 +37,7 @@ const LandingPage = (props: Props) => {
         <PortfolioCreate />
         <PortfolioPage />
         <ItemPage />
+        <PlannerPage />
         {/* <SocialLogin />
       <SocialLogout /> */}
         <ItemCreate />
@@ -39,35 +48,45 @@ const LandingPage = (props: Props) => {
         >
           <Button
             variant='contained'
-            onClick={() => dispatch(intoRegistPage())}
+            onClick={() => dispatch(intoView("Regist"))}
           >
             RegistPage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoPortfolioCreatePage())}
+            onClick={() => dispatch(intoView("PortfolioCreate"))}
           >
             PortfolioCreatePage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoPortfolioPage())}
+            onClick={() => dispatch(intoView("Portfolio"))}
           >
             PortfolioPage
           </Button>
-          <Button variant='contained' onClick={() => dispatch(intoItemPage())}>
+          <Button
+            variant='contained'
+            onClick={() => dispatch(intoView("Item"))}
+          >
             ItemPage
           </Button>
           <Button
             variant='contained'
-            onClick={() => dispatch(intoItemCreatePage())}
+            onClick={() => dispatch(intoView("ItemCreate"))}
           >
             ItemCreatePage
           </Button>
+          <Button
+            variant='contained'
+            onClick={() => dispatch(intoView("Planner"))}
+          >
+            PlannerPage
+          </Button>
+          <Button href={KAKAO_LOGIN_URL}>just-href</Button>
         </div>
       </div>
     </Box>
   );
 };
 
-export default LandingPage;
+export default MainPage;

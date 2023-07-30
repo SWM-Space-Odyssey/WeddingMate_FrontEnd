@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-  type: "Title" | "Description" | "Title-large" | "Content";
+  type: "Title-large" | "Title-base" | "Title" | "Description" | "Content";
   text: string;
 };
 
@@ -10,6 +10,9 @@ const CustomText = (props: Props) => {
   let textClassName = "";
   switch (type) {
     case "Title-large":
+      textClassName = "font-bold text-lg";
+      break;
+    case "Title-base":
       textClassName = "font-bold text-base";
       break;
     case "Title":
