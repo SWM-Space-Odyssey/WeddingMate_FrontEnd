@@ -29,7 +29,6 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
   };
   if (initValue) {
     useEffect(() => {
-      console.log("UseEffectCall, initValue: ", initValue);
       setComponentValue([...initValue]);
     }, [initValue]);
   }
@@ -40,12 +39,6 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
     setAddTag("");
     return setAddFormSwitch(false);
   };
-  useEffect(() => {
-    console.log("TAGBLOCK MOUNT");
-    return () => {
-      console.log("TAGBLOCK UNMOUNT");
-    };
-  }, []);
 
   return (
     <div>

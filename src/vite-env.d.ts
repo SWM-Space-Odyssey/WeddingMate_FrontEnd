@@ -51,7 +51,7 @@ interface portfolioRegister {
   Title: string;
   Mood: string[];
   Location: string[];
-  pictures: File[];
+  pictures: File[] | string[];
 }
 
 type portfolioRegisterType = {

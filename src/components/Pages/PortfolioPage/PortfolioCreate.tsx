@@ -15,6 +15,8 @@ import { Button, Slide } from "@mui/material";
 import ImageUpload from "../../Modules/ImageUpload";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import axios from "axios";
+import { getItem, postItem } from "../../../api/Item";
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -28,28 +30,60 @@ const PortfolioCreate = (props: Props) => {
   const methods = useForm<portfolioRegister>();
   const [initMood, setInitMood] = useState<string[]>([]);
   const [initLocation, setInitLocation] = useState<string[]>([]);
+  4;
+
+  const useResetForm = (data: portfolioRegister) => {
+    methods.reset(data);
+    setInitMood(data.Mood);
+    setInitLocation(data.Location);
+  };
+  const getData = async () => {
+    const data = await getItem("portfolio", 1);
+    if (data) {
+      const resMood: string[] = [];
+      const resLocation: string[] = [];
+      data.tagResDtoList.forEach((tag) => {
+        if (CountryList.includes(tag.content)) {
+          resLocation.push(tag.content);
+        } else if (!initMood.includes(tag.content)) {
+          resMood.push(tag.content);
+        }
+      });
+      const FormData = {
+        Title: data.title,
+        Mood: [...resMood],
+        Location: [...resLocation],
+        pictures: [data.repImgUrl],
+      };
+      useResetForm(FormData);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const onSubmit: SubmitHandler<portfolioRegister> = (data) => {
-    console.log("=====Submit Test=======");
-    console.log(JSON.stringify(data));
-    console.log(data);
-    console.log("========================");
+    const body = new FormData();
+    for (let i = 0; i < data.pictures.length; i++) {
+      body.append("file", data.pictures[i]);
+    }
+    const jsonData = {
+      title: data.Title,
+      tags: data.Mood.concat(data.Location),
+    };
+    const json = JSON.stringify(jsonData);
+    const blob = new Blob([json], { type: "application/json" });
+    body.append("portfolioSaveReqDto", blob);
+    console.log("DATA POST ! : ", data);
+    // 위 콘솔을 주석처리하고 아래 코드를 주석을 풀면 실제로 서버에 데이터가 전송됩니다
+    // const postData = postItem({ itemType: "portfolio", body });
   };
 
   const InputContent: PortfolioInputContentType = {
     state: "Title",
     title: "타이틀",
     placeholder: "제목을 입력해 주세요",
-  };
-
-  //Adjust Fuction
-  const testReset = () => {
-    methods.reset({
-      Title: "감사합니다",
-      Mood: ["우아한", "러블리"],
-      Location: ["서울"],
-    });
-    setInitMood(["우아한", "러블리"]);
-    setInitLocation(["서울"]);
   };
 
   return (
@@ -88,6 +122,12 @@ const PortfolioCreate = (props: Props) => {
               variant='contained'
             >
               추가
+            </Button>
+            <Button
+              type='button'
+              onClick={() => console.log(initMood, initLocation)}
+            >
+              TEST
             </Button>
           </form>
         </FormProvider>
