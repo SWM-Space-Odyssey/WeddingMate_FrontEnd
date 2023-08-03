@@ -5,8 +5,16 @@ import AuthenticationPage from "./components/Pages/SocialLogin/AuthenticationPag
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Header from "./components/Header/Header";
 import { BottomNavigation } from "@mui/material";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+      suspense: true,
+    },
+  },
+});
 
 function App() {
   return (
@@ -20,6 +28,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <BottomNavigation />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

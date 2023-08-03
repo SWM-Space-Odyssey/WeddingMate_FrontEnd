@@ -1,6 +1,6 @@
 import { BottomNavigation, Box, Button } from "@mui/material";
 import Header from "../Header/Header";
-import RegistComponent from "./RegistPage/RegistComponent";
+import RegistComponent from "./RegistPage/RegistPage";
 import PortfolioCreate from "./PortfolioPage/PortfolioCreate";
 import PortfolioPage from "./PortfolioPage/PortfolioPage";
 import ItemPage from "./ItemPage/ItemPage";
@@ -12,10 +12,12 @@ import { RootState } from "../../store/store";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PlannerPage from "./PlannerPage/PlannerPage";
+import { Feed } from "@mui/icons-material";
+import FeedPage from "./FeedPage/FeedPage";
 
 type Props = {};
 const KAKAO_LOGIN_URL =
-  "http://ec2-3-39-119-130.ap-northeast-2.compute.amazonaws.com/oauth2/authorization/kakao";
+  "https://api.weddingmate.co.kr/oauth2/authorization/kakao";
 
 const MainPage = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
@@ -24,20 +26,20 @@ const MainPage = (props: Props) => {
   const [searchParmas] = useSearchParams();
   if (searchParmas.get("accessToken")) {
     console.log(searchParmas.get("accessToken"));
-    navigate("http://localhost:5173");
+    navigate("/");
   }
 
   // console.log(searchParmas.get("accessToken"));
 
   return (
     <Box className='h-full flex flex-col mainpage'>
-      <Header />
       <div className='flex-1 relative flex overflow-y-scroll'>
         <RegistComponent />
         <PortfolioCreate />
         <PortfolioPage />
         <ItemPage />
         <PlannerPage />
+        <FeedPage />
         {/* <SocialLogin />
       <SocialLogout /> */}
         <ItemCreate />
@@ -84,10 +86,17 @@ const MainPage = (props: Props) => {
           >
             PlannerPage
           </Button>
+          <Button
+            variant='contained'
+            onClick={() =>
+              dispatch(intoView({ view: "Feed", requestParam: "1" }))
+            }
+          >
+            FeedPage
+          </Button>
           <Button href={KAKAO_LOGIN_URL}>just-href</Button>
         </div>
       </div>
-      <BottomNavigation />
     </Box>
   );
 };

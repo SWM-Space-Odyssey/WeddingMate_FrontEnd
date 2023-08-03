@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import axios from "axios";
 import { getItem, postItem } from "../../../api/Item";
+import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -31,6 +32,7 @@ const PortfolioCreate = (props: Props) => {
   const [initMood, setInitMood] = useState<string[]>([]);
   const [initLocation, setInitLocation] = useState<string[]>([]);
   4;
+  // const { data } = useQuery(["getMenu"], () => getItem("portfolio", 1));
 
   const useResetForm = (data: portfolioRegister) => {
     methods.reset(data);
@@ -38,11 +40,11 @@ const PortfolioCreate = (props: Props) => {
     setInitLocation(data.Location);
   };
   const getData = async () => {
-    const data = await getItem("portfolio", 1);
-    if (data) {
+    const resData = await getItem("portfolio", 1);
+    if (resData) {
       const resMood: string[] = [];
       const resLocation: string[] = [];
-      data.tagResDtoList.forEach((tag) => {
+      resData.tagResDtoList.forEach((tag) => {
         if (CountryList.includes(tag.content)) {
           resLocation.push(tag.content);
         } else if (!initMood.includes(tag.content)) {
@@ -50,17 +52,17 @@ const PortfolioCreate = (props: Props) => {
         }
       });
       const FormData = {
-        Title: data.title,
+        Title: resData.title,
         Mood: [...resMood],
         Location: [...resLocation],
-        pictures: [data.repImgUrl],
+        pictures: [resData.repImgUrl],
       };
       useResetForm(FormData);
     }
   };
 
   useEffect(() => {
-    getData();
+    // getData();
   }, []);
 
   const onSubmit: SubmitHandler<portfolioRegister> = (data) => {

@@ -89,3 +89,13 @@ type itemStates =
   | "itemRecord"
   | "date"
   | "company";
+
+// ========================================================================≈≈
+// React Query ===============================================================
+// ========================================================================≈≈
+
+interface IntersectionObserverInit {
+  root?: Element | Document | null;
+  rootMargin?: string;
+  threshold?: number | number[];
+}

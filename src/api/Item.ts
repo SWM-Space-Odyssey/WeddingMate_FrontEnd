@@ -2,14 +2,6 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const MY_ACCESS_KEY = import.meta.env.VITE_ACCESSKEY;
 
-const getURL = (itemType: string, itemId: string) => {
-  switch (itemType) {
-    case "portfolio":
-      return `${BASE_URL}/v1/portfolio/${itemId}`;
-    case "project":
-      return `${BASE_URL}/v1/project/${itemId}`;
-  }
-};
 type getItemProp = {
   itemType: "portfolio" | "project";
   itemId: number;
@@ -48,6 +40,15 @@ type ResponseTypes = {
   project: getItemResponse;
 };
 
+const getURL = (itemType: string, itemId: string) => {
+  switch (itemType) {
+    case "portfolio":
+      return `${BASE_URL}/v1/portfolio/${itemId}`;
+    case "project":
+      return `${BASE_URL}/v1/project/${itemId}`;
+  }
+};
+
 /**
  * props object안에 itemType 과 itemId 를 받아서 requestURL 을 구성한 후 axios 를 통해 get요청을 보내는 함수입니다
  * @itemType 은 "portfolio" 와 같이 /api/v1/ 뒤에 붙어야하는 string형식입니다,
@@ -67,7 +68,6 @@ export const getItem = async <T extends keyof ResponseTypes>(
     },
   });
   const data = response.data;
-  console.log("getItem requset funtion :: ", data);
   return data as ResponseTypes[T];
 };
 

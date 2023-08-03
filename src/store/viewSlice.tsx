@@ -18,7 +18,8 @@ type Pagelst =
   | "Portfolio"
   | "Item"
   | "ItemCreate"
-  | "Planner";
+  | "Planner"
+  | "Feed";
 
 interface viewState {
   currentView: Pagelst;
@@ -35,7 +36,6 @@ const initialState: viewState = {
   page: 0,
   prevPage: 0,
 };
-
 export const viewSlice = createSlice({
   name: "viewChanger",
   initialState,
@@ -62,7 +62,6 @@ export const viewSlice = createSlice({
       state,
       action: PayloadAction<{ view: Pagelst; requestParam?: string | number }>
     ) => {
-      console.log("REDUX", action.payload);
       state.viewStack.push(state.currentView);
       state.currentView = action.payload.view;
       state.requestParam = action.payload.requestParam ?? "";
