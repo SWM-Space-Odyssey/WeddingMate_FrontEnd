@@ -1,5 +1,5 @@
 import React from "react";
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../Modules/CustomTagBlock";
 
 const ITEM_TAGS = ["비즈", "실크"];
 

@@ -1,12 +1,15 @@
 import { Chip } from "@mui/material";
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { FieldValues, useFormContext } from "react-hook-form";
 
 interface Props<T extends registStates | portfolioStates | itemStates> {
   text: string;
-  formState?: T;
+  formState?: {
+    state: T;
+    tagState: [string[], React.Dispatch<React.SetStateAction<string[]>>];
+  };
+
   tagCountMax?: number;
-  tagState?: [string[], React.Dispatch<React.SetStateAction<string[]>>];
 }
 const CustomTag = <T extends registStates | portfolioStates | itemStates>(
   props: Props<T>
@@ -17,11 +20,8 @@ const CustomTag = <T extends registStates | portfolioStates | itemStates>(
   // form 의 경우
   if (props.formState) {
     const { register } = useFormContext();
-    const formState = props.formState;
-    const [value, setValue] = props.tagState as [
-      string[],
-      React.Dispatch<React.SetStateAction<string[]>>
-    ];
+    const formState = props.formState.state;
+    const [value, setValue] = props.formState.tagState;
 
     const onClickHandler = () => {
       let newValue = [];
@@ -42,7 +42,7 @@ const CustomTag = <T extends registStates | portfolioStates | itemStates>(
           newValue = [...value.slice(1), text];
         }
       }
-      register(formState, { value: [...newValue] } as any);
+      register(formState, { value: [...newValue] } as FieldValues);
       setValue([...newValue]);
     };
 

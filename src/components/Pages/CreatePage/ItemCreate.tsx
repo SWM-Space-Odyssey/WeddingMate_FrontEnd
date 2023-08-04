@@ -1,8 +1,8 @@
 import React from "react";
-import ItemCategories from "./subComponent/ItemCategories";
+import ItemCategories from "../ItemPage/subComponent/ItemCategories";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import ImageUpload from "../../Modules/ImageUpload";
-import ItemTags from "./subComponent/ItemTags";
+import ItemTags from "./ItemTags";
 import CustomInput from "../../Modules/CustumInput";
 import CustomDatePicker from "../../Modules/CustomDatePicker";
 import CustomButton from "../../Modules/CustomButton";
@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { PrevPage } from "../../../store/viewSlice";
+import Header from "../../Header/Header";
 
 type Props = {
   adjust?: itemRegister;
@@ -28,10 +29,6 @@ const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
   const view = useSelector((state: RootState) => state.view.currentView);
   const dispatch = useDispatch();
-  // const setClose = () => {
-  //   console.log("setC : ", methods.watch());
-  //   dispatch(PrevPage());
-  // };
   const onSubmit: SubmitHandler<itemRegister> = (data) => {
     console.log(data);
   };
@@ -55,6 +52,7 @@ const ItemCreate = (props: Props) => {
       unmountOnExit
     >
       <div className='absolute w-full px-4'>
+        <Header />
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}

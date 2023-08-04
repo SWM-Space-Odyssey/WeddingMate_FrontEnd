@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomInput from "../../Modules/CustumInput";
-import {
-  FormProvider,
-  SubmitHandler,
-  UseFormRegister,
-  useFieldArray,
-  useForm,
-  useWatch,
-} from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import CustomTagBlock from "../../Modules/CustomTagBlock";
 import { MoodTagList } from "../../../common/TagList";
 import { CountryList } from "../../../common/CountryLIst";
@@ -18,6 +11,7 @@ import { RootState } from "../../../store/store";
 import axios from "axios";
 import { getItem, postItem } from "../../../api/Item";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
+import Header from "../../Header/Header";
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -62,7 +56,7 @@ const PortfolioCreate = (props: Props) => {
   };
 
   useEffect(() => {
-    // getData();
+    getData();
   }, []);
 
   const onSubmit: SubmitHandler<portfolioRegister> = (data) => {
@@ -96,6 +90,7 @@ const PortfolioCreate = (props: Props) => {
       unmountOnExit
     >
       <div className='absolute h-full px-4'>
+        <Header />
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
