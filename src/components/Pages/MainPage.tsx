@@ -1,10 +1,10 @@
 import { BottomNavigation, Box, Button } from "@mui/material";
 import Header from "../Header/Header";
 import RegistComponent from "./RegistPage/RegistPage";
-import PortfolioCreate from "./PortfolioPage/PortfolioCreate";
+import PortfolioCreate from "./CreatePage/PortfolioCreate";
 import PortfolioPage from "./PortfolioPage/PortfolioPage";
 import ItemPage from "./ItemPage/ItemPage";
-import ItemCreate from "./ItemPage/ItemCreate";
+import ItemCreate from "./CreatePage/ItemCreate";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
@@ -28,76 +28,94 @@ const MainPage = (props: Props) => {
     console.log(searchParmas.get("accessToken"));
     navigate("/");
   }
-
-  // console.log(searchParmas.get("accessToken"));
+  const accessToken = useSelector((state: RootState) => state.user.accessToken);
+  const tokenRefresh = async () => {
+    // refresh token is in https cookie
+    const { data } = await axios.get(
+      "https://api.weddingmate.co.kr/api/v1/token/refresh",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+          withCredentials: true,
+        },
+      }
+    );
+    console.log(data);
+  };
 
   return (
-    <Box className='h-full flex flex-col mainpage'>
-      <div className='flex-1 relative flex overflow-y-scroll'>
-        <RegistComponent />
-        <PortfolioCreate />
-        <PortfolioPage />
-        <ItemPage />
-        <PlannerPage />
-        <FeedPage />
-        {/* <SocialLogin />
+    <div className='flex-1 relative flex overflow-y-scroll pt-12'>
+      <RegistComponent />
+      <PortfolioCreate />
+      <PortfolioPage />
+      <ItemPage />
+      <PlannerPage />
+      <FeedPage />
+      {/* <SocialLogin />
       <SocialLogout /> */}
-        <ItemCreate />
-        <div
-          className={`${
-            view === "LandingPage" ? "" : "hidden"
-          } flex flex-col gap-4`}
+      <ItemCreate />
+      <div
+        className={`${
+          view === "LandingPage" ? "" : "hidden"
+        } flex flex-col gap-4`}
+      >
+        <Button
+          variant='contained'
+          onClick={() => dispatch(intoView({ view: "Regist" }))}
         >
-          <Button
-            variant='contained'
-            onClick={() => dispatch(intoView({ view: "Regist" }))}
-          >
-            RegistPage
-          </Button>
-          <Button
-            variant='contained'
-            onClick={() => dispatch(intoView({ view: "PortfolioCreate" }))}
-          >
-            PortfolioCreatePage
-          </Button>
-          <Button
-            variant='contained'
-            onClick={() => dispatch(intoView({ view: "Portfolio" }))}
-          >
-            PortfolioPage
-          </Button>
-          <Button
-            variant='contained'
-            onClick={() => dispatch(intoView({ view: "Item" }))}
-          >
-            ItemPage
-          </Button>
-          <Button
-            variant='contained'
-            onClick={() => dispatch(intoView({ view: "ItemCreate" }))}
-          >
-            ItemCreatePage
-          </Button>
-          <Button
-            variant='contained'
-            onClick={() =>
-              dispatch(intoView({ view: "Planner", requestParam: "1" }))
-            }
-          >
-            PlannerPage
-          </Button>
-          <Button
-            variant='contained'
-            onClick={() =>
-              dispatch(intoView({ view: "Feed", requestParam: "1" }))
-            }
-          >
-            FeedPage
-          </Button>
-          <Button href={KAKAO_LOGIN_URL}>just-href</Button>
-        </div>
+          RegistPage
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() => dispatch(intoView({ view: "PortfolioCreate" }))}
+        >
+          PortfolioCreatePage
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() => dispatch(intoView({ view: "Portfolio" }))}
+        >
+          PortfolioPage
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() => dispatch(intoView({ view: "Item" }))}
+        >
+          ItemPage
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() => dispatch(intoView({ view: "ItemCreate" }))}
+        >
+          ItemCreatePage
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() =>
+            dispatch(intoView({ view: "Planner", requestParam: "1" }))
+          }
+        >
+          PlannerPage
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() =>
+            dispatch(intoView({ view: "Feed", requestParam: "1" }))
+          }
+        >
+          FeedPage
+        </Button>
+        <Button href={KAKAO_LOGIN_URL}>LoginButton</Button>
+        <Button
+          onClick={() => {
+            tokenRefresh();
+          }}
+        >
+          tokenRefresh OA2
+        </Button>
       </div>
-    </Box>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
+import { useNavigate } from "react-router-dom";
 /**
  * Simple Redux Store Counter Example . . .
  * when you want to use this Store ...
@@ -11,7 +12,7 @@ import type { RootState } from "./store";
  * }
  *
  */
-type Pagelst =
+type PageList =
   | "Regist"
   | "LandingPage"
   | "PortfolioCreate"
@@ -22,8 +23,8 @@ type Pagelst =
   | "Feed";
 
 interface viewState {
-  currentView: Pagelst;
-  viewStack: Pagelst[];
+  currentView: PageList;
+  viewStack: PageList[];
   requestParam: string | number;
   page: number;
   prevPage: number;
@@ -60,7 +61,7 @@ export const viewSlice = createSlice({
     },
     intoView: (
       state,
-      action: PayloadAction<{ view: Pagelst; requestParam?: string | number }>
+      action: PayloadAction<{ view: PageList; requestParam?: string | number }>
     ) => {
       state.viewStack.push(state.currentView);
       state.currentView = action.payload.view;

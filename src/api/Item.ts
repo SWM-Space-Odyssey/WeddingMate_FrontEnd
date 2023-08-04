@@ -1,6 +1,6 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const MY_ACCESS_KEY = import.meta.env.VITE_ACCESSKEY;
+const MY_ACCESS_KEY = import.meta.env.VITE_MY_ACCESS_KEY;
 
 type getItemProp = {
   itemType: "portfolio" | "project";
@@ -60,6 +60,7 @@ export const getItem = async <T extends keyof ResponseTypes>(
   itemType: T,
   itemId: number
 ) => {
+  console.log(MY_ACCESS_KEY);
   const reqURL = getURL(itemType, `${itemId}`);
   if (!reqURL) return;
   const response = await axios.get(reqURL, {

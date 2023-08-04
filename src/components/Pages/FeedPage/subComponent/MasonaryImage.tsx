@@ -59,7 +59,7 @@ const useFetchUsers = () =>
   );
 
 const MasonaryImage = (props: Props) => {
-  const { data, fetchNextPage } = useFetchUsers();
+  const { data, isLoading, fetchNextPage } = useFetchUsers();
 
   const renderData = useMemo(
     () => (data ? data.pages.flatMap(({ data }) => data) : []),
@@ -94,12 +94,7 @@ const MasonaryImage = (props: Props) => {
         columnClassName='my-masonry-grid_column'
       >
         {realRender}
-        <Skeleton className='mb-2' variant='rounded' height={180} />
-        <Skeleton className='mb-2' variant='rounded' height={150} />
-        <Skeleton className='mb-2' variant='rounded' height={120} />
-        <Skeleton className='mb-2' variant='rounded' height={180} />
-        <Skeleton ref={ref} className='mb-2' variant='rounded' height={150} />
-        <Skeleton className='mb-2' variant='rounded' height={120} />
+        <div ref={ref} className='mb-2' />
       </Masonry>
     </div>
   );

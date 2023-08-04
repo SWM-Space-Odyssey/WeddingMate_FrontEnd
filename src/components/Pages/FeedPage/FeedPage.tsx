@@ -5,6 +5,7 @@ import { RootState } from "../../../store/store";
 import MasonaryImage from "./subComponent/MasonaryImage";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import SkeletonImages from "../../Modules/SkeletonImages";
 
 type Props = {};
 
@@ -32,10 +33,10 @@ const FeedPage = (props: Props) => {
       in={view === "Feed"}
       mountOnEnter
       unmountOnExit
-      className='flex-1 overflow-y-scroll px-4'
+      className='px-4'
     >
       <div>
-        <Suspense fallback>{<MasonaryImage />}</Suspense>
+        <Suspense fallback={<SkeletonImages />}>{<MasonaryImage />}</Suspense>
       </div>
     </Slide>
   );
