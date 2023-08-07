@@ -1,5 +1,6 @@
-import React from "react";
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import React, { useEffect } from "react";
+import CustomTagBlock from "../../Modules/CustomTagBlock";
+import { useFormContext, useWatch } from "react-hook-form";
 
 const ITEM_TAGS = ["비즈", "실크"];
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PortfolioHeader from "./subComponents/PortfolioHeader";
 import { Button, Slide } from "@mui/material";
-import ItemCreate from "../ItemPage/ItemCreate";
+import ItemCreate from "../CreatePage/ItemCreate";
 import PortfolioItemCard from "./subComponents/PortfolioItemCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";

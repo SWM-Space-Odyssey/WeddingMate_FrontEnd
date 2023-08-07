@@ -12,7 +12,8 @@ import type { RootState } from "./store";
  *
  */
 interface userState {
-  type: string | null;
+  accessToken: string | null;
+  type: "planner" | "couple" | null;
   nickname: string | null;
   company?: string | null;
   grade?: string | null;
@@ -20,6 +21,7 @@ interface userState {
 }
 
 const initialState: userState = {
+  accessToken: null,
   type: null,
   nickname: null,
   company: null,
@@ -39,6 +41,10 @@ export const userSlice = createSlice({
       console.log("Redux Logout", +state);
       state.nickname = "EMPTY";
     },
+    setAccessToken: (state, action: PayloadAction<string>) => {
+      state.accessToken = action.payload;
+    },
+
     // decrement: (state) => {
     //   state.value -= 1;
     // },
@@ -48,7 +54,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { ReduxLogin, ReduxLogout } = userSlice.actions;
+export const { ReduxLogin, ReduxLogout, setAccessToken } = userSlice.actions;
 
 export const selectUsers = (state: RootState) => state.user.nickname;
 

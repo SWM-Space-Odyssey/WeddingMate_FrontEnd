@@ -11,7 +11,7 @@ const Header = () => {
   const view = useSelector((state: RootState) => state.view.viewStack);
   const title = view[view.length - 1] ?? "LandingPage";
   return (
-    <div className='h-12 py-1 px-2 justify-center'>
+    <div className='sticky h-12 py-1 px-2 justify-center'>
       <Grid className='h-10 items-center' container>
         <Grid item className='w-10 flex justify-center' xs={1}>
           <button onClick={() => dispatch(PrevPage())}>

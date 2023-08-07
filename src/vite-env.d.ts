@@ -51,7 +51,7 @@ interface portfolioRegister {
   Title: string;
   Mood: string[];
   Location: string[];
-  pictures: File[];
+  pictures: File[] | string[];
 }
 
 type portfolioRegisterType = {
@@ -89,3 +89,13 @@ type itemStates =
   | "itemRecord"
   | "date"
   | "company";
+
+// ========================================================================≈≈
+// React Query ===============================================================
+// ========================================================================≈≈
+
+interface IntersectionObserverInit {
+  root?: Element | Document | null;
+  rootMargin?: string;
+  threshold?: number | number[];
+}

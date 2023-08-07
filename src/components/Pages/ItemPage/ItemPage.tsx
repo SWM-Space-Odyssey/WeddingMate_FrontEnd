@@ -5,6 +5,7 @@ import CustomTagBlock from "../../Modules/CustomTagBlock";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { Slide } from "@mui/material";
+import Header from "../../Header/Header";
 
 type Props = {};
 
@@ -28,7 +29,8 @@ const ItemPage = (props: Props) => {
 
   return (
     <Slide direction='left' in={view === "Item"} mountOnEnter unmountOnExit>
-      <div className={`px-4 flex flex-col w-full gap-6`}>
+      <div className={`px-4 h-fit flex flex-col w-full gap-6`}>
+        <Header />
         <div className={defaultClassName}>
           <CustomText type='Title' text='카테고리' />
           <CustomText type='Content' text='반지' />

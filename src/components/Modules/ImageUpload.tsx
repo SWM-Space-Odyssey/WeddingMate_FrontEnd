@@ -35,7 +35,11 @@ const ImageUpload = (props: Props) => {
           key={index}
           onClick={() => imageDelete(index)}
         >
-          <img className='w-16 h-16' src={URL.createObjectURL(item)} />
+          <img
+            className='w-16 h-16'
+            // 여기 가이드 위해서 임시로 string으로 넣어놨습니다 나중에 수정해야합니다
+            src={typeof item !== "string" ? URL.createObjectURL(item) : ""}
+          />
         </Badge>
       );
     });

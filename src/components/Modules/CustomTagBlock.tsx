@@ -17,7 +17,7 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
   props: Props<T>
 ) => {
   const spreadValues = props.spreadValues;
-  const formElement = props?.formState;
+  const state = props.formState;
   const tagCountMax = props.maxTag ? props.maxTag : 1;
   const initValue = props.initValue;
   const [componentValue, setComponentValue] = useState<string[]>([]);
@@ -29,7 +29,6 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
   };
   if (initValue) {
     useEffect(() => {
-      console.log("UseEffectCall, initValue: ", initValue);
       setComponentValue([...initValue]);
     }, [initValue]);
   }
@@ -40,12 +39,6 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
     setAddTag("");
     return setAddFormSwitch(false);
   };
-  useEffect(() => {
-    console.log("TAGBLOCK MOUNT");
-    return () => {
-      console.log("TAGBLOCK UNMOUNT");
-    };
-  }, []);
 
   return (
     <div>
@@ -63,10 +56,14 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
         {spreadValues.map((item, index) => (
           <CustomTag
             key={index}
-            text={`${formElement ? "" : "#"}${item}`}
-            formState={formElement}
+            text={`${state ? "" : "#"}${item}`}
+            formState={
+              state && {
+                state: state,
+                tagState: [componentValue, setComponentValue],
+              }
+            }
             tagCountMax={tagCountMax}
-            tagState={[componentValue, setComponentValue]}
           />
         ))}
         {props.isAddable && (

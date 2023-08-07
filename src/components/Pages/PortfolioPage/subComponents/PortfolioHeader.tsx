@@ -1,5 +1,5 @@
 import React from "react";
-import CustomTag from "../../../Modules/CustomTag";
+
 import CustomTagBlock from "../../../Modules/CustomTagBlock";
 
 type Props = {};

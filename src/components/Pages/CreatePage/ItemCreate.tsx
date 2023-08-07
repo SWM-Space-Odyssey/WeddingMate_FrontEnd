@@ -1,8 +1,13 @@
-import React from "react";
-import ItemCategories from "./subComponent/ItemCategories";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import ItemCategories from "../ItemPage/subComponent/ItemCategories";
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from "react-hook-form";
 import ImageUpload from "../../Modules/ImageUpload";
-import ItemTags from "./subComponent/ItemTags";
+import ItemTags from "./ItemTags";
 import CustomInput from "../../Modules/CustumInput";
 import CustomDatePicker from "../../Modules/CustomDatePicker";
 import CustomButton from "../../Modules/CustomButton";
@@ -11,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { PrevPage } from "../../../store/viewSlice";
+import Header from "../../Header/Header";
 
 type Props = {
   adjust?: itemRegister;
@@ -28,10 +34,6 @@ const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
   const view = useSelector((state: RootState) => state.view.currentView);
   const dispatch = useDispatch();
-  // const setClose = () => {
-  //   console.log("setC : ", methods.watch());
-  //   dispatch(PrevPage());
-  // };
   const onSubmit: SubmitHandler<itemRegister> = (data) => {
     console.log(data);
   };
@@ -47,6 +49,14 @@ const ItemCreate = (props: Props) => {
     title: "업체명",
     placeholder: "업체명을 기입해주세요",
   };
+  const category = useWatch({
+    control: methods.control,
+    name: "categoryContent",
+  });
+  useEffect(() => {
+    console.log("안녕하세요" + category);
+  }, [category]);
+
   return (
     <Slide
       direction='left'
@@ -55,6 +65,7 @@ const ItemCreate = (props: Props) => {
       unmountOnExit
     >
       <div className='absolute w-full px-4'>
+        <Header />
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}

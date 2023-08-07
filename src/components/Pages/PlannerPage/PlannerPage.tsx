@@ -2,10 +2,6 @@ import { Button, Slide } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import PortfolioHeader from "../PortfolioPage/subComponents/PortfolioHeader";
-import CustomText from "../../Modules/CustomText";
-import CustomTag from "../../Modules/CustomTag";
-import CustomTagBlock from "../../Modules/CustomTagBlock";
 import PlannerInfo from "./subComponent/PlannerInfo";
 import PlannerPortfolio from "./subComponent/PlannerPortfolio";
 
