@@ -12,7 +12,6 @@ import { RootState } from "../../store/store";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PlannerPage from "./PlannerPage/PlannerPage";
-import { Feed } from "@mui/icons-material";
 import FeedPage from "./FeedPage/FeedPage";
 
 type Props = {};
@@ -30,18 +29,16 @@ const MainPage = (props: Props) => {
   }
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
   const tokenRefresh = async () => {
-    // refresh token is in https cookie
-    const { data } = await axios.get(
+    const { data } = await axios.post(
       "https://api.weddingmate.co.kr/api/v1/token/refresh",
+      {},
       {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
-          withCredentials: true,
         },
+        withCredentials: true,
       }
     );
-    console.log(data);
   };
 
   return (
@@ -68,7 +65,10 @@ const MainPage = (props: Props) => {
         </Button>
         <Button
           variant='contained'
-          onClick={() => dispatch(intoView({ view: "PortfolioCreate" }))}
+          onClick={() => {
+            dispatch(intoView({ view: "PortfolioCreate" }));
+            navigate("/create/portfolio/param");
+          }}
         >
           PortfolioCreatePage
         </Button>

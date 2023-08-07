@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ItemCategories from "../ItemPage/subComponent/ItemCategories";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from "react-hook-form";
 import ImageUpload from "../../Modules/ImageUpload";
 import ItemTags from "./ItemTags";
 import CustomInput from "../../Modules/CustumInput";
@@ -44,6 +49,14 @@ const ItemCreate = (props: Props) => {
     title: "업체명",
     placeholder: "업체명을 기입해주세요",
   };
+  const category = useWatch({
+    control: methods.control,
+    name: "categoryContent",
+  });
+  useEffect(() => {
+    console.log("안녕하세요" + category);
+  }, [category]);
+
   return (
     <Slide
       direction='left'

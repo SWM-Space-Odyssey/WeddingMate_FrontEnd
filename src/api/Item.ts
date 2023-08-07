@@ -1,6 +1,5 @@
 import axios from "axios";
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const MY_ACCESS_KEY = import.meta.env.VITE_MY_ACCESS_KEY;
+import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
 
 type getItemProp = {
   itemType: "portfolio" | "project";
@@ -43,9 +42,9 @@ type ResponseTypes = {
 const getURL = (itemType: string, itemId: string) => {
   switch (itemType) {
     case "portfolio":
-      return `${BASE_URL}/v1/portfolio/${itemId}`;
+      return `${SERVER_URL}/v1/portfolio/${itemId}`;
     case "project":
-      return `${BASE_URL}/v1/project/${itemId}`;
+      return `${SERVER_URL}/v1/project/${itemId}`;
   }
 };
 
@@ -60,7 +59,6 @@ export const getItem = async <T extends keyof ResponseTypes>(
   itemType: T,
   itemId: number
 ) => {
-  console.log(MY_ACCESS_KEY);
   const reqURL = getURL(itemType, `${itemId}`);
   if (!reqURL) return;
   const response = await axios.get(reqURL, {
@@ -75,7 +73,7 @@ export const getItem = async <T extends keyof ResponseTypes>(
 export const postItem = async (prop: postItemProp) => {
   const { itemType, itemId, body } = prop;
   console.log("body" + body);
-  const response = await axios.post(`${BASE_URL}/v1/portfolio/save`, body, {
+  const response = await axios.post(`${SERVER_URL}/v1/portfolio/save`, body, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${MY_ACCESS_KEY}`,

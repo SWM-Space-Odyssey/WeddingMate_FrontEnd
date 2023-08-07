@@ -12,13 +12,22 @@ import axios from "axios";
 import { getItem, postItem } from "../../../api/Item";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import Header from "../../Header/Header";
+import { useParams } from "react-router-dom";
 
-type Props = {};
+type Props = {
+  itemId?: number;
+};
 interface PortfolioInputContentType {
   state: "Title";
   title: string;
   placeholder: string;
 }
+
+const InputContent: PortfolioInputContentType = {
+  state: "Title",
+  title: "타이틀",
+  placeholder: "제목을 입력해 주세요",
+};
 
 const PortfolioCreate = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
@@ -26,13 +35,19 @@ const PortfolioCreate = (props: Props) => {
   const [initMood, setInitMood] = useState<string[]>([]);
   const [initLocation, setInitLocation] = useState<string[]>([]);
   4;
-  // const { data } = useQuery(["getMenu"], () => getItem("portfolio", 1));
+  const itemId = props?.itemId;
+  const param = useParams();
+  console.log(param);
+  const { data } = useQuery(["getMenu"], () => getItem("portfolio", 1), {
+    enabled: !!itemId,
+  });
 
   const useResetForm = (data: portfolioRegister) => {
     methods.reset(data);
     setInitMood(data.Mood);
     setInitLocation(data.Location);
   };
+
   const getData = async () => {
     const resData = await getItem("portfolio", 1);
     if (resData) {
@@ -56,10 +71,10 @@ const PortfolioCreate = (props: Props) => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    // getData();
+  }, [data]);
 
-  const onSubmit: SubmitHandler<portfolioRegister> = (data) => {
+  const onSubmit: SubmitHandler<portfolioRegister> = async (data) => {
     const body = new FormData();
     for (let i = 0; i < data.pictures.length; i++) {
       body.append("file", data.pictures[i]);
@@ -71,15 +86,9 @@ const PortfolioCreate = (props: Props) => {
     const json = JSON.stringify(jsonData);
     const blob = new Blob([json], { type: "application/json" });
     body.append("portfolioSaveReqDto", blob);
-    console.log("DATA POST ! : ", data);
     // 위 콘솔을 주석처리하고 아래 코드를 주석을 풀면 실제로 서버에 데이터가 전송됩니다
-    // const postData = postItem({ itemType: "portfolio", body });
-  };
-
-  const InputContent: PortfolioInputContentType = {
-    state: "Title",
-    title: "타이틀",
-    placeholder: "제목을 입력해 주세요",
+    const postData = await postItem({ itemType: "portfolio", body });
+    if (postData.status === 200) methods.reset();
   };
 
   return (
