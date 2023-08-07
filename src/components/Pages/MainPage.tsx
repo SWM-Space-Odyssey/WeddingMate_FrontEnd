@@ -13,6 +13,9 @@ import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PlannerPage from "./PlannerPage/PlannerPage";
 import FeedPage from "./FeedPage/FeedPage";
+import { useEffect } from "react";
+import { tokenRefresh, userCheck } from "../../api/user";
+import { useQuery } from "@tanstack/react-query";
 
 type Props = {};
 const KAKAO_LOGIN_URL =
@@ -23,23 +26,50 @@ const MainPage = (props: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParmas] = useSearchParams();
-  if (searchParmas.get("accessToken")) {
-    console.log(searchParmas.get("accessToken"));
-    navigate("/");
+  // const accessToken = useSelector((state: RootState) => state.user.accessToken);
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    const checkData = useQuery(["test"], () => userCheck(accessToken), {
+      enabled: !!accessToken,
+      refetchOnWindowFocus: false,
+    });
+    const refreshData = useQuery(["refresh"], () => tokenRefresh(accessToken), {
+      enabled: checkData.data?.status === 401,
+      refetchOnWindowFocus: false,
+    });
+    if (refreshData.data?.status === 200) {
+      localStorage.setItem("accessToken", refreshData.data.accessToken);
+    } else {
+      localStorage.removeItem("accessToken");
+    }
+  } else {
+    console.log("no token");
   }
-  const accessToken = useSelector((state: RootState) => state.user.accessToken);
-  const tokenRefresh = async () => {
-    const { data } = await axios.post(
-      "https://api.weddingmate.co.kr/api/v1/token/refresh",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      }
-    );
-  };
+
+  // const tokenRefresh = async () => {
+  //   const { data } = await axios.post(
+  //     "https://api.weddingmate.co.kr/api/v1/token/refresh",
+  //     {},
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //       withCredentials: true,
+  //     }
+  //   );
+  // };
+  // useEffect(() => {
+  // userCheck(accessToken)
+  // .then((res) => {
+  //   if (!res) {
+  //     tokenRefresh(accessToken).then((res) => {
+  //       console.log(res);
+  //     });
+  //   }
+  // });
+  // 여기 accessToken만 사용해서 내 정보 받아오는 api가 하나정도 필요할 듯
+  // 정보 받아오려했는데 토큰이 만료됐다고 뜨면 새로 갱신
+  // }, []);
 
   return (
     <div className='flex-1 relative flex overflow-y-scroll pt-12'>
@@ -109,7 +139,7 @@ const MainPage = (props: Props) => {
         <Button href={KAKAO_LOGIN_URL}>LoginButton</Button>
         <Button
           onClick={() => {
-            tokenRefresh();
+            // tokenRefresh();
           }}
         >
           tokenRefresh OA2

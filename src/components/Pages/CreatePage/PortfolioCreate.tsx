@@ -37,7 +37,6 @@ const PortfolioCreate = (props: Props) => {
   4;
   const itemId = props?.itemId;
   const param = useParams();
-  console.log(param);
   const { data } = useQuery(["getMenu"], () => getItem("portfolio", 1), {
     enabled: !!itemId,
   });
