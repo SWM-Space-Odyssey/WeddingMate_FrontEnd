@@ -3,7 +3,7 @@ import { SERVER_URL } from "../common/constants";
 
 export const userCheck = async (token: string) => {
   const response: AxiosResponse = await axios
-    .get(`${SERVER_URL}/v1/category/all`, {
+    .get(`${SERVER_URL}/api/v1/category/all`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => {
@@ -19,7 +19,7 @@ export const userCheck = async (token: string) => {
 export const tokenRefresh = async (accessToken: string) => {
   const response = await axios
     .post(
-      `${SERVER_URL}/v1/token/refresh`,
+      `${SERVER_URL}/api/v1/token/refresh`,
       {},
       {
         headers: {

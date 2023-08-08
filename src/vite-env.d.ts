@@ -18,20 +18,20 @@ type stateLiteral = registStates | portfolioStates | itemStates;
 // UserRegist============================================================≈≈
 // ========================================================================≈≈
 interface registRegister {
-  Type: string;
-  Nickname: string;
-  Company: string;
-  Grade: string;
-  Location: string[];
-  PlannerTag?: string[];
+  type: string;
+  nickname: string;
+  company: string;
+  position: string;
+  region: string[];
+  plannerTagList?: string[];
 }
 type registStates =
-  | "Type"
-  | "Nickname"
-  | "Company"
-  | "Grade"
-  | "Location"
-  | "PlannerTag";
+  | "type"
+  | "nickname"
+  | "company"
+  | "position"
+  | "region"
+  | "plannerTagList";
 
 type registRegisterType = {
   register: UseFormRegister<registRegister>;

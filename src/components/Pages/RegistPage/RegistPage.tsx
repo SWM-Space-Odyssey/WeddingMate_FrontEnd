@@ -12,8 +12,31 @@ const RegistComponent = () => {
   const page = useSelector((state: RootState) => state.view.page);
   const prevPage = useSelector((state: RootState) => state.view.prevPage);
   const methods = useForm<registRegister>();
-  const onSubmit: SubmitHandler<registRegister> = (data) =>
-    alert(JSON.stringify(data));
+  const onSubmit: SubmitHandler<registRegister> = (data) => {
+    // alert(JSON.stringify(data));
+    console.log(data);
+    const { type, company, nickname, position, region, plannerTagList } = data;
+    if (type === "planner") {
+      const planner = {
+        company,
+        nickname,
+        position,
+        region,
+        plannerTagList,
+      };
+      console.log(planner);
+    } else {
+      // NOT YET
+      // const couple = {
+      //   company,
+      //   nickname,
+      //   position,
+      //   region,
+      //   plannerTagList
+      // }
+      // console.log(couple);
+    }
+  };
   const transitionClass = "absolute left-0 right-0 h-full";
   return (
     <Slide direction='left' in={view === "Regist"} mountOnEnter unmountOnExit>
@@ -66,7 +89,7 @@ const RegistComponent = () => {
               in={page === 2}
             >
               <div className={transitionClass}>
-                <RegistUserTag formElement={"PlannerTag"} />
+                <RegistUserTag formElement={"plannerTagList"} />
               </div>
             </Slide>
             <Slide

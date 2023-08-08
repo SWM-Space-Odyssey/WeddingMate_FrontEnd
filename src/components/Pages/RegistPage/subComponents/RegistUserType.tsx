@@ -20,7 +20,7 @@ const RegistUserType = () => {
 
   const onClickHandler = (type: typeof CoupleString | typeof PlannerString) => {
     setUserType(type);
-    register("Type", { value: type });
+    register("type", { value: type });
   };
   // userType에서만 사용되는 Component여서 따로 Unit화 하지 않았습니다.
   const buttonComponent = (

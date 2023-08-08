@@ -14,9 +14,7 @@ import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import Header from "../../Header/Header";
 import { useParams } from "react-router-dom";
 
-type Props = {
-  itemId?: number;
-};
+type Props = {};
 interface PortfolioInputContentType {
   state: "Title";
   title: string;
@@ -35,24 +33,26 @@ const PortfolioCreate = (props: Props) => {
   const [initMood, setInitMood] = useState<string[]>([]);
   const [initLocation, setInitLocation] = useState<string[]>([]);
   4;
-  const itemId = props?.itemId;
-  const param = useParams();
-  const { data } = useQuery(["getMenu"], () => getItem("portfolio", 1), {
-    enabled: !!itemId,
-  });
-
-  const useResetForm = (data: portfolioRegister) => {
-    methods.reset(data);
-    setInitMood(data.Mood);
-    setInitLocation(data.Location);
+  const param = useParams().itemId;
+  const useResetForm = (data?: portfolioRegister) => {
+    if (data) {
+      methods.reset(data);
+      setInitMood(data.Mood);
+      setInitLocation(data.Location);
+    } else {
+      methods.reset();
+      setInitMood([]);
+      setInitLocation([]);
+    }
   };
 
-  const getData = async () => {
+  const getData = async (itemId: number) => {
     const resData = await getItem("portfolio", 1);
-    if (resData) {
+    if (resData?.status === "SUCCESS" && resData.data) {
+      const response = resData.data;
       const resMood: string[] = [];
       const resLocation: string[] = [];
-      resData.tagResDtoList.forEach((tag) => {
+      response.tagResDtoList.forEach((tag) => {
         if (CountryList.includes(tag.content)) {
           resLocation.push(tag.content);
         } else if (!initMood.includes(tag.content)) {
@@ -60,24 +60,18 @@ const PortfolioCreate = (props: Props) => {
         }
       });
       const FormData = {
-        Title: resData.title,
+        Title: response.title,
         Mood: [...resMood],
         Location: [...resLocation],
-        pictures: [resData.repImgUrl],
+        pictures: [response.repImgUrl],
       };
       useResetForm(FormData);
     }
   };
 
-  useEffect(() => {
-    // getData();
-  }, [data]);
-
   const onSubmit: SubmitHandler<portfolioRegister> = async (data) => {
     const body = new FormData();
-    for (let i = 0; i < data.pictures.length; i++) {
-      body.append("file", data.pictures[i]);
-    }
+    body.append("file", data.pictures[0]);
     const jsonData = {
       title: data.Title,
       tags: data.Mood.concat(data.Location),
@@ -85,11 +79,22 @@ const PortfolioCreate = (props: Props) => {
     const json = JSON.stringify(jsonData);
     const blob = new Blob([json], { type: "application/json" });
     body.append("portfolioSaveReqDto", blob);
-    // 위 콘솔을 주석처리하고 아래 코드를 주석을 풀면 실제로 서버에 데이터가 전송됩니다
     const postData = await postItem({ itemType: "portfolio", body });
-    if (postData.status === 200) methods.reset();
+    console.log(postData);
+    if (postData.status === 201) useResetForm();
   };
 
+  useEffect(() => {
+    if (param) {
+      const isValidParam = parseInt(param);
+      if (isValidParam) {
+        console.log("valid param");
+        getData(isValidParam);
+      } else {
+        console.log("invalid param");
+      }
+    }
+  }, [param]);
   return (
     <Slide
       direction='left'
@@ -119,7 +124,7 @@ const PortfolioCreate = (props: Props) => {
               formState='Location'
               initValue={initLocation}
             />
-            <ImageUpload title='image' maxCount={5} />
+            <ImageUpload title='image' maxCount={1} />
             <Button
               type='submit'
               sx={{ fontSize: "1rem", bottom: 0 }}
@@ -127,12 +132,6 @@ const PortfolioCreate = (props: Props) => {
               variant='contained'
             >
               추가
-            </Button>
-            <Button
-              type='button'
-              onClick={() => console.log(initMood, initLocation)}
-            >
-              TEST
             </Button>
           </form>
         </FormProvider>

@@ -10,17 +10,17 @@ const RegistUserInfo = () => {
   const dispatch = useDispatch();
   const stateMapping: MappingInterface<registStates, registRegister> = {
     userNickname: {
-      state: "Nickname",
+      state: "nickname",
       title: "닉네임",
       placeholder: "사용할 닉네임을 입력해주세요",
     },
     userCompany: {
-      state: "Company",
+      state: "company",
       title: "소속",
       placeholder: "웨딩 플래너님의 소속을 입력해주세요",
     },
     userGrade: {
-      state: "Grade",
+      state: "position",
       title: "직급",
       placeholder: "사원, 대리, 과장 등",
     },
@@ -34,7 +34,7 @@ const RegistUserInfo = () => {
         <CustomInput content={stateMapping.userGrade} />
         <div>
           <div className='font-bold mb-1'>지역</div>
-          <CustomTagBlock spreadValues={CountryList} formState={"Location"} />
+          <CustomTagBlock spreadValues={CountryList} formState={"region"} />
         </div>
       </div>
       <Button
