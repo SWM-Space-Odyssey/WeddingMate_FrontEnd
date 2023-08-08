@@ -1,16 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
-/**
- * Simple Redux Store Counter Example . . .
- * when you want to use this Store ...
- * you have 2 change {
- *  userState interface,
- *  initialState,
- *  userSlice-reducers
- * }
- *
- */
+
 interface userState {
   accessToken: string | null;
   type: "planner" | "couple" | null;
@@ -43,14 +34,8 @@ export const userSlice = createSlice({
     },
     setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
+      localStorage.setItem("accessToken", action.payload);
     },
-
-    // decrement: (state) => {
-    //   state.value -= 1;
-    // },
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
   },
 });
 

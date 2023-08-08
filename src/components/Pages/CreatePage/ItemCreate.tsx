@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ItemCategories from "../ItemPage/subComponent/ItemCategories";
 import {
   FormProvider,
@@ -49,13 +49,6 @@ const ItemCreate = (props: Props) => {
     title: "업체명",
     placeholder: "업체명을 기입해주세요",
   };
-  const category = useWatch({
-    control: methods.control,
-    name: "categoryContent",
-  });
-  useEffect(() => {
-    console.log("안녕하세요" + category);
-  }, [category]);
 
   return (
     <Slide

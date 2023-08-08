@@ -1,6 +1,7 @@
 import axios from "axios";
-import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
-
+import { SERVER_URL } from "../common/constants";
+import { MY_ACCESS_KEY } from "../common/constants";
+// const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 type getItemProp = {
   itemType: "portfolio" | "project";
   itemId: number;
@@ -17,11 +18,14 @@ type tagResDtoList = {
 };
 
 interface getPortfolioResponse {
-  id: string;
-  title: string;
-  itemResDtoList: Object[];
-  repImgUrl: string;
-  tagResDtoList: tagResDtoList[];
+  status: "SUCCESS" | "FAIL";
+  data?: {
+    id: string;
+    title: string;
+    itemResDtoList: Object[];
+    repImgUrl: string;
+    tagResDtoList: tagResDtoList[];
+  };
 }
 interface getItemResponse {
   itemId: number;
@@ -42,9 +46,9 @@ type ResponseTypes = {
 const getURL = (itemType: string, itemId: string) => {
   switch (itemType) {
     case "portfolio":
-      return `${SERVER_URL}/v1/portfolio/${itemId}`;
+      return `${SERVER_URL}/api/v1/portfolio/${itemId}`;
     case "project":
-      return `${SERVER_URL}/v1/project/${itemId}`;
+      return `${SERVER_URL}/api/v1/project/${itemId}`;
   }
 };
 
@@ -59,12 +63,14 @@ export const getItem = async <T extends keyof ResponseTypes>(
   itemType: T,
   itemId: number
 ) => {
+  console.log("getItem function" + MY_ACCESS_KEY);
   const reqURL = getURL(itemType, `${itemId}`);
   if (!reqURL) return;
   const response = await axios.get(reqURL, {
     headers: {
       Authorization: `Bearer ${MY_ACCESS_KEY}`,
     },
+    withCredentials: true,
   });
   const data = response.data;
   return data as ResponseTypes[T];
@@ -72,14 +78,18 @@ export const getItem = async <T extends keyof ResponseTypes>(
 
 export const postItem = async (prop: postItemProp) => {
   const { itemType, itemId, body } = prop;
-  console.log("body" + body);
-  const response = await axios.post(`${SERVER_URL}/v1/portfolio/save`, body, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${MY_ACCESS_KEY}`,
-    },
-    withCredentials: true,
-  });
+  console.log(body, MY_ACCESS_KEY);
+  const response = await axios.post(
+    `${SERVER_URL}/api/v1/portfolio/save`,
+    body,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    }
+  );
   const data = response;
   console.log("postItem requset funtion :: ", data);
   return data;

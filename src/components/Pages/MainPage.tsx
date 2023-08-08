@@ -37,39 +37,16 @@ const MainPage = (props: Props) => {
       enabled: checkData.data?.status === 401,
       refetchOnWindowFocus: false,
     });
-    if (refreshData.data?.status === 200) {
-      localStorage.setItem("accessToken", refreshData.data.accessToken);
-    } else {
-      localStorage.removeItem("accessToken");
+    if (checkData.data?.status !== 200) {
+      if (refreshData.data?.status === 200) {
+        localStorage.setItem("accessToken", refreshData.data.accessToken);
+      } else {
+        localStorage.removeItem("accessToken");
+      }
     }
   } else {
     console.log("no token");
   }
-
-  // const tokenRefresh = async () => {
-  //   const { data } = await axios.post(
-  //     "https://api.weddingmate.co.kr/api/v1/token/refresh",
-  //     {},
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //       withCredentials: true,
-  //     }
-  //   );
-  // };
-  // useEffect(() => {
-  // userCheck(accessToken)
-  // .then((res) => {
-  //   if (!res) {
-  //     tokenRefresh(accessToken).then((res) => {
-  //       console.log(res);
-  //     });
-  //   }
-  // });
-  // 여기 accessToken만 사용해서 내 정보 받아오는 api가 하나정도 필요할 듯
-  // 정보 받아오려했는데 토큰이 만료됐다고 뜨면 새로 갱신
-  // }, []);
 
   return (
     <div className='flex-1 relative flex overflow-y-scroll pt-12'>
@@ -79,8 +56,6 @@ const MainPage = (props: Props) => {
       <ItemPage />
       <PlannerPage />
       <FeedPage />
-      {/* <SocialLogin />
-      <SocialLogout /> */}
       <ItemCreate />
       <div
         className={`${
@@ -97,7 +72,7 @@ const MainPage = (props: Props) => {
           variant='contained'
           onClick={() => {
             dispatch(intoView({ view: "PortfolioCreate" }));
-            navigate("/create/portfolio/param");
+            navigate("/create/portfolio/1");
           }}
         >
           PortfolioCreatePage

@@ -19,7 +19,7 @@ type Props = {};
 
 const ItemCategories = (props: Props) => {
   const [selectValue, setSelectValue] = useState<string>("드레스");
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
 
   const selectHandler = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
@@ -28,7 +28,8 @@ const ItemCategories = (props: Props) => {
     const value = e.currentTarget.value;
     if (selectValue !== "직접입력" || e.currentTarget.type === "select-one")
       setSelectValue(value);
-    register("categoryContent", { value: value });
+    setValue("categoryContentText", "");
+    // register("categoryContent", { value: value });
   };
   return (
     <div>
@@ -42,14 +43,15 @@ const ItemCategories = (props: Props) => {
             selectValue === "직접입력" ? "flex-1" : "hidden"
           }`}
           disabled={selectValue !== "직접입력"}
-          placeholder={selectValue}
-          onChange={(e) => selectHandler(e)}
+          {...register("categoryContentText")}
         />
         <select
           className={`border rounded-md text-sm p-2.5 ${
             selectValue === "직접입력" ? "flex-2" : "flex-1"
           }`}
-          onChange={(e) => selectHandler(e)}
+          {...register("categoryContent", {
+            onChange: (e) => selectHandler(e),
+          })}
         >
           <option value={"드레스"}>드레스</option>
           <option value={"메이크업"}>메이크업</option>

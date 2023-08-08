@@ -2,16 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { useNavigate } from "react-router-dom";
-/**
- * Simple Redux Store Counter Example . . .
- * when you want to use this Store ...
- * you have 2 change {
- *  userState interface,
- *  initialState,
- *  userSlice-reducers
- * }
- *
- */
+
 type PageList =
   | "Regist"
   | "LandingPage"
@@ -67,12 +58,6 @@ export const viewSlice = createSlice({
       state.currentView = action.payload.view;
       state.requestParam = action.payload.requestParam ?? "";
     },
-    // i want to take 2 parameter in intoView function and second parameter is optional
-    // intoView: (state, action: PayloadAction<string, string>) => {
-    //   state.viewStack.push(state.currentView);
-    //   state.currentView = action.payload;
-    //   state.viewId = action.payload2;
-    // },
   },
 });
 
