@@ -14,6 +14,11 @@ interface MappingInterface<T, I> {
   };
 }
 type stateLiteral = registStates | portfolioStates | itemStates;
+
+interface API_STATUS {
+  status: "SUCCESS" | "FAIL";
+}
+
 // ========================================================================≈≈
 // UserRegist============================================================≈≈
 // ========================================================================≈≈

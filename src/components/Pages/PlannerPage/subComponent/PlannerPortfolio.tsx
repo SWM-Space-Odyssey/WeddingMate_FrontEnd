@@ -2,6 +2,8 @@ import React from "react";
 import CustomText from "../../../Modules/CustomText";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
+import axios from "axios";
+import { getOwnPortfolio } from "../../../../api/portfolio";
 
 type Props = {};
 const mockData = [
@@ -33,7 +35,14 @@ const mockData = [
 
 const PlannerPortfolio = (props: Props) => {
   const dispatch = useDispatch();
-  // make server axios get logic
+  const response = getOwnPortfolio().then((response) => {
+    if (response.status === "SUCCESS") {
+      console.log(response.data);
+    } else {
+      console.log(response.data);
+    }
+  });
+  console.log(response);
   const portfolioList = mockData.map((data) => (
     <button
       onClick={() =>

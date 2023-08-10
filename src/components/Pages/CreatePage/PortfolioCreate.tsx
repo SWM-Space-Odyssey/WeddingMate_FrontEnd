@@ -9,10 +9,11 @@ import ImageUpload from "../../Modules/ImageUpload";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import axios from "axios";
-import { getItem, postItem } from "../../../api/Item";
+import { getItem } from "../../../api/Item";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import Header from "../../Header/Header";
 import { useParams } from "react-router-dom";
+import { postPortfolio } from "../../../api/portfolio";
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -34,7 +35,7 @@ const PortfolioCreate = (props: Props) => {
   const [initLocation, setInitLocation] = useState<string[]>([]);
   4;
   const param = useParams().itemId;
-  const useResetForm = (data?: portfolioRegister) => {
+  const setForm = (data?: portfolioRegister) => {
     if (data) {
       methods.reset(data);
       setInitMood(data.Mood);
@@ -46,9 +47,9 @@ const PortfolioCreate = (props: Props) => {
     }
   };
 
-  const getData = async (itemId: number) => {
+  const getInitData = async (itemId: number) => {
     const resData = await getItem("portfolio", 1);
-    if (resData?.status === "SUCCESS" && resData.data) {
+    if (resData?.status === "SUCCESS" && resData.data.typeTag === "portfolio") {
       const response = resData.data;
       const resMood: string[] = [];
       const resLocation: string[] = [];
@@ -65,23 +66,23 @@ const PortfolioCreate = (props: Props) => {
         Location: [...resLocation],
         pictures: [response.repImgUrl],
       };
-      useResetForm(FormData);
+      setForm(FormData);
     }
   };
 
   const onSubmit: SubmitHandler<portfolioRegister> = async (data) => {
     const body = new FormData();
-    body.append("file", data.pictures[0]);
     const jsonData = {
       title: data.Title,
       tags: data.Mood.concat(data.Location),
     };
     const json = JSON.stringify(jsonData);
     const blob = new Blob([json], { type: "application/json" });
+    body.append("file", data.pictures[0]);
     body.append("portfolioSaveReqDto", blob);
-    const postData = await postItem({ itemType: "portfolio", body });
-    console.log(postData);
-    if (postData.status === 201) useResetForm();
+    const postData = await postPortfolio({ itemType: "portfolio", body });
+    if (postData.status === "SUCCESS") return setForm();
+    console.log("포트폴리오 등록에 실패했습니다.");
   };
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const PortfolioCreate = (props: Props) => {
       const isValidParam = parseInt(param);
       if (isValidParam) {
         console.log("valid param");
-        getData(isValidParam);
+        getInitData(isValidParam);
       } else {
         console.log("invalid param");
       }

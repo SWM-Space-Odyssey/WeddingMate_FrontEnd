@@ -24,12 +24,10 @@ const ItemCategories = (props: Props) => {
   const selectHandler = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
-    console.log(e.currentTarget);
     const value = e.currentTarget.value;
     if (selectValue !== "직접입력" || e.currentTarget.type === "select-one")
       setSelectValue(value);
     setValue("categoryContentText", "");
-    // register("categoryContent", { value: value });
   };
   return (
     <div>

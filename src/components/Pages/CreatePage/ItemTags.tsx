@@ -4,24 +4,14 @@ import { useFormContext, useWatch } from "react-hook-form";
 import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
 import { useQuery } from "@tanstack/react-query";
+import { getTagList } from "../../../api/Item";
 
 const ITEM_TAGS = ["비즈", "실크"];
 
 type Props = {
   formState: itemStates;
 };
-const getTagList = async (category: string) => {
-  const response = axios
-    .get(`${SERVER_URL}/api/v1/tag/all?category=${category}}`)
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return err;
-    });
 
-  return response;
-};
 const ItemTags = (props: Props) => {
   const [spreadValues, setSpreadValue] = useState<string[]>([]);
   const formState = props.formState;
@@ -38,10 +28,15 @@ const ItemTags = (props: Props) => {
   useEffect(() => {
     if (content) {
       getTagList(content).then((res) => {
-        if (res.data) {
-          setSpreadValue(res.data);
+        if (
+          res.status === "SUCCESS" &&
+          res.data.typeTag === "itemTag" &&
+          res.data.tagList
+        ) {
+          setSpreadValue(res.data.tagList);
           return;
         }
+        // 현재 DB 에 저장된 태그리스트가 없어서 목데이터 보여줄 겸 이렇게 해두었음
         setSpreadValue(ITEM_TAGS);
       });
     }

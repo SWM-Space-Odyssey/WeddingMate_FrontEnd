@@ -3,6 +3,11 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import Masonry from "react-masonry-css";
+import {
+  MY_ACCESS_KEY,
+  SERVER_IMAGE_URL,
+  SERVER_URL,
+} from "../../../../common/constants";
 
 type Props = {};
 type loremPicsum = {
@@ -46,32 +51,36 @@ const useIntersect = (
 const useFetchUsers = () =>
   useInfiniteQuery(
     ["picsum"],
-    ({ pageParam = 1 }) => {
+    ({ pageParam = 0 }) => {
       console.log(pageParam);
-      return axios.get("https://picsum.photos/v2/list", {
-        params: { page: pageParam, limit: 30 },
+      return axios.get(`${SERVER_URL}/api/v1/file`, {
+        headers: {
+          Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        },
+        params: { page: pageParam, size: 6 },
+        withCredentials: true,
       });
     },
     {
       getNextPageParam: (lastPage) =>
-        lastPage ? lastPage.config.params.page + 1 : undefined,
+        !lastPage.data.data.last ? lastPage.config.params.page + 1 : undefined,
     }
   );
 
 const MasonaryImage = (props: Props) => {
   const { data, isLoading, fetchNextPage } = useFetchUsers();
 
-  const renderData = useMemo(
-    () => (data ? data.pages.flatMap(({ data }) => data) : []),
-    [data]
-  );
+  const renderData = useMemo(() => {
+    return data ? data.pages.flatMap(({ data }) => data.data.content) : [];
+  }, [data]);
   const realRender = useMemo(() => {
     return renderData.map((item, index) => {
+      console.log(item);
       return (
         <img
           onClick={() => console.log(item, index)}
-          src={item.download_url}
-          alt={item.author}
+          src={SERVER_IMAGE_URL + item.url}
+          alt={String(item.url)}
           key={index}
           loading='lazy'
           className='pb-2'
