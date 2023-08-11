@@ -1,5 +1,5 @@
 import { Button, Slide } from "@mui/material";
-import React from "react";
+import React, { Suspense } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import PlannerInfo from "./subComponent/PlannerInfo";
@@ -10,17 +10,23 @@ type Props = {};
 const PlannerPage = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
   return (
-    <Slide
-      direction={`${view === "Planner" ? "right" : "left"}`}
-      in={view === "Planner"}
-      mountOnEnter
-      unmountOnExit
-    >
-      <div className='absolute w-full h-full px-4 flex flex-col gap-5'>
-        <PlannerInfo />
-        <PlannerPortfolio />
-      </div>
-    </Slide>
+    <Suspense fallback={<div>loading...</div>}>
+      <Slide
+        direction={`${view === "Planner" ? "right" : "left"}`}
+        in
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className='w-full h-full px-4 flex flex-col '>
+          <div className='sticky pb-5'>
+            <PlannerInfo />
+          </div>
+          <div className='overflow-y-scroll'>
+            <PlannerPortfolio />
+          </div>
+        </div>
+      </Slide>
+    </Suspense>
   );
 };
 
