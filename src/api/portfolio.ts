@@ -2,16 +2,39 @@ import axios, { AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
 import { MY_ACCESS_KEY } from "../common/constants"; // 나중에 Localstorage에서 받아오기
 import { handleError } from "../hooks/apiHook";
+import { useQuery } from "@tanstack/react-query";
 // const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
-interface plannerPortfolioObj {
+type plannerPortfolioObj = {
   title: string;
   repImgUrl: string;
   portfolioId: number;
-}
-interface GET_API_RESPONSE extends API_STATUS {
-  data: plannerPortfolioObj[] | object;
-}
+};
+type portfolioData = {
+  typeTag: "portfolio";
+  data: {
+    id: string;
+    title: string;
+    itemResDtoList: Object[];
+    repImgUrl: string;
+    tagResDtoList: tagResDtoList[];
+  };
+};
+
+type tagResDtoList = {
+  tagId: number;
+  content: string;
+  categoryContent: string;
+};
+
+type GetPortfolioResponse = portfolioData & {
+  status: "SUCCESS" | "FAIL";
+};
+
+type GetPlannerPortfolioResponse = {
+  status: "SUCCESS" | "FAIL";
+  data: plannerPortfolioObj[];
+};
 
 export const getOwnPortfolio = async () => {
   // 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
@@ -20,22 +43,51 @@ export const getOwnPortfolio = async () => {
       headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
     })
     .then((res) => {
-      return res;
+      return {
+        typeTag: "portfolio",
+        ...res.data,
+      } as GetPlannerPortfolioResponse;
     })
     .catch((err: AxiosError) => {
       return handleError(err);
     });
-  return response as GET_API_RESPONSE;
+  return response;
+};
+
+export const getPortfolio = async (portfolioId: number) => {
+  // const { data } = useQuery(
+  //   ["portfolio"],
+  //   async () =>
+  //     await axios.get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+  //       headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+  //     })
+  // );
+  // return data?.data as GET_API_RESPONSE;
+
+  // 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
+  const response = await axios
+    .get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+      headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+    })
+    .then((res) => {
+      return {
+        typeTag: "portfolio",
+        ...res.data,
+      } as GetPortfolioResponse;
+    })
+    .catch((err: AxiosError) => {
+      return handleError(err);
+    });
+  return response;
 };
 
 type postItemProp = {
   itemType: string;
-  itemId?: string;
-  body: any;
+  itemId?: number;
+  body: FormData;
 };
 export const postPortfolio = async (prop: postItemProp) => {
   const { itemType, itemId, body } = prop;
-  console.log(body, MY_ACCESS_KEY);
   const response = await axios
     .post(`${SERVER_URL}/api/v1/portfolio/save`, body, {
       headers: {
@@ -45,11 +97,39 @@ export const postPortfolio = async (prop: postItemProp) => {
       withCredentials: true,
     })
     .then((res) => {
-      return res;
+      return {
+        status: "SUCCESS" as const,
+        data: res.data,
+      };
     })
     .catch((err: AxiosError) => {
       return handleError(err);
     });
 
-  return response as GET_API_RESPONSE;
+  console.log(response);
+  return response;
+};
+
+export const putPortfolio = async (prop: postItemProp) => {
+  const { itemType, itemId, body } = prop;
+  const response = await axios
+    .put(`${SERVER_URL}/api/v1/portfolio/${itemId}`, body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      return {
+        status: "SUCCESS" as const,
+        data: res.data,
+      };
+    })
+    .catch((err: AxiosError) => {
+      return handleError(err);
+    });
+
+  console.log(response);
+  return response;
 };

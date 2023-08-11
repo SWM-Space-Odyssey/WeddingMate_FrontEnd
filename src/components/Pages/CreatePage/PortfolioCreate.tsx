@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomInput from "../../Modules/CustumInput";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, set, useForm } from "react-hook-form";
 import CustomTagBlock from "../../Modules/CustomTagBlock";
 import { MoodTagList } from "../../../common/TagList";
 import { CountryList } from "../../../common/CountryLIst";
@@ -13,7 +13,12 @@ import { getItem } from "../../../api/Item";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import Header from "../../Header/Header";
 import { useParams } from "react-router-dom";
-import { postPortfolio } from "../../../api/portfolio";
+import {
+  getPortfolio,
+  postPortfolio,
+  putPortfolio,
+} from "../../../api/portfolio";
+import { MY_ACCESS_KEY, SERVER_URL } from "../../../common/constants";
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -28,9 +33,28 @@ const InputContent: PortfolioInputContentType = {
   placeholder: "제목을 입력해 주세요",
 };
 
+type portfolioData = {
+  typeTag: "portfolio";
+  status: "SUCCESS" | "FAIL";
+  data: {
+    id: string;
+    title: string;
+    itemResDtoList: Object[];
+    repImgUrl: string;
+    tagResDtoList: tagResDtoList[];
+  };
+};
+
+type tagResDtoList = {
+  tagId: number;
+  content: string;
+  categoryContent: string;
+};
+
 const PortfolioCreate = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
   const methods = useForm<portfolioRegister>();
+  const [isEdit, setIsEdit] = useState<null | number>(null);
   const [initMood, setInitMood] = useState<string[]>([]);
   const [initLocation, setInitLocation] = useState<string[]>([]);
   4;
@@ -48,8 +72,20 @@ const PortfolioCreate = (props: Props) => {
   };
 
   const getInitData = async (itemId: number) => {
-    const resData = await getItem("portfolio", 1);
-    if (resData?.status === "SUCCESS" && resData.data.typeTag === "portfolio") {
+    setIsEdit(itemId);
+    // const resData = await getPortfolio(itemId);
+    const resData = await axios
+      .get(`${SERVER_URL}/api/v1/portfolio/${itemId}`, {
+        headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+      })
+      .then((res) => {
+        return {
+          typeTag: "portfolio",
+          ...res.data,
+        } as portfolioData;
+      });
+    console.log(resData);
+    if (resData?.status === "SUCCESS" && resData.typeTag === "portfolio") {
       const response = resData.data;
       const resMood: string[] = [];
       const resLocation: string[] = [];
@@ -80,29 +116,31 @@ const PortfolioCreate = (props: Props) => {
     const blob = new Blob([json], { type: "application/json" });
     body.append("file", data.pictures[0]);
     body.append("portfolioSaveReqDto", blob);
-    const postData = await postPortfolio({ itemType: "portfolio", body });
-    if (postData.status === "SUCCESS") return setForm();
-    console.log("포트폴리오 등록에 실패했습니다.");
+    if (isEdit) {
+      console.log("수정");
+      const putData = await putPortfolio({
+        itemType: "portfolio",
+        body,
+        itemId: isEdit,
+      });
+      console.log(putData);
+      if (putData.status === "SUCCESS") return setForm();
+      console.log("포트폴리오 수정에 실패했습니다.");
+    } else {
+      const postData = await postPortfolio({ itemType: "portfolio", body });
+      if (postData.status === "SUCCESS") return setForm();
+      console.log("포트폴리오 등록에 실패했습니다.");
+    }
   };
 
   useEffect(() => {
-    if (param) {
-      const isValidParam = parseInt(param);
-      if (isValidParam) {
-        console.log("valid param");
-        getInitData(isValidParam);
-      } else {
-        console.log("invalid param");
-      }
-    }
+    if (!param) return;
+    const isValidParam = parseInt(param);
+    if (!isValidParam) return;
+    getInitData(isValidParam);
   }, [param]);
   return (
-    <Slide
-      direction='left'
-      in={view === "PortfolioCreate"}
-      mountOnEnter
-      unmountOnExit
-    >
+    <Slide direction='left' in mountOnEnter unmountOnExit>
       <div className='absolute h-full px-4'>
         <Header />
         <FormProvider {...methods}>

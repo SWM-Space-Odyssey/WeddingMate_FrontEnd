@@ -14,7 +14,6 @@ const RegistComponent = () => {
   const methods = useForm<registRegister>();
   const onSubmit: SubmitHandler<registRegister> = (data) => {
     // alert(JSON.stringify(data));
-    console.log(data);
     const { type, company, nickname, position, region, plannerTagList } = data;
     if (type === "planner") {
       const planner = {

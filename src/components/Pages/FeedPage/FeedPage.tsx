@@ -6,6 +6,7 @@ import MasonaryImage from "./subComponent/MasonaryImage";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonImages from "../../Modules/SkeletonImages";
+import CustomSearchForm from "../../Modules/CustomSearchForm";
 
 type Props = {};
 
@@ -36,7 +37,10 @@ const FeedPage = (props: Props) => {
       className='px-4'
     >
       <div>
-        <Suspense fallback={<SkeletonImages />}>{<MasonaryImage />}</Suspense>
+        <Suspense fallback={<SkeletonImages />}>
+          <CustomSearchForm />
+          <MasonaryImage />
+        </Suspense>
       </div>
     </Slide>
   );

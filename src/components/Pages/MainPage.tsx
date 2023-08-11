@@ -51,10 +51,7 @@ const MainPage = (props: Props) => {
   return (
     <div className='flex-1 relative flex overflow-y-scroll pt-12'>
       <RegistComponent />
-      <PortfolioCreate />
-      <PortfolioPage />
       <ItemPage />
-      <PlannerPage />
       <FeedPage />
       <ItemCreate />
       <div
@@ -72,14 +69,17 @@ const MainPage = (props: Props) => {
           variant='contained'
           onClick={() => {
             dispatch(intoView({ view: "PortfolioCreate" }));
-            navigate("/create/portfolio/1");
+            navigate("/create/portfolio/15");
           }}
         >
           PortfolioCreatePage
         </Button>
         <Button
           variant='contained'
-          onClick={() => dispatch(intoView({ view: "Portfolio" }))}
+          onClick={() => {
+            dispatch(intoView({ view: "Portfolio" }));
+            navigate("/portfolio/1");
+          }}
         >
           PortfolioPage
         </Button>

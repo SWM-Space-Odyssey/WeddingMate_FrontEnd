@@ -10,6 +10,7 @@ import FeedPage from "./components/Pages/FeedPage/FeedPage";
 import PlannerPage from "./components/Pages/PlannerPage/PlannerPage";
 import LodingSpinner from "./components/Modules/LodingSpinner";
 import PortfolioCreate from "./components/Pages/CreatePage/PortfolioCreate";
+import PortfolioPage from "./components/Pages/PortfolioPage/PortfolioPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,7 +25,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className='h-full flex flex-col pb-28'>
+        <div className='h-full flex flex-col'>
           <div className='flex-1 relative flex overflow-y-scroll'>
             <Routes>
               <Route path='/' element={<MainPage />} />
@@ -33,6 +34,7 @@ function App() {
                 path='/create/portfolio/:itemId?'
                 element={<PortfolioCreate />}
               />
+              <Route path='/portfolio/:itemId' element={<PortfolioPage />} />
               <Route path='/feed' element={<FeedPage />} />
               <Route path='/planner' element={<PlannerPage />} />
               <Route path='/oauth2/redirect' element={<LodingSpinner />} />

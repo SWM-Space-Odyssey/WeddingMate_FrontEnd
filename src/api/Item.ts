@@ -102,8 +102,7 @@ export const getItem = async (
       return handleError(err) as ItemResponse;
     });
 
-  const data = response.data;
-  return data;
+  return response;
 };
 
 export const getTagList = async (category: string) => {
@@ -123,22 +122,23 @@ export const getTagList = async (category: string) => {
   return response;
 };
 
-export const getFeedImage = async (page: number, size: number) => {
-  console.log("getFeedImage function page :" + page);
+export const getFeedImage = async (pageParam: number, size: number) => {
   const response = await axios
-    .get<ItemResponse>(`${SERVER_URL}/api/v1/file?page=${page}&size=${size}`, {
+    .get<ItemResponse>(`${SERVER_URL}/api/v1/file`, {
       headers: {
         Authorization: `Bearer ${MY_ACCESS_KEY}`,
       },
-      params: { page: page, size: size },
+      params: { page: pageParam, size: size },
       withCredentials: true,
     })
     .then((res) => {
+      // return res.data;
       const successData = res.data as { status: "SUCCESS"; data: feedData };
       successData.data.typeTag = "feed";
       return successData;
     })
-    .catch((err: AxiosError) => {
+    .catch((err) => {
+      // throw new Error(err);
       return handleError(err) as ItemResponse;
     });
   return response;
