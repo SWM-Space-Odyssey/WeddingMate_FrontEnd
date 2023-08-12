@@ -32,8 +32,6 @@ interface itemRegister {
 
 const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
-  const view = useSelector((state: RootState) => state.view.currentView);
-  const dispatch = useDispatch();
   const onSubmit: SubmitHandler<itemRegister> = (data) => {
     console.log(data);
   };
@@ -51,13 +49,8 @@ const ItemCreate = (props: Props) => {
   };
 
   return (
-    <Slide
-      direction='left'
-      in={view === "ItemCreate"}
-      mountOnEnter
-      unmountOnExit
-    >
-      <div className='absolute w-full px-4'>
+    <Slide direction='left' in mountOnEnter unmountOnExit>
+      <div className='w-full px-4'>
         <Header />
         <FormProvider {...methods}>
           <form

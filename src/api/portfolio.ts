@@ -55,30 +55,36 @@ export const getOwnPortfolio = async () => {
 };
 
 export const getPortfolio = async (portfolioId: number) => {
-  // const { data } = useQuery(
-  //   ["portfolio"],
-  //   async () =>
-  //     await axios.get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
-  //       headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
-  //     })
-  // );
-  // return data?.data as GET_API_RESPONSE;
+  console.log("getPortfolio" + portfolioId);
+  return useQuery(
+    ["portfolio"],
+    () =>
+      axios.get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+        headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+      }),
+    {
+      enabled: !!portfolioId,
+    }
+  );
+  // console.log(data?.data);
+  // if (error) return error;
+  // return data?.data as GetPortfolioResponse;
 
   // 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
-  const response = await axios
-    .get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
-      headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
-    })
-    .then((res) => {
-      return {
-        typeTag: "portfolio",
-        ...res.data,
-      } as GetPortfolioResponse;
-    })
-    .catch((err: AxiosError) => {
-      return handleError(err);
-    });
-  return response;
+  // const response = await axios
+  //   .get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+  //     headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+  //   })
+  //   .then((res) => {
+  //     return {
+  //       typeTag: "portfolio",
+  //       ...res.data,
+  //     } as GetPortfolioResponse;
+  //   })
+  //   .catch((err: AxiosError) => {
+  //     return handleError(err);
+  //   });
+  // return response;
 };
 
 type postItemProp = {

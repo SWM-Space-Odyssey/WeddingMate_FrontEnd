@@ -31,7 +31,7 @@ const FeedPage = (props: Props) => {
   return (
     <Slide
       direction={`${view === "Feed" ? "left" : "right"}`}
-      in={view === "Feed"}
+      in
       mountOnEnter
       unmountOnExit
       className='px-4'

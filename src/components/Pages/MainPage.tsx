@@ -22,10 +22,7 @@ const KAKAO_LOGIN_URL =
   "https://api.weddingmate.co.kr/oauth2/authorization/kakao";
 
 const MainPage = (props: Props) => {
-  const view = useSelector((state: RootState) => state.view.currentView);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [searchParmas] = useSearchParams();
   // const accessToken = useSelector((state: RootState) => state.user.accessToken);
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
@@ -52,23 +49,13 @@ const MainPage = (props: Props) => {
     <div className='flex-1 relative flex overflow-y-scroll pt-12'>
       <RegistComponent />
       <ItemPage />
-      <FeedPage />
-      <ItemCreate />
-      <div
-        className={`${
-          view === "LandingPage" ? "" : "hidden"
-        } flex flex-col gap-4`}
-      >
-        <Button
-          variant='contained'
-          onClick={() => dispatch(intoView({ view: "Regist" }))}
-        >
+      <div className={`flex flex-col gap-4`}>
+        <Button variant='contained' onClick={() => {}}>
           RegistPage
         </Button>
         <Button
           variant='contained'
           onClick={() => {
-            dispatch(intoView({ view: "PortfolioCreate" }));
             navigate("/create/portfolio/15");
           }}
         >
@@ -77,37 +64,25 @@ const MainPage = (props: Props) => {
         <Button
           variant='contained'
           onClick={() => {
-            dispatch(intoView({ view: "Portfolio" }));
-            navigate("/portfolio/1");
+            navigate("/portfolio/15");
           }}
         >
           PortfolioPage
         </Button>
-        <Button
-          variant='contained'
-          onClick={() => dispatch(intoView({ view: "Item" }))}
-        >
+        <Button variant='contained' onClick={() => {}}>
           ItemPage
         </Button>
-        <Button
-          variant='contained'
-          onClick={() => dispatch(intoView({ view: "ItemCreate" }))}
-        >
+        <Button variant='contained' onClick={() => {}}>
           ItemCreatePage
         </Button>
-        <Button
-          variant='contained'
-          onClick={() =>
-            dispatch(intoView({ view: "Planner", requestParam: "1" }))
-          }
-        >
+        <Button variant='contained' onClick={() => {}}>
           PlannerPage
         </Button>
         <Button
           variant='contained'
-          onClick={() =>
-            dispatch(intoView({ view: "Feed", requestParam: "1" }))
-          }
+          onClick={() => {
+            navigate("/feed");
+          }}
         >
           FeedPage
         </Button>

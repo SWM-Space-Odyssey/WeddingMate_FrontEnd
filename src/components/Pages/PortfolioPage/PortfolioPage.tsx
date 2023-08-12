@@ -1,81 +1,109 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import PortfolioHeader from "./subComponents/PortfolioHeader";
 import { Button, Slide } from "@mui/material";
-import ItemCreate from "../CreatePage/ItemCreate";
 import PortfolioItemCard from "./subComponents/PortfolioItemCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
-import { intoView } from "../../../store/viewSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getItem } from "../../../api/Item";
-import { getPortfolio } from "../../../api/portfolio";
+import axios from "axios";
+import { MY_ACCESS_KEY, SERVER_URL } from "../../../common/constants";
 type Props = {};
 
+type tagResDtoList = {
+  tagId: number;
+  content: string;
+  categoryContent: string;
+};
+type headerData = {
+  id: string;
+  title: string;
+  itemResDtoList: cardData[];
+  repImgUrl: string;
+  tagResDtoList: tagResDtoList[];
+};
+type portfolioData = {
+  typeTag: "portfolio";
+  data: headerData;
+};
+type GetPortfolioResponse = portfolioData & {
+  status: "SUCCESS" | "FAIL";
+};
+type cardData = {
+  itemRecord: string;
+  portfolioId: number;
+  itemTagList: string[];
+  categoryContent: string;
+  pictures: string[];
+  order: number;
+  itemId: number;
+  company: string;
+  date: string;
+};
+
 const PortfolioPage = (props: Props) => {
-  const dispatch = useDispatch();
-  const view = useSelector((state: RootState) => state.view.currentView);
   const params = useParams();
   const navigate = useNavigate();
-  const dataRef = useRef<any>(null);
+  const [headerData, setHeaderData] = useState<headerData>();
+  const [ItemCard, setItemCard] = useState<cardData[]>();
   const itemId = params.itemId;
-  let queryFlag = null;
+  const fetchPortfolio = () => {
+    axios
+      .get(`${SERVER_URL}/api/v1/portfolio/${itemId}`, {
+        headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+      })
+      .then((res) => {
+        const data = res.data as GetPortfolioResponse;
+        if (data.status === "SUCCESS") {
+          setHeaderData(data.data);
+          setItemCard(data.data.itemResDtoList);
+        } else {
+          console.log("error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // const renderData = data?.data as GetPortfolioResponse;
+  // const headerData = {
+  //   title: renderData?.data.title,
+  //   tagList: renderData?.data.tagResDtoList,
+  //   repImgUrl: renderData?.data.repImgUrl,
+  // };
   useEffect(() => {
-    if (!itemId) {
-      navigate("/");
-      const data = getPortfolio(parseInt(itemId as string));
-      dataRef.current = data;
-    }
+    fetchPortfolio();
   }, [itemId]);
 
-  // const { data, isLoading } = useQuery(
-  //   ["portfolio"],
-  //   async () => {
-  //     console.log("hhh?");
-  //     const response = await getPortfolio(parseInt(itemId as string));
-  //     if (response) {
-  //       dataRef.current = response.data;
-  //       return response;
-  //     }
-  //   },
-  //   {
-  //     enabled: !!itemId,
-  //     refetchOnWindowFocus: false,
-  //   }
-  // );
-  console.log(dataRef);
+  console.log(headerData, ItemCard);
   return (
-    // <Slide
-    //   direction='left'
-    //   in={view === "Portfolio"}
-    //   mountOnEnter
-    //   unmountOnExit
-    // >
-    <div className='absolute w-full px-4'>
-      <Suspense fallback={<div>loading...</div>}>
-        {dataRef && (
-          <>
-            <div>
-              <PortfolioHeader />
-            </div>
-            <div className='mt-12'>
-              <Button
-                onClick={() => console.log(dataRef)}
-                sx={{ height: "38px", width: "100%" }}
-                variant='outlined'
-              >
-                아이템 추가하기
-              </Button>
-            </div>
-            <div className='mt-3'>
-              <PortfolioItemCard />
-            </div>
-          </>
-        )}
-      </Suspense>
-    </div>
-    // </Slide>
+    <Slide direction='left' in mountOnEnter unmountOnExit>
+      <div className='absolute w-full px-4'>
+        <Suspense fallback={<div>loading...</div>}>
+          {headerData && ItemCard && (
+            <>
+              <div>
+                <PortfolioHeader data={headerData} />
+              </div>
+              <div className='mt-12'>
+                <Button
+                  onClick={() => console.log(headerData)}
+                  sx={{ height: "38px", width: "100%" }}
+                  variant='outlined'
+                >
+                  아이템 추가하기
+                </Button>
+              </div>
+              <div className='mt-3'>
+                <PortfolioItemCard />
+              </div>
+            </>
+          )}
+        </Suspense>
+      </div>
+    </Slide>
   );
 };
 
