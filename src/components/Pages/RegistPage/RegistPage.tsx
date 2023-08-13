@@ -6,24 +6,32 @@ import RegistUserType from "./subComponents/RegistUserType";
 import RegistSuccess from "./subComponents/RegistSuccess";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import { plannerRegist } from "../../../api/user";
+import { useNavigate } from "react-router-dom";
 
 const RegistComponent = () => {
   const view = useSelector((state: RootState) => state.view.currentView);
   const page = useSelector((state: RootState) => state.view.page);
   const prevPage = useSelector((state: RootState) => state.view.prevPage);
   const methods = useForm<registRegister>();
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<registRegister> = (data) => {
     // alert(JSON.stringify(data));
     const { type, company, nickname, position, region, plannerTagList } = data;
     if (type === "planner") {
       const planner = {
-        company,
         nickname,
+        company,
         position,
-        region,
+        region: region[0],
         plannerTagList,
       };
-      console.log(planner);
+      plannerRegist(planner).then((res) => {
+        if (res.status === 200) {
+          alert("회원가입이 완료되었습니다.");
+          navigate("/");
+        }
+      });
     } else {
       // NOT YET
       // const couple = {
@@ -36,10 +44,10 @@ const RegistComponent = () => {
       // console.log(couple);
     }
   };
-  const transitionClass = "absolute left-0 right-0 h-full";
+  const transitionClass = "absolute left-0 right-0";
   return (
-    <Slide direction='left' in={view === "Regist"} mountOnEnter unmountOnExit>
-      <div className='absolute flex flex-col w-full h-full justify-between'>
+    <Slide direction='left' in mountOnEnter unmountOnExit>
+      <div className='flex flex-col w-full justify-between'>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <Slide
