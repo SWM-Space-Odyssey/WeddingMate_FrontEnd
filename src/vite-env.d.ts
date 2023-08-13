@@ -86,6 +86,16 @@ interface itemRegister {
 type itemRegisterType = {
   register: UseFormRegister<itemRegister>;
 };
+type ItemBody = {
+  itemRecord: string;
+  itemTagList: string[];
+  imageList: string[];
+  date: string;
+  company: string;
+  portfolioId: number;
+  order: number;
+  categoryContent: string;
+};
 
 type itemStates =
   | "categoryContent"
@@ -95,6 +105,17 @@ type itemStates =
   | "date"
   | "company";
 
+type cardData = {
+  itemRecord: string;
+  portfolioId: number;
+  itemTagList: string[];
+  categoryContent: string;
+  imageList: string[];
+  order: number;
+  itemId: number;
+  company: string;
+  date: string;
+};
 // ========================================================================≈≈
 // React Query ===============================================================
 // ========================================================================≈≈

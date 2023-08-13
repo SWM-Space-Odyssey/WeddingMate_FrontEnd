@@ -6,6 +6,7 @@ import axios from "axios";
 import { getOwnPortfolio } from "../../../../api/portfolio";
 import { useQuery } from "@tanstack/react-query";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 const mockData = [
@@ -44,6 +45,7 @@ const PlannerPortfolio = (props: Props) => {
   //     console.log(response.data);
   //   }
   // });
+  const navigate = useNavigate();
   const { data } = useQuery(["myPortfolio"], () => getOwnPortfolio(), {
     refetchOnWindowFocus: false,
   });
@@ -58,7 +60,9 @@ const PlannerPortfolio = (props: Props) => {
 
   const portfolioList = data.data.map((data) => (
     <button
-      onClick={() => {}}
+      onClick={() => {
+        navigate(`/portfolio/${data.portfolioId}`);
+      }}
       key={data.portfolioId}
       className='h-56 flex flex-col gap-1.5'
     >

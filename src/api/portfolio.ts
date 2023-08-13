@@ -4,6 +4,17 @@ import { MY_ACCESS_KEY } from "../common/constants"; // 나중에 Localstorage�
 import { handleError } from "../hooks/apiHook";
 import { useQuery } from "@tanstack/react-query";
 // const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+type ItemResponse =
+  | {
+      status: "SUCCESS";
+      data: successDatas;
+    }
+  | {
+      status: "FAIL";
+      data: failDatas;
+    };
+type successDatas = portfolioData;
+type failDatas = AxiosError;
 
 type plannerPortfolioObj = {
   title: string;
@@ -137,5 +148,22 @@ export const putPortfolio = async (prop: postItemProp) => {
     });
 
   console.log(response);
+  return response;
+};
+
+export const deletePortfolio = async (portfolioId: number) => {
+  const response = await axios
+    .delete(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+      headers: {
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return handleError(err) as ItemResponse;
+    });
   return response;
 };

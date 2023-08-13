@@ -47,16 +47,19 @@ const MainPage = (props: Props) => {
 
   return (
     <div className='flex-1 relative flex overflow-y-scroll pt-12'>
-      <RegistComponent />
-      <ItemPage />
       <div className={`flex flex-col gap-4`}>
-        <Button variant='contained' onClick={() => {}}>
+        <Button
+          variant='contained'
+          onClick={() => {
+            navigate("/regist");
+          }}
+        >
           RegistPage
         </Button>
         <Button
           variant='contained'
           onClick={() => {
-            navigate("/create/portfolio/3");
+            navigate("/create/portfolio/");
           }}
         >
           PortfolioCreatePage
@@ -69,7 +72,12 @@ const MainPage = (props: Props) => {
         >
           PortfolioPage
         </Button>
-        <Button variant='contained' onClick={() => {}}>
+        <Button
+          variant='contained'
+          onClick={() => {
+            navigate("/item/3");
+          }}
+        >
           ItemPage
         </Button>
         <Button

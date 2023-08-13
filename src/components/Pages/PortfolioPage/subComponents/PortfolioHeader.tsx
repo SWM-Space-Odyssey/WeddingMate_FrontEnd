@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import CustomTagBlock from "../../../Modules/CustomTagBlock";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 import { CountryList } from "../../../../common/CountryLIst";
+import { IconButton, Menu, MenuItem, MenuList } from "@mui/material";
+import { Delete, Edit, MoreVert } from "@mui/icons-material";
+import { useNavigate, useParams } from "react-router-dom";
+import { deletePortfolio } from "../../../../api/portfolio";
 
 type tagResDtoList = {
   tagId: number;
@@ -19,11 +23,39 @@ type Props = {
 };
 
 const Mock = ["화려한", "사람많은", "야외"];
+const dropdownMenuStyle = {
+  fontSize: "0.75rem",
+  py: 0,
+};
+const dropdownIconStyle = {
+  fontSize: "1rem",
+};
 
 const PortfolioHeader = (props: Props) => {
   const { title, tagResDtoList, repImgUrl } = props.data;
   const [location, setLocation] = useState("");
   const [mood, setMood] = useState<string[]>([]);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const portfolioId = useParams().itemId;
+  const navigate = useNavigate();
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const deleteHandler = async () => {
+    if (!portfolioId) return;
+    const response = await deletePortfolio(parseInt(portfolioId));
+    if (response.status === "SUCCESS") {
+      navigate("-1");
+    } else {
+      console.log(response);
+      alert("삭제에 실패했습니다. - PortfolioHeader");
+    }
+  };
   useEffect(() => {
     const moodlist: string[] = [];
     tagResDtoList.forEach((tag) => {
@@ -55,7 +87,25 @@ const PortfolioHeader = (props: Props) => {
         </div>
       </div>
       <div>
-        <button>수정하기</button>
+        <IconButton onClick={handleClick}>
+          <MoreVert />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          className='text-sm'
+          sx={{ py: 0 }}
+        >
+          <MenuItem sx={dropdownMenuStyle}>
+            <Edit sx={dropdownIconStyle} />
+            포트폴리오 수정하기
+          </MenuItem>
+          <MenuItem sx={dropdownMenuStyle} onClick={() => deleteHandler()}>
+            <Delete sx={dropdownIconStyle} />
+            포트폴리오 삭제하기
+          </MenuItem>
+        </Menu>
       </div>
     </div>
   );
