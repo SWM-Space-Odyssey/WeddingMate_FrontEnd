@@ -12,6 +12,8 @@ import LodingSpinner from "./components/Modules/LodingSpinner";
 import PortfolioCreate from "./components/Pages/CreatePage/PortfolioCreate";
 import PortfolioPage from "./components/Pages/PortfolioPage/PortfolioPage";
 import ItemCreate from "./components/Pages/CreatePage/ItemCreate";
+import ItemPage from "./components/Pages/ItemPage/ItemPage";
+import { Suspense } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,28 +28,34 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className='h-full flex flex-col'>
-          <div className='flex-1 relative flex overflow-y-scroll'>
-            <Routes>
-              <Route path='/' element={<MainPage />} />
-              <Route path='/regist' element={<RegisterPage />} />
-              <Route
-                path='/create/portfolio/:portfolioId?'
-                element={<PortfolioCreate />}
-              />
-              <Route path='/portfolio/:itemId' element={<PortfolioPage />} />
-              <Route path='/feed' element={<FeedPage />} />
-              <Route
-                path='/create/item/:portfolioId/:itemId?'
-                element={<ItemCreate />}
-              />
-              <Route path='/planner' element={<PlannerPage />} />
-              <Route path='/oauth2/redirect' element={<LodingSpinner />} />
-            </Routes>
-            <ReactQueryDevtools initialIsOpen={false} />
+        <Suspense fallback={<LodingSpinner />}>
+          <div className='h-full flex flex-col'>
+            <div className='flex-1 relative flex overflow-y-scroll'>
+              <Routes>
+                <Route path='/' element={<MainPage />} />
+                <Route path='/regist' element={<RegisterPage />} />
+                <Route path='/feed' element={<FeedPage />} />
+                <Route path='/planner' element={<PlannerPage />} />
+                <Route path='/item/:itemId' element={<ItemPage />} />
+                <Route path='/portfolio/:itemId' element={<PortfolioPage />} />
+                <Route
+                  path='/create/portfolio/:portfolioId?'
+                  element={<PortfolioCreate />}
+                />
+                <Route
+                  path='/create/item/:portfolioId/:itemId?'
+                  element={<ItemCreate />}
+                />
+                <Route
+                  path='/oauth2/redirect'
+                  element={<LodingSpinner redirect />}
+                />
+              </Routes>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </div>
           </div>
-        </div>
-        <NavBar />
+          <NavBar />
+        </Suspense>
       </BrowserRouter>
     </QueryClientProvider>
   );

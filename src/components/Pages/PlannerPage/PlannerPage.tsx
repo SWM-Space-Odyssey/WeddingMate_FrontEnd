@@ -10,23 +10,21 @@ type Props = {};
 const PlannerPage = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
   return (
-    <Suspense fallback={<div>loading...</div>}>
-      <Slide
-        direction={`${view === "Planner" ? "right" : "left"}`}
-        in
-        mountOnEnter
-        unmountOnExit
-      >
-        <div className='w-full h-full px-4 flex flex-col '>
-          <div className='sticky pb-5'>
-            <PlannerInfo />
-          </div>
-          <div className='overflow-y-scroll'>
-            <PlannerPortfolio />
-          </div>
+    <Slide
+      direction={`${view === "Planner" ? "right" : "left"}`}
+      in
+      mountOnEnter
+      unmountOnExit
+    >
+      <div className='w-full h-full px-4 flex flex-col '>
+        <div className='sticky pb-5'>
+          <PlannerInfo />
         </div>
-      </Slide>
-    </Suspense>
+        <div className='overflow-y-scroll'>
+          <PlannerPortfolio />
+        </div>
+      </div>
+    </Slide>
   );
 };
 

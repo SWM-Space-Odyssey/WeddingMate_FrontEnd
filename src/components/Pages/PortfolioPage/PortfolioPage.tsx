@@ -30,17 +30,6 @@ type portfolioData = {
 type GetPortfolioResponse = portfolioData & {
   status: "SUCCESS" | "FAIL";
 };
-type cardData = {
-  itemRecord: string;
-  portfolioId: number;
-  itemTagList: string[];
-  categoryContent: string;
-  pictures: string[];
-  order: number;
-  itemId: number;
-  company: string;
-  date: string;
-};
 
 const PortfolioPage = (props: Props) => {
   const params = useParams();
@@ -75,27 +64,25 @@ const PortfolioPage = (props: Props) => {
   return (
     <Slide direction='left' in mountOnEnter unmountOnExit>
       <div className='absolute w-full px-4'>
-        <Suspense fallback={<div>loading...</div>}>
-          {headerData && ItemCard && (
-            <>
-              <div>
-                <PortfolioHeader data={headerData} />
-              </div>
-              <div className='mt-12'>
-                <Button
-                  onClick={() => console.log(headerData)}
-                  sx={{ height: "38px", width: "100%" }}
-                  variant='outlined'
-                >
-                  아이템 추가하기
-                </Button>
-              </div>
-              <div className='mt-3'>
-                <PortfolioItemCard />
-              </div>
-            </>
-          )}
-        </Suspense>
+        {headerData && ItemCard && (
+          <>
+            <div>
+              <PortfolioHeader data={headerData} />
+            </div>
+            <div className='mt-12'>
+              <Button
+                onClick={() => navigate(`/create/item/${itemId}`)}
+                sx={{ height: "38px", width: "100%" }}
+                variant='outlined'
+              >
+                아이템 추가하기
+              </Button>
+            </div>
+            <div className='mt-3'>
+              <PortfolioItemCard cardData={ItemCard} />
+            </div>
+          </>
+        )}
       </div>
     </Slide>
   );

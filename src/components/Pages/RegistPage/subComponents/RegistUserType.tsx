@@ -52,11 +52,6 @@ const RegistUserType = () => {
           {buttonComponent(PlannerString)}
         </Stack>
       </div>
-      {/* <BottomButton
-        text='선택 완료'
-        flag={userType ? false : true}
-        function={buttonFunction}
-      /> */}
       <Button
         className='h-11 w-full'
         variant='outlined'

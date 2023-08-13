@@ -37,10 +37,8 @@ const FeedPage = (props: Props) => {
       className='px-4'
     >
       <div>
-        <Suspense fallback={<SkeletonImages />}>
-          <CustomSearchForm />
-          <MasonaryImage />
-        </Suspense>
+        <CustomSearchForm />
+        <MasonaryImage />
       </div>
     </Slide>
   );

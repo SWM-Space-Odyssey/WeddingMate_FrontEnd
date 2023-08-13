@@ -29,7 +29,6 @@ const PlannerInfo = (props: Props) => {
   const response = data?.data;
   return (
     <div>
-      {isLoading && <div>loading...</div>}
       {data && (
         <div className='flex flex-col items-center mt-4 gap-2'>
           <img
