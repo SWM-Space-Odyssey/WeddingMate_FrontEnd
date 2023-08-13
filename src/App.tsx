@@ -11,6 +11,7 @@ import PlannerPage from "./components/Pages/PlannerPage/PlannerPage";
 import LodingSpinner from "./components/Modules/LodingSpinner";
 import PortfolioCreate from "./components/Pages/CreatePage/PortfolioCreate";
 import PortfolioPage from "./components/Pages/PortfolioPage/PortfolioPage";
+import ItemCreate from "./components/Pages/CreatePage/ItemCreate";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,11 +32,15 @@ function App() {
               <Route path='/' element={<MainPage />} />
               <Route path='/regist' element={<RegisterPage />} />
               <Route
-                path='/create/portfolio/:itemId?'
+                path='/create/portfolio/:portfolioId?'
                 element={<PortfolioCreate />}
               />
               <Route path='/portfolio/:itemId' element={<PortfolioPage />} />
               <Route path='/feed' element={<FeedPage />} />
+              <Route
+                path='/create/item/:portfolioId/:itemId?'
+                element={<ItemCreate />}
+              />
               <Route path='/planner' element={<PlannerPage />} />
               <Route path='/oauth2/redirect' element={<LodingSpinner />} />
             </Routes>

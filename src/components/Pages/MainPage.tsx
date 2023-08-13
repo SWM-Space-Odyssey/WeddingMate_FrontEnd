@@ -56,7 +56,7 @@ const MainPage = (props: Props) => {
         <Button
           variant='contained'
           onClick={() => {
-            navigate("/create/portfolio/15");
+            navigate("/create/portfolio/3");
           }}
         >
           PortfolioCreatePage
@@ -64,7 +64,7 @@ const MainPage = (props: Props) => {
         <Button
           variant='contained'
           onClick={() => {
-            navigate("/portfolio/15");
+            navigate("/portfolio/3");
           }}
         >
           PortfolioPage
@@ -72,7 +72,12 @@ const MainPage = (props: Props) => {
         <Button variant='contained' onClick={() => {}}>
           ItemPage
         </Button>
-        <Button variant='contained' onClick={() => {}}>
+        <Button
+          variant='contained'
+          onClick={() => {
+            navigate("/create/item/3");
+          }}
+        >
           ItemCreatePage
         </Button>
         <Button variant='contained' onClick={() => {}}>

@@ -17,6 +17,7 @@ import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { PrevPage } from "../../../store/viewSlice";
 import Header from "../../Header/Header";
+import { useParams } from "react-router-dom";
 
 type Props = {
   adjust?: itemRegister;
@@ -29,36 +30,39 @@ interface itemRegister {
   date?: string;
   company?: string;
 }
+const itemRecord = {
+  state: "itemRecord" as const,
+  title: "일정 기록",
+  placeholder: "일정에 대한 상세한 기록을 작성해주세요",
+  multiline: true,
+  textCount: true,
+};
+const company = {
+  state: "company" as const,
+  title: "업체명",
+  placeholder: "업체명을 기입해주세요",
+};
 
 const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
   const onSubmit: SubmitHandler<itemRegister> = (data) => {
     console.log(data);
   };
-  const itemRecord = {
-    state: "itemRecord" as const,
-    title: "일정 기록",
-    placeholder: "일정에 대한 상세한 기록을 작성해주세요",
-    multiline: true,
-    textCount: true,
-  };
-  const company = {
-    state: "company" as const,
-    title: "업체명",
-    placeholder: "업체명을 기입해주세요",
-  };
+  const portfolioId = useParams().portfolioId;
+  const itemId = useParams().itemId;
 
   return (
     <Slide direction='left' in mountOnEnter unmountOnExit>
       <div className='w-full px-4'>
         <Header />
+        <button onClick={() => console.log(portfolioId, itemId)}>hh</button>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
             className='flex flex-col gap-6 h-full'
           >
             <ItemCategories />
-            <ImageUpload title='image' maxCount={5} />
+            <ImageUpload title='image' maxCount={5} isImmediately={true} />
             <ItemTags formState='itemTagList' />
             <CustomInput content={itemRecord} />
             <CustomDatePicker state='date' />

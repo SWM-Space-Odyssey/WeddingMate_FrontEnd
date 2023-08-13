@@ -1,32 +1,82 @@
 import { Add, Clear } from "@mui/icons-material";
 import { Badge, Button, Input } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useController, useFormContext, useWatch } from "react-hook-form";
 import CustomText from "./CustomText";
+import { useMutation, useQueries } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { postImageAndGetURI } from "../../api/Item";
+import { SERVER_IMAGE_URL } from "../../common/constants";
 
 type Props = {
   title: string;
+  isImmediately?: boolean;
   maxCount?: number;
 };
 
 const ImageUpload = (props: Props) => {
+  const { title, isImmediately } = props;
   const { control } = useFormContext();
-
+  const portfolioId = useParams().portfolioId;
   const { field } = useController({
     name: "pictures",
     control,
     rules: { required: true },
   });
   const [prevFiles, setPrevFiles] = useState<File[]>();
+  const [prevStrings, setPrevStrings] = useState<string[]>();
   const maxCount = props.maxCount ?? 1;
-
-  const pictures: File[] = useWatch({
+  const pictures: File[] | string[] = useWatch({
     control,
     name: "pictures",
   });
+  const categoryContent = useWatch({
+    control,
+    name: "categoryContent",
+  });
+  const categoryContentText = useWatch({
+    control,
+    name: "categoryContentText",
+  });
+
+  useEffect(() => {
+    if (!isImmediately) return;
+    console.log("im here", isImmediately);
+  }, [pictures]);
+
+  const bindOnChange = (data: File[] | string[]) => {
+    if (!data) return;
+    if (typeof data[0] === "string") {
+      field.onChange([...data] as string[]);
+      setPrevStrings([...data] as string[]);
+    } else {
+      field.onChange([...data] as File[]);
+      setPrevFiles([...data] as File[]);
+    }
+  };
+
+  const getURIArrFromFileArr = async (data: File[]) => {
+    if (!data) return;
+    const body = new FormData();
+    const itemFileReqDto = {
+      portfolioId: portfolioId,
+      itemCategory:
+        categoryContent === "직접입력" ? categoryContentText : categoryContent,
+    };
+    const json = JSON.stringify(itemFileReqDto);
+    const blob = new Blob([json], { type: "application/json" });
+    data.forEach((item) => {
+      body.append("file", item);
+    });
+    body.append("itemFileReqDto", blob);
+    const response = await postImageAndGetURI(body);
+    return response;
+  };
 
   const imageSpread = () => {
     return pictures?.map((item, index) => {
+      console.log(item);
+      console.log(typeof item);
       return (
         <Badge
           sx={{ p: 0 }}
@@ -37,8 +87,13 @@ const ImageUpload = (props: Props) => {
         >
           <img
             className='w-16 h-16'
-            // 여기 가이드 위해서 임시로 string으로 넣어놨습니다 나중에 수정해야합니다
-            src={typeof item !== "string" ? URL.createObjectURL(item) : ""}
+            src={
+              typeof item !== "string"
+                ? URL.createObjectURL(item)
+                : typeof item === "string"
+                ? `${SERVER_IMAGE_URL}${item}`
+                : ""
+            }
           />
         </Badge>
       );
@@ -47,31 +102,58 @@ const ImageUpload = (props: Props) => {
   const imageDelete = (targetIndex: number) => {
     if (!pictures) return;
 
-    const newArray: File[] = [];
-    pictures?.map((item, index) => {
-      if (!(targetIndex === index)) newArray.push(item);
-    });
-    field.onChange([...newArray]);
-    setPrevFiles([...newArray]);
+    if (isImmediately) {
+      const newArray: File[] = [];
+      pictures?.map((item, index) => {
+        if (!(targetIndex === index)) newArray.push(item as File);
+      });
+      bindOnChange([...newArray]);
+    } else {
+      const newArray: string[] = [];
+      pictures?.map((item, index) => {
+        if (!(targetIndex === index)) newArray.push(item as string);
+      });
+      bindOnChange([...newArray]);
+    }
   };
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const FileArray = Array.from(e.target.files);
     if (FileArray.length + (prevFiles?.length ?? 0) > maxCount)
       return alert("최대 사진 수를 초과했습니다!");
-    const handledArray = [];
-    for (let item of FileArray) {
-      if (!prevFiles?.includes(item)) {
-        handledArray.push(item);
+
+    if (isImmediately) {
+      const values: string[] = [];
+      const handledArray: string[] = [];
+
+      for (let item of FileArray) {
+        const res = await getURIArrFromFileArr([item]);
+        if (!res) continue;
+        values.push(res.data);
       }
-    }
-    if (prevFiles) {
-      field.onChange([...prevFiles, ...handledArray]);
-      setPrevFiles([...prevFiles, ...handledArray]);
+      values.forEach((item) => {
+        if (!prevStrings?.includes(item)) {
+          handledArray.push(item);
+        }
+      });
+      if (prevStrings) {
+        bindOnChange([...prevStrings, ...handledArray] as string[]);
+      } else {
+        bindOnChange([...handledArray] as string[]);
+      }
     } else {
-      field.onChange(handledArray);
-      setPrevFiles(handledArray);
+      const handledArray: File[] = [];
+      for (let item of FileArray) {
+        if (!prevFiles?.includes(item)) {
+          handledArray.push(item);
+        }
+      }
+      if (prevFiles) {
+        bindOnChange([...prevFiles, ...handledArray] as File[]);
+      } else {
+        bindOnChange([...handledArray] as File[]);
+      }
     }
   };
 

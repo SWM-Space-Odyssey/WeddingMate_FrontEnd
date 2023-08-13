@@ -16,8 +16,13 @@ type ItemResponse =
       status: "FAIL";
       data: failDatas;
     };
-type successDatas = itemTagData | portfolioData | feedData;
+type successDatas = itemTagData | portfolioData | feedData | URI;
 type failDatas = AxiosError;
+
+type URI = {
+  typeTag: "URI";
+  data: string;
+};
 
 export type feedData = {
   typeTag: "feed";
@@ -141,5 +146,25 @@ export const getFeedImage = async (pageParam: number, size: number) => {
       // throw new Error(err);
       return handleError(err) as ItemResponse;
     });
+  return response;
+};
+
+export const postImageAndGetURI = (formData: FormData) => {
+  const response = axios
+    .post(`${SERVER_URL}/api/v1/file/items`, formData, {
+      headers: {
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      const data = {
+        status: "SUCCESS" as const,
+        data: res.data.data,
+      };
+      return data;
+    });
+  console.log(response);
   return response;
 };

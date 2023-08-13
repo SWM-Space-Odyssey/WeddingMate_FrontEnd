@@ -5,7 +5,7 @@ import CustomText from "../../../Modules/CustomText";
 
 interface itemFormRegister {
   Title: string;
-  pictures: File[];
+  pictures: string[];
   Tags: string[];
   Comment: string;
   Date: string;

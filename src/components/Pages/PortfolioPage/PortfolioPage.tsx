@@ -67,12 +67,6 @@ const PortfolioPage = (props: Props) => {
       });
   };
 
-  // const renderData = data?.data as GetPortfolioResponse;
-  // const headerData = {
-  //   title: renderData?.data.title,
-  //   tagList: renderData?.data.tagResDtoList,
-  //   repImgUrl: renderData?.data.repImgUrl,
-  // };
   useEffect(() => {
     fetchPortfolio();
   }, [itemId]);

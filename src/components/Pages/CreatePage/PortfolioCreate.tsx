@@ -58,7 +58,7 @@ const PortfolioCreate = (props: Props) => {
   const [initMood, setInitMood] = useState<string[]>([]);
   const [initLocation, setInitLocation] = useState<string[]>([]);
   4;
-  const param = useParams().itemId;
+  const param = useParams().portfolioId;
   const setForm = (data?: portfolioRegister) => {
     if (data) {
       methods.reset(data);
@@ -117,7 +117,6 @@ const PortfolioCreate = (props: Props) => {
     body.append("file", data.pictures[0]);
     body.append("portfolioSaveReqDto", blob);
     if (isEdit) {
-      console.log("수정");
       const putData = await putPortfolio({
         itemType: "portfolio",
         body,
