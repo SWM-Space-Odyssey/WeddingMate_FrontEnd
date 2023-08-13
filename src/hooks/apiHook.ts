@@ -14,5 +14,7 @@ export const getURL = (itemType: string, itemId: string) => {
       return `${SERVER_URL}/api/v1/portfolio/${itemId}`;
     case "project":
       return `${SERVER_URL}/api/v1/project/${itemId}`;
+    case "item":
+      return `${SERVER_URL}/api/v1/portfolio/item/${itemId}`;
   }
 };

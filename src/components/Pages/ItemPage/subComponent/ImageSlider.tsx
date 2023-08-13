@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import Header from "../../../Header/Header";
+import { SERVER_IMAGE_URL } from "../../../../common/constants";
 
 type Props = {
   images: string[];
@@ -28,7 +29,10 @@ const ImageSlider = (props: Props) => {
         {props.images.map((image, index) => {
           return (
             <SwiperSlide key={index}>
-              <img src={image} className='w-full aspect-square object-cover' />
+              <img
+                src={SERVER_IMAGE_URL + image}
+                className='w-full aspect-square object-cover'
+              />
             </SwiperSlide>
           );
         })}
@@ -46,7 +50,10 @@ const ImageSlider = (props: Props) => {
         {props.images.map((image, index) => {
           return (
             <SwiperSlide key={index}>
-              <img src={image} className='aspect-square object-cover' />
+              <img
+                src={SERVER_IMAGE_URL + image}
+                className='aspect-square object-cover'
+              />
             </SwiperSlide>
           );
         })}

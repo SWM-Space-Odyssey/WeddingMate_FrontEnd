@@ -16,12 +16,17 @@ type ItemResponse =
       status: "FAIL";
       data: failDatas;
     };
-type successDatas = itemTagData | portfolioData | feedData | URI;
+type successDatas = itemTagData | portfolioData | feedData | URI | ItemData;
 type failDatas = AxiosError;
 
 type URI = {
   typeTag: "URI";
   data: string;
+};
+
+type itemTagData = {
+  typeTag: "itemTag";
+  tagList: string[];
 };
 
 export type feedData = {
@@ -60,11 +65,6 @@ type pageable = {
   unpaged: boolean;
 };
 
-type itemTagData = {
-  typeTag: "itemTag";
-  tagList: string[];
-};
-
 type portfolioData = {
   typeTag: "portfolio";
   id: string;
@@ -73,11 +73,14 @@ type portfolioData = {
   repImgUrl: string;
   tagResDtoList: tagResDtoList[];
 };
-
 type tagResDtoList = {
   tagId: number;
   content: string;
   categoryContent: string;
+};
+
+type ItemData = ItemBody & {
+  typeTag: "item";
 };
 
 /**
@@ -87,10 +90,9 @@ type tagResDtoList = {
  * @returns {object} axios 를 통해 받은 response 를 반환합니다.
  */
 export const getItem = async (
-  itemType: "portfolio" | "project",
+  itemType: "portfolio" | "item",
   itemId: number
 ) => {
-  console.log("getItem function" + MY_ACCESS_KEY);
   const reqURL = getURL(itemType, `${itemId}`);
   if (!reqURL) return;
   const response = await axios
@@ -166,5 +168,27 @@ export const postImageAndGetURI = (formData: FormData) => {
       return data;
     });
   console.log(response);
+  return response;
+};
+
+export const postItem = async (body: ItemBody) => {
+  const response = await axios
+    .post(`${SERVER_URL}/api/v1/portfolio/item/save`, body, {
+      headers: {
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      const data = {
+        status: "SUCCESS" as const,
+        data: res.data.data,
+      };
+      return data;
+    })
+    .catch((err) => {
+      return handleError(err) as ItemResponse;
+    });
+  console.log(body, response);
   return response;
 };
