@@ -27,18 +27,18 @@ const ItemTags = (props: Props) => {
 
   useEffect(() => {
     if (content) {
-      getTagList(content).then((res) => {
-        if (
-          res.status === "SUCCESS" &&
-          res.data.typeTag === "itemTag" &&
-          res.data.tagList
-        ) {
-          setSpreadValue(res.data.tagList);
-          return;
-        }
-        // 현재 DB 에 저장된 태그리스트가 없어서 목데이터 보여줄 겸 이렇게 해두었음
-        setSpreadValue(ITEM_TAGS);
-      });
+      // getTagList(content).then((res) => {
+      //   if (
+      //     res.status === "SUCCESS" &&
+      //     res.data.typeTag === "itemTag" &&
+      //     res.data.tagList
+      //   ) {
+      //     setSpreadValue(res.data.tagList);
+      //     return;
+      //   }
+      //   // 현재 DB 에 저장된 태그리스트가 없어서 목데이터 보여줄 겸 이렇게 해두었음
+      // });
+      setSpreadValue(ITEM_TAGS);
     }
   }, [contentText, content]);
 

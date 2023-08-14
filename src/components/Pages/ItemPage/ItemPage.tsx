@@ -41,6 +41,7 @@ const ItemPage = (props: Props) => {
       refetchOnWindowFocus: false,
     }
   );
+  console.log(data);
   const {
     categoryContent,
     company,
@@ -55,27 +56,35 @@ const ItemPage = (props: Props) => {
   return (
     <Slide direction='left' in mountOnEnter unmountOnExit>
       <div className={`px-4 h-fit flex flex-col w-full gap-6`}>
-        <Header />
-        <div className={defaultClassName}>
-          <CustomText type='Title' text='카테고리' />
-          <CustomText type='Content' text={categoryContent} />
-        </div>
-        <div className='max-w-lg'>
-          <ImageSlider images={imageList} />
-        </div>
-        <CustomTagBlock title='태그' spreadValues={tagList} />
-        <div className={defaultClassName}>
-          <CustomText type='Title' text='상세 설명' />
-          <CustomText type='Content' text={itemRecord} />
-        </div>
-        <div className={defaultClassName}>
-          <CustomText type='Title' text='일정 기록' />
-          <CustomText type='Content' text={date} />
-        </div>
-        <div className={defaultClassName}>
-          <CustomText type='Title' text='업체명' />
-          <CustomText type='Content' text={company} />
-        </div>
+        {isLoading && <div>로딩중</div>}
+        {data && (
+          <>
+            <Header />
+            <div className={defaultClassName}>
+              <CustomText type='Title' text='카테고리' />
+              <CustomText type='Content' text={categoryContent} />
+            </div>
+            <div className='max-w-lg'>
+              <ImageSlider images={imageList} />
+            </div>
+            <CustomTagBlock
+              title='태그'
+              spreadValues={itemTagList.split(",")}
+            />
+            <div className={defaultClassName}>
+              <CustomText type='Title' text='상세 설명' />
+              <CustomText type='Content' text={itemRecord} />
+            </div>
+            <div className={defaultClassName}>
+              <CustomText type='Title' text='일정 기록' />
+              <CustomText type='Content' text={date} />
+            </div>
+            <div className={defaultClassName}>
+              <CustomText type='Title' text='업체명' />
+              <CustomText type='Content' text={company} />
+            </div>
+          </>
+        )}
       </div>
     </Slide>
   );

@@ -51,27 +51,17 @@ const ItemCreate = (props: Props) => {
   const onSubmit: SubmitHandler<itemRegister> = (data) => {
     if (!portfolioId) return alert("잘못된 접근입니다. - itemCreate");
     if (!itemId) {
-      const mock = {
-        itemRecord: "너무 예쁜 드레스를 입은 신부님",
-        company: "두근두근 웨딩",
-        date: "2023-03.30",
-        portfolioId: 1,
-        categoryContent: "드레스",
-        order: 1,
-        itemTagList: ["고급스러운", "러블리"],
-        imageList: ["portfolio/8/dress/20230812-1612947.jpg"],
-      };
       const body = {
         itemRecord: data.itemRecord,
         company: data.company,
         date: data.date,
         portfolioId: parseInt(portfolioId),
-        categoryContent: data.categoryContent,
+        category: data.categoryContent,
         order: 1,
         imageList: data.pictures,
-        itemTagList: data.itemTagList,
+        itemTagList: data.itemTagList.join(","),
       };
-      console.log(body, mock);
+      // console.log(body);
       const res = postItem(body);
       console.log("res", res);
     } else {
@@ -82,7 +72,6 @@ const ItemCreate = (props: Props) => {
     <Slide direction='left' in mountOnEnter unmountOnExit>
       <div className='w-full px-4'>
         <Header />
-        <button onClick={() => console.log(portfolioId, itemId)}>hh</button>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}

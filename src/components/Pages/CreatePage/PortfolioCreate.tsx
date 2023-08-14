@@ -55,12 +55,14 @@ const PortfolioCreate = (props: Props) => {
   const [initLocation, setInitLocation] = useState<string[]>([]);
   4;
   const param = useParams().portfolioId;
+  const navigate = useNavigate();
   const setForm = (data?: portfolioRegister) => {
     if (data) {
       methods.reset(data);
       setInitMood(data.Mood);
       setInitLocation(data.Location);
     } else {
+      console.log("mothods Reset");
       methods.reset();
       setInitMood([]);
       setInitLocation([]);
@@ -85,11 +87,12 @@ const PortfolioCreate = (props: Props) => {
       const response = resData.data;
       const resMood: string[] = [];
       const resLocation: string[] = [];
-      response.tagResDtoList.forEach((tag) => {
-        if (CountryList.includes(tag.content)) {
-          resLocation.push(tag.content);
-        } else if (!initMood.includes(tag.content)) {
-          resMood.push(tag.content);
+      const tagSplit = response.tagList.split(",");
+      tagSplit.forEach((tag) => {
+        if (CountryList.includes(tag)) {
+          resLocation.push(tag);
+        } else if (!initMood.includes(tag)) {
+          resMood.push(tag);
         }
       });
       const FormData = {
@@ -104,15 +107,16 @@ const PortfolioCreate = (props: Props) => {
 
   const onSubmit: SubmitHandler<portfolioRegister> = async (data) => {
     const body = new FormData();
+    const joinString = data.Mood.concat(data.Location).join(",");
     const jsonData = {
       title: data.Title,
-      tags: data.Mood.concat(data.Location),
+      tags: joinString,
     };
+    console.log(joinString);
     const json = JSON.stringify(jsonData);
     const blob = new Blob([json], { type: "application/json" });
     body.append("file", data.pictures[0]);
     body.append("portfolioSaveReqDto", blob);
-    console.log(data);
     if (isEdit) {
       const putData = await putPortfolio({
         itemType: "portfolio",
