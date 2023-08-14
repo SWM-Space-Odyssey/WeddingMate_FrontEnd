@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import PlannerInfo from "./subComponent/PlannerInfo";
 import PlannerPortfolio from "./subComponent/PlannerPortfolio";
+import BottomPostButton from "./subComponent/BottomPostButton";
 
 type Props = {};
 
@@ -23,6 +24,9 @@ const PlannerPage = (props: Props) => {
         <div className='overflow-y-scroll'>
           <PlannerPortfolio />
         </div>
+        <p className='absolute right-4 bottom-20 z-10'>
+          <BottomPostButton />
+        </p>
       </div>
     </Slide>
   );
