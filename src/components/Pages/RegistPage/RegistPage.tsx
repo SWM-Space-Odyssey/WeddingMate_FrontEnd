@@ -24,10 +24,10 @@ const RegistComponent = () => {
         company,
         position,
         region: region[0],
-        plannerTagList,
+        plannerTagList: plannerTagList?.join(","),
       };
       plannerRegist(planner).then((res) => {
-        if (res.status === 200) {
+        if (res.status === 200 && res.data.data === "SUCCESS") {
           alert("회원가입이 완료되었습니다.");
           navigate("/");
         }

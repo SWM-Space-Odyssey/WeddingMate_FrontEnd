@@ -31,7 +31,7 @@ const MainPage = (props: Props) => {
       refetchOnWindowFocus: false,
     });
     const refreshData = useQuery(["refresh"], () => tokenRefresh(accessToken), {
-      enabled: checkData.data?.status === 401,
+      enabled: checkData.data?.status !== 200,
       refetchOnWindowFocus: false,
     });
     if (checkData.data?.status !== 200) {

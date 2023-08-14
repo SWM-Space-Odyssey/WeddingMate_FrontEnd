@@ -10,11 +10,13 @@ import React, {
 } from "react";
 import Masonry from "react-masonry-css";
 import {
-  MY_ACCESS_KEY,
+  // MY_ACCESS_KEY,
   SERVER_IMAGE_URL,
   SERVER_URL,
 } from "../../../../common/constants";
 import { getFeedImage } from "../../../../api/Item";
+import { useNavigate } from "react-router-dom";
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
 type loremPicsum = {

@@ -1,15 +1,18 @@
 import axios, { AxiosResponse } from "axios";
-import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
+// import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
+import { SERVER_URL } from "../common/constants";
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type plannerBody = {
   nickname: string;
   company: string;
   position: string;
   region: string;
-  plannerTagList: string[] | undefined;
+  plannerTagList: string | undefined;
 };
 
 export const plannerRegist = async (body: plannerBody) => {
+  console.log(body);
   const response: AxiosResponse = await axios
     .post(`${SERVER_URL}/api/v1/signup/planner`, body, {
       headers: {
@@ -32,7 +35,6 @@ export const userCheck = async (token: string) => {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => {
-      return res;
     })
     .catch((err) => {
       return err.response;

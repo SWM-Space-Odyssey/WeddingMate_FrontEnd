@@ -7,6 +7,7 @@ import { IconButton, Menu, MenuItem, MenuList } from "@mui/material";
 import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
 import { deletePortfolio } from "../../../../api/portfolio";
+import HeaderOptionButton from "../../../Modules/HeaderOptionButton";
 
 type tagResDtoList = {
   tagId: number;
@@ -17,7 +18,7 @@ type tagResDtoList = {
 type Props = {
   data: {
     title: string;
-    tagResDtoList: tagResDtoList[];
+    tagList: string;
     repImgUrl: string;
   };
 };
@@ -32,42 +33,60 @@ const dropdownIconStyle = {
 };
 
 const PortfolioHeader = (props: Props) => {
-  const { title, tagResDtoList, repImgUrl } = props.data;
+  const { title, tagList, repImgUrl } = props.data;
   const [location, setLocation] = useState("");
   const [mood, setMood] = useState<string[]>([]);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const portfolioId = useParams().itemId;
   const navigate = useNavigate();
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const deleteHandler = async () => {
     if (!portfolioId) return;
     const response = await deletePortfolio(parseInt(portfolioId));
-    if (response.status === "SUCCESS") {
-      navigate("-1");
+    if (response.data.status === "SUCCESS") {
+      navigate(-1);
     } else {
       console.log(response);
       alert("삭제에 실패했습니다. - PortfolioHeader");
     }
   };
+  const menuItems = [
+    {
+      content: (
+        <>
+          <Edit sx={dropdownIconStyle} />
+          포트폴리오 수정하기
+        </>
+      ),
+      onClick: () => {
+        navigate(`/create/portfolio/${portfolioId}`);
+      },
+      style: dropdownMenuStyle,
+    },
+    {
+      content: (
+        <>
+          <Delete sx={dropdownIconStyle} />
+          포트폴리오 삭제하기
+        </>
+      ),
+      onClick: () => {
+        deleteHandler();
+      },
+      style: dropdownMenuStyle,
+    },
+  ];
+
   useEffect(() => {
     const moodlist: string[] = [];
-    tagResDtoList.forEach((tag) => {
-      if (CountryList.includes(tag.content)) {
-        setLocation(tag.content);
+    tagList.split(",").forEach((tag) => {
+      if (CountryList.includes(tag)) {
+        setLocation(tag);
       } else {
-        moodlist.push(tag.content);
+        moodlist.push(tag);
       }
     });
     setMood(moodlist);
-  }, [tagResDtoList]);
-
+  }, [tagList]);
   return (
     <div className='flex flex-row gap-2.5 mt-5'>
       <div>
@@ -86,27 +105,7 @@ const PortfolioHeader = (props: Props) => {
           </div>
         </div>
       </div>
-      <div>
-        <IconButton onClick={handleClick}>
-          <MoreVert />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          className='text-sm'
-          sx={{ py: 0 }}
-        >
-          <MenuItem sx={dropdownMenuStyle}>
-            <Edit sx={dropdownIconStyle} />
-            포트폴리오 수정하기
-          </MenuItem>
-          <MenuItem sx={dropdownMenuStyle} onClick={() => deleteHandler()}>
-            <Delete sx={dropdownIconStyle} />
-            포트폴리오 삭제하기
-          </MenuItem>
-        </Menu>
-      </div>
+      <HeaderOptionButton data={{ menuItems }} />
     </div>
   );
 };

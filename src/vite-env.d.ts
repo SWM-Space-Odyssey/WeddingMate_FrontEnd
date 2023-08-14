@@ -88,13 +88,13 @@ type itemRegisterType = {
 };
 type ItemBody = {
   itemRecord: string;
-  itemTagList: string[];
+  itemTagList: string;
   imageList: string[];
   date: string;
   company: string;
   portfolioId: number;
   order: number;
-  categoryContent: string;
+  category: string;
 };
 
 type itemStates =

@@ -3,12 +3,13 @@ import CustomText from "../../../Modules/CustomText";
 import CustomTagBlock from "../../../Modules/CustomTagBlock";
 import { useQuery } from "@tanstack/react-query";
 import {
-  MY_ACCESS_KEY,
+  // MY_ACCESS_KEY,
   SERVER_IMAGE_URL,
   SERVER_URL,
 } from "../../../../common/constants";
 import axios from "axios";
 const mockTag = ["친절한", "답변이빠른", "꼼꼼한"];
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
 
@@ -27,6 +28,7 @@ const PlannerInfo = (props: Props) => {
     }
   );
   const response = data?.data;
+  console.log(response);
   return (
     <div>
       {data && (

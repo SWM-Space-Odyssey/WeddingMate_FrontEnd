@@ -8,7 +8,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { MY_ACCESS_KEY, SERVER_URL } from "../../../common/constants";
+import {
+  // MY_ACCESS_KEY,
+  SERVER_URL,
+} from "../../../common/constants";
+import Header from "../../Header/Header";
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+
 type Props = {};
 
 type tagResDtoList = {
@@ -21,7 +27,7 @@ type headerData = {
   title: string;
   itemResDtoList: cardData[];
   repImgUrl: string;
-  tagResDtoList: tagResDtoList[];
+  tagList: string;
 };
 type portfolioData = {
   typeTag: "portfolio";
@@ -60,10 +66,10 @@ const PortfolioPage = (props: Props) => {
     fetchPortfolio();
   }, [itemId]);
 
-  console.log(headerData, ItemCard);
   return (
     <Slide direction='left' in mountOnEnter unmountOnExit>
       <div className='absolute w-full px-4'>
+        <Header />
         {headerData && ItemCard && (
           <>
             <div>

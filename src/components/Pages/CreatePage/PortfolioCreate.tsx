@@ -12,13 +12,15 @@ import axios from "axios";
 import { getItem } from "../../../api/Item";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import Header from "../../Header/Header";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   getPortfolio,
   postPortfolio,
-  putPortfolio,
+  editPortfolio,
 } from "../../../api/portfolio";
-import { MY_ACCESS_KEY, SERVER_URL } from "../../../common/constants";
+// import { MY_ACCESS_KEY, SERVER_URL } from "../../../common/constants";
+import { SERVER_URL } from "../../../common/constants";
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
 interface PortfolioInputContentType {
@@ -41,14 +43,8 @@ type portfolioData = {
     title: string;
     itemResDtoList: Object[];
     repImgUrl: string;
-    tagResDtoList: tagResDtoList[];
+    tagList: string;
   };
-};
-
-type tagResDtoList = {
-  tagId: number;
-  content: string;
-  categoryContent: string;
 };
 
 const PortfolioCreate = (props: Props) => {

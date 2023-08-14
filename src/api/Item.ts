@@ -1,12 +1,9 @@
 import axios, { Axios, AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
-import { MY_ACCESS_KEY } from "../common/constants";
+// import { MY_ACCESS_KEY } from "../common/constants";
 import { getURL, handleError } from "../hooks/apiHook";
-// const MY_ACCESS_KEY = localStorage.getItem("accessToken");
-// type getItemProp = {
-//   itemType: "portfolio" | "project";
-//   itemId: number;
-// };
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+
 type ItemResponse =
   | {
       status: "SUCCESS";

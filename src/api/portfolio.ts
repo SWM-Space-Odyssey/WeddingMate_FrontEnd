@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
-import { MY_ACCESS_KEY } from "../common/constants"; // 나중에 Localstorage에서 받아오기
+// import { MY_ACCESS_KEY } from "../common/constants"; // 나중에 Localstorage에서 받아오기
 import { handleError } from "../hooks/apiHook";
 import { useQuery } from "@tanstack/react-query";
-// const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 type ItemResponse =
   | {
       status: "SUCCESS";
@@ -130,7 +130,6 @@ export const postPortfolio = async (prop: postItemProp) => {
 export const putPortfolio = async (prop: postItemProp) => {
   const { itemType, itemId, body } = prop;
   const response = await axios
-    .put(`${SERVER_URL}/api/v1/portfolio/${itemId}`, body, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${MY_ACCESS_KEY}`,
