@@ -127,9 +127,10 @@ export const postPortfolio = async (prop: postItemProp) => {
   return response;
 };
 
-export const putPortfolio = async (prop: postItemProp) => {
+export const editPortfolio = async (prop: postItemProp) => {
   const { itemType, itemId, body } = prop;
   const response = await axios
+    .post(`${SERVER_URL}/api/v1/portfolio/${itemId}`, body, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${MY_ACCESS_KEY}`,

@@ -118,7 +118,7 @@ const PortfolioCreate = (props: Props) => {
     body.append("file", data.pictures[0]);
     body.append("portfolioSaveReqDto", blob);
     if (isEdit) {
-      const putData = await putPortfolio({
+      const putData = await editPortfolio({
         itemType: "portfolio",
         body,
         itemId: isEdit,
@@ -127,7 +127,11 @@ const PortfolioCreate = (props: Props) => {
       console.log("포트폴리오 수정에 실패했습니다.");
     } else {
       const postData = await postPortfolio({ itemType: "portfolio", body });
-      if (postData.status === "SUCCESS") return setForm();
+      if (postData.status === "SUCCESS") {
+        setForm();
+        navigate("/planner");
+        return;
+      }
       console.log("포트폴리오 등록에 실패했습니다.");
     }
   };

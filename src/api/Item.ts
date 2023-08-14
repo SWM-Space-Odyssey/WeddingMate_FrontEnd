@@ -150,7 +150,7 @@ export const getFeedImage = async (pageParam: number, size: number) => {
 
 export const postImageAndGetURI = (formData: FormData) => {
   const response = axios
-    .post(`${SERVER_URL}/api/v1/file/items`, formData, {
+    .post(`${SERVER_URL}/api/v1/portfolio/item/file`, formData, {
       headers: {
         Authorization: `Bearer ${MY_ACCESS_KEY}`,
         "Content-Type": "multipart/form-data",

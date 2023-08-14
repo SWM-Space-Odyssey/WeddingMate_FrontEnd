@@ -81,9 +81,10 @@ const useFetchUsers = (param?: string) =>
     }
   );
 
-const MasonaryImage = (props: Props) => {
+const MasonryImage = (props: Props) => {
   const { data, isLoading, fetchNextPage } = useFetchUsers();
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
   const renderData = useMemo(() => {
     if (data?.pages[0].status === "FAIL") setIsError(true);
     console.log(data);
@@ -99,15 +100,23 @@ const MasonaryImage = (props: Props) => {
   const realRender = useMemo(() => {
     return renderData.map((item, index) => {
       console.log(item, index);
+      let imageNav = "";
+      if (!item) return;
+      if (item.itemId === null) {
+        imageNav = `/portfolio/${item.portfolioId}`;
+      } else {
+        imageNav = `/item/${item.itemId}`;
+      }
+
       if (!item) return;
       return (
         <img
-          onClick={() => console.log(item, index)}
+          onClick={() => navigate(imageNav)}
           src={SERVER_IMAGE_URL + item.url}
           alt={String(item.url)}
           key={index}
           loading='lazy'
-          className='pb-2'
+          className='pb-2 cursor-pointer'
         />
       );
     });
@@ -134,4 +143,4 @@ const MasonaryImage = (props: Props) => {
   );
 };
 
-export default React.memo(MasonaryImage);
+export default React.memo(MasonryImage);

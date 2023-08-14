@@ -2,7 +2,7 @@ import { Slide } from "@mui/material";
 import React, { Suspense, useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import MasonaryImage from "./subComponent/MasonaryImage";
+import MasonryImage from "./subComponent/MasonryImage";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonImages from "../../Modules/SkeletonImages";
@@ -38,7 +38,7 @@ const FeedPage = (props: Props) => {
     >
       <div>
         <CustomSearchForm />
-        <MasonaryImage />
+        <MasonryImage />
       </div>
     </Slide>
   );

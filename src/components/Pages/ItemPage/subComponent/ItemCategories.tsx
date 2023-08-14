@@ -25,8 +25,10 @@ const ItemCategories = (props: Props) => {
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
-    if (selectValue !== "직접입력" || e.currentTarget.type === "select-one")
+    console.log(e.currentTarget.value);
+    if (selectValue !== "직접입력" || e.currentTarget.type === "select-one") {
       setSelectValue(value);
+    }
     setValue("categoryContentText", "");
   };
   return (
@@ -51,6 +53,7 @@ const ItemCategories = (props: Props) => {
             onChange: (e) => selectHandler(e),
           })}
         >
+          <option value={"default"}>카테고리를 입력해주세요</option>
           <option value={"드레스"}>드레스</option>
           <option value={"메이크업"}>메이크업</option>
           <option value={"스튜디오"}>스튜디오</option>
