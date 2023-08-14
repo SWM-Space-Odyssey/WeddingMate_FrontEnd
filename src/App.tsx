@@ -50,6 +50,7 @@ function App() {
                   path='/oauth2/redirect'
                   element={<LodingSpinner redirect />}
                 />
+                <Route path='/spinner' element={<LodingSpinner />} />
               </Routes>
               <ReactQueryDevtools initialIsOpen={false} />
             </div>
