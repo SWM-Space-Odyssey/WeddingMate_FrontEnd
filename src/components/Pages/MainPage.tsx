@@ -40,6 +40,11 @@ const MainPage = (props: Props) => {
       } else {
         localStorage.removeItem("accessToken");
       }
+    } else {
+      if (checkData.data?.data.data === "UNREGISTERED") {
+        console.log("you have to regist!!");
+        // navigate("/regist");
+      }
     }
   } else {
     console.log("no token");

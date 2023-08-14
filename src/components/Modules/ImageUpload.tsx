@@ -57,6 +57,9 @@ const ImageUpload = (props: Props) => {
 
   const getURIArrFromFileArr = async (data: File[]) => {
     if (!data) return;
+    if (categoryContent === "default")
+      return alert("카테고리를 먼저 선택해주세요");
+    console.log(categoryContent);
     const body = new FormData();
     const itemFileReqDto = {
       portfolioId: portfolioId,

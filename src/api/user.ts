@@ -29,12 +29,22 @@ export const plannerRegist = async (body: plannerBody) => {
   return response;
 };
 
+type userCheckResponse = {
+  status: number;
+  data: {
+    status: string;
+    data: "UNREGISTERED" | "PLANNER" | "CUSTOMER";
+  };
+};
+
 export const userCheck = async (token: string) => {
   const response: AxiosResponse = await axios
-    .get(`${SERVER_URL}/api/v1/category/all`, {
+    .get(`${SERVER_URL}/api/v1/signup`, {
       headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true,
     })
     .then((res) => {
+      return res as userCheckResponse;
     })
     .catch((err) => {
       return err.response;
@@ -44,6 +54,7 @@ export const userCheck = async (token: string) => {
 };
 
 export const tokenRefresh = async (accessToken: string) => {
+  console.log(accessToken);
   const response = await axios
     .post(
       `${SERVER_URL}/api/v1/token/refresh`,
