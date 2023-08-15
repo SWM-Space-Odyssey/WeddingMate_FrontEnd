@@ -95,6 +95,7 @@ type ItemBody = {
   portfolioId: number;
   order: number;
   category: string;
+  isWriter?: boolean;
 };
 
 type itemStates =

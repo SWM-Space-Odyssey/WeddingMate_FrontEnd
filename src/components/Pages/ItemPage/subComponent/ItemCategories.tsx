@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../../../Modules/CustumInput";
 import { UseFormRegister, useFormContext } from "react-hook-form";
 import CustomText from "../../../Modules/CustomText";
@@ -15,7 +15,9 @@ type itemRegisterType = {
   register: UseFormRegister<itemFormRegister>;
 };
 
-type Props = {};
+type Props = {
+  required?: boolean;
+};
 
 const ItemCategories = (props: Props) => {
   const [selectValue, setSelectValue] = useState<string>("드레스");
@@ -31,10 +33,19 @@ const ItemCategories = (props: Props) => {
     }
     setValue("categoryContentText", "");
   };
+  useEffect(() => {
+    console.log(selectValue);
+    if (selectValue === "직접입력") {
+      setValue("categoryContent", "");
+    } else {
+      setValue("categoryContent", selectValue);
+    }
+  }, [selectValue]);
+
   return (
     <div>
       <div className='mb-1 w-full'>
-        <CustomText type='Title' text='카테고리' />
+        <CustomText type='Title' text='카테고리' required={props.required} />
       </div>
       <div className='flex flex-row gap-2 transition-all h-11'>
         <input

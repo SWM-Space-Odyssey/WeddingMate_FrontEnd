@@ -100,6 +100,9 @@ export const getItem = async (
       withCredentials: true,
     })
     .then((res) => {
+      if (res.data.status === "SUCCESS") {
+        res.data.data.typeTag = itemType;
+      }
       return res.data;
     })
     .catch((err: AxiosError) => {
@@ -186,6 +189,47 @@ export const postItem = async (body: ItemBody) => {
     .catch((err) => {
       return handleError(err) as ItemResponse;
     });
-  console.log(body, response);
+  return response;
+};
+
+export const putItem = async (itemId: number, body: ItemBody) => {
+  const response = await axios
+    .put(`${SERVER_URL}/api/v1/portfolio/item/${itemId}`, body, {
+      headers: {
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      const data = {
+        status: "SUCCESS" as const,
+        data: res.data.data,
+      };
+      return data;
+    })
+    .catch((err) => {
+      return handleError(err) as ItemResponse;
+    });
+  return response;
+};
+
+export const deleteItem = async (itemId: number) => {
+  const response = await axios
+    .delete(`${SERVER_URL}/api/v1/portfolio/item/${itemId}`, {
+      headers: {
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      const data = {
+        status: "SUCCESS" as const,
+        data: res.data.data,
+      };
+      return data;
+    })
+    .catch((err) => {
+      return handleError(err) as ItemResponse;
+    });
   return response;
 };

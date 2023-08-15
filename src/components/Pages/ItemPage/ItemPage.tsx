@@ -8,7 +8,9 @@ import { Slide } from "@mui/material";
 import Header from "../../Header/Header";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getItem } from "../../../api/Item";
+import { deleteItem, getItem } from "../../../api/Item";
+import HeaderOptionButton from "../../Modules/HeaderOptionButton";
+import { Delete, Edit } from "@mui/icons-material";
 
 type Props = {};
 
@@ -41,9 +43,21 @@ const ItemPage = (props: Props) => {
       refetchOnWindowFocus: false,
     }
   );
+
+  const deleteHandler = async () => {
+    if (!portfolioId) return;
+    const response = await deleteItem(parseInt(itemId));
+    if (response.data.status === "SUCCESS") {
+      navigate(-1);
+    } else {
+      console.log(response);
+      alert("삭제에 실패했습니다. - PortfolioHeader");
+    }
+  };
+
   console.log(data);
   const {
-    categoryContent,
+    category,
     company,
     date,
     imageList,
@@ -51,42 +65,77 @@ const ItemPage = (props: Props) => {
     itemTagList,
     order,
     portfolioId,
+    isWriter,
   } = data?.data as ItemBody;
 
+  const menuItems = [
+    {
+      content: (
+        <>
+          <Edit />
+          아이템 수정하기
+        </>
+      ),
+      onClick: () => {
+        navigate(`/create/item/${portfolioId}/${order}/${itemId}`);
+      },
+    },
+    {
+      content: (
+        <>
+          <Delete />
+          아이템 삭제하기
+        </>
+      ),
+      onClick: () => {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+          deleteHandler();
+        }
+      },
+    },
+  ];
+
   return (
-    <Slide direction='left' in mountOnEnter unmountOnExit>
-      <div className={`px-4 h-fit flex flex-col w-full gap-6`}>
-        {isLoading && <div>로딩중</div>}
-        {data && (
-          <>
-            <Header />
-            <div className={defaultClassName}>
-              <CustomText type='Title' text='카테고리' />
-              <CustomText type='Content' text={categoryContent} />
-            </div>
-            <div className='max-w-lg'>
-              <ImageSlider images={imageList} />
-            </div>
-            <CustomTagBlock
-              title='태그'
-              spreadValues={itemTagList.split(",")}
-            />
-            <div className={defaultClassName}>
-              <CustomText type='Title' text='상세 설명' />
-              <CustomText type='Content' text={itemRecord} />
-            </div>
-            <div className={defaultClassName}>
-              <CustomText type='Title' text='일정 기록' />
-              <CustomText type='Content' text={date} />
-            </div>
-            <div className={defaultClassName}>
-              <CustomText type='Title' text='업체명' />
-              <CustomText type='Content' text={company} />
-            </div>
-          </>
-        )}
+    <>
+      <div>
+        <Header />
       </div>
-    </Slide>
+      <Slide direction='left' in mountOnEnter unmountOnExit>
+        <div className={`px-4 h-fit flex flex-col w-full gap-6`}>
+          {isLoading && <div>로딩중</div>}
+          {data && (
+            <>
+              <div className='flex justify-between'>
+                <div className={defaultClassName}>
+                  <CustomText type='Title' text='카테고리' />
+                  <CustomText type='Content' text={category} />
+                </div>
+                {isWriter && <HeaderOptionButton data={{ menuItems }} />}
+              </div>
+              <div className='max-w-lg'>
+                <ImageSlider images={imageList} />
+              </div>
+              <CustomTagBlock
+                title='태그'
+                spreadValues={itemTagList.split(",")}
+              />
+              <div className={defaultClassName}>
+                <CustomText type='Title' text='상세 설명' />
+                <CustomText type='Content' text={itemRecord} />
+              </div>
+              <div className={defaultClassName}>
+                <CustomText type='Title' text='일정 기록' />
+                <CustomText type='Content' text={date} />
+              </div>
+              <div className={defaultClassName}>
+                <CustomText type='Title' text='업체명' />
+                <CustomText type='Content' text={company} />
+              </div>
+            </>
+          )}
+        </div>
+      </Slide>
+    </>
   );
 };
 
