@@ -8,7 +8,9 @@ import { useQuery } from "@tanstack/react-query";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 import { useNavigate } from "react-router-dom";
 
-type Props = {};
+type Props = {
+  mypage?: boolean;
+};
 const mockData = [
   {
     portfolioId: 1,
@@ -37,14 +39,6 @@ const mockData = [
 ];
 
 const PlannerPortfolio = (props: Props) => {
-  const dispatch = useDispatch();
-  // const response = getOwnPortfolio().then((response) => {
-  //   if (response.status === "SUCCESS") {
-  //     console.log(response.data);
-  //   } else {
-  //     console.log(response.data);
-  //   }
-  // });
   const navigate = useNavigate();
   const { data } = useQuery(["myPortfolio"], () => getOwnPortfolio(), {
     refetchOnWindowFocus: false,

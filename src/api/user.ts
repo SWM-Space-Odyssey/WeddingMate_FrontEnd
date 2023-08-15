@@ -28,6 +28,22 @@ export const plannerRegist = async (body: plannerBody) => {
     });
   return response;
 };
+export const editProfileImg = async (formData: FormData) => {
+  const response: AxiosResponse = await axios
+    .post(`${SERVER_URL}/api/v1/profile/file`, formData, {
+      headers: {
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+  return response;
+};
 
 type userCheckResponse = {
   status: number;
