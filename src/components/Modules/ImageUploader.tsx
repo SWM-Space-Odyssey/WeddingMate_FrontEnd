@@ -14,7 +14,7 @@ type Props = {
   maxCount?: number;
 };
 
-const ImageUpload = (props: Props) => {
+const ImageUploader = (props: Props) => {
   const { title, isImmediately } = props;
   const { control } = useFormContext();
   const portfolioId = useParams().portfolioId;
@@ -188,4 +188,4 @@ const ImageUpload = (props: Props) => {
   );
 };
 
-export default ImageUpload;
+export default ImageUploader;

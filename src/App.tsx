@@ -32,10 +32,9 @@ function App() {
           <div className='h-full flex flex-col'>
             <div className='flex-1 relative flex overflow-y-scroll'>
               <Routes>
-                <Route path='/' element={<MainPage />} />
+                <Route path='/' element={<FeedPage />} />
                 <Route path='/regist' element={<RegisterPage />} />
-                <Route path='/feed' element={<FeedPage />} />
-                <Route path='/planner' element={<PlannerPage />} />
+                <Route path='/planner/:Id' element={<PlannerPage />} />
                 <Route path='/item/:itemId' element={<ItemPage />} />
                 <Route path='/portfolio/:itemId' element={<PortfolioPage />} />
                 <Route
@@ -50,12 +49,13 @@ function App() {
                   path='/oauth2/redirect'
                   element={<LodingSpinner redirect />}
                 />
+                <Route path='/admin' element={<MainPage />} />
                 <Route path='/spinner' element={<LodingSpinner />} />
               </Routes>
               <ReactQueryDevtools initialIsOpen={false} />
             </div>
           </div>
-          <NavBar />
+          {/* <NavBar /> */}
         </Suspense>
       </BrowserRouter>
     </QueryClientProvider>
