@@ -1,7 +1,7 @@
 import { Add, Clear } from "@mui/icons-material";
 import { Badge, Button, Input } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useController, useFormContext, useWatch } from "react-hook-form";
+import { set, useController, useFormContext, useWatch } from "react-hook-form";
 import CustomText from "./CustomText";
 import { useMutation, useQueries } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
@@ -12,19 +12,21 @@ type Props = {
   title: string;
   isImmediately?: boolean;
   maxCount?: number;
+  required?: boolean;
 };
 
 const ImageUploader = (props: Props) => {
   const { title, isImmediately } = props;
   const { control } = useFormContext();
   const portfolioId = useParams().portfolioId;
+  const itemId = useParams().itemId;
   const { field } = useController({
     name: "pictures",
     control,
     rules: { required: true },
   });
-  const [prevFiles, setPrevFiles] = useState<File[]>();
-  const [prevStrings, setPrevStrings] = useState<string[]>();
+  const [prevFiles, setPrevFiles] = useState<File[]>([]);
+  const [prevStrings, setPrevStrings] = useState<string[]>([]);
   const maxCount = props.maxCount ?? 1;
   const pictures: File[] | string[] = useWatch({
     control,
@@ -41,12 +43,15 @@ const ImageUploader = (props: Props) => {
 
   useEffect(() => {
     if (!isImmediately) return;
-    console.log("im here", isImmediately);
+    if (itemId && pictures) {
+      setPrevStrings([...(pictures as string[])]);
+    }
   }, [pictures]);
 
   const bindOnChange = (data: File[] | string[]) => {
     if (!data) return;
     if (typeof data[0] === "string") {
+      console.log(field);
       field.onChange([...data] as string[]);
       setPrevStrings([...data] as string[]);
     } else {
@@ -167,6 +172,7 @@ const ImageUploader = (props: Props) => {
         <span className='tracking-widest font-bold text-sm'>
           ({pictures?.length ?? 0}/{maxCount})
         </span>
+        {props.required && <span className='text-[#FF6A6A]'>*</span>}
       </div>
       <div className='flex gap-1.5 flex-wrap'>
         <label>

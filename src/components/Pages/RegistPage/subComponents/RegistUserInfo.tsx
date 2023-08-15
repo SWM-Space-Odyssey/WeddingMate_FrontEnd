@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { CountryList } from "../../../../common/CountryLIst";
-import CustomInput from "../../../Modules/CustumInput";
+import CustomInput from "../../../Modules/CustomInput";
 
 import CustomTagBlock from "../../../Modules/CustomTagBlock";
 import { Button } from "@mui/material";

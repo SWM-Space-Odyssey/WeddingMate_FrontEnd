@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../Modules/CustumInput";
+import CustomInput from "../../Modules/CustomInput";
 import { FormProvider, SubmitHandler, set, useForm } from "react-hook-form";
 import CustomTagBlock from "../../Modules/CustomTagBlock";
 import { MoodTagList } from "../../../common/TagList";
@@ -153,7 +153,7 @@ const PortfolioCreate = (props: Props) => {
       const postData = await postPortfolio({ itemType: "portfolio", body });
       if (postData.status === "SUCCESS") {
         setForm();
-        navigate("/planner");
+        navigate("/plannermypage");
         return;
       }
       console.log("포트폴리오 등록에 실패했습니다.");
@@ -167,42 +167,48 @@ const PortfolioCreate = (props: Props) => {
     getInitData(isValidParam);
   }, [param]);
   return (
-    <Slide direction='left' in mountOnEnter unmountOnExit>
-      <div className='absolute h-full px-4'>
+    <>
+      <div>
         <Header />
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className='flex flex-col gap-6 h-full '
-          >
-            <CustomInput content={InputContent} />
-            <CustomTagBlock
-              title='MOOD'
-              renderCounter={true}
-              spreadValues={MoodTagList}
-              formState='Mood'
-              maxTag={3}
-              initValue={initMood}
-            />
-            <CustomTagBlock
-              title='Location'
-              spreadValues={CountryList}
-              formState='Location'
-              initValue={[initRegion]}
-            />
-            <ImageUploader title='image' maxCount={1} />
-            <Button
-              type='submit'
-              sx={{ fontSize: "1rem", bottom: 0 }}
-              className='w-full'
-              variant='contained'
-            >
-              추가
-            </Button>
-          </form>
-        </FormProvider>
       </div>
-    </Slide>
+      <Slide direction='left' in mountOnEnter unmountOnExit>
+        <div className='h-full px-4 flex flex-col'>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className='flex flex-col gap-6 flex-1 justify-between mt'
+            >
+              <div className='flex flex-col gap-6 pt-6'>
+                <CustomInput content={InputContent} />
+                <CustomTagBlock
+                  title='MOOD'
+                  renderCounter={true}
+                  spreadValues={MoodTagList}
+                  formState='Mood'
+                  maxTag={3}
+                  initValue={initMood}
+                />
+                <CustomTagBlock
+                  title='Location'
+                  spreadValues={CountryList}
+                  formState='Location'
+                  initValue={[initRegion]}
+                />
+                <ImageUploader title='image' maxCount={1} />
+              </div>
+              <Button
+                type='submit'
+                sx={{ fontSize: "1rem", my: 1, color: "white" }}
+                className='w-full'
+                variant='contained'
+              >
+                추가
+              </Button>
+            </form>
+          </FormProvider>
+        </div>
+      </Slide>
+    </>
   );
 };
 

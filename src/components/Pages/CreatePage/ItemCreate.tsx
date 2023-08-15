@@ -8,7 +8,7 @@ import {
 } from "react-hook-form";
 import ImageUploader from "../../Modules/ImageUploader";
 import ItemTags from "./ItemTags";
-import CustomInput from "../../Modules/CustumInput";
+import CustomInput from "../../Modules/CustomInput";
 import CustomDatePicker from "../../Modules/CustomDatePicker";
 import CustomButton from "../../Modules/CustomButton";
 import { Slide } from "@mui/material";

@@ -30,6 +30,7 @@ type headerData = {
   tagList: string;
   region: string;
   isWriter: boolean;
+  plannerId: number;
 };
 type portfolioData = {
   typeTag: "portfolio";
@@ -74,32 +75,49 @@ const PortfolioPage = (props: Props) => {
   console.log(headerData);
 
   return (
-    <Slide direction='left' in mountOnEnter unmountOnExit>
-      <div className='absolute w-full px-4'>
+    <>
+      <div>
         <Header />
-        {headerData && ItemCard && (
-          <>
-            <div>
-              <PortfolioHeader data={headerData} />
-            </div>
-            {isWriter && (
-              <div className='mt-12'>
-                <Button
-                  onClick={() => navigate(`/create/item/${itemId}`)}
-                  sx={{ height: "38px", width: "100%" }}
-                  variant='outlined'
-                >
-                  아이템 추가하기
-                </Button>
-              </div>
-            )}
-            <div className='mt-3'>
-              <PortfolioItemCard cardData={ItemCard} />
-            </div>
-          </>
-        )}
       </div>
-    </Slide>
+      <Slide direction='left' in mountOnEnter unmountOnExit>
+        <div className='w-full px-4'>
+          {headerData && ItemCard && (
+            <>
+              <div>
+                <PortfolioHeader data={headerData} />
+              </div>
+              {isWriter && (
+                <div className='mt-12'>
+                  <Button
+                    onClick={() =>
+                      navigate(`/create/item/${itemId}/${ItemCard.length}`)
+                    }
+                    sx={{ height: "38px", width: "100%" }}
+                    variant='outlined'
+                  >
+                    아이템 추가하기
+                  </Button>
+                </div>
+              )}
+              {!isWriter && (
+                <div className='mt-12'>
+                  <Button
+                    onClick={() => navigate(`/planner/${headerData.plannerId}`)}
+                    sx={{ height: "38px", width: "100%" }}
+                    variant='contained'
+                  >
+                    다른 포트폴리오 둘러보기
+                  </Button>
+                </div>
+              )}
+              <div className='my-3'>
+                <PortfolioItemCard cardData={ItemCard} />
+              </div>
+            </>
+          )}
+        </div>
+      </Slide>
+    </>
   );
 };
 

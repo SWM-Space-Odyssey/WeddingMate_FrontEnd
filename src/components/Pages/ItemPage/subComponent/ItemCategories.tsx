@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../../Modules/CustumInput";
+import CustomInput from "../../../Modules/CustomInput";
 import { UseFormRegister, useFormContext } from "react-hook-form";
 import CustomText from "../../../Modules/CustomText";
 

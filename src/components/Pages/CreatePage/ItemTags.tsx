@@ -10,6 +10,8 @@ const ITEM_TAGS = ["비즈", "실크"];
 
 type Props = {
   formState: itemStates;
+  required?: boolean;
+  initValue?: string[];
 };
 
 const ItemTags = (props: Props) => {
@@ -41,7 +43,11 @@ const ItemTags = (props: Props) => {
       setSpreadValue(ITEM_TAGS);
     }
   }, [contentText, content]);
-
+  useEffect(() => {
+    if (props.initValue) {
+      setSpreadValue([...spreadValues, ...props.initValue]);
+    }
+  }, [props.initValue]);
   return (
     <div>
       <CustomTagBlock
@@ -49,6 +55,8 @@ const ItemTags = (props: Props) => {
         formState={formState}
         title='아이템 태그'
         isAddable={true}
+        required={props.required}
+        initValue={props.initValue}
       />
     </div>
   );

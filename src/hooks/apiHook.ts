@@ -18,3 +18,11 @@ export const getURL = (itemType: string, itemId: string) => {
       return `${SERVER_URL}/api/v1/portfolio/item/${itemId}`;
   }
 };
+
+export const dateFormatter = (date: Date) => {
+  // const date = new Date(str);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}.${month}.${day}`;
+};

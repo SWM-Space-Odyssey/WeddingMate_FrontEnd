@@ -26,13 +26,6 @@ type Props = {
 };
 
 const Mock = ["화려한", "사람많은", "야외"];
-const dropdownMenuStyle = {
-  fontSize: "0.75rem",
-  py: 0,
-};
-const dropdownIconStyle = {
-  fontSize: "1rem",
-};
 
 const PortfolioHeader = (props: Props) => {
   const { title, tagList, region, repImgUrl } = props.data;
@@ -53,45 +46,47 @@ const PortfolioHeader = (props: Props) => {
     {
       content: (
         <>
-          <Edit sx={dropdownIconStyle} />
+          <Edit />
           포트폴리오 수정하기
         </>
       ),
       onClick: () => {
         navigate(`/create/portfolio/${portfolioId}`);
       },
-      style: dropdownMenuStyle,
     },
     {
       content: (
         <>
-          <Delete sx={dropdownIconStyle} />
+          <Delete />
           포트폴리오 삭제하기
         </>
       ),
       onClick: () => {
-        deleteHandler();
+        if (confirm("정말로 삭제하시겠습니까?")) {
+          deleteHandler();
+        }
       },
-      style: dropdownMenuStyle,
     },
   ];
 
   const tagSplit = tagList.split(",");
   return (
-    <div className='flex flex-row gap-2.5 mt-5'>
-      <div>
-        <img
-          src={`${SERVER_IMAGE_URL}${repImgUrl}`}
-          className='w-[5.5rem] h-[5.5rem] rounded-sm'
-        />
-      </div>
-      <div>
-        <div className='font-bold leading-tight mb-1.5'>{title}</div>
-        <div className='text-xs leading-tight mb-1'>Location : {region}</div>
+    <div className='flex flex-row justify-between mt-5'>
+      <div className='flex gap-2.5 '>
         <div>
-          <div className='text-xs leading-tight mb-1'>Mood</div>
+          <img
+            src={`${SERVER_IMAGE_URL}${repImgUrl}`}
+            className='w-[5.5rem] h-[5.5rem] rounded-sm'
+          />
+        </div>
+        <div>
+          <div className='font-bold leading-tight mb-1.5'>{title}</div>
+          <div className='text-xs leading-tight mb-1'>Location : {region}</div>
           <div>
-            <CustomTagBlock spreadValues={tagSplit} />
+            <div className='text-xs leading-tight mb-1'>Mood</div>
+            <div>
+              <CustomTagBlock spreadValues={tagSplit} />
+            </div>
           </div>
         </div>
       </div>
