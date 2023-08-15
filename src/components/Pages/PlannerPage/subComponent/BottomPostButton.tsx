@@ -10,12 +10,12 @@ const BottomPostButton = (props: Props) => {
   return (
     <IconButton
       color='primary'
-      sx={{ borderColor: "primary", border: "2px solid" }}
+      sx={{ borderColor: "primary", border: "2px solid", p: 0.5 }}
       onClick={() => {
         navigate("/create/portfolio");
       }}
     >
-      <div className='flex flex-col items-center p-1'>
+      <div className='flex flex-col items-center p-1 aspect-square justify-center'>
         <EditNote sx={{ ml: 0.5 }} />
         <div className='text-xs'>포폴 추가</div>
       </div>

@@ -8,16 +8,18 @@ import {
   SERVER_URL,
 } from "../../../../common/constants";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 const mockTag = ["친절한", "답변이빠른", "꼼꼼한"];
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
 
 const PlannerInfo = (props: Props) => {
+  const plannerId = parseInt(useParams().Id ?? "0");
   const { data, isLoading } = useQuery(
-    ["plannerInfo"],
+    ["plannerInfo", plannerId],
     () =>
-      axios.get(`${SERVER_URL}/api/v1/profile/planner`, {
+      axios.get(`${SERVER_URL}/api/v1/planner/profile`, {
         headers: {
           Authorization: `Bearer ${MY_ACCESS_KEY}`,
         },
@@ -28,7 +30,7 @@ const PlannerInfo = (props: Props) => {
     }
   );
   const response = data?.data;
-  console.log(response);
+  console.log(data);
   return (
     <div>
       {data && (

@@ -28,6 +28,8 @@ type headerData = {
   itemResDtoList: cardData[];
   repImgUrl: string;
   tagList: string;
+  region: string;
+  isWriter: boolean;
 };
 type portfolioData = {
   typeTag: "portfolio";
@@ -42,6 +44,7 @@ const PortfolioPage = (props: Props) => {
   const navigate = useNavigate();
   const [headerData, setHeaderData] = useState<headerData>();
   const [ItemCard, setItemCard] = useState<cardData[]>();
+  const [isWriter, setIsWriter] = useState<boolean>(false);
   const itemId = params.itemId;
   const fetchPortfolio = () => {
     axios
@@ -53,6 +56,9 @@ const PortfolioPage = (props: Props) => {
         if (data.status === "SUCCESS") {
           setHeaderData(data.data);
           setItemCard(data.data.itemResDtoList);
+          if (data.data.isWriter) {
+            setIsWriter(true);
+          }
         } else {
           console.log("error");
         }
@@ -65,6 +71,7 @@ const PortfolioPage = (props: Props) => {
   useEffect(() => {
     fetchPortfolio();
   }, [itemId]);
+  console.log(headerData);
 
   return (
     <Slide direction='left' in mountOnEnter unmountOnExit>
@@ -75,15 +82,17 @@ const PortfolioPage = (props: Props) => {
             <div>
               <PortfolioHeader data={headerData} />
             </div>
-            <div className='mt-12'>
-              <Button
-                onClick={() => navigate(`/create/item/${itemId}`)}
-                sx={{ height: "38px", width: "100%" }}
-                variant='outlined'
-              >
-                아이템 추가하기
-              </Button>
-            </div>
+            {isWriter && (
+              <div className='mt-12'>
+                <Button
+                  onClick={() => navigate(`/create/item/${itemId}`)}
+                  sx={{ height: "38px", width: "100%" }}
+                  variant='outlined'
+                >
+                  아이템 추가하기
+                </Button>
+              </div>
+            )}
             <div className='mt-3'>
               <PortfolioItemCard cardData={ItemCard} />
             </div>

@@ -5,6 +5,7 @@ import { RootState } from "../../../store/store";
 import PlannerInfo from "./subComponent/PlannerInfo";
 import PlannerPortfolio from "./subComponent/PlannerPortfolio";
 import BottomPostButton from "./subComponent/BottomPostButton";
+import Header from "../../Header/Header";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const PlannerPage = (props: Props) => {
       unmountOnExit
     >
       <div className='w-full h-full px-4 flex flex-col '>
+        <Header />
         <div className='sticky pb-5'>
           <PlannerInfo />
         </div>

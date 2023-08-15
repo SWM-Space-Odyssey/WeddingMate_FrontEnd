@@ -141,13 +141,15 @@ const PortfolioCreate = (props: Props) => {
     if (isEdit) {
       body.append("portfolioUpdateReqDto", blob);
       console.log(body.getAll("file"));
+      const editData = await editPortfolio({
         itemType: "portfolio",
         body,
         itemId: isEdit,
       });
-      if (putData.status === "SUCCESS") return setForm();
+      if (editData.status === "SUCCESS") return setForm();
       console.log("포트폴리오 수정에 실패했습니다.");
     } else {
+      body.append("portfolioSaveReqDto", blob);
       const postData = await postPortfolio({ itemType: "portfolio", body });
       if (postData.status === "SUCCESS") {
         setForm();
