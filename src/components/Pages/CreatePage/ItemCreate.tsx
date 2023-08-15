@@ -6,7 +6,7 @@ import {
   useForm,
   useWatch,
 } from "react-hook-form";
-import ImageUpload from "../../Modules/ImageUpload";
+import ImageUploader from "../../Modules/ImageUploader";
 import ItemTags from "./ItemTags";
 import CustomInput from "../../Modules/CustumInput";
 import CustomDatePicker from "../../Modules/CustomDatePicker";
@@ -56,12 +56,12 @@ const ItemCreate = (props: Props) => {
         company: data.company,
         date: data.date,
         portfolioId: parseInt(portfolioId),
-        category: data.categoryContent,
+        category: data.categoryContent.replace(/(\s*)/g, ""),
         order: 1,
         imageList: data.pictures,
         itemTagList: data.itemTagList.join(","),
       };
-      // console.log(body);
+      console.log(body);
       const res = postItem(body);
       console.log("res", res);
     } else {
@@ -78,7 +78,7 @@ const ItemCreate = (props: Props) => {
             className='flex flex-col gap-6 h-full'
           >
             <ItemCategories />
-            <ImageUpload title='image' maxCount={5} isImmediately={true} />
+            <ImageUploader title='image' maxCount={5} isImmediately={true} />
             <ItemTags formState='itemTagList' />
             <CustomInput content={itemRecord} />
             <CustomDatePicker state='date' />

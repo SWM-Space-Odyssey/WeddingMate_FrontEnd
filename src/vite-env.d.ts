@@ -55,7 +55,7 @@ type RegistInputProp = {
 interface portfolioRegister {
   Title: string;
   Mood: string[];
-  Location: string[];
+  region: string;
   pictures: File[] | string[];
 }
 

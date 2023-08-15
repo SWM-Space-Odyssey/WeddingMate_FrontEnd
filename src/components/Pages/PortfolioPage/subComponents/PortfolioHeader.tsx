@@ -20,6 +20,8 @@ type Props = {
     title: string;
     tagList: string;
     repImgUrl: string;
+    region: string;
+    isWriter: boolean;
   };
 };
 
@@ -33,9 +35,7 @@ const dropdownIconStyle = {
 };
 
 const PortfolioHeader = (props: Props) => {
-  const { title, tagList, repImgUrl } = props.data;
-  const [location, setLocation] = useState("");
-  const [mood, setMood] = useState<string[]>([]);
+  const { title, tagList, region, repImgUrl } = props.data;
   const portfolioId = useParams().itemId;
   const navigate = useNavigate();
 
@@ -76,17 +76,7 @@ const PortfolioHeader = (props: Props) => {
     },
   ];
 
-  useEffect(() => {
-    const moodlist: string[] = [];
-    tagList.split(",").forEach((tag) => {
-      if (CountryList.includes(tag)) {
-        setLocation(tag);
-      } else {
-        moodlist.push(tag);
-      }
-    });
-    setMood(moodlist);
-  }, [tagList]);
+  const tagSplit = tagList.split(",");
   return (
     <div className='flex flex-row gap-2.5 mt-5'>
       <div>
@@ -97,15 +87,15 @@ const PortfolioHeader = (props: Props) => {
       </div>
       <div>
         <div className='font-bold leading-tight mb-1.5'>{title}</div>
-        <div className='text-xs leading-tight mb-1'>Location : {location}</div>
+        <div className='text-xs leading-tight mb-1'>Location : {region}</div>
         <div>
           <div className='text-xs leading-tight mb-1'>Mood</div>
           <div>
-            <CustomTagBlock spreadValues={mood} />
+            <CustomTagBlock spreadValues={tagSplit} />
           </div>
         </div>
       </div>
-      <HeaderOptionButton data={{ menuItems }} />
+      {props.data.isWriter && <HeaderOptionButton data={{ menuItems }} />}
     </div>
   );
 };

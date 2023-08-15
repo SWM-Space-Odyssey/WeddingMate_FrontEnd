@@ -5,7 +5,7 @@ import CustomTagBlock from "../../Modules/CustomTagBlock";
 import { MoodTagList } from "../../../common/TagList";
 import { CountryList } from "../../../common/CountryLIst";
 import { Button, Slide } from "@mui/material";
-import ImageUpload from "../../Modules/ImageUpload";
+import ImageUploader from "../../Modules/ImageUploader";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import axios from "axios";
@@ -34,6 +34,20 @@ const InputContent: PortfolioInputContentType = {
   title: "타이틀",
   placeholder: "제목을 입력해 주세요",
 };
+type ItemOrderList = { itemId: number; itemOrder: number };
+
+type ItemResDtoList = {
+  itemId: number;
+  order: number;
+  itemTagList: string;
+  itemRecord: string;
+  portfolioId: number;
+  imageList: string[];
+  date: string;
+  company: string;
+  category: string;
+  isWriter: boolean;
+};
 
 type portfolioData = {
   typeTag: "portfolio";
@@ -41,31 +55,37 @@ type portfolioData = {
   data: {
     id: string;
     title: string;
-    itemResDtoList: Object[];
+    itemResDtoList: ItemResDtoList[];
     repImgUrl: string;
     tagList: string;
+    region: string;
   };
 };
-
+type JsonData = {
+  title: string;
+  tags: string;
+  region: string;
+  itemOrderList?: ItemOrderList[];
+};
 const PortfolioCreate = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
   const methods = useForm<portfolioRegister>();
   const [isEdit, setIsEdit] = useState<null | number>(null);
   const [initMood, setInitMood] = useState<string[]>([]);
-  const [initLocation, setInitLocation] = useState<string[]>([]);
-  4;
+  const [initRegion, setInitRegion] = useState<string>("");
+  const [itemOrderList, setItemOrderList] = useState<ItemOrderList[]>([]);
   const param = useParams().portfolioId;
   const navigate = useNavigate();
   const setForm = (data?: portfolioRegister) => {
     if (data) {
       methods.reset(data);
       setInitMood(data.Mood);
-      setInitLocation(data.Location);
+      setInitRegion(data.region);
     } else {
       console.log("mothods Reset");
       methods.reset();
       setInitMood([]);
-      setInitLocation([]);
+      setInitRegion("");
     }
   };
 
@@ -82,23 +102,21 @@ const PortfolioCreate = (props: Props) => {
           ...res.data,
         } as portfolioData;
       });
+
     console.log(resData);
     if (resData?.status === "SUCCESS" && resData.typeTag === "portfolio") {
       const response = resData.data;
-      const resMood: string[] = [];
-      const resLocation: string[] = [];
-      const tagSplit = response.tagList.split(",");
-      tagSplit.forEach((tag) => {
-        if (CountryList.includes(tag)) {
-          resLocation.push(tag);
-        } else if (!initMood.includes(tag)) {
-          resMood.push(tag);
-        }
+      const resMood = response.tagList.split(",");
+      const resItemResDtoList: ItemOrderList[] = [];
+      response.itemResDtoList.forEach((item, index) => {
+        resItemResDtoList.push({ itemId: item.itemId, itemOrder: index });
       });
+      const resRegion = response.region;
+      setItemOrderList(resItemResDtoList);
       const FormData = {
         Title: response.title,
-        Mood: [...resMood],
-        Location: [...resLocation],
+        Mood: resMood,
+        region: resRegion,
         pictures: [response.repImgUrl],
       };
       setForm(FormData);
@@ -107,18 +125,22 @@ const PortfolioCreate = (props: Props) => {
 
   const onSubmit: SubmitHandler<portfolioRegister> = async (data) => {
     const body = new FormData();
-    const joinString = data.Mood.concat(data.Location).join(",");
-    const jsonData = {
+    const joinString = data.Mood.join(",");
+    const jsonData: JsonData = {
       title: data.Title,
       tags: joinString,
+      region: data.region,
     };
-    console.log(joinString);
+    if (isEdit) {
+      jsonData.itemOrderList = itemOrderList;
+    }
     const json = JSON.stringify(jsonData);
     const blob = new Blob([json], { type: "application/json" });
+
     body.append("file", data.pictures[0]);
-    body.append("portfolioSaveReqDto", blob);
     if (isEdit) {
-      const putData = await editPortfolio({
+      body.append("portfolioUpdateReqDto", blob);
+      console.log(body.getAll("file"));
         itemType: "portfolio",
         body,
         itemId: isEdit,
@@ -164,9 +186,9 @@ const PortfolioCreate = (props: Props) => {
               title='Location'
               spreadValues={CountryList}
               formState='Location'
-              initValue={initLocation}
+              initValue={[initRegion]}
             />
-            <ImageUpload title='image' maxCount={1} />
+            <ImageUploader title='image' maxCount={1} />
             <Button
               type='submit'
               sx={{ fontSize: "1rem", bottom: 0 }}
