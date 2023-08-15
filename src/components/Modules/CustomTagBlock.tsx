@@ -70,17 +70,21 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
           <Chip label={`추가`} onClick={() => addFormDisplay()} />
         )}
       </div>
-      <div className={`${addFormSwitch ? "block" : "hidden"}`}>
-        <input
-          type='text'
-          className='border'
-          value={addTag}
-          onChange={(e) => setAddTag(e.currentTarget.value)}
-        />
-        <button type='button' onClick={() => onClickAdd()}>
-          입력
-        </button>
-      </div>
+      {props?.isAddable && (
+        <>
+          <div className={`${addFormSwitch ? "block" : "hidden"}`}>
+            <input
+              type='text'
+              className='border'
+              value={addTag}
+              onChange={(e) => setAddTag(e.currentTarget.value)}
+            />
+            <button type='button' onClick={() => onClickAdd()}>
+              입력
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

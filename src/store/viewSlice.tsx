@@ -33,12 +33,11 @@ export const viewSlice = createSlice({
   initialState,
   reducers: {
     NextPage: (state) => {
-      console.log("REDUX NextPage" + state);
       state.prevPage = state.page;
       state.page += 1;
     },
     PrevPage: (state) => {
-      if (state.currentView === "Regist" && state.page !== 0) {
+      if (state.page !== 0) {
         state.page -= 1;
         state.prevPage -= 1;
         return;

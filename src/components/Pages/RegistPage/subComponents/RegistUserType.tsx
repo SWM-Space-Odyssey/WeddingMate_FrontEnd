@@ -31,6 +31,7 @@ const RegistUserType = () => {
         className={buttonClass}
         variant='outlined'
         onClick={() => onClickHandler(str)}
+        disabled={str === CoupleString ? true : false}
         sx={{
           display: "flex",
           fontWeight: `${userType === str ? 700 : 400}`,
@@ -38,14 +39,18 @@ const RegistUserType = () => {
         }}
       >
         <Radio disableRipple size='small' checked={userType === str} />
-        {stringMapping[str]}
+        <div
+          className={`${userType === str ? "text-black" : "text-slate-500"}`}
+        >
+          {stringMapping[str]}
+        </div>
       </Button>
     );
   };
 
   return (
     <div className='flex flex-col px-4 h-full justify-between'>
-      <div className='mt-10'>
+      <div className='mt-20'>
         <div className='font-bold text-2xl'>{GuideText}</div>
         <Stack spacing={1} className='mt-10'>
           {buttonComponent(CoupleString)}
@@ -54,8 +59,8 @@ const RegistUserType = () => {
       </div>
       <Button
         className='h-11 w-full'
-        variant='outlined'
-        sx={{ fontSize: "1rem", my: 1 }}
+        variant='contained'
+        sx={{ fontSize: "1rem", my: 1, color: "white" }}
         disabled={userType ? false : true}
         onClick={() => {
           dispatch(NextPage());

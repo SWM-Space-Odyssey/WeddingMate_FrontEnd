@@ -7,6 +7,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonImages from "../../Modules/SkeletonImages";
 import CustomSearchForm from "../../Modules/CustomSearchForm";
+import Header from "../../Header/Header";
 
 type Props = {};
 
@@ -20,7 +21,7 @@ type loremPicsum = {
 };
 
 const FeedPage = (props: Props) => {
-  const view = useSelector((state: RootState) => state.view.currentView);
+  const user = useSelector((state: RootState) => state.view.currentView);
   const defaultOption = {
     root: null,
     threshold: 0.5,
@@ -29,14 +30,9 @@ const FeedPage = (props: Props) => {
   // useQuery 작성
 
   return (
-    <Slide
-      direction={`${view === "Feed" ? "left" : "right"}`}
-      in
-      mountOnEnter
-      unmountOnExit
-      className='px-4'
-    >
+    <Slide direction='right' in mountOnEnter unmountOnExit className='px-4'>
       <div>
+        <Header main='main' />
         <CustomSearchForm />
         <MasonryImage />
       </div>

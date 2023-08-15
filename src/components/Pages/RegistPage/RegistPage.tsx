@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { plannerRegist } from "../../../api/user";
 import { useNavigate } from "react-router-dom";
+import Header from "../../Header/Header";
 
 const RegistComponent = () => {
   const view = useSelector((state: RootState) => state.view.currentView);
@@ -44,12 +45,18 @@ const RegistComponent = () => {
       // console.log(couple);
     }
   };
-  const transitionClass = "absolute left-0 right-0";
+  const transitionClass = "absolute left-0 right-0 h-full";
   return (
     <Slide direction='left' in mountOnEnter unmountOnExit>
       <div className='flex flex-col w-full justify-between'>
         <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className='flex flex-col'
+          >
+            <div className='z-10'>
+              <Header main='regist' />
+            </div>
             <Slide
               direction={
                 page === 0
