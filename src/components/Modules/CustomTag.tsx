@@ -19,7 +19,7 @@ const CustomTag = <T extends registStates | portfolioStates | itemStates>(
 
   // form 의 경우
   if (props.formState) {
-    const { register, setValue } = useFormContext();
+    const { setValue } = useFormContext();
     const formState = props.formState.state;
     const [innerValue, setInnerValue] = props.formState.tagState;
 

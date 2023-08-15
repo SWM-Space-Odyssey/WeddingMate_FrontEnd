@@ -30,13 +30,17 @@ const FeedPage = (props: Props) => {
   // useQuery 작성
 
   return (
-    <Slide direction='right' in mountOnEnter unmountOnExit className='px-4'>
+    <>
       <div>
         <Header main='main' />
-        <CustomSearchForm />
-        <MasonryImage />
       </div>
-    </Slide>
+      <Slide direction='right' in mountOnEnter unmountOnExit className='px-4'>
+        <div>
+          <CustomSearchForm />
+          <MasonryImage />
+        </div>
+      </Slide>
+    </>
   );
 };
 

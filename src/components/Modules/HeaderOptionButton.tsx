@@ -12,8 +12,12 @@ type MenuItemInfo = {
 type Props = {
   data: {
     menuItems: MenuItemInfo[];
-    dropDownMenuStyle?: React.CSSProperties;
   };
+};
+
+const dropdownMenuStyle = {
+  fontSize: "0.75rem",
+  py: 0,
 };
 
 const HeaderOptionButton = (props: Props) => {
@@ -43,7 +47,7 @@ const HeaderOptionButton = (props: Props) => {
         {props.data.menuItems.map((item, index) => {
           return (
             <MenuItem
-              sx={props.data.dropDownMenuStyle}
+              sx={dropdownMenuStyle}
               onClick={() => {
                 item.onClick();
                 handleClose();

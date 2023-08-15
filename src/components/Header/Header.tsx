@@ -1,11 +1,17 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography, colors } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { PrevPage } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { AccountBox, ArrowBackIos, Settings } from "@mui/icons-material";
+import {
+  AccountBox,
+  AccountCircle,
+  ArrowBackIos,
+  Settings,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { logo } from "../../assets/logo";
 
 type Props = {
   main?: "main" | "regist";
@@ -19,15 +25,23 @@ const Header = (props: Props) => {
   const title = view[view.length - 1] ?? "LandingPage";
   if (props.main === "main")
     return (
-      <div className='sticky h-12 py-1 px-2 justify-center border-b-2'>
+      <div className='sticky h-12 py-1 px-2 justify-center border-b-2 bg-[#FF6A6A]'>
         <Grid className='h-10 items-center' container>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={10} className='flex justify-center'>
-            WEDDING MATE
+          <Grid item xs={3}>
+            <Button
+              href='https://api.weddingmate.co.kr/oauth2/authorization/kakao'
+              sx={{ bgcolor: "yellow" }}
+            >
+              LOGIN
+            </Button>
+          </Grid>
+          <Grid item xs={8} className='flex justify-center'>
+            {/* <text fontFamily='Damion'>WEDDING MATE</text> */}
+            {logo}
           </Grid>
           <Grid item xs={1}>
-            <button onClick={() => navigate("/planner")}>
-              <AccountBox />
+            <button onClick={() => navigate("/plannermypage")}>
+              <AccountCircle fontSize='large' sx={{ color: "white" }} />
             </button>
           </Grid>
         </Grid>
@@ -71,7 +85,7 @@ const Header = (props: Props) => {
     );
   }
   return (
-    <div className='sticky h-12 py-1 px-2 justify-center'>
+    <div className='sticky h-12 py-1 px-6 justify-center'>
       <Grid className='h-10 items-center' container>
         <Grid item className='w-10 flex justify-center' xs={1}>
           <button
@@ -87,11 +101,7 @@ const Header = (props: Props) => {
         <Grid item xs={10}>
           <div>{title}</div>
         </Grid>
-        <Grid item xs={1}>
-          <button onClick={() => console.log("특수키")}>
-            <Settings />
-          </button>
-        </Grid>
+        <Grid item xs={1}></Grid>
       </Grid>
     </div>
   );

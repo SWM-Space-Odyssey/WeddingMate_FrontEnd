@@ -30,11 +30,12 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={<LodingSpinner />}>
           <div className='h-full flex flex-col'>
-            <div className='flex-1 relative flex overflow-y-scroll'>
+            <div className='flex-1 relative flex overflow-y-scroll flex-col'>
               <Routes>
                 <Route path='/' element={<FeedPage />} />
                 <Route path='/regist' element={<RegisterPage />} />
                 <Route path='/planner/:Id' element={<PlannerPage />} />
+                <Route path='/plannermypage' element={<PlannerPage mypage />} />
                 <Route path='/item/:itemId' element={<ItemPage />} />
                 <Route path='/portfolio/:itemId' element={<PortfolioPage />} />
                 <Route
@@ -42,7 +43,7 @@ function App() {
                   element={<PortfolioCreate />}
                 />
                 <Route
-                  path='/create/item/:portfolioId/:itemId?'
+                  path='/create/item/:portfolioId/:order/:itemId?'
                   element={<ItemCreate />}
                 />
                 <Route
@@ -50,9 +51,9 @@ function App() {
                   element={<LodingSpinner redirect />}
                 />
                 <Route path='/admin' element={<MainPage />} />
-                <Route path='/spinner' element={<LodingSpinner />} />
+                {/* <Route path='/spinner/:timeout' element={<LodingSpinner />} /> */}
               </Routes>
-              <ReactQueryDevtools initialIsOpen={false} />
+              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </div>
           </div>
           {/* <NavBar /> */}

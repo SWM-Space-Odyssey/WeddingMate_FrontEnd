@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomTag from "./CustomTag";
-import { Chip } from "@mui/material";
+import { Chip, Collapse } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 
 interface Props<T extends registStates | portfolioStates | itemStates> {
@@ -11,6 +11,7 @@ interface Props<T extends registStates | portfolioStates | itemStates> {
   title?: string;
   renderCounter?: boolean;
   isAddable?: boolean;
+  required?: boolean;
 }
 
 const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
@@ -27,11 +28,11 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
     if (addFormSwitch) return;
     setAddFormSwitch(true);
   };
-  if (initValue) {
-    useEffect(() => {
-      setComponentValue([...initValue]);
-    }, [initValue]);
-  }
+  useEffect(() => {
+    if (!initValue) return;
+    setComponentValue([...initValue]);
+    console.log(componentValue);
+  }, [initValue]);
   const onClickAdd = () => {
     if (addTag) {
       spreadValues.push(addTag);
@@ -50,6 +51,7 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
           ) : (
             ""
           )}
+          {props.required && <span className='text-[#FF6A6A]'>*</span>}
         </div>
       )}
       <div className='flex flex-wrap gap-1.5'>
@@ -71,19 +73,23 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
         )}
       </div>
       {props?.isAddable && (
-        <>
-          <div className={`${addFormSwitch ? "block" : "hidden"}`}>
+        <Collapse in={addFormSwitch} className='pt-1'>
+          <div className={`${addFormSwitch ? "block" : "hidden"} w-full flex`}>
             <input
               type='text'
-              className='border'
+              className='border flex-shrink-2'
               value={addTag}
               onChange={(e) => setAddTag(e.currentTarget.value)}
             />
-            <button type='button' onClick={() => onClickAdd()}>
+            <button
+              className='flex-3'
+              type='button'
+              onClick={() => onClickAdd()}
+            >
               입력
             </button>
           </div>
-        </>
+        </Collapse>
       )}
     </div>
   );
