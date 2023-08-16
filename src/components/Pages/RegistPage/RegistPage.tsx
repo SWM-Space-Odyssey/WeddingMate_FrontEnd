@@ -42,12 +42,17 @@ const RegistComponent = () => {
       //   region,
       //   plannerTagList
       // }
-      // console.log(couple);
     }
   };
   const transitionClass = "absolute left-0 right-0 h-full";
   return (
-    <Slide direction='left' in mountOnEnter unmountOnExit>
+    <Slide
+      className='overflow-y-scroll px-4'
+      direction='left'
+      in
+      mountOnEnter
+      unmountOnExit
+    >
       <div className='flex flex-col w-full justify-between'>
         <FormProvider {...methods}>
           <form
@@ -58,6 +63,7 @@ const RegistComponent = () => {
               <Header main='regist' />
             </div>
             <Slide
+              className='overflow-y-scroll px-4'
               direction={
                 page === 0
                   ? prevPage < 0
@@ -74,6 +80,7 @@ const RegistComponent = () => {
               </div>
             </Slide>
             <Slide
+              className='overflow-y-scroll px-4'
               direction={
                 page === 1
                   ? prevPage < 1
@@ -91,6 +98,7 @@ const RegistComponent = () => {
             </Slide>
 
             <Slide
+              className='overflow-y-scroll px-4'
               direction={
                 page === 2
                   ? prevPage < 2 // 들어올 때
@@ -107,6 +115,7 @@ const RegistComponent = () => {
               </div>
             </Slide>
             <Slide
+              className='overflow-y-scroll px-4'
               direction={
                 page === 3
                   ? prevPage < 3

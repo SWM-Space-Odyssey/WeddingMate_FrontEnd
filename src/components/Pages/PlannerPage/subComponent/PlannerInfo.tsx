@@ -19,12 +19,11 @@ type Props = {
   mypage?: boolean;
 };
 
-const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
   if (e.target.files) {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
-    const imgResponse = editProfileImg(formData);
-    console.log(imgResponse);
+    const imgResponse = await editProfileImg(formData);
   }
 };
 

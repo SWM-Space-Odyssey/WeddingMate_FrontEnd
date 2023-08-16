@@ -82,7 +82,6 @@ const PortfolioCreate = (props: Props) => {
       setInitMood(data.Mood);
       setInitRegion(data.region);
     } else {
-      console.log("mothods Reset");
       methods.reset();
       setInitMood([]);
       setInitRegion("");
@@ -103,7 +102,6 @@ const PortfolioCreate = (props: Props) => {
         } as portfolioData;
       });
 
-    console.log(resData);
     if (resData?.status === "SUCCESS" && resData.typeTag === "portfolio") {
       const response = resData.data;
       const resMood = response.tagList.split(",");
@@ -140,7 +138,6 @@ const PortfolioCreate = (props: Props) => {
     body.append("file", data.pictures[0]);
     if (isEdit) {
       body.append("portfolioUpdateReqDto", blob);
-      console.log(body.getAll("file"));
       const editData = await editPortfolio({
         itemType: "portfolio",
         body,
@@ -171,7 +168,13 @@ const PortfolioCreate = (props: Props) => {
       <div>
         <Header />
       </div>
-      <Slide direction='left' in mountOnEnter unmountOnExit>
+      <Slide
+        className='overflow-y-scroll px-4'
+        direction='left'
+        in
+        mountOnEnter
+        unmountOnExit
+      >
         <div className='h-full px-4 flex flex-col'>
           <FormProvider {...methods}>
             <form

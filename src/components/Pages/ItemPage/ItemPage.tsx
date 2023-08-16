@@ -29,7 +29,6 @@ const ItemPage = (props: Props) => {
   const viewId = useSelector((state: RootState) => state.view.requestParam);
   const navigate = useNavigate();
   if (viewId) {
-    console.log(viewId);
   }
   const itemId = useParams().itemId;
   if (!itemId) {
@@ -50,12 +49,10 @@ const ItemPage = (props: Props) => {
     if (response.data.status === "SUCCESS") {
       navigate(-1);
     } else {
-      console.log(response);
       alert("삭제에 실패했습니다. - PortfolioHeader");
     }
   };
 
-  console.log(data);
   const {
     category,
     company,
@@ -100,8 +97,14 @@ const ItemPage = (props: Props) => {
       <div>
         <Header />
       </div>
-      <Slide direction='left' in mountOnEnter unmountOnExit>
-        <div className={`px-4 h-fit flex flex-col w-full gap-6`}>
+      <Slide
+        className='overflow-y-scroll px-4'
+        direction='left'
+        in
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className={`px-4 h-fit flex flex-col w-full gap-6 `}>
           {isLoading && <div>로딩중</div>}
           {data && (
             <>

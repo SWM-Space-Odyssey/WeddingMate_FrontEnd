@@ -57,7 +57,6 @@ const ItemCreate = (props: Props) => {
   const itemId = useParams().itemId;
   const order = useParams().order;
   const portfolioId = useParams().portfolioId;
-  console.log(portfolioId, order, itemId);
   const navigate = useNavigate();
 
   const setForm = (data?: itemRegister) => {
@@ -73,7 +72,6 @@ const ItemCreate = (props: Props) => {
   const getInitData = async (itemId: number) => {
     setIsEdit(itemId);
     const res = await getItem("item", itemId);
-    console.log(res);
     if (res?.status === "SUCCESS" && res.data.typeTag === "item") {
       const data = res.data;
       const itemTagList = data.itemTagList.split(",");
@@ -120,10 +118,8 @@ const ItemCreate = (props: Props) => {
     if (!isEdit) {
       if (!order) return;
       body.order = parseInt(order);
-      console.log(body);
       setLoadging(true);
       const res = await postItem(body);
-      console.log("res", res);
       if (res.status === "SUCCESS") {
         setForm();
         setTimeout(() => {
@@ -161,7 +157,13 @@ const ItemCreate = (props: Props) => {
         <Header />
       </div>
 
-      <Slide direction='left' in mountOnEnter unmountOnExit>
+      <Slide
+        className='overflow-y-scroll px-4'
+        direction='left'
+        in
+        mountOnEnter
+        unmountOnExit
+      >
         <div className='w-full h-full px-4 flex flex-col'>
           {loadging && (
             <div className='absolute backdrop-blur-sm w-full h-full z-50'>

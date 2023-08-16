@@ -72,14 +72,19 @@ const PortfolioPage = (props: Props) => {
   useEffect(() => {
     fetchPortfolio();
   }, [itemId]);
-  console.log(headerData);
 
   return (
     <>
       <div>
         <Header />
       </div>
-      <Slide direction='left' in mountOnEnter unmountOnExit>
+      <Slide
+        className='overflow-y-scroll px-4'
+        direction='left'
+        in
+        mountOnEnter
+        unmountOnExit
+      >
         <div className='w-full px-4'>
           {headerData && ItemCard && (
             <>

@@ -19,6 +19,7 @@ const PlannerPage = (props: Props) => {
         <Header />
       </div>
       <Slide
+        className='overflow-y-scroll px-4'
         direction={`${view === "Planner" ? "right" : "left"}`}
         in
         mountOnEnter
