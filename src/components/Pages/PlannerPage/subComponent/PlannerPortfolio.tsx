@@ -43,7 +43,6 @@ const PlannerPortfolio = (props: Props) => {
   const { data } = useQuery(["myPortfolio"], () => getOwnPortfolio(), {
     refetchOnWindowFocus: false,
   });
-  console.log(data);
   if (data?.status === "FAIL" || !data)
     return (
       <div>

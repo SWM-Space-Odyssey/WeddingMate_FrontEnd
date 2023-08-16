@@ -167,7 +167,6 @@ export const postImageAndGetURI = (formData: FormData) => {
       };
       return data;
     });
-  console.log(response);
   return response;
 };
 

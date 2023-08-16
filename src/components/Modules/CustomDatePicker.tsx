@@ -22,7 +22,6 @@ const CustomDatePicker = (props: Props) => {
           <DatePicker
             {...field}
             onChange={(e) => {
-              console.log(typeof e);
               field.onChange(e);
             }}
             selected={field.value}

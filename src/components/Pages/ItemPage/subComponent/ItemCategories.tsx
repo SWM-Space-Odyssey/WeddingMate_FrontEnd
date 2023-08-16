@@ -27,14 +27,12 @@ const ItemCategories = (props: Props) => {
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
-    console.log(e.currentTarget.value);
     if (selectValue !== "직접입력" || e.currentTarget.type === "select-one") {
       setSelectValue(value);
     }
     setValue("categoryContentText", "");
   };
   useEffect(() => {
-    console.log(selectValue);
     if (selectValue === "직접입력") {
       setValue("categoryContent", "");
     } else {

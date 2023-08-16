@@ -66,7 +66,6 @@ export const getOwnPortfolio = async () => {
 };
 
 export const getPortfolio = async (portfolioId: number) => {
-  console.log("getPortfolio" + portfolioId);
   return useQuery(
     ["portfolio"],
     () =>
@@ -77,7 +76,6 @@ export const getPortfolio = async (portfolioId: number) => {
       enabled: !!portfolioId,
     }
   );
-  // console.log(data?.data);
   // if (error) return error;
   // return data?.data as GetPortfolioResponse;
 
@@ -123,7 +121,6 @@ export const postPortfolio = async (prop: postItemProp) => {
       return handleError(err);
     });
 
-  console.log(response);
   return response;
 };
 
@@ -147,7 +144,6 @@ export const editPortfolio = async (prop: postItemProp) => {
       return handleError(err);
     });
 
-  console.log(response);
   return response;
 };
 

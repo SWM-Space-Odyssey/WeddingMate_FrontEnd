@@ -31,7 +31,6 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
   useEffect(() => {
     if (!initValue) return;
     setComponentValue([...initValue]);
-    console.log(componentValue);
   }, [initValue]);
   const onClickAdd = () => {
     if (addTag) {

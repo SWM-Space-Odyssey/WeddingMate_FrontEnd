@@ -51,7 +51,6 @@ const ImageUploader = (props: Props) => {
   const bindOnChange = (data: File[] | string[]) => {
     if (!data) return;
     if (typeof data[0] === "string") {
-      console.log(field);
       field.onChange([...data] as string[]);
       setPrevStrings([...data] as string[]);
     } else {
@@ -64,7 +63,6 @@ const ImageUploader = (props: Props) => {
     if (!data) return;
     if (categoryContent === "default")
       return alert("카테고리를 먼저 선택해주세요");
-    console.log(categoryContent);
     const body = new FormData();
     const itemFileReqDto = {
       portfolioId: portfolioId,
@@ -83,8 +81,6 @@ const ImageUploader = (props: Props) => {
 
   const imageSpread = () => {
     return pictures?.map((item, index) => {
-      console.log(item);
-      console.log(typeof item);
       return (
         <Badge
           sx={{ p: 0 }}

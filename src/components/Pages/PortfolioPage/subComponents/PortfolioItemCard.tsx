@@ -11,7 +11,6 @@ type Props = {
 
 const PortfolioItemCard = (props: Props) => {
   const navigate = useNavigate();
-  console.log(props.cardData);
   const getItemCard = (mockData: cardData[]) => {
     return mockData.map((item, index) => {
       return (

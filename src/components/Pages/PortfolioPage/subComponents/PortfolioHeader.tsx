@@ -38,7 +38,6 @@ const PortfolioHeader = (props: Props) => {
     if (response.data.status === "SUCCESS") {
       navigate(-1);
     } else {
-      console.log(response);
       alert("삭제에 실패했습니다. - PortfolioHeader");
     }
   };
