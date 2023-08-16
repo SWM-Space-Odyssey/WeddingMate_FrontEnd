@@ -14,24 +14,29 @@ interface MappingInterface<T, I> {
   };
 }
 type stateLiteral = registStates | portfolioStates | itemStates;
+
+interface API_STATUS {
+  status: "SUCCESS" | "FAIL";
+}
+
 // ========================================================================≈≈
 // UserRegist============================================================≈≈
 // ========================================================================≈≈
 interface registRegister {
-  Type: string;
-  Nickname: string;
-  Company: string;
-  Grade: string;
-  Location: string[];
-  PlannerTag?: string[];
+  type: string;
+  nickname: string;
+  company: string;
+  position: string;
+  region: string[];
+  plannerTagList?: string[];
 }
 type registStates =
-  | "Type"
-  | "Nickname"
-  | "Company"
-  | "Grade"
-  | "Location"
-  | "PlannerTag";
+  | "type"
+  | "nickname"
+  | "company"
+  | "position"
+  | "region"
+  | "plannerTagList";
 
 type registRegisterType = {
   register: UseFormRegister<registRegister>;
@@ -50,7 +55,7 @@ type RegistInputProp = {
 interface portfolioRegister {
   Title: string;
   Mood: string[];
-  Location: string[];
+  region: string;
   pictures: File[] | string[];
 }
 
@@ -81,6 +86,17 @@ interface itemRegister {
 type itemRegisterType = {
   register: UseFormRegister<itemRegister>;
 };
+type ItemBody = {
+  itemRecord: string;
+  itemTagList: string;
+  imageList: string[];
+  date: string;
+  company: string;
+  portfolioId: number;
+  order: number;
+  category: string;
+  isWriter?: boolean;
+};
 
 type itemStates =
   | "categoryContent"
@@ -90,6 +106,17 @@ type itemStates =
   | "date"
   | "company";
 
+type cardData = {
+  itemRecord: string;
+  portfolioId: number;
+  itemTagList: string[];
+  categoryContent: string;
+  imageList: string[];
+  order: number;
+  itemId: number;
+  company: string;
+  date: string;
+};
 // ========================================================================≈≈
 // React Query ===============================================================
 // ========================================================================≈≈

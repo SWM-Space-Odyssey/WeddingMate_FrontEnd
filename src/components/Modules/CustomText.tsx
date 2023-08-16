@@ -9,6 +9,7 @@ type Props = {
     | "Content"
     | "Content-small";
   text: string;
+  required?: boolean;
 };
 
 const CustomText = (props: Props) => {
@@ -35,7 +36,12 @@ const CustomText = (props: Props) => {
       break;
   }
 
-  return <span className={textClassName}>{props.text}</span>;
+  return (
+    <span className={textClassName}>
+      {props.text}
+      {props?.required ? <span className='text-[#FF6A6A]'>*</span> : ""}
+    </span>
+  );
 };
 
 export default CustomText;

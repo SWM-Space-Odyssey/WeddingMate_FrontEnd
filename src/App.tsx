@@ -10,6 +10,11 @@ import FeedPage from "./components/Pages/FeedPage/FeedPage";
 import PlannerPage from "./components/Pages/PlannerPage/PlannerPage";
 import LodingSpinner from "./components/Modules/LodingSpinner";
 import PortfolioCreate from "./components/Pages/CreatePage/PortfolioCreate";
+import PortfolioPage from "./components/Pages/PortfolioPage/PortfolioPage";
+import ItemCreate from "./components/Pages/CreatePage/ItemCreate";
+import ItemPage from "./components/Pages/ItemPage/ItemPage";
+import { Suspense } from "react";
+import Auth from "./hoc/auth";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,28 +24,57 @@ const queryClient = new QueryClient({
     },
   },
 });
+const AuthPlannerPage = Auth(PlannerPage, "all");
+const AuthPlannerMyPage = Auth(PlannerPage, "planner");
+const AuthRegisterPage = Auth(RegisterPage, "unregistered");
+const AuthFeedPage = Auth(FeedPage, "all");
+const AuthPortfolioPage = Auth(PortfolioPage, "all");
+const AuthItemPage = Auth(ItemPage, "all");
+const AuthItemCreate = Auth(ItemCreate, "planner");
+const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
+const AuthLoginGuidePage = Auth(FeedPage, "unregistered");
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className='h-full flex flex-col pb-28'>
-          <div className='flex-1 relative flex overflow-y-scroll'>
-            <Routes>
-              <Route path='/' element={<MainPage />} />
-              <Route path='/regist' element={<RegisterPage />} />
-              <Route
-                path='/create/portfolio/:itemId?'
-                element={<PortfolioCreate />}
-              />
-              <Route path='/feed' element={<FeedPage />} />
-              <Route path='/planner' element={<PlannerPage />} />
-              <Route path='/oauth2/redirect' element={<LodingSpinner />} />
-            </Routes>
-            <ReactQueryDevtools initialIsOpen={false} />
+        <Suspense fallback={<LodingSpinner />}>
+          <div className='h-full flex flex-col'>
+            <div className='flex-1 relative flex overflow-y-scroll flex-col'>
+              <Routes>
+                <Route path='/' element={<AuthFeedPage />} />
+                <Route path='/regist' element={<AuthRegisterPage />} />
+                <Route path='/planner/:Id' element={<AuthPlannerPage />} />
+                <Route
+                  path='/plannermypage'
+                  element={<AuthPlannerMyPage mypage />}
+                />
+                <Route path='/item/:itemId' element={<AuthItemPage />} />
+                <Route
+                  path='/portfolio/:itemId'
+                  element={<AuthPortfolioPage />}
+                />
+                <Route
+                  path='/create/portfolio/:portfolioId?'
+                  element={<AuthPortfolioCreate />}
+                />
+                <Route
+                  path='/create/item/:portfolioId/:order/:itemId?'
+                  element={<AuthItemCreate />}
+                />
+                <Route
+                  path='/oauth2/redirect'
+                  element={<LodingSpinner redirect />}
+                />
+                <Route path='/login' element={<AuthLoginGuidePage guide />} />
+                <Route path='/admin' element={<MainPage />} />
+                {/* <Route path='/spinner/:timeout' element={<LodingSpinner />} /> */}
+              </Routes>
+              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+            </div>
           </div>
-        </div>
-        <NavBar />
+          {/* <NavBar /> */}
+        </Suspense>
       </BrowserRouter>
     </QueryClientProvider>
   );

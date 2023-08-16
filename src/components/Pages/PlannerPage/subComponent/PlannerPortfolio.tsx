@@ -2,8 +2,15 @@ import React from "react";
 import CustomText from "../../../Modules/CustomText";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
+import axios from "axios";
+import { getOwnPortfolio } from "../../../../api/portfolio";
+import { useQuery } from "@tanstack/react-query";
+import { SERVER_IMAGE_URL } from "../../../../common/constants";
+import { useNavigate } from "react-router-dom";
 
-type Props = {};
+type Props = {
+  mypage?: boolean;
+};
 const mockData = [
   {
     portfolioId: 1,
@@ -32,22 +39,30 @@ const mockData = [
 ];
 
 const PlannerPortfolio = (props: Props) => {
-  const dispatch = useDispatch();
-  // make server axios get logic
-  const portfolioList = mockData.map((data) => (
+  const navigate = useNavigate();
+  const { data } = useQuery(["myPortfolio"], () => getOwnPortfolio(), {
+    refetchOnWindowFocus: false,
+  });
+  if (data?.status === "FAIL" || !data)
+    return (
+      <div>
+        <div>포트폴리오가 없습니다!</div>
+        <div>포트폴리오를 생성해보세요!</div>
+      </div>
+    );
+
+  const portfolioList = data.data.map((data) => (
     <button
-      onClick={() =>
-        dispatch(
-          intoView({ view: "Portfolio", requestParam: data.portfolioId })
-        )
-      }
+      onClick={() => {
+        navigate(`/portfolio/${data.portfolioId}`);
+      }}
       key={data.portfolioId}
       className='h-56 flex flex-col gap-1.5'
     >
       <img
-        src={data.repImgUrl}
+        src={SERVER_IMAGE_URL + data.repImgUrl}
         alt='Planner Portfolio Image'
-        className='w-full max-h-44 object-cover rounded-sm'
+        className='w-full max-h-44 flex-1 object-cover rounded-sm'
       />
       <CustomText text={data.title} type='Content-small' />
     </button>

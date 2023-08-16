@@ -9,6 +9,7 @@ interface Props<T extends stateLiteral> {
     multiline?: boolean;
     textCount?: boolean;
   };
+  required?: boolean;
 }
 
 const CustomInput = <T extends stateLiteral>(props: Props<T>) => {
@@ -26,7 +27,11 @@ const CustomInput = <T extends stateLiteral>(props: Props<T>) => {
   return (
     <div className='flex flex-col'>
       <div className='mb-1'>
-        <CustomText type='Title' text={props.content.title} />
+        <CustomText
+          type='Title'
+          text={props.content.title}
+          required={props?.required}
+        />
       </div>
       {multiLine && state === "itemRecord" ? (
         <div>

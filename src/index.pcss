@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: AppleSDGothicNeo, Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
 }
 html,
 body {
@@ -12,6 +13,7 @@ body {
   display: flex;
   justify-content: center;
   -ms-overflow-style: none;
+  background-color: #d3d3d3;
 }
 
 ::-webkit-scrollbar {
@@ -21,8 +23,10 @@ body {
   height: 100%;
   width: 100%;
   max-width: 516px;
+  min-width: 375px;
   overflow: hidden;
   position: fixed;
+  background-color: #ffffff;
 }
 
 .registRoot {

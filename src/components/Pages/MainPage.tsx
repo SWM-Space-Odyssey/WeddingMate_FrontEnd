@@ -22,10 +22,7 @@ const KAKAO_LOGIN_URL =
   "https://api.weddingmate.co.kr/oauth2/authorization/kakao";
 
 const MainPage = (props: Props) => {
-  const view = useSelector((state: RootState) => state.view.currentView);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [searchParmas] = useSearchParams();
   // const accessToken = useSelector((state: RootState) => state.user.accessToken);
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
@@ -34,105 +31,76 @@ const MainPage = (props: Props) => {
       refetchOnWindowFocus: false,
     });
     const refreshData = useQuery(["refresh"], () => tokenRefresh(accessToken), {
-      enabled: checkData.data?.status === 401,
+      enabled: checkData.data?.status !== 200,
       refetchOnWindowFocus: false,
     });
-    if (refreshData.data?.status === 200) {
-      localStorage.setItem("accessToken", refreshData.data.accessToken);
+    if (checkData.data?.status !== 200) {
+      if (refreshData.data?.status === 200) {
+        localStorage.setItem("accessToken", refreshData.data.accessToken);
+      } else {
+        localStorage.removeItem("accessToken");
+      }
     } else {
-      localStorage.removeItem("accessToken");
+      if (checkData.data?.data.data === "UNREGISTERED") {
+        console.log("you have to regist!!");
+        // navigate("/regist");
+      }
     }
   } else {
     console.log("no token");
   }
 
-  // const tokenRefresh = async () => {
-  //   const { data } = await axios.post(
-  //     "https://api.weddingmate.co.kr/api/v1/token/refresh",
-  //     {},
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //       withCredentials: true,
-  //     }
-  //   );
-  // };
-  // useEffect(() => {
-  // userCheck(accessToken)
-  // .then((res) => {
-  //   if (!res) {
-  //     tokenRefresh(accessToken).then((res) => {
-  //       console.log(res);
-  //     });
-  //   }
-  // });
-  // 여기 accessToken만 사용해서 내 정보 받아오는 api가 하나정도 필요할 듯
-  // 정보 받아오려했는데 토큰이 만료됐다고 뜨면 새로 갱신
-  // }, []);
-
   return (
     <div className='flex-1 relative flex overflow-y-scroll pt-12'>
-      <RegistComponent />
-      <PortfolioCreate />
-      <PortfolioPage />
-      <ItemPage />
-      <PlannerPage />
-      <FeedPage />
-      {/* <SocialLogin />
-      <SocialLogout /> */}
-      <ItemCreate />
-      <div
-        className={`${
-          view === "LandingPage" ? "" : "hidden"
-        } flex flex-col gap-4`}
-      >
+      <div className={`flex flex-col gap-4`}>
         <Button
           variant='contained'
-          onClick={() => dispatch(intoView({ view: "Regist" }))}
+          onClick={() => {
+            navigate("/regist");
+          }}
         >
           RegistPage
         </Button>
         <Button
           variant='contained'
           onClick={() => {
-            dispatch(intoView({ view: "PortfolioCreate" }));
-            navigate("/create/portfolio/param");
+            navigate("/create/portfolio/");
           }}
         >
           PortfolioCreatePage
         </Button>
         <Button
           variant='contained'
-          onClick={() => dispatch(intoView({ view: "Portfolio" }))}
+          onClick={() => {
+            navigate("/portfolio/3");
+          }}
         >
           PortfolioPage
         </Button>
         <Button
           variant='contained'
-          onClick={() => dispatch(intoView({ view: "Item" }))}
+          onClick={() => {
+            navigate("/item/3");
+          }}
         >
           ItemPage
         </Button>
         <Button
           variant='contained'
-          onClick={() => dispatch(intoView({ view: "ItemCreate" }))}
+          onClick={() => {
+            navigate("/create/item/3");
+          }}
         >
           ItemCreatePage
         </Button>
-        <Button
-          variant='contained'
-          onClick={() =>
-            dispatch(intoView({ view: "Planner", requestParam: "1" }))
-          }
-        >
+        <Button variant='contained' onClick={() => {}}>
           PlannerPage
         </Button>
         <Button
           variant='contained'
-          onClick={() =>
-            dispatch(intoView({ view: "Feed", requestParam: "1" }))
-          }
+          onClick={() => {
+            navigate("/feed");
+          }}
         >
           FeedPage
         </Button>

@@ -2,40 +2,28 @@ import React from "react";
 import CustomText from "../../../Modules/CustomText";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
+import { SERVER_IMAGE_URL } from "../../../../common/constants";
+import { useNavigate } from "react-router-dom";
 
-type Props = {};
-interface itemAdjustStates {
-  categoryContent: string;
-  itemTagList: string[];
-  itemRecord: string;
-  company?: string;
-  date?: string;
-  pictures?: string[];
-}
-
-type cardData = {
-  itemRecord: string;
-  portfolioId: number;
-  itemTagList: string[];
-  categoryContent: string;
-  pictures: string[];
-  order: number;
-  itemId: number;
-  company?: string;
-  date?: string;
+type Props = {
+  cardData: cardData[];
 };
-const PortfolioItemCard = (props: Props) => {
-  const dispatch = useDispatch();
 
+const PortfolioItemCard = (props: Props) => {
+  const navigate = useNavigate();
   const getItemCard = (mockData: cardData[]) => {
     return mockData.map((item, index) => {
       return (
-        <div className='flex flex-col gap-1.5' key={index} onClick={() => {}}>
+        <div
+          className='flex flex-col gap-1.5'
+          key={index}
+          onClick={() => {
+            navigate(`/item/${item.itemId}`);
+          }}
+        >
           <CustomText type='Title-base' text={item.categoryContent} />
           <div
-            onClick={() =>
-              dispatch(intoView({ view: "Item", requestParam: item.itemId }))
-            }
+            onClick={() => {}}
             className='relative rounded border shadow-md p-4 hover:cursor-pointer'
             key={index}
           >
@@ -45,11 +33,11 @@ const PortfolioItemCard = (props: Props) => {
             </div>
             <div>
               <div className='flex flex-row gap-2'>
-                {item.pictures?.map((picture, index) => {
+                {item.imageList?.map((imageURI, index) => {
                   return (
                     <img
                       key={index}
-                      src={picture}
+                      src={`${SERVER_IMAGE_URL}${imageURI}`}
                       className='w-[5.5rem] h-[5.5rem] rounded-sm border'
                     />
                   );
@@ -61,7 +49,9 @@ const PortfolioItemCard = (props: Props) => {
       );
     });
   };
-  return <div className='flex flex-col gap-6'>{getItemCard(itemMock)}</div>;
+  return (
+    <div className='flex flex-col gap-6'>{getItemCard(props.cardData)}</div>
+  );
 };
 
 export default PortfolioItemCard;

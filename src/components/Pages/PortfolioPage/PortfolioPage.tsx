@@ -1,43 +1,128 @@
-import React, { useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import PortfolioHeader from "./subComponents/PortfolioHeader";
 import { Button, Slide } from "@mui/material";
-import ItemCreate from "../CreatePage/ItemCreate";
 import PortfolioItemCard from "./subComponents/PortfolioItemCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
-import { intoView } from "../../../store/viewSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import {
+  // MY_ACCESS_KEY,
+  SERVER_URL,
+} from "../../../common/constants";
+import Header from "../../Header/Header";
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
 
+type tagResDtoList = {
+  tagId: number;
+  content: string;
+  categoryContent: string;
+};
+type headerData = {
+  id: string;
+  title: string;
+  itemResDtoList: cardData[];
+  repImgUrl: string;
+  tagList: string;
+  region: string;
+  isWriter: boolean;
+  plannerId: number;
+};
+type portfolioData = {
+  typeTag: "portfolio";
+  data: headerData;
+};
+type GetPortfolioResponse = portfolioData & {
+  status: "SUCCESS" | "FAIL";
+};
+
 const PortfolioPage = (props: Props) => {
-  const dispatch = useDispatch();
-  const view = useSelector((state: RootState) => state.view.currentView);
+  const params = useParams();
+  const navigate = useNavigate();
+  const [headerData, setHeaderData] = useState<headerData>();
+  const [ItemCard, setItemCard] = useState<cardData[]>();
+  const [isWriter, setIsWriter] = useState<boolean>(false);
+  const itemId = params.itemId;
+  const fetchPortfolio = () => {
+    axios
+      .get(`${SERVER_URL}/api/v1/portfolio/${itemId}`, {
+        headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+      })
+      .then((res) => {
+        const data = res.data as GetPortfolioResponse;
+        if (data.status === "SUCCESS") {
+          setHeaderData(data.data);
+          setItemCard(data.data.itemResDtoList);
+          if (data.data.isWriter) {
+            setIsWriter(true);
+          }
+        } else {
+          console.log("error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchPortfolio();
+  }, [itemId]);
+
   return (
-    <Slide
-      direction='left'
-      in={view === "Portfolio"}
-      mountOnEnter
-      unmountOnExit
-    >
-      <div className='absolute w-full px-4'>
-        <div>
-          <PortfolioHeader />
-        </div>
-        <div className='mt-12'>
-          <Button
-            onClick={() => dispatch(intoView({ view: "ItemCreate" }))}
-            sx={{ height: "38px", width: "100%" }}
-            variant='outlined'
-          >
-            아이템 추가하기
-          </Button>
-        </div>
-        <div className='mt-3'>
-          <PortfolioItemCard />
-        </div>
+    <>
+      <div>
+        <Header />
       </div>
-    </Slide>
+      <Slide
+        className='overflow-y-scroll px-4'
+        direction='left'
+        in
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className='w-full px-4'>
+          {headerData && ItemCard && (
+            <>
+              <div>
+                <PortfolioHeader data={headerData} />
+              </div>
+              {isWriter && (
+                <div className='mt-12'>
+                  <Button
+                    onClick={() =>
+                      navigate(`/create/item/${itemId}/${ItemCard.length}`)
+                    }
+                    sx={{ height: "38px", width: "100%" }}
+                    variant='outlined'
+                  >
+                    아이템 추가하기
+                  </Button>
+                </div>
+              )}
+              {!isWriter && (
+                <div className='mt-12'>
+                  <Button
+                    onClick={() => navigate(`/planner/${headerData.plannerId}`)}
+                    sx={{ height: "38px", width: "100%" }}
+                    variant='contained'
+                  >
+                    다른 포트폴리오 둘러보기
+                  </Button>
+                </div>
+              )}
+              <div className='my-3'>
+                <PortfolioItemCard cardData={ItemCard} />
+              </div>
+            </>
+          )}
+        </div>
+      </Slide>
+    </>
   );
 };
 

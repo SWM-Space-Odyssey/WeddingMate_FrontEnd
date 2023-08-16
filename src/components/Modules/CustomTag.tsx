@@ -19,40 +19,46 @@ const CustomTag = <T extends registStates | portfolioStates | itemStates>(
 
   // form 의 경우
   if (props.formState) {
-    const { register } = useFormContext();
+    const { setValue } = useFormContext();
     const formState = props.formState.state;
-    const [value, setValue] = props.formState.tagState;
+    const [innerValue, setInnerValue] = props.formState.tagState;
 
     const onClickHandler = () => {
       let newValue = [];
-      if (value.length < (tagCountMax as number)) {
-        if (value.includes(text)) {
-          const targetIndex = value.indexOf(text);
-          value.splice(targetIndex, 1);
-          newValue = [...value];
+      if (innerValue.length < (tagCountMax as number)) {
+        if (innerValue.includes(text)) {
+          const targetIndex = innerValue.indexOf(text);
+          innerValue.splice(targetIndex, 1);
+          newValue = [...innerValue];
         } else {
-          newValue = [...value, text];
+          newValue = [...innerValue, text];
         }
       } else {
-        if (value.includes(text)) {
-          const targetIndex = value.indexOf(text);
-          value.splice(targetIndex, 1);
-          newValue = [...value];
+        if (innerValue.includes(text)) {
+          const targetIndex = innerValue.indexOf(text);
+          innerValue.splice(targetIndex, 1);
+          newValue = [...innerValue];
         } else {
-          newValue = [...value.slice(1), text];
+          newValue = [...innerValue.slice(1), text];
         }
       }
-      register(formState, { value: [...newValue] } as FieldValues);
-      setValue([...newValue]);
+      setValue(formState, newValue as any, { shouldDirty: true });
+      setInnerValue([...newValue]);
     };
 
     return (
       <Chip
         label={text}
+        variant='outlined'
         onClick={() => {
           onClickHandler();
         }}
-        className={`${value.includes(text) ? "font-bold" : ""}`}
+        sx={{
+          fontWeight: `${innerValue.includes(text) ? "bold" : ""}`,
+          border: `${innerValue.includes(text) ? "2px solid" : ""}`,
+          borderColor: `${innerValue.includes(text) ? "primary.main" : ""}`,
+          color: `${innerValue.includes(text) ? "primary.main" : ""}`,
+        }}
       />
     );
   }
