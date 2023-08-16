@@ -16,6 +16,7 @@ import {
 } from "../../../../common/constants";
 import { getFeedImage } from "../../../../api/Item";
 import { useNavigate } from "react-router-dom";
+import LodingSpinner from "../../../Modules/LodingSpinner";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -87,7 +88,6 @@ const MasonryImage = (props: Props) => {
   const navigate = useNavigate();
   const renderData = useMemo(() => {
     if (data?.pages[0].status === "FAIL") setIsError(true);
-    console.log(data);
     // return data ? data.pages.flatMap(({ data }) => data.data.content) : [];
     return data
       ? data.pages.flatMap(({ data, status }) =>
@@ -99,7 +99,6 @@ const MasonryImage = (props: Props) => {
   }, [data]);
   const realRender = useMemo(() => {
     return renderData.map((item, index) => {
-      console.log(item, index);
       let imageNav = "";
       if (!item) return;
       if (item.itemId === null) {
@@ -123,13 +122,12 @@ const MasonryImage = (props: Props) => {
   }, [renderData]);
   const ref = useIntersect(async (entry, observer) => {
     if (entry.isIntersecting) {
-      console.log("detect");
       await fetchNextPage();
       observer.unobserve(entry.target);
     }
   });
   return (
-    <div>
+    <div className='flex-1'>
       <Masonry
         breakpointCols={3}
         className='my-masonry-grid'
@@ -138,7 +136,11 @@ const MasonryImage = (props: Props) => {
         {data && !isError && realRender}
         <div ref={ref} className='mb-2' />
       </Masonry>
-      {isError && <div>일시적 오류입니다 새로고침 버튼을 눌러주세요!</div>}
+      {isError && (
+        <div className='h-3/4'>
+          <LodingSpinner />
+        </div>
+      )}
     </div>
   );
 };

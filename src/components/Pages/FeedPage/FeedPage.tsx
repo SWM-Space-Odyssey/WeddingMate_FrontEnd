@@ -1,5 +1,11 @@
-import { Slide } from "@mui/material";
-import React, { Suspense, useCallback, useEffect, useRef } from "react";
+import { Button, Modal, Slide } from "@mui/material";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import MasonryImage from "./subComponent/MasonryImage";
@@ -8,8 +14,12 @@ import { useQuery } from "@tanstack/react-query";
 import SkeletonImages from "../../Modules/SkeletonImages";
 import CustomSearchForm from "../../Modules/CustomSearchForm";
 import Header from "../../Header/Header";
+import CustomText from "../../Modules/CustomText";
+import kakaoLogin from "../../../assets/kakaoLogin.png";
 
-type Props = {};
+type Props = {
+  guide?: boolean;
+};
 
 type loremPicsum = {
   author: string;
@@ -19,22 +29,40 @@ type loremPicsum = {
   url: string;
   width: number;
 };
-
+const madalStyle = "flex flex-col justify-center items-center ";
 const FeedPage = (props: Props) => {
   const user = useSelector((state: RootState) => state.view.currentView);
-  const defaultOption = {
-    root: null,
-    threshold: 0.5,
-    rootMargin: "0px",
-  };
-  // useQuery 작성
 
+  // useQuery 작성
+  const [loginMadal, setLoginMadal] = useState(props.guide ? true : false);
   return (
     <>
+      <Modal open={loginMadal} className={madalStyle}>
+        <div
+          className={
+            madalStyle + "shadow-sm h-48 w-64 bg-zinc-100 rounded-3xl mb-20"
+          }
+        >
+          <div className='text-lg'>서비스 이용을 위해</div>
+          <div className='text-lg'>로그인이 필요합니다</div>
+          <Button
+            className='bg-[#FEE500] text-[#000000 85%] w-4/6 mt-4 rounded-md'
+            href='https://api.weddingmate.co.kr/oauth2/authorization/kakao'
+          >
+            <img src={kakaoLogin} className='w-full h-full' />
+          </Button>
+        </div>
+      </Modal>
       <div>
         <Header main='main' />
       </div>
-      <Slide direction='right' in mountOnEnter unmountOnExit className='px-4'>
+      <Slide
+        direction='right'
+        in
+        mountOnEnter
+        unmountOnExit
+        className='overflow-y-scroll px-4 flex-1 flex flex-col'
+      >
         <div>
           <CustomSearchForm />
           <MasonryImage />

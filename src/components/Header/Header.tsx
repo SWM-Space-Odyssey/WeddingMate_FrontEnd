@@ -22,20 +22,12 @@ const Header = (props: Props) => {
   const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.viewStack);
   const page = useSelector((state: RootState) => state.view.page);
-  const title = view[view.length - 1] ?? "LandingPage";
   if (props.main === "main")
     return (
       <div className='sticky h-12 py-1 px-2 justify-center border-b-2 bg-[#FF6A6A]'>
         <Grid className='h-10 items-center' container>
-          <Grid item xs={3}>
-            <Button
-              href='https://api.weddingmate.co.kr/oauth2/authorization/kakao'
-              sx={{ bgcolor: "yellow" }}
-            >
-              LOGIN
-            </Button>
-          </Grid>
-          <Grid item xs={8} className='flex justify-center'>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={10} className='flex justify-center'>
             {/* <text fontFamily='Damion'>WEDDING MATE</text> */}
             {logo}
           </Grid>
@@ -55,7 +47,6 @@ const Header = (props: Props) => {
             <button
               type='button'
               onClick={() => {
-                console.log("page", page);
                 if (page === 0) {
                   if (
                     confirm(
@@ -85,7 +76,7 @@ const Header = (props: Props) => {
     );
   }
   return (
-    <div className='sticky h-12 py-1 px-6 justify-center'>
+    <div className='sticky h-12 py-1 px-6 justify-center border-b-2'>
       <Grid className='h-10 items-center' container>
         <Grid item className='w-10 flex justify-center' xs={1}>
           <button
@@ -98,9 +89,7 @@ const Header = (props: Props) => {
             <ArrowBackIos />
           </button>
         </Grid>
-        <Grid item xs={10}>
-          <div>{title}</div>
-        </Grid>
+        <Grid item xs={10}></Grid>
         <Grid item xs={1}></Grid>
       </Grid>
     </div>
