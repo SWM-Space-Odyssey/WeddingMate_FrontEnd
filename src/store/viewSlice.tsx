@@ -44,7 +44,6 @@ export const viewSlice = createSlice({
       }
 
       const prevPage = state.viewStack.pop();
-      console.log(prevPage);
       if (prevPage) {
         state.currentView = prevPage;
       }

@@ -12,7 +12,6 @@ type plannerBody = {
 };
 
 export const plannerRegist = async (body: plannerBody) => {
-  console.log(body);
   const response: AxiosResponse = await axios
     .post(`${SERVER_URL}/api/v1/signup/planner`, body, {
       headers: {
@@ -48,7 +47,7 @@ export const editProfileImg = async (formData: FormData) => {
 type userCheckResponse = {
   status: number;
   data: {
-    status: string;
+    status: "SUCCESS" | "FAIL";
     data: "UNREGISTERED" | "PLANNER" | "CUSTOMER";
   };
 };
@@ -70,7 +69,6 @@ export const userCheck = async (token: string) => {
 };
 
 export const tokenRefresh = async (accessToken: string) => {
-  console.log(accessToken);
   const response = await axios
     .post(
       `${SERVER_URL}/api/v1/token/refresh`,
