@@ -20,7 +20,7 @@ type Props = {
 };
 
 const ItemCategories = (props: Props) => {
-  const [selectValue, setSelectValue] = useState<string>("드레스");
+  const [selectValue, setSelectValue] = useState<string>("default");
   const { register, setValue } = useFormContext();
 
   const selectHandler = (

@@ -28,23 +28,23 @@ const RegistComponent = () => {
         plannerTagList: plannerTagList?.join(","),
       };
       plannerRegist(planner).then((res) => {
-        if (res.status === 200 && res.data.data === "SUCCESS") {
-          alert("회원가입이 완료되었습니다.");
+        if (res.status === 200) {
+          if (res.data.status === "conflict") {
+            alert("이미 회원가입이 되어있는 계정입니다.");
+          } else {
+            alert("회원가입이 완료되었습니다.");
+          }
           navigate("/");
+        } else {
+          alert("회원가입에 실패하였습니다.");
+          console.log(res.data.data);
         }
       });
     } else {
-      // NOT YET
-      // const couple = {
-      //   company,
-      //   nickname,
-      //   position,
-      //   region,
-      //   plannerTagList
-      // }
+      // 예비부부의 경우
     }
   };
-  const transitionClass = "absolute left-0 right-0 h-full";
+  const transitionClass = "absolute left-0 right-0 h-full overflow-y-scroll";
   return (
     <Slide
       className='overflow-y-scroll px-4'
@@ -63,7 +63,6 @@ const RegistComponent = () => {
               <Header main='regist' />
             </div>
             <Slide
-              className='overflow-y-scroll px-4'
               direction={
                 page === 0
                   ? prevPage < 0
@@ -80,12 +79,11 @@ const RegistComponent = () => {
               </div>
             </Slide>
             <Slide
-              className='overflow-y-scroll px-4'
               direction={
                 page === 1
                   ? prevPage < 1
                     ? "left"
-                    : "right"
+                    : "left"
                   : page > 1
                   ? "right"
                   : "left"
@@ -98,7 +96,6 @@ const RegistComponent = () => {
             </Slide>
 
             <Slide
-              className='overflow-y-scroll px-4'
               direction={
                 page === 2
                   ? prevPage < 2 // 들어올 때
@@ -115,7 +112,6 @@ const RegistComponent = () => {
               </div>
             </Slide>
             <Slide
-              className='overflow-y-scroll px-4'
               direction={
                 page === 3
                   ? prevPage < 3
