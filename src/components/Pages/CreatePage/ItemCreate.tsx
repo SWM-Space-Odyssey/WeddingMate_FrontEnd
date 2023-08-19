@@ -11,7 +11,7 @@ import ItemTags from "./ItemTags";
 import CustomInput from "../../Modules/CustomInput";
 import CustomDatePicker from "../../Modules/CustomDatePicker";
 import CustomButton from "../../Modules/CustomButton";
-import { Slide } from "@mui/material";
+import { Alert, Slide, Snackbar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
@@ -20,7 +20,7 @@ import Header from "../../Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
 import { getItem, postItem, putItem } from "../../../api/Item";
 import { dateFormatter } from "../../../hooks/apiHook";
-import LodingSpinner from "../../Modules/LodingSpinner";
+import LoadingSpinner from "../../Modules/LoadingSpinner";
 import { Edit } from "@mui/icons-material";
 
 type Props = {
@@ -54,11 +54,17 @@ const ItemCreate = (props: Props) => {
   const [isEdit, setIsEdit] = useState<null | number>(null);
   const [loadging, setLoadging] = useState<boolean>(false);
   const [initTags, setInitTags] = useState<string[]>([]);
+  const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+
   const itemId = useParams().itemId;
   const order = useParams().order;
   const portfolioId = useParams().portfolioId;
   const navigate = useNavigate();
 
+  const snackbarClose = () => {
+    setOpenSnackbar(false);
+  };
   const setForm = (data?: itemRegister) => {
     if (data) {
       methods.reset(data);
@@ -83,7 +89,6 @@ const ItemCreate = (props: Props) => {
       const itemRecord = data.itemRecord;
       const date = new Date(data.date);
       const company = data.company;
-      // setInitTags(itemTagList);
       const form = {
         itemTagList,
         categoryContent,
@@ -104,7 +109,10 @@ const ItemCreate = (props: Props) => {
       data.categoryContent !== "직접입력"
         ? data.categoryContent
         : data.categoryContentText;
-
+    if (!data.itemTagList || data.itemTagList.length === 0) {
+      setOpenSnackbar(true);
+      return;
+    }
     const body = {
       itemRecord: data.itemRecord,
       company: data.company,
@@ -158,7 +166,7 @@ const ItemCreate = (props: Props) => {
       </div>
 
       <Slide
-        className='overflow-y-scroll px-4'
+        className='overflow-y-scroll px-4 flex-1 flex'
         direction='left'
         in
         mountOnEnter
@@ -167,7 +175,7 @@ const ItemCreate = (props: Props) => {
         <div className='w-full h-full px-4 flex flex-col'>
           {loadging && (
             <div className='absolute backdrop-blur-sm w-full h-full z-50'>
-              <LodingSpinner />
+              <LoadingSpinner />
             </div>
           )}
           <FormProvider {...methods}>
@@ -199,6 +207,13 @@ const ItemCreate = (props: Props) => {
               />
             </form>
           </FormProvider>
+          <Snackbar
+            open={openSnackbar}
+            onClose={snackbarClose}
+            autoHideDuration={1500}
+          >
+            <Alert severity='error'>태그를 한 개 이상 선택해주세요!</Alert>
+          </Snackbar>
         </div>
       </Slide>
     </>

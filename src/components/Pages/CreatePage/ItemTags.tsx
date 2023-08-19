@@ -5,6 +5,11 @@ import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
 import { useQuery } from "@tanstack/react-query";
 import { getTagList } from "../../../api/Item";
+import {
+  dressTagList,
+  makeupTagList,
+  studioTagList,
+} from "../../../common/TagList";
 
 const ITEM_TAGS = ["비즈", "실크"];
 
@@ -29,18 +34,13 @@ const ItemTags = (props: Props) => {
 
   useEffect(() => {
     if (content) {
-      // getTagList(content).then((res) => {
-      //   if (
-      //     res.status === "SUCCESS" &&
-      //     res.data.typeTag === "itemTag" &&
-      //     res.data.tagList
-      //   ) {
-      //     setSpreadValue(res.data.tagList);
-      //     return;
-      //   }
-      //   // 현재 DB 에 저장된 태그리스트가 없어서 목데이터 보여줄 겸 이렇게 해두었음
-      // });
-      setSpreadValue(ITEM_TAGS);
+      if (content === "드레스") {
+        setSpreadValue(dressTagList);
+      } else if (content === "메이크업") {
+        setSpreadValue(makeupTagList);
+      } else if (content === "스튜디오") {
+        setSpreadValue(studioTagList);
+      }
     }
   }, [contentText, content]);
   useEffect(() => {
@@ -55,6 +55,7 @@ const ItemTags = (props: Props) => {
         formState={formState}
         title='아이템 태그'
         isAddable={true}
+        maxTag={3}
         required={props.required}
         initValue={props.initValue}
       />

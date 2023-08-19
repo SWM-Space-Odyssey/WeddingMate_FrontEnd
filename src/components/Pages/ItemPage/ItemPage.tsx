@@ -45,8 +45,8 @@ const ItemPage = (props: Props) => {
 
   const deleteHandler = async () => {
     if (!portfolioId) return;
-    const response = await deleteItem(parseInt(itemId));
-    if (response.data.status === "SUCCESS") {
+    const { status, data } = await deleteItem(parseInt(itemId));
+    if (status === "SUCCESS") {
       navigate(-1);
     } else {
       alert("삭제에 실패했습니다. - PortfolioHeader");
@@ -98,7 +98,7 @@ const ItemPage = (props: Props) => {
         <Header />
       </div>
       <Slide
-        className='overflow-y-scroll px-4'
+        className='overflow-y-scroll px-4 pt-6 gap-6 flex flex-col'
         direction='left'
         in
         mountOnEnter
@@ -121,6 +121,7 @@ const ItemPage = (props: Props) => {
               <CustomTagBlock
                 title='태그'
                 spreadValues={itemTagList.split(",")}
+                type='item'
               />
               <div className={defaultClassName}>
                 <CustomText type='Title' text='상세 설명' />

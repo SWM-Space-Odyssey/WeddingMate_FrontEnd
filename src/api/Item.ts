@@ -130,10 +130,12 @@ export const getTagList = async (category: string) => {
 };
 
 export const getFeedImage = async (pageParam: number, size: number) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return { status: "FAIL" as const, data: null };
   const response = await axios
     .get<ItemResponse>(`${SERVER_URL}/api/v1/file`, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       params: { page: pageParam, size: size },
       withCredentials: true,
