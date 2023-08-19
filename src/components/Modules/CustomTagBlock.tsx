@@ -3,7 +3,9 @@ import CustomTag from "./CustomTag";
 import { Chip, Collapse } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 
-interface Props<T extends registStates | portfolioStates | itemStates> {
+interface Props<
+  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+> {
   spreadValues: string[];
   formState?: T;
   initValue?: string[];
@@ -12,9 +14,12 @@ interface Props<T extends registStates | portfolioStates | itemStates> {
   renderCounter?: boolean;
   isAddable?: boolean;
   required?: boolean;
+  type?: "item" | "sns";
 }
 
-const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
+const CustomTagBlock = <
+  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+>(
   props: Props<T>
 ) => {
   const spreadValues = props.spreadValues;
@@ -29,7 +34,7 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
     setAddFormSwitch(true);
   };
   useEffect(() => {
-    if (!initValue) return;
+    if (!initValue || !initValue[0]) return;
     setComponentValue([...initValue]);
   }, [initValue]);
   const onClickAdd = () => {
@@ -65,6 +70,7 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
               }
             }
             tagCountMax={tagCountMax}
+            type={props.type}
           />
         ))}
         {props.isAddable && (
@@ -76,12 +82,12 @@ const CustomTagBlock = <T extends registStates | portfolioStates | itemStates>(
           <div className={`${addFormSwitch ? "block" : "hidden"} w-full flex`}>
             <input
               type='text'
-              className='border flex-shrink-2'
+              className='border flex-grow-3'
               value={addTag}
               onChange={(e) => setAddTag(e.currentTarget.value)}
             />
             <button
-              className='flex-3'
+              className='flex-grow-1'
               type='button'
               onClick={() => onClickAdd()}
             >

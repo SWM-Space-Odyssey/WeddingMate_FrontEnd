@@ -13,7 +13,11 @@ interface MappingInterface<T, I> {
     placeholder: string;
   };
 }
-type stateLiteral = registStates | portfolioStates | itemStates;
+type stateLiteral =
+  | registStates
+  | portfolioStates
+  | itemStates
+  | plannerProfileStates;
 
 interface API_STATUS {
   status: "SUCCESS" | "FAIL";
@@ -117,6 +121,18 @@ type cardData = {
   company: string;
   date: string;
 };
+// ========================================================================≈≈
+// PlannerProfile===============================================================
+// ========================================================================≈≈
+type plannerProfileStates =
+  | "nickname"
+  | "company"
+  | "position"
+  | "region"
+  | "tagList"
+  | "bio"
+  | "sns";
+
 // ========================================================================≈≈
 // React Query ===============================================================
 // ========================================================================≈≈

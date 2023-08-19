@@ -108,7 +108,7 @@ const PortfolioPage = (props: Props) => {
                 <div className='mt-12'>
                   <Button
                     onClick={() => navigate(`/planner/${headerData.plannerId}`)}
-                    sx={{ height: "38px", width: "100%" }}
+                    sx={{ height: "38px", width: "100%", color: "#fff" }}
                     variant='contained'
                   >
                     다른 포트폴리오 둘러보기

@@ -47,10 +47,16 @@ type GetPlannerPortfolioResponse = {
   data: plannerPortfolioObj[];
 };
 
-export const getOwnPortfolio = async () => {
+export const getPortfolio = async (
+  portfolioId: number,
+  isMypage: boolean | undefined
+) => {
   // 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
+  const requestUrl = isMypage
+    ? `${SERVER_URL}/api/v1/portfolio/`
+    : `${SERVER_URL}/api/v1/planner/${portfolioId}/portfolio`;
   const response = await axios
-    .get(`${SERVER_URL}/api/v1/portfolio/`, {
+    .get(requestUrl, {
       headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
     })
     .then((res) => {
@@ -65,36 +71,36 @@ export const getOwnPortfolio = async () => {
   return response;
 };
 
-export const getPortfolio = async (portfolioId: number) => {
-  return useQuery(
-    ["portfolio"],
-    () =>
-      axios.get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
-        headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
-      }),
-    {
-      enabled: !!portfolioId,
-    }
-  );
-  // if (error) return error;
-  // return data?.data as GetPortfolioResponse;
+// export const getPortfolio = async (portfolioId: number) => {
+//   return useQuery(
+//     ["portfolio"],
+//     () =>
+//       axios.get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+//         headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+//       }),
+//     {
+//       enabled: !!portfolioId,
+//     }
+//   );
+// };
+// if (error) return error;
+// return data?.data as GetPortfolioResponse;
 
-  // 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
-  // const response = await axios
-  //   .get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
-  //     headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
-  //   })
-  //   .then((res) => {
-  //     return {
-  //       typeTag: "portfolio",
-  //       ...res.data,
-  //     } as GetPortfolioResponse;
-  //   })
-  //   .catch((err: AxiosError) => {
-  //     return handleError(err);
-  //   });
-  // return response;
-};
+// 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
+// const response = await axios
+//   .get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+//     headers: { Authorization: `Bearer ${MY_ACCESS_KEY}` },
+//   })
+//   .then((res) => {
+//     return {
+//       typeTag: "portfolio",
+//       ...res.data,
+//     } as GetPortfolioResponse;
+//   })
+//   .catch((err: AxiosError) => {
+//     return handleError(err);
+//   });
+// return response;
 
 type postItemProp = {
   itemType: string;

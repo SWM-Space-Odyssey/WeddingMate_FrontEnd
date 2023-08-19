@@ -10,12 +10,26 @@ type plannerBody = {
   region: string;
   plannerTagList: string | undefined;
 };
+type plannerProfileBody = {
+  nickname: string;
+  plannerInfo: {
+    company: string;
+    position: string;
+    region: string;
+    tagList: string;
+  };
+  plannerProfileInfo: {
+    sns: string;
+    bio: string;
+  };
+};
 
 export const plannerRegist = async (body: plannerBody) => {
+  const accessToken = localStorage.getItem("accessToken");
   const response: AxiosResponse = await axios
     .post(`${SERVER_URL}/api/v1/signup/planner`, body, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       withCredentials: true,
     })
@@ -50,6 +64,22 @@ type userCheckResponse = {
     status: "SUCCESS" | "FAIL";
     data: "UNREGISTERED" | "PLANNER" | "CUSTOMER";
   };
+};
+export const editPlannerProfile = async (body: plannerProfileBody) => {
+  const response: AxiosResponse = await axios
+    .put(`${SERVER_URL}/api/v1/profile/planner`, body, {
+      headers: {
+        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+  return response;
 };
 
 export const userCheck = async (token: string) => {
