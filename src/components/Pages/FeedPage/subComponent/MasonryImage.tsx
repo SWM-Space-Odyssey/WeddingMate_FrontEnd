@@ -16,7 +16,7 @@ import {
 } from "../../../../common/constants";
 import { getFeedImage } from "../../../../api/Item";
 import { useNavigate } from "react-router-dom";
-import LodingSpinner from "../../../Modules/LodingSpinner";
+import LoadingSpinner from "../../../Modules/LoadingSpinner";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -59,7 +59,7 @@ const useIntersect = (
 };
 const useFetchUsers = (param?: string) =>
   useInfiniteQuery(
-    ["picsum"],
+    ["Feed", MY_ACCESS_KEY],
     ({ pageParam = 0 }) => {
       return getFeedImage(pageParam, 6);
       // return axios.get(`${SERVER_URL}/api/v1/file`, {
@@ -138,7 +138,7 @@ const MasonryImage = (props: Props) => {
       </Masonry>
       {isError && (
         <div className='h-3/4'>
-          <LodingSpinner />
+          <LoadingSpinner />
         </div>
       )}
     </div>

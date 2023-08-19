@@ -6,6 +6,12 @@ import PlannerInfo from "./subComponent/PlannerInfo";
 import PlannerPortfolio from "./subComponent/PlannerPortfolio";
 import BottomPostButton from "./subComponent/BottomPostButton";
 import Header from "../../Header/Header";
+import ProfileDialog from "../CreatePage/ProfileDialog";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { SERVER_URL } from "../../../common/constants";
+import { useParams } from "react-router-dom";
+const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {
   mypage?: boolean;
@@ -13,13 +19,35 @@ type Props = {
 
 const PlannerPage = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
+  const plannerId = parseInt(useParams().Id ?? "0");
+  const requestURL = props.mypage
+    ? `/api/v1/profile/planner`
+    : `/api/v1/planner/${plannerId}`;
+  const { data, isLoading } = useQuery(
+    ["plannerInfo", plannerId],
+    () =>
+      axios.get(`${SERVER_URL}${requestURL}`, {
+        headers: {
+          Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        },
+        withCredentials: true,
+      }),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+  console.log(data?.data.data);
   return (
     <>
       <div>
-        <Header />
+        <Header
+          rightButton={
+            props.mypage ? <ProfileDialog data={data?.data.data} /> : undefined
+          }
+        />
       </div>
       <Slide
-        className='overflow-y-scroll px-4'
+        className='overflow-y-scroll px-4 flex-1'
         direction={`${view === "Planner" ? "right" : "left"}`}
         in
         mountOnEnter
@@ -33,7 +61,7 @@ const PlannerPage = (props: Props) => {
             <PlannerPortfolio mypage={props.mypage} />
           </div>
           {props.mypage && (
-            <p className='absolute right-4 bottom-20 z-10'>
+            <p className='absolute right-4 bottom-10 z-10'>
               <BottomPostButton />
             </p>
           )}
