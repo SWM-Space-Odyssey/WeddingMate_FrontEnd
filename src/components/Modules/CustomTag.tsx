@@ -2,6 +2,7 @@ import { Instagram } from "@mui/icons-material";
 import { Chip } from "@mui/material";
 import React from "react";
 import { FieldValues, useFormContext } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 interface Props<
   T extends registStates | portfolioStates | itemStates | plannerProfileStates
@@ -21,6 +22,7 @@ const CustomTag = <
 ) => {
   const text = props.text;
   const tagCountMax = props.tagCountMax;
+  const navigate = useNavigate();
 
   console.log(props.type);
   // form 의 경우
@@ -69,17 +71,19 @@ const CustomTag = <
     );
   } else if (props.type === "sns") {
     return (
-      <Chip
-        icon={<Instagram color='primary' />}
-        label={text}
-        variant='outlined'
-        sx={{
-          fontWeight: "bold",
-          border: "2px solid",
-          borderColor: "primary",
-          color: "primary.main",
-        }}
-      />
+      <a href={"https://instagram.com/" + text}>
+        <Chip
+          icon={<Instagram color='primary' />}
+          label={"@" + text}
+          variant='outlined'
+          sx={{
+            fontWeight: "bold",
+            border: "2px solid",
+            borderColor: "primary",
+            color: "primary.main",
+          }}
+        />
+      </a>
     );
   } else if (props.type === "item") {
     return (

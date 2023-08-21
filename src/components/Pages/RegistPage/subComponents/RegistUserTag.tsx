@@ -14,10 +14,13 @@ const RegistUserTag = (props: Props) => {
   const tags = useWatch({
     name: formElement,
   });
+  const tagMax = 3;
   return (
     <div className='px-4 flex flex-col h-full justify-between'>
       <div className='mt-20'>
-        <div className='font-bold text-2xl'>키워드를 2개 선택해 주세요</div>
+        <div className='font-bold text-2xl'>
+          키워드를 {tagMax}개 선택해 주세요
+        </div>
 
         {/* Grayscale 넣어줘야함!! */}
         <div className='mt-2'>
@@ -28,7 +31,7 @@ const RegistUserTag = (props: Props) => {
           <CustomTagBlock
             spreadValues={PlannerTagList}
             formState={formElement}
-            maxTag={2}
+            maxTag={tagMax}
           />
         </div>
       </div>
@@ -36,12 +39,14 @@ const RegistUserTag = (props: Props) => {
         className='h-11 w-full'
         variant='contained'
         sx={{ fontSize: "1rem", my: 1 }}
-        disabled={tags?.length !== 2}
+        disabled={tags?.length !== tagMax}
         onClick={() => {
           dispatch(NextPage());
         }}
       >
-        <div className='text-white'>다음</div>
+        <div className='text-white'>
+          {tags?.length < 3 ? "태그를 3개 선택해주세요!" : "다음"}
+        </div>
       </Button>
     </div>
   );

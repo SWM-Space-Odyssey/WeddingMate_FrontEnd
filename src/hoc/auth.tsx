@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
 import { tokenRefresh, userCheck } from "../api/user";
 
-type option = "all" | "planner" | "customer" | "unregistered";
+type option = "all" | "planner" | "customer" | "unregistered" | null;
 const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const RefreshToken = async (accessToken: string) => {
     const { status, data } = await tokenRefresh(accessToken);
     if (status === 200) {
@@ -21,14 +20,15 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       return;
     }
   };
-
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    const admin = localStorage.getItem("admin");
+    const admin = localStorage.getItem("admin"); // 나중에 지우기
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
+    console.log(accessToken, admin);
     if (accessToken && !admin) {
       userCheck(accessToken)
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;
@@ -49,14 +49,17 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
                 }
                 break;
               case "UNREGISTERED":
-                if (option === "all" || option === "customer") {
-                } else {
+                if (option !== "unregistered") {
                   navigate("/regist");
                 }
                 break;
             }
+            if (option === null) {
+              navigate("/");
+            }
           } else {
             // 토큰이 만료된 경우
+            console.log("??");
             if (res.status === 401) {
               RefreshToken(accessToken);
             }
@@ -67,8 +70,8 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
           RefreshToken(accessToken);
         });
     } else {
-      if (admin) return;
-      if (option === "all") return;
+      if (admin) return; // 나중에 지워줘야함
+      if (option === null) return;
       alert("로그인이 만료되었습니다! 다시 로그인해주세요.");
       navigate("/login");
     }

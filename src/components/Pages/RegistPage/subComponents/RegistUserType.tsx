@@ -9,7 +9,7 @@ const RegistUserType = () => {
   const { register } = useFormContext();
   const [userType, setUserType] = useState("");
   // 사용되는 상수구역
-  const GuideText = "본인의 신분을 선택해주세요";
+  const GuideText = "가입 유형을 선택해주세요";
   const CoupleString = "couple";
   const PlannerString = "planner";
   const stringMapping = {

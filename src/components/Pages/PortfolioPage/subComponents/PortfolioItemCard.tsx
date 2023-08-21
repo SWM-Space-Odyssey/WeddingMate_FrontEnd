@@ -24,15 +24,17 @@ const PortfolioItemCard = (props: Props) => {
           <CustomText type='Title-base' text={item.categoryContent} />
           <div
             onClick={() => {}}
-            className='relative rounded border shadow-md p-4 hover:cursor-pointer'
+            className='relative rounded border shadow-md p-4 hover:cursor-pointer overflow-hidden'
             key={index}
           >
-            <div>
-              <div>{item?.date}</div>
-              <div>{item.itemRecord}</div>
+            <div className='flex flex-col gap-1 pb-2'>
+              <CustomText type='Title' text={item?.date} />
+              <CustomText type='Content-small' text={item.itemRecord} />
+              {/* <div>{item?.date}</div>
+              <div>{item.itemRecord}</div> */}
             </div>
             <div>
-              <div className='flex flex-row gap-2'>
+              <div className='flex flex-row gap-2 overflow-x-scroll'>
                 {item.imageList?.map((imageURI, index) => {
                   return (
                     <img
