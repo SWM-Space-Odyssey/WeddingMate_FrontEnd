@@ -94,11 +94,11 @@ type ItemBody = {
   itemRecord: string;
   itemTagList: string;
   imageList: string[];
+  portfolioId: number;
+  category: string;
   date: string;
   company: string;
-  portfolioId: number;
-  order: number;
-  category: string;
+  order?: number;
   isWriter?: boolean;
 };
 

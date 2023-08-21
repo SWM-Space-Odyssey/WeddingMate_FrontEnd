@@ -78,6 +78,7 @@ const PortfolioCreate = (props: Props) => {
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const param = useParams().portfolioId;
   const navigate = useNavigate();
+
   const snackbarOpenFunc = (message: string) => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);

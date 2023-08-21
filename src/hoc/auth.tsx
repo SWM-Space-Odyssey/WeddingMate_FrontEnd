@@ -24,11 +24,9 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
     const accessToken = localStorage.getItem("accessToken");
     const admin = localStorage.getItem("admin"); // 나중에 지우기
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
-    console.log(accessToken, admin);
     if (accessToken && !admin) {
       userCheck(accessToken)
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;

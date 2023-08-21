@@ -181,7 +181,9 @@ const ImageUploader = (props: Props) => {
         <span className='tracking-widest font-bold text-sm'>
           ({pictures?.length ?? 0}/{maxCount})
         </span>
-        {props.required && <span className='text-[#FF6A6A]'>*</span>}
+        <span className='text-[#FF6A6A] font-bold text-xs'>
+          필수{maxCount > 1 ? " 1개 이상" : ""}*
+        </span>
       </div>
       <div className='flex gap-1.5 flex-wrap'>
         <label>

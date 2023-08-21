@@ -12,7 +12,6 @@ interface Props<
   maxTag?: number;
   title?: string;
   renderCounter?: boolean;
-  isAddable?: boolean;
   required?: boolean;
   type?: "item" | "sns";
 }
@@ -27,28 +26,26 @@ const CustomTagBlock = <
   const tagCountMax = props.maxTag ? props.maxTag : 1;
   const initValue = props.initValue;
   const [componentValue, setComponentValue] = useState<string[]>([]);
-  const [addFormSwitch, setAddFormSwitch] = useState<boolean>(false);
-  const [addTag, setAddTag] = useState<string>("");
-  const addFormDisplay = () => {
-    if (addFormSwitch) return;
-    setAddFormSwitch(true);
-  };
+  if (props?.formState) {
+    const { control, setValue } = useFormContext();
+    const category = useWatch({
+      control: control,
+      name: "categoryContent",
+    });
+    useEffect(() => {
+      setValue("itemTagList", []);
+      setComponentValue([]);
+    }, [category]);
+  }
   useEffect(() => {
     if (!initValue || !initValue[0]) return;
     setComponentValue([...initValue]);
   }, [initValue]);
-  const onClickAdd = () => {
-    if (addTag) {
-      spreadValues.push(addTag);
-    }
-    setAddTag("");
-    return setAddFormSwitch(false);
-  };
 
   return (
     <div>
       {props.title && (
-        <div>
+        <div className='pb-1'>
           <span className='font-bold text-sm'>{props.title}</span>
           {props.renderCounter ? (
             <span>{` ${componentValue.length} / ${tagCountMax}`}</span>
@@ -73,29 +70,7 @@ const CustomTagBlock = <
             type={props.type}
           />
         ))}
-        {props.isAddable && (
-          <Chip label={`추가`} onClick={() => addFormDisplay()} />
-        )}
       </div>
-      {props?.isAddable && (
-        <Collapse in={addFormSwitch} className='pt-1'>
-          <div className={`${addFormSwitch ? "block" : "hidden"} w-full flex`}>
-            <input
-              type='text'
-              className='border flex-grow-3'
-              value={addTag}
-              onChange={(e) => setAddTag(e.currentTarget.value)}
-            />
-            <button
-              className='flex-grow-1'
-              type='button'
-              onClick={() => onClickAdd()}
-            >
-              입력
-            </button>
-          </div>
-        </Collapse>
-      )}
     </div>
   );
 };

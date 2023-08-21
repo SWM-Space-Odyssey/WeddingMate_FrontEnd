@@ -11,8 +11,6 @@ import {
   studioTagList,
 } from "../../../common/TagList";
 
-const ITEM_TAGS = ["비즈", "실크"];
-
 type Props = {
   formState: itemStates;
   required?: boolean;
@@ -54,7 +52,6 @@ const ItemTags = (props: Props) => {
         spreadValues={spreadValues}
         formState={formState}
         title='아이템 태그'
-        isAddable={true}
         maxTag={3}
         required={props.required}
         initValue={props.initValue}

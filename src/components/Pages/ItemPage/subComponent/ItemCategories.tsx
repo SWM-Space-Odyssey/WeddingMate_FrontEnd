@@ -28,20 +28,9 @@ const ItemCategories = (props: Props) => {
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
-    if (selectValue !== "직접입력" || e.currentTarget.type === "select-one") {
-      setSelectValue(value);
-    }
-    setValue("categoryContentText", "");
+    setSelectValue(value);
+    // setValue("categoryContentText", "");
   };
-
-  useEffect(() => {
-    console.log("selectValue ? " + selectValue);
-    if (selectValue === "직접입력") {
-      setValue("categoryContent", "");
-    } else {
-      setValue("categoryContent", selectValue);
-    }
-  }, [selectValue]);
 
   return (
     <div>
@@ -49,28 +38,27 @@ const ItemCategories = (props: Props) => {
         <CustomText type='Title' text='카테고리' required={props.required} />
       </div>
       <div className='flex flex-row gap-2 transition-all h-11'>
-        <input
+        {/* <input
           type='text'
           className={`border p-2.5 ${
             selectValue === "직접입력" ? "flex-1" : "hidden"
           }`}
           disabled={selectValue !== "직접입력"}
           {...register("categoryContentText")}
-        />
+        /> */}
         <select
-          className={`border rounded-md text-sm p-2.5 ${
-            selectValue === "직접입력" ? "flex-2" : "flex-1"
-          }`}
+          className={`border rounded-md text-sm p-2.5 flex-1
+          `}
           value={selectValue}
           {...register("categoryContent", {
             onChange: (e) => selectHandler(e),
           })}
         >
           <option value={"default"}>카테고리를 입력해주세요</option>
+          {/* 맵핑으로 바꿔야함 */}
           <option value={"드레스"}>드레스</option>
           <option value={"메이크업"}>메이크업</option>
           <option value={"스튜디오"}>스튜디오</option>
-          <option value={"직접입력"}>직접 입력</option>
         </select>
       </div>
       <CustomText type='Description' text='제목에 노출됩니다!' />

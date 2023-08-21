@@ -28,13 +28,12 @@ type Props = {
 };
 interface itemRegister {
   categoryContent: string;
-  categoryContentText: string;
   itemTagList: string[];
   itemRecord: string;
   pictures: string[];
   date: Date;
   company: string;
-  order: number;
+  order?: number;
 }
 const itemRecord = {
   state: "itemRecord" as const,
@@ -49,13 +48,19 @@ const company = {
   placeholder: "업체명을 기입해주세요",
 };
 
+const alertMessage = {
+  tag: "태그를 한 개 이상 선택해주세요!",
+  inputs: "입력되지 않은 항목이 있습니다!",
+};
 const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
   const [isEdit, setIsEdit] = useState<null | number>(null);
   const [loadging, setLoadging] = useState<boolean>(false);
   const [initTags, setInitTags] = useState<string[]>([]);
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
-  const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+  const [snackbarMessage, setSnackbarMessage] = useState<string>(
+    alertMessage.tag
+  );
 
   const itemId = useParams().itemId;
   const order = useParams().order;
@@ -81,23 +86,19 @@ const ItemCreate = (props: Props) => {
     if (res?.status === "SUCCESS" && res.data.typeTag === "item") {
       const data = res.data;
       const itemTagList = data.itemTagList.split(",");
-      const categoryContent =
-        data.category !== "직접입력" ? data.category : "직접입력";
-      const categoryContentText =
-        data.category !== "직접입력" ? "" : data.category;
-      const pictures = data.imageList;
-      const itemRecord = data.itemRecord;
+      const categoryContent = data.category;
       const date = new Date(data.date);
       const company = data.company;
-      const form = {
+      const pictures = data.imageList;
+      const itemRecord = data.itemRecord;
+      const form: itemRegister = {
         itemTagList,
         categoryContent,
-        categoryContentText,
         pictures,
         itemRecord,
         date,
-        order: res.data.order,
         company,
+        order: res.data.order,
       };
       setForm(form);
     }
@@ -105,23 +106,26 @@ const ItemCreate = (props: Props) => {
 
   const onSubmit: SubmitHandler<itemRegister> = async (data) => {
     if (!portfolioId) return alert("잘못된 접근입니다. - itemCreate");
-    const category =
-      data.categoryContent !== "직접입력"
-        ? data.categoryContent
-        : data.categoryContentText;
+    const category = data.categoryContent;
     if (!data.itemTagList || data.itemTagList.length === 0) {
       setOpenSnackbar(true);
+      setSnackbarMessage(alertMessage.tag);
+      return;
+    } else if (!data.company || !data.date || !data.itemRecord) {
+      setOpenSnackbar(true);
+      setSnackbarMessage(alertMessage.inputs);
       return;
     }
-    const body = {
+
+    const body: ItemBody = {
       itemRecord: data.itemRecord,
-      company: data.company,
-      date: dateFormatter(data.date),
       portfolioId: parseInt(portfolioId),
       category: category.replace(/(\s*)/g, ""),
-      order: data.order,
       imageList: data.pictures,
       itemTagList: data.itemTagList.join(","),
+      company: data.company,
+      date: dateFormatter(data.date),
+      order: data.order,
     };
     if (!isEdit) {
       if (!order) return;
@@ -197,8 +201,8 @@ const ItemCreate = (props: Props) => {
                   required
                 />
                 <CustomInput content={itemRecord} required />
-                <CustomDatePicker state='date' />
-                <CustomInput content={company} />
+                <CustomDatePicker state='date' required />
+                <CustomInput content={company} required />
               </div>
               <CustomButton
                 text='아이템 추가'
@@ -212,7 +216,7 @@ const ItemCreate = (props: Props) => {
             onClose={snackbarClose}
             autoHideDuration={1500}
           >
-            <Alert severity='error'>태그를 한 개 이상 선택해주세요!</Alert>
+            <Alert severity='error'>{snackbarMessage}</Alert>
           </Snackbar>
         </div>
       </Slide>

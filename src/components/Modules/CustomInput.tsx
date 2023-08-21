@@ -1,6 +1,7 @@
 import { UseFormRegister, useFormContext, useWatch } from "react-hook-form";
 import CustomText from "./CustomText";
 import { TextField } from "@mui/material";
+import { useEffect } from "react";
 
 interface Props<T extends stateLiteral> {
   content: {
@@ -17,7 +18,7 @@ interface Props<T extends stateLiteral> {
 }
 
 const CustomInput = <T extends stateLiteral>(props: Props<T>) => {
-  const { register, control, formState } = useFormContext();
+  const { register, control } = useFormContext();
   const isRequired = props.required ?? false;
   const state = props.content.state;
   let textCount: string = "";

@@ -22,10 +22,8 @@ const CustomTag = <
 ) => {
   const text = props.text;
   const tagCountMax = props.tagCountMax;
-  const navigate = useNavigate();
-
-  console.log(props.type);
   // form 의 경우
+
   if (props.formState) {
     const { setValue } = useFormContext();
     const formState = props.formState.state;
@@ -81,6 +79,7 @@ const CustomTag = <
             border: "2px solid",
             borderColor: "primary",
             color: "primary.main",
+            cursor: "pointer",
           }}
         />
       </a>

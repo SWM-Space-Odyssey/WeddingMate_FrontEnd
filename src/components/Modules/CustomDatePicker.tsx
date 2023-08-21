@@ -7,6 +7,7 @@ import styles from "./DatePicker.module.scss";
 import CustomText from "./CustomText";
 type Props = {
   state: string;
+  required?: boolean;
 };
 
 const CustomDatePicker = (props: Props) => {
@@ -18,7 +19,7 @@ const CustomDatePicker = (props: Props) => {
       name={props.state}
       render={({ field }) => (
         <div className={styles.datepicker}>
-          <CustomText type='Title' text='날짜' />
+          <CustomText type='Title' text='날짜' required={props.required} />
           <DatePicker
             {...field}
             onChange={(e) => {
