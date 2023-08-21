@@ -17,6 +17,7 @@ import {
 import { getFeedImage } from "../../../../api/Item";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../../Modules/LoadingSpinner";
+import ProgressiveImg from "../../../Modules/ProgressiveImg";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -61,7 +62,7 @@ const useFetchUsers = (param?: string) =>
   useInfiniteQuery(
     ["Feed", MY_ACCESS_KEY],
     ({ pageParam = 0 }) => {
-      return getFeedImage(pageParam, 6);
+      return getFeedImage(pageParam, 12);
       // return axios.get(`${SERVER_URL}/api/v1/file`, {
       //   headers: {
       //     Authorization: `Bearer ${MY_ACCESS_KEY}`,
@@ -109,14 +110,20 @@ const MasonryImage = (props: Props) => {
 
       if (!item) return;
       return (
-        <img
+        <ProgressiveImg
           onClick={() => navigate(imageNav)}
-          src={SERVER_IMAGE_URL + item.url}
+          src={item.url}
           alt={String(item.url)}
           key={index}
           loading='lazy'
-          className='pb-2 cursor-pointer'
         />
+        // <img
+        //   src={SERVER_IMAGE_URL + item.url}
+        //   alt={String(item.url)}
+        //   key={index}
+        //   loading='lazy'
+        //   className='pb-2 cursor-pointer'
+        // />
       );
     });
   }, [renderData]);

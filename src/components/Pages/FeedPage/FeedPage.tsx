@@ -1,4 +1,4 @@
-import { Button, Modal, Slide } from "@mui/material";
+import { Button, Fade, Modal, Slide } from "@mui/material";
 import React, {
   Suspense,
   useCallback,
@@ -64,8 +64,8 @@ const FeedPage = (props: Props) => {
       <div>
         <Header main='main' rightButton={myPageButton} />
       </div>
-      <Slide
-        direction='right'
+      <Fade
+        // direction='right'
         in
         mountOnEnter
         unmountOnExit
@@ -75,7 +75,7 @@ const FeedPage = (props: Props) => {
           <CustomSearchForm />
           <MasonryImage />
         </div>
-      </Slide>
+      </Fade>
     </>
   );
 };
