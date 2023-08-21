@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { deleteItem, getItem } from "../../../api/Item";
 import HeaderOptionButton from "../../Modules/HeaderOptionButton";
 import { Delete, Edit } from "@mui/icons-material";
+import InfoIndicator from "../../Modules/InfoIndicator";
 
 type Props = {};
 
@@ -64,7 +65,7 @@ const ItemPage = (props: Props) => {
     portfolioId,
     isWriter,
   } = data?.data as ItemBody;
-
+  console.log(data);
   const menuItems = [
     {
       content: (
@@ -108,12 +109,15 @@ const ItemPage = (props: Props) => {
           {isLoading && <div>로딩중</div>}
           {data && (
             <>
-              <div className='flex justify-between'>
-                <div className={defaultClassName}>
-                  <CustomText type='Title' text='카테고리' />
-                  <CustomText type='Content' text={category} />
+              <div className='flex flex-col'>
+                <InfoIndicator portfolioId={portfolioId} />
+                <div className='flex justify-between'>
+                  <div className={defaultClassName}>
+                    <CustomText type='Title' text='카테고리' />
+                    <CustomText type='Content' text={category} />
+                  </div>
+                  {isWriter && <HeaderOptionButton data={{ menuItems }} />}
                 </div>
-                {isWriter && <HeaderOptionButton data={{ menuItems }} />}
               </div>
               <div className='max-w-lg'>
                 <ImageSlider images={imageList} />
