@@ -26,17 +26,7 @@ const CustomTagBlock = <
   const tagCountMax = props.maxTag ? props.maxTag : 1;
   const initValue = props.initValue;
   const [componentValue, setComponentValue] = useState<string[]>([]);
-  if (props?.formState) {
-    const { control, setValue } = useFormContext();
-    const category = useWatch({
-      control: control,
-      name: "categoryContent",
-    });
-    useEffect(() => {
-      setValue("itemTagList", []);
-      setComponentValue([]);
-    }, [category]);
-  }
+
   useEffect(() => {
     if (!initValue || !initValue[0]) return;
     setComponentValue([...initValue]);

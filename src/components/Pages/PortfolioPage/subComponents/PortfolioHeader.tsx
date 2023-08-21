@@ -33,7 +33,6 @@ const PortfolioHeader = (props: Props) => {
   const { title, tagList, region, repImgUrl, plannerId } = props.data;
   const portfolioId = useParams().itemId;
   const navigate = useNavigate();
-
   const deleteHandler = async () => {
     if (!portfolioId) return;
     const response = await deletePortfolio(parseInt(portfolioId));
@@ -74,7 +73,7 @@ const PortfolioHeader = (props: Props) => {
   return (
     <div className='flex flex-col justify-between mt-5'>
       <div>
-        <InfoIndicator plannerId={plannerId} portfolioId={portfolioId} />
+        <InfoIndicator portfolioId={portfolioId ?? "1"} type='portfolio' />
       </div>
       <div className='flex flex-row justify-between'>
         <div className='flex gap-2.5 '>

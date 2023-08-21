@@ -106,6 +106,7 @@ const ItemCreate = (props: Props) => {
 
   const onSubmit: SubmitHandler<itemRegister> = async (data) => {
     if (!portfolioId) return alert("잘못된 접근입니다. - itemCreate");
+    console.log(data);
     const category = data.categoryContent;
     if (!data.itemTagList || data.itemTagList.length === 0) {
       setOpenSnackbar(true);
@@ -130,9 +131,9 @@ const ItemCreate = (props: Props) => {
     if (!isEdit) {
       if (!order) return;
       body.order = parseInt(order);
-      setLoadging(true);
       const res = await postItem(body);
       if (res.status === "SUCCESS") {
+        setLoadging(true);
         setForm();
         setTimeout(() => {
           setLoadging(false);
@@ -144,6 +145,7 @@ const ItemCreate = (props: Props) => {
     } else {
       const res = await putItem(isEdit, body);
       if (res.status === "SUCCESS") {
+        setLoadging(true);
         setForm();
         setTimeout(() => {
           setLoadging(false);

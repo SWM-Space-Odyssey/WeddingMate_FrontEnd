@@ -21,10 +21,6 @@ const ItemTags = (props: Props) => {
   const [spreadValues, setSpreadValue] = useState<string[]>([]);
   const formState = props.formState;
   const { control } = useFormContext();
-  const contentText = useWatch({
-    control: control,
-    name: "categoryContentText",
-  });
   const content = useWatch({
     control: control,
     name: "categoryContent",
@@ -40,10 +36,18 @@ const ItemTags = (props: Props) => {
         setSpreadValue(studioTagList);
       }
     }
-  }, [contentText, content]);
+  }, [content]);
   useEffect(() => {
     if (props.initValue) {
-      setSpreadValue([...spreadValues, ...props.initValue]);
+      if (content === "드레스") {
+        setSpreadValue([...dressTagList]);
+      } else if (content === "메이크업") {
+        setSpreadValue([...makeupTagList]);
+      } else if (content === "스튜디오") {
+        setSpreadValue([...studioTagList]);
+      }
+
+      // setSpreadValue([...spreadValues, ...props.initValue]);
     }
   }, [props.initValue]);
   return (

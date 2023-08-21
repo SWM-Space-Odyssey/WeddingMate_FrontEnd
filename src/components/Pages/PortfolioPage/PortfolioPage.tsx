@@ -54,7 +54,6 @@ const PortfolioPage = (props: Props) => {
       })
       .then((res) => {
         const data = res.data as GetPortfolioResponse;
-        console.log(data);
         if (data.status === "SUCCESS") {
           setHeaderData(data.data);
           setItemCard(data.data.itemResDtoList);

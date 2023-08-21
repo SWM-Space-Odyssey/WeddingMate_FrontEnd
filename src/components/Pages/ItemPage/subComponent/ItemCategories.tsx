@@ -22,13 +22,14 @@ type Props = {
 
 const ItemCategories = (props: Props) => {
   const [selectValue, setSelectValue] = useState<string>("default");
-  const { register, setValue } = useFormContext();
+  const { register, setValue, getValues } = useFormContext();
 
   const selectHandler = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
     setSelectValue(value);
+    setValue("itemTagList", []);
     // setValue("categoryContentText", "");
   };
 
@@ -49,7 +50,7 @@ const ItemCategories = (props: Props) => {
         <select
           className={`border rounded-md text-sm p-2.5 flex-1
           `}
-          value={selectValue}
+          value={getValues("categoryContent")}
           {...register("categoryContent", {
             onChange: (e) => selectHandler(e),
           })}

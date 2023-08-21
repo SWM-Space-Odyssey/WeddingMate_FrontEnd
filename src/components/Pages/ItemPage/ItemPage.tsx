@@ -65,7 +65,6 @@ const ItemPage = (props: Props) => {
     portfolioId,
     isWriter,
   } = data?.data as ItemBody;
-  console.log(data);
   const menuItems = [
     {
       content: (
@@ -110,7 +109,7 @@ const ItemPage = (props: Props) => {
           {data && (
             <>
               <div className='flex flex-col'>
-                <InfoIndicator portfolioId={portfolioId} />
+                <InfoIndicator portfolioId={`${portfolioId}`} type='item' />
                 <div className='flex justify-between'>
                   <div className={defaultClassName}>
                     <CustomText type='Title' text='카테고리' />
