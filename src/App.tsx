@@ -23,15 +23,15 @@ const queryClient = new QueryClient({
     },
   },
 });
+const AuthFeedPage = Auth(FeedPage, "all");
 const AuthPlannerPage = Auth(PlannerPage, "all");
 const AuthPlannerMyPage = Auth(PlannerPage, "planner");
 const AuthRegisterPage = Auth(RegisterPage, "unregistered");
-const AuthFeedPage = Auth(FeedPage, "all");
 const AuthPortfolioPage = Auth(PortfolioPage, "all");
 const AuthItemPage = Auth(ItemPage, "all");
 const AuthItemCreate = Auth(ItemCreate, "planner");
 const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
-const AuthLoginGuidePage = Auth(FeedPage, "all");
+const AuthLoginGuidePage = Auth(FeedPage, null);
 
 function App() {
   return (

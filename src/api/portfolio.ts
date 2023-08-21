@@ -52,6 +52,7 @@ export const getPortfolio = async (
   isMypage: boolean | undefined
 ) => {
   // 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
+  const MY_ACCESS_KEY = localStorage.getItem("accessToken");
   const requestUrl = isMypage
     ? `${SERVER_URL}/api/v1/portfolio/`
     : `${SERVER_URL}/api/v1/planner/${portfolioId}/portfolio`;

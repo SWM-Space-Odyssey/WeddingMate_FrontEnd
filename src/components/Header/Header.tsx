@@ -42,7 +42,7 @@ const Header = (props: Props) => {
             }
           }}
         >
-          <ArrowBackIos />
+          <ArrowBackIos color='secondary' />
         </button>
       );
     } else if (props.main === "main") {
@@ -66,7 +66,7 @@ const Header = (props: Props) => {
       return (
         <>
           {page < 3 && (
-            <Typography>
+            <Typography color={"secondary"}>
               회원가입 ({page + 1}/{3})
             </Typography>
           )}

@@ -15,13 +15,13 @@ import { editProfileImg } from "../../../../api/user";
 import CustomTag from "../../../Modules/CustomTag";
 import ProfileDialog from "../../CreatePage/ProfileDialog";
 const mockTag = ["친절한", "답변이빠른", "꼼꼼한"];
-const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {
   mypage?: boolean;
 };
 
 const PlannerInfo = (props: Props) => {
+  const MY_ACCESS_KEY = localStorage.getItem("accessToken");
   const [imgURL, setImgURL] = useState("");
   const plannerId = parseInt(useParams().Id ?? "0");
   const requestURL = props.mypage

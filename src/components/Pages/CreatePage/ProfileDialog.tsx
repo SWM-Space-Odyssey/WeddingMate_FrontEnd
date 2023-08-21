@@ -52,7 +52,7 @@ const nicknameContent = {
 const snsContent = {
   state: "sns" as const,
   title: "SNS",
-  placeholder: "@WED_WM",
+  placeholder: "WED_WM",
   required: false,
 };
 const bioContent = {

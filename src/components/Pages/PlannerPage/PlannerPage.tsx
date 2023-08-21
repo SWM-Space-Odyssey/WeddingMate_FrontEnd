@@ -11,13 +11,13 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
 import { useParams } from "react-router-dom";
-const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {
   mypage?: boolean;
 };
 
 const PlannerPage = (props: Props) => {
+  const MY_ACCESS_KEY = localStorage.getItem("accessToken");
   const view = useSelector((state: RootState) => state.view.currentView);
   const plannerId = parseInt(useParams().Id ?? "0");
   const requestURL = props.mypage

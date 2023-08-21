@@ -11,6 +11,7 @@ interface itemFormRegister {
   Date: string;
   Company: string;
 }
+
 type itemRegisterType = {
   register: UseFormRegister<itemFormRegister>;
 };
@@ -32,7 +33,9 @@ const ItemCategories = (props: Props) => {
     }
     setValue("categoryContentText", "");
   };
+
   useEffect(() => {
+    console.log("selectValue ? " + selectValue);
     if (selectValue === "직접입력") {
       setValue("categoryContent", "");
     } else {
@@ -58,6 +61,7 @@ const ItemCategories = (props: Props) => {
           className={`border rounded-md text-sm p-2.5 ${
             selectValue === "직접입력" ? "flex-2" : "flex-1"
           }`}
+          value={selectValue}
           {...register("categoryContent", {
             onChange: (e) => selectHandler(e),
           })}

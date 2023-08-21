@@ -99,7 +99,7 @@ export const userCheck = async (token: string) => {
 };
 
 export const tokenRefresh = async (accessToken: string) => {
-  const response = await axios
+  const response: AxiosResponse = await axios
     .post(
       `${SERVER_URL}/api/v1/token/refresh`,
       {},
