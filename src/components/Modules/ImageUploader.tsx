@@ -79,15 +79,28 @@ const ImageUploader = (props: Props) => {
     return response;
   };
 
+  const badgeContent = (index: number) => {
+    return (
+      <Clear
+        onClick={() => {
+          imageDelete(index);
+        }}
+        sx={{ p: 0, fontSize: ".8rem" }}
+        className='cursor-pointer'
+      />
+    );
+  };
   const imageSpread = () => {
     return pictures?.map((item, index) => {
       return (
         <Badge
-          sx={{ p: 0 }}
-          badgeContent='X'
+          badgeContent={badgeContent(index)}
           color='primary'
           key={index}
-          onClick={() => imageDelete(index)}
+          // onClick={(e) => {
+          //   console.log(e);
+          //   imageDelete(index);
+          // }}
         >
           <img
             className='w-16 h-16'
