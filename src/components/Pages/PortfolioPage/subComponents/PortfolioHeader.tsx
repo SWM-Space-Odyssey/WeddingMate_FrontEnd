@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { deletePortfolio } from "../../../../api/portfolio";
 import HeaderOptionButton from "../../../Modules/HeaderOptionButton";
 import InfoIndicator from "../../../Modules/InfoIndicator";
+import CustomText from "../../../Modules/CustomText";
 
 type tagResDtoList = {
   tagId: number;
@@ -85,13 +86,12 @@ const PortfolioHeader = (props: Props) => {
               className='w-[5.5rem] h-[5.5rem] rounded-sm'
             />
           </div>
-          <div>
+          <div className='flex flex-col justify-around'>
             <div className='font-bold leading-tight mb-1.5'>{title}</div>
             <div className='text-xs leading-tight mb-1'>
-              Location : {region}
+              <CustomText type='Content-small' text={`Location : ${region}`} />
             </div>
             <div>
-              <div className='text-xs leading-tight mb-1'>Mood</div>
               <div>
                 <CustomTagBlock spreadValues={tagSplit} />
               </div>

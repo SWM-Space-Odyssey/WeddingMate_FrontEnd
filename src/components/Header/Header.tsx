@@ -91,7 +91,6 @@ const Header = (props: Props) => {
           {leftButton()}
         </Grid>
         <Grid item xs={8} className='flex justify-center'>
-          {/* <text fontFamily='Damion'>WEDDING MATE</text> */}
           <div onClick={() => navigate("/")} className='cursor-pointer'>
             {centerContent()}
           </div>

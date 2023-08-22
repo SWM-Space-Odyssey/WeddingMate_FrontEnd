@@ -79,7 +79,7 @@ const PortfolioPage = (props: Props) => {
         <Header />
       </div>
       <Slide
-        className='overflow-y-scroll px-4'
+        className='overflow-y-scroll px-4  pb-4'
         direction='left'
         in
         mountOnEnter

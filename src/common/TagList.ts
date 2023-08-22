@@ -85,34 +85,76 @@ export const makeupTagList: string[] = [
   "원포인트",
 ];
 
-export const hallTagList: string[] = ["어두운홀", "밝은홀", "단독홀"];
-
-export const minimumRegistTagList: string[] = [
-  "49명 이하",
-  "50 ~ 99명",
-  "100명 ~ 199명",
-  "200명 ~ 299명",
-  "300명 ~ 399명",
-  "400명 ~ 499명",
-  "500명 이상",
-];
-
-export const conceptTagList: string[] = [
+export const hallTagList: string[] = [
+  "어두운홀",
+  "밝은홀",
+  "단독홀",
+  "분리예식",
+  "동시예식",
+  "일반",
+  "컨벤션",
+  "호텔",
+  "하우스",
+  "레스토랑",
+  "교회",
+  "기타",
   "채플",
   "스몰",
   "야외/가든",
   "전통혼례",
+  "한옥",
+];
+export const bouquetTagList: string[] = [
+  "생화",
+  "조화",
+  "봄",
+  "여름",
+  "가을",
+  "겨울",
+  "라운드",
+  "캐스케이드",
+  "드롭",
+  "핸드타이드",
+  "카라",
+  "장미",
+  "작약",
+  "수국",
+  "핑크",
+  "화이트",
+  "레드",
+  "오렌지",
+  "옐로우",
+  "블루",
+  "그린",
+  "퍼플",
+];
+export const jewelryTagList: string[] = [
+  "반지",
+  "귀걸이",
+  "목걸이",
+  "팔찌",
+  "0.3캐럿 이하",
+  "0.5캐럿",
+  "1캐럿 이상",
+  "플래티넘",
+  "18K",
+  "14K",
+  "화이트골드",
+  "옐로우골드",
+  "로즈골드",
+  "심플한",
+  "화려한",
 ];
 
-export const mealTagList: string[] = ["뷔페", "양식", "한식", "중식", "퓨전"];
-
-export const mealPriceTagList: string[] = [
-  "39,000 ₩ 이하",
-  "40,000 ₩ ~ 49,000 ₩",
-  "50,000 ₩ ~ 69,000 ₩",
-  "60,000 ₩ ~ 79,000 ₩",
-  "80,000 ₩ ~ 99,000 ₩",
-  "100,000 ₩ 이상",
+export const groomSuitTagList: string[] = [
+  "신랑",
+  "가족",
+  "정장셔츠",
+  "셔츠",
+  "넥타이",
+  "베스트",
+  "벨트",
+  "구두",
+  "맞춤",
+  "대여",
 ];
-
-export const wedTypeTagList: string[] = ["분리예식", "동시예식"];

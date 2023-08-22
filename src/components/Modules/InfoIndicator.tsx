@@ -20,7 +20,17 @@ const portfolioURL = SERVER_URL + "/api/v1/portfolio/";
 const plannerLink = "/planner/";
 const portfolioLink = "/portfolio/";
 
+const loadingElement = (
+  <div>
+    <div className='animate-pulse flex items-center space-x-2'>
+      <div className='rounded-full bg-gray-400 h-8 w-8'></div>
+      <div className='flex-1 bg-gray-400 h-4 w-16 py-1 rounded'></div>
+    </div>
+  </div>
+);
+
 const InfoIndicator = (props: Props) => {
+  const [loading, setLoading] = useState(true);
   const [plannerInfo, setPlannerInfo] = useState<[string, string, number]>();
   const [portfolioInfo, setPortfolioInfo] =
     useState<[string, string, number]>();
@@ -29,7 +39,10 @@ const InfoIndicator = (props: Props) => {
     data: [string, string, number | string],
     type: "planner" | "portfolio"
   ) => {
-    const [imageUrl, nickname, id] = data;
+    const [imageUrl, title, id] = data;
+    const maxLength = 10;
+    const nickname =
+      title.length > maxLength ? title.slice(0, maxLength) + "..." : title;
     return (
       <div
         className='flex items-center gap-2 cursor-pointer'
@@ -46,7 +59,7 @@ const InfoIndicator = (props: Props) => {
           alt='plannerImage'
           className='h-8 w-8 rounded-2xl'
         />
-        <CustomText type='Content-underlined' text={nickname} />
+        <CustomText type='Content-small' text={nickname} />
       </div>
     );
   };
@@ -76,13 +89,15 @@ const InfoIndicator = (props: Props) => {
         plannerRes.data.data.plannerProfileId,
       ]);
     }
+    setLoading(false);
   };
   useEffect(() => {
     getInfo();
   }, []);
   return (
-    <div className='pb-1 mb-3 flex gap-3 items-center border-b'>
-      {plannerInfo && infoElement(plannerInfo, "planner")}
+    <div className='pb-2 mb-3 flex gap-3 items-center border-b'>
+      {loading && loadingElement}
+      {!loading && plannerInfo && infoElement(plannerInfo, "planner")}
       {props.type === "item" && portfolioInfo && (
         <>
           <ChevronRight /> {infoElement(portfolioInfo, "portfolio")}

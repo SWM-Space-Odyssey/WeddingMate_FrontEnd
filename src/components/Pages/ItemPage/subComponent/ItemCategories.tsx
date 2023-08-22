@@ -60,6 +60,10 @@ const ItemCategories = (props: Props) => {
           <option value={"드레스"}>드레스</option>
           <option value={"메이크업"}>메이크업</option>
           <option value={"스튜디오"}>스튜디오</option>
+          <option value={"웨딩홀"}>웨딩홀</option>
+          <option value={"예물"}>예물</option>
+          <option value={"부케"}>부케</option>
+          <option value={"남성예복"}>남성예복</option>
         </select>
       </div>
       <CustomText type='Description' text='제목에 노출됩니다!' />

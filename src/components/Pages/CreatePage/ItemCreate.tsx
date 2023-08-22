@@ -172,13 +172,13 @@ const ItemCreate = (props: Props) => {
       </div>
 
       <Slide
-        className='overflow-y-scroll px-4 flex-1 flex'
+        className='overflow-y-scroll px-4 mb-2 flex-1 flex'
         direction='left'
         in
         mountOnEnter
         unmountOnExit
       >
-        <div className='w-full h-full px-4 flex flex-col'>
+        <div className='w-full h-full px-4 flex flex-col '>
           {loading && (
             <div className='absolute backdrop-blur-sm w-full h-full z-50'>
               <LoadingSpinner />
