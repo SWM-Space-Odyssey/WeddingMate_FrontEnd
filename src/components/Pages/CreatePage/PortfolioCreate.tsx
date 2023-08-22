@@ -20,6 +20,7 @@ import {
 } from "../../../api/portfolio";
 // import { MY_ACCESS_KEY, SERVER_URL } from "../../../common/constants";
 import { SERVER_URL } from "../../../common/constants";
+import LoadingSpinner from "../../Modules/LoadingSpinner";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -76,6 +77,7 @@ const PortfolioCreate = (props: Props) => {
   const [itemOrderList, setItemOrderList] = useState<ItemOrderList[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const param = useParams().portfolioId;
   const navigate = useNavigate();
 
@@ -162,8 +164,12 @@ const PortfolioCreate = (props: Props) => {
         itemId: isEdit,
       });
       if (editData.status === "SUCCESS") {
+        setLoading(true);
         setForm();
-        navigate(-1);
+        setTimeout(() => {
+          setLoading(false);
+          navigate(-1);
+        }, 1000);
         return;
       }
       console.log("포트폴리오 수정에 실패했습니다.");
@@ -171,8 +177,12 @@ const PortfolioCreate = (props: Props) => {
       body.append("portfolioSaveReqDto", blob);
       const postData = await postPortfolio({ itemType: "portfolio", body });
       if (postData.status === "SUCCESS") {
+        setLoading(true);
         setForm();
-        navigate("/plannermypage");
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/plannermypage");
+        }, 1000);
         return;
       }
       console.log("포트폴리오 등록에 실패했습니다.");
@@ -198,6 +208,11 @@ const PortfolioCreate = (props: Props) => {
         unmountOnExit
       >
         <div className='h-full px-4 flex flex-col'>
+          {loading && (
+            <div className='absolute backdrop-blur-sm w-full h-full z-50'>
+              <LoadingSpinner />
+            </div>
+          )}
           <FormProvider {...methods}>
             <form
               onSubmit={methods.handleSubmit(onSubmit)}

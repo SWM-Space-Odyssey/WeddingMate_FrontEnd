@@ -36,7 +36,6 @@ const PlannerPage = (props: Props) => {
       refetchOnWindowFocus: false,
     }
   );
-  console.log(data?.data.data);
   return (
     <>
       <div>

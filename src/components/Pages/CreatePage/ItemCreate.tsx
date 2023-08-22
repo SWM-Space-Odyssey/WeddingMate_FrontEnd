@@ -55,7 +55,7 @@ const alertMessage = {
 const ItemCreate = (props: Props) => {
   const methods = useForm<itemRegister>({});
   const [isEdit, setIsEdit] = useState<null | number>(null);
-  const [loadging, setLoadging] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [initTags, setInitTags] = useState<string[]>([]);
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>(
@@ -133,10 +133,10 @@ const ItemCreate = (props: Props) => {
       body.order = parseInt(order);
       const res = await postItem(body);
       if (res.status === "SUCCESS") {
-        setLoadging(true);
+        setLoading(true);
         setForm();
         setTimeout(() => {
-          setLoadging(false);
+          setLoading(false);
           navigate(-1);
         }, 1000);
         return;
@@ -145,10 +145,10 @@ const ItemCreate = (props: Props) => {
     } else {
       const res = await putItem(isEdit, body);
       if (res.status === "SUCCESS") {
-        setLoadging(true);
+        setLoading(true);
         setForm();
         setTimeout(() => {
-          setLoadging(false);
+          setLoading(false);
           navigate(-1);
         }, 1000);
         return;
@@ -179,7 +179,7 @@ const ItemCreate = (props: Props) => {
         unmountOnExit
       >
         <div className='w-full h-full px-4 flex flex-col'>
-          {loadging && (
+          {loading && (
             <div className='absolute backdrop-blur-sm w-full h-full z-50'>
               <LoadingSpinner />
             </div>

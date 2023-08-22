@@ -30,7 +30,7 @@ type Props = {
 const Mock = ["화려한", "사람많은", "야외"];
 
 const PortfolioHeader = (props: Props) => {
-  const { title, tagList, region, repImgUrl, plannerId } = props.data;
+  const { title, tagList, region, repImgUrl, isWriter, plannerId } = props.data;
   const portfolioId = useParams().itemId;
   const navigate = useNavigate();
   const deleteHandler = async () => {
@@ -79,7 +79,9 @@ const PortfolioHeader = (props: Props) => {
         <div className='flex gap-2.5 '>
           <div>
             <img
-              src={`${SERVER_IMAGE_URL}${repImgUrl}`}
+              src={`${SERVER_IMAGE_URL}${repImgUrl}?edit=${
+                isWriter ?? Date.now()
+              }`}
               className='w-[5.5rem] h-[5.5rem] rounded-sm'
             />
           </div>

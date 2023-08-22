@@ -19,7 +19,6 @@ const mockTag = ["친절한", "답변이빠른", "꼼꼼한"];
 type Props = {
   mypage?: boolean;
 };
-
 const PlannerInfo = (props: Props) => {
   const MY_ACCESS_KEY = localStorage.getItem("accessToken");
   const [imgURL, setImgURL] = useState("");
@@ -50,7 +49,12 @@ const PlannerInfo = (props: Props) => {
       formData.append("file", e.target.files[0]);
       const { status, data } = await editProfileImg(formData);
       if (status === 200 && data.status === "SUCCESS") {
-        setImgURL(data.data);
+        let responseURL = data.data;
+        if (props.mypage) {
+          responseURL += `?key=${Date.now()}`;
+        }
+        console.log(responseURL);
+        setImgURL(responseURL);
       }
     }
   };
