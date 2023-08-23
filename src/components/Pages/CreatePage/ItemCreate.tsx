@@ -31,8 +31,8 @@ interface itemRegister {
   itemTagList: string[];
   itemRecord: string;
   pictures: string[];
-  date: Date;
-  company: string;
+  date?: Date;
+  company?: string;
   order?: number;
 }
 const itemRecord = {
@@ -87,8 +87,8 @@ const ItemCreate = (props: Props) => {
       const data = res.data;
       const itemTagList = data.itemTagList.split(",");
       const categoryContent = data.category;
-      const date = new Date(data.date);
-      const company = data.company;
+      // const date = new Date(data.date);
+      // const company = data.company;
       const pictures = data.imageList;
       const itemRecord = data.itemRecord;
       const form: itemRegister = {
@@ -96,10 +96,17 @@ const ItemCreate = (props: Props) => {
         categoryContent,
         pictures,
         itemRecord,
-        date,
-        company,
+        // date,
+        // company,
         order: res.data.order,
       };
+      if (data.date) {
+        form.date = new Date(data.date);
+      }
+      if (data.company) {
+        form.company = data.company;
+      }
+
       setForm(form);
     }
   };
@@ -112,7 +119,7 @@ const ItemCreate = (props: Props) => {
       setOpenSnackbar(true);
       setSnackbarMessage(alertMessage.tag);
       return;
-    } else if (!data.company || !data.date || !data.itemRecord) {
+    } else if (!data.itemRecord) {
       setOpenSnackbar(true);
       setSnackbarMessage(alertMessage.inputs);
       return;
@@ -124,10 +131,17 @@ const ItemCreate = (props: Props) => {
       category: category.replace(/(\s*)/g, ""),
       imageList: data.pictures,
       itemTagList: data.itemTagList.join(","),
-      company: data.company,
-      date: dateFormatter(data.date),
+      // company: data.company,
+      // date: dateFormatter(data.date),
       order: data.order,
     };
+    if (data.company) {
+      body.company = data.company;
+    }
+    if (data.date) {
+      body.date = dateFormatter(data.date);
+    }
+
     if (!isEdit) {
       if (!order) return;
       body.order = parseInt(order);
@@ -203,8 +217,8 @@ const ItemCreate = (props: Props) => {
                   required
                 />
                 <CustomInput content={itemRecord} required />
-                <CustomDatePicker state='date' required />
-                <CustomInput content={company} required />
+                <CustomDatePicker state='date' />
+                <CustomInput content={company} />
               </div>
               <CustomButton
                 text='아이템 추가'

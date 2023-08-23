@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 import { useNavigate } from "react-router-dom";
+import CustomTagBlock from "../../../Modules/CustomTagBlock";
 
 type Props = {
   cardData: cardData[];
@@ -12,6 +13,13 @@ type Props = {
 const PortfolioItemCard = (props: Props) => {
   const navigate = useNavigate();
   const getItemCard = (mockData: cardData[]) => {
+    const tagList = props.cardData.map((item) => {
+      const arr: string[] = [];
+      item.itemTagList.split(",").map((tag) => {
+        arr.push(tag);
+      });
+      return arr;
+    });
     return mockData.map((item, index) => {
       return (
         <div
@@ -21,13 +29,13 @@ const PortfolioItemCard = (props: Props) => {
             navigate(`/item/${item.itemId}`);
           }}
         >
-          <CustomText type='Title-base' text={item.categoryContent} />
+          <CustomText type='Title-base' text={item.category} />
           <div
             onClick={() => {}}
-            className='relative rounded border shadow-md p-4 hover:cursor-pointer overflow-hidden'
+            className='flex flex-col gap-2 relative rounded border shadow-md p-4 hover:cursor-pointer overflow-hidden'
             key={index}
           >
-            <div className='flex flex-col gap-1 pb-2'>
+            <div className='flex flex-col gap-1'>
               <CustomText type='Title' text={item?.date} />
               <CustomText type='Content-small' text={item.itemRecord} />
               {/* <div>{item?.date}</div>
@@ -45,6 +53,9 @@ const PortfolioItemCard = (props: Props) => {
                   );
                 })}
               </div>
+            </div>
+            <div>
+              <CustomTagBlock spreadValues={tagList[index]} />
             </div>
           </div>
         </div>

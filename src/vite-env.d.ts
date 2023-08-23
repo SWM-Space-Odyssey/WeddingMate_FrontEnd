@@ -96,8 +96,8 @@ type ItemBody = {
   imageList: string[];
   portfolioId: number;
   category: string;
-  date: string;
-  company: string;
+  date?: string;
+  company?: string;
   order?: number;
   isWriter?: boolean;
 };
@@ -113,8 +113,8 @@ type itemStates =
 type cardData = {
   itemRecord: string;
   portfolioId: number;
-  itemTagList: string[];
-  categoryContent: string;
+  itemTagList: string;
+  category: string;
   imageList: string[];
   order: number;
   itemId: number;

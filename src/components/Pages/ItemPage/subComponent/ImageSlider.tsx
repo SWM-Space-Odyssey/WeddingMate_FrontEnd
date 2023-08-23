@@ -5,8 +5,8 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import { EffectCards, FreeMode, Navigation, Thumbs } from "swiper/modules";
-import Header from "../../../Header/Header";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 
 type Props = {
@@ -22,7 +22,7 @@ const ImageSlider = (props: Props) => {
         loop={true}
         spaceBetween={10}
         navigation={true}
-        grabCursor={true}
+        thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
         className='mySwiper2'
       >
