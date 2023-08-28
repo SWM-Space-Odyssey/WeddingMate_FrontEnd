@@ -20,6 +20,18 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       return;
     }
   };
+  let foo: {
+    readonly bar: number;
+  } = {
+    bar: 123,
+  };
+
+  function iMutateFoo(foo: { bar: number }) {
+    foo.bar = 456;
+  }
+
+  iMutateFoo(foo);
+  console.log(foo.bar); // 456!
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const admin = localStorage.getItem("admin"); // 나중에 지우기
