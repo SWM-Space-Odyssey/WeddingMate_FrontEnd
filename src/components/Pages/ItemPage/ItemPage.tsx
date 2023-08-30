@@ -15,14 +15,6 @@ import InfoIndicator from "../../Modules/InfoIndicator";
 
 type Props = {};
 
-const pictures = [
-  "https://images.pexels.com/photos/1317844/pexels-photo-1317844.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/3777622/pexels-photo-3777622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/2361952/pexels-photo-2361952.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/3643714/pexels-photo-3643714.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-];
-const tagList = ["비즈", "펜던트", "귀걸이"];
 const defaultClassName = "flex flex-col gap-1";
 
 const ItemPage = (props: Props) => {
@@ -130,14 +122,18 @@ const ItemPage = (props: Props) => {
                 <CustomText type='Title' text='상세 설명' />
                 <CustomText type='Content' text={itemRecord} />
               </div>
-              <div className={defaultClassName}>
-                <CustomText type='Title' text='일정 기록' />
-                <CustomText type='Content' text={date} />
-              </div>
-              <div className={defaultClassName}>
-                <CustomText type='Title' text='업체명' />
-                <CustomText type='Content' text={company} />
-              </div>
+              {date && (
+                <div className={defaultClassName}>
+                  <CustomText type='Title' text='일정 기록' />
+                  <CustomText type='Content' text={date} />
+                </div>
+              )}
+              {company && (
+                <div className={defaultClassName}>
+                  <CustomText type='Title' text='업체명' />
+                  <CustomText type='Content' text={company} />
+                </div>
+              )}
             </>
           )}
         </div>

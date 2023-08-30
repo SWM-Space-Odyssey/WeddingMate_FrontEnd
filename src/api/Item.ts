@@ -1,8 +1,7 @@
 import axios, { Axios, AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
-// import { MY_ACCESS_KEY } from "../common/constants";
-import { getURL, handleError } from "../hooks/apiHook";
-const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+// import { getAccessToken } from "../common/constants";
+import { getAccessToken, getURL, handleError } from "../hooks/apiHook";
 
 type ItemResponse =
   | {
@@ -49,6 +48,7 @@ type feedContent = {
   portfolioId: number | null;
   url: string;
 };
+
 type pageable = {
   sort: {
     empty: boolean;
@@ -70,6 +70,7 @@ type portfolioData = {
   repImgUrl: string;
   tagResDtoList: tagResDtoList[];
 };
+
 type tagResDtoList = {
   tagId: number;
   content: string;
@@ -95,7 +96,7 @@ export const getItem = async (
   const response = await axios
     .get<ItemResponse>(reqURL, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -116,7 +117,7 @@ export const getTagList = async (category: string) => {
   const response = await axios
     .get<ItemResponse>(`${SERVER_URL}/api/v1/tag/all?category=${category}`, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -130,7 +131,7 @@ export const getTagList = async (category: string) => {
 };
 
 export const getFeedImage = async (pageParam: number, size: number) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = getAccessToken();
   if (!accessToken) return { status: "FAIL" as const, data: null };
   const response = await axios
     .get<ItemResponse>(`${SERVER_URL}/api/v1/file`, {
@@ -157,7 +158,7 @@ export const postImageAndGetURI = (formData: FormData) => {
   const response = axios
     .post(`${SERVER_URL}/api/v1/portfolio/item/file`, formData, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
         "Content-Type": "multipart/form-data",
       },
       withCredentials: true,
@@ -176,7 +177,7 @@ export const postItem = async (body: ItemBody) => {
   const response = await axios
     .post(`${SERVER_URL}/api/v1/portfolio/item/save`, body, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -197,7 +198,7 @@ export const putItem = async (itemId: number, body: ItemBody) => {
   const response = await axios
     .put(`${SERVER_URL}/api/v1/portfolio/item/${itemId}`, body, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -218,7 +219,7 @@ export const deleteItem = async (itemId: number) => {
   const response = await axios
     .delete(`${SERVER_URL}/api/v1/portfolio/item/${itemId}`, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })

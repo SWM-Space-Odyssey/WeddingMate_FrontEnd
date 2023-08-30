@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 // import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
 import { SERVER_URL } from "../common/constants";
+import { getAccessToken } from "../hooks/apiHook";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type plannerBody = {
@@ -25,11 +26,10 @@ type plannerProfileBody = {
 };
 
 export const plannerRegist = async (body: plannerBody) => {
-  const accessToken = localStorage.getItem("accessToken");
   const response: AxiosResponse = await axios
     .post(`${SERVER_URL}/api/v1/signup/planner`, body, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -45,7 +45,7 @@ export const editProfileImg = async (formData: FormData) => {
   const response: AxiosResponse = await axios
     .post(`${SERVER_URL}/api/v1/profile/file`, formData, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -69,7 +69,7 @@ export const editPlannerProfile = async (body: plannerProfileBody) => {
   const response: AxiosResponse = await axios
     .put(`${SERVER_URL}/api/v1/profile/planner`, body, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -99,13 +99,16 @@ export const userCheck = async (token: string) => {
 };
 
 export const tokenRefresh = async (accessToken: string) => {
+  const storageToken = getAccessToken();
+  const token: string = accessToken ?? storageToken;
+
   const response: AxiosResponse = await axios
     .post(
       `${SERVER_URL}/api/v1/token/refresh`,
       {},
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       }

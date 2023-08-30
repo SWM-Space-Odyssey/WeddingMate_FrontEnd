@@ -164,7 +164,7 @@ const ProfileDialog = (props: Props) => {
   }, [props.data]);
   return (
     <div>
-      <Button size='small' onClick={handleClickOpen}>
+      <Button size='small' onClick={handleClickOpen} sx={{ p: 0 }}>
         <Settings color='secondary' fontSize='large' />
       </Button>
       <Dialog open={open} onClose={() => handleClose()}>
