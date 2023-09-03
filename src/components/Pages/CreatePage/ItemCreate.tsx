@@ -18,7 +18,7 @@ import { useDispatch } from "react-redux";
 import { PrevPage } from "../../../store/viewSlice";
 import Header from "../../Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
-import { getItem, postItem, putItem } from "../../../api/Item";
+import { fetchItems, postItem, putItem } from "../../../api/Item";
 import { dateFormatter } from "../../../hooks/apiHook";
 import LoadingSpinner from "../../Modules/LoadingSpinner";
 import { Edit } from "@mui/icons-material";
@@ -82,7 +82,7 @@ const ItemCreate = (props: Props) => {
 
   const getInitData = async (itemId: number) => {
     setIsEdit(itemId);
-    const res = await getItem("item", itemId);
+    const res = await fetchItems(itemId);
     if (res?.status === "SUCCESS" && res.data.typeTag === "item") {
       const data = res.data;
       const itemTagList = data.itemTagList.split(",");

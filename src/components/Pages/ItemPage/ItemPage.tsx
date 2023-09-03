@@ -8,7 +8,7 @@ import { Slide } from "@mui/material";
 import Header from "../../Header/Header";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteItem, getItem } from "../../../api/Item";
+import { deleteItem, fetchItems } from "../../../api/Item";
 import HeaderOptionButton from "../../Modules/HeaderOptionButton";
 import { Delete, Edit } from "@mui/icons-material";
 import InfoIndicator from "../../Modules/InfoIndicator";
@@ -30,7 +30,7 @@ const ItemPage = (props: Props) => {
   }
   const { data, isLoading } = useQuery(
     ["item", itemId],
-    () => getItem("item", parseInt(itemId)),
+    () => fetchItems(parseInt(itemId)),
     {
       refetchOnWindowFocus: false,
     }

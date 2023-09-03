@@ -62,19 +62,12 @@ const useFetchUsers = (param?: string) =>
   useInfiniteQuery(
     ["Feed", MY_ACCESS_KEY],
     ({ pageParam = 0 }) => {
-      return getFeedImage(pageParam, 12);
-      // return axios.get(`${SERVER_URL}/api/v1/file`, {
-      //   headers: {
-      //     Authorization: `Bearer ${MY_ACCESS_KEY}`,
-      //   },
-      //   params: { page: pageParam, size: 6 },
-      //   withCredentials: true,
-      // });
+      const response = getFeedImage(pageParam, 12);
+      return response;
     },
     {
       refetchOnWindowFocus: false,
       getNextPageParam: (lastPage) =>
-        // !lastPage.data.data.last ? lastPage.config.params.page + 1 : undefined,
         lastPage.status === "SUCCESS" &&
         lastPage.data.typeTag === "feed" &&
         !lastPage.data.last

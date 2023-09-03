@@ -9,7 +9,7 @@ import ImageUploader from "../../Modules/ImageUploader";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import axios from "axios";
-import { getItem } from "../../../api/Item";
+import { fetchItems } from "../../../api/Item";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import Header from "../../Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
