@@ -11,6 +11,9 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
 import { useParams } from "react-router-dom";
+import LikeButton from "../../Modules/LikeButton";
+import ContactForm from "../../Modules/contactForm";
+import PlannerOptions from "../../Header/PlannerOptions";
 
 type Props = {
   mypage?: boolean;
@@ -36,14 +39,11 @@ const PlannerPage = (props: Props) => {
       refetchOnWindowFocus: false,
     }
   );
+  const response = data?.data.data;
   return (
     <>
       <div>
-        <Header
-          rightButton={
-            props.mypage ? <ProfileDialog data={data?.data.data} /> : undefined
-          }
-        />
+        <Header rightButton={props.mypage ? <PlannerOptions /> : undefined} />
       </div>
       <Slide
         className='overflow-y-scroll px-4 flex-1'
@@ -56,13 +56,22 @@ const PlannerPage = (props: Props) => {
           <div className='sticky pb-5'>
             <PlannerInfo mypage={props.mypage} />
           </div>
+          {/* <LikeButton
+            isLiked={response?.isLiked}
+            type='PLANNER'
+            targetId={plannerId}
+          /> */}
           <div className='overflow-y-scroll'>
             <PlannerPortfolio mypage={props.mypage} />
           </div>
-          {props.mypage && (
+          {props.mypage ? (
             <p className='absolute right-4 bottom-10 z-10'>
               <BottomPostButton />
             </p>
+          ) : (
+            <span className='absolute right-4 bottom-10 z-10'>
+              <ContactForm />
+            </span>
           )}
         </div>
       </Slide>

@@ -7,6 +7,7 @@ import axios from "axios";
 import { getAccessToken } from "../../hooks/apiHook";
 import { useQuery } from "@tanstack/react-query";
 import { SERVER_URL } from "../../common/constants";
+import ContactList from "../Pages/PlannerPage/subComponent/ContactList";
 
 type MenuItemInfo = {
   content: JSX.Element;
@@ -61,6 +62,9 @@ const PlannerOptions = (props: Props) => {
       >
         <MenuItem sx={dropdownMenuStyle}>
           <ProfileDialog data={response} />
+        </MenuItem>
+        <MenuItem sx={dropdownMenuStyle}>
+          <ContactList />
         </MenuItem>
       </Menu>
     </div>
