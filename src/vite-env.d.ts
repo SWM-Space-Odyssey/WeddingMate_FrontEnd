@@ -17,7 +17,8 @@ type stateLiteral =
   | registStates
   | portfolioStates
   | itemStates
-  | plannerProfileStates;
+  | plannerProfileStates
+  | contactFormState;
 
 interface API_STATUS {
   status: "SUCCESS" | "FAIL";
@@ -132,7 +133,10 @@ type plannerProfileStates =
   | "tagList"
   | "bio"
   | "sns";
-
+// ========================================================================≈≈
+// React Query ===============================================================
+// ========================================================================≈≈
+type contactFormState = "message" | "contact";
 // ========================================================================≈≈
 // React Query ===============================================================
 // ========================================================================≈≈

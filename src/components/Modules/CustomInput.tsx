@@ -32,24 +32,27 @@ const CustomInput = <T extends stateLiteral>(props: Props<T>) => {
       control,
       name: "bio",
     });
+  } else if (state === "message") {
+    textCount = useWatch({
+      control,
+      name: "message",
+    });
   }
 
   const MultilineTextArea = (state: string) => {
-    const itemRecordLength = 300;
-    const bioLength = 100;
+    const textLength = {
+      itemRecord: 300,
+      message: 200,
+      bio: 100,
+    };
     const validLength = props.validate ?? 0;
-    if (state === "itemRecord" || state === "bio") {
-      let Length: number;
-      if (state === "itemRecord") {
-        Length = itemRecordLength;
-      } else {
-        Length = bioLength;
-      }
+    if (["itemRecord", "bio", "message"].includes(state)) {
+      let Length: number = textLength[state as keyof typeof textLength];
       return (
         <div>
           <textarea
             className='border w-full resize-none h-20 px-3 py-2.5 invalid:border-red-500'
-            {...register(props.content.state)}
+            {...register(state)}
             autoComplete='off'
             maxLength={Length}
             placeholder={props.content.placeholder}
@@ -69,7 +72,7 @@ const CustomInput = <T extends stateLiteral>(props: Props<T>) => {
           placeholder={props.content.placeholder}
           type='text'
           autoComplete='off'
-          {...register(props.content.state)}
+          {...register(state)}
         />
       );
     }

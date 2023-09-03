@@ -162,12 +162,22 @@ const ProfileDialog = (props: Props) => {
       methods.reset(form);
     }
   }, [props.data]);
+  const stopPropagationForTab = (event: React.KeyboardEvent) => {
+    if (event.key === "Tab") {
+      event.stopPropagation();
+    }
+  };
   return (
     <div>
-      <Button size='small' onClick={handleClickOpen} sx={{ p: 0 }}>
-        <Settings color='secondary' fontSize='large' />
-      </Button>
-      <Dialog open={open} onClose={() => handleClose()}>
+      <div onClick={handleClickOpen}>
+        회원 정보 수정
+        {/* <Settings color='secondary' fontSize='large' /> */}
+      </div>
+      <Dialog
+        open={open}
+        onClose={() => handleClose()}
+        onKeyDown={stopPropagationForTab}
+      >
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <DialogTitle className='sticky'>회원 정보 수정</DialogTitle>

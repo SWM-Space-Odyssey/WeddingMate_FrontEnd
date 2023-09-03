@@ -13,7 +13,6 @@ import { Badge, Button, IconButton } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { editProfileImg } from "../../../../api/user";
 import CustomTag from "../../../Modules/CustomTag";
-import ProfileDialog from "../../CreatePage/ProfileDialog";
 const mockTag = ["친절한", "답변이빠른", "꼼꼼한"];
 
 type Props = {

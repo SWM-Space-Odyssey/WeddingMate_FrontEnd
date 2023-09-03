@@ -52,7 +52,6 @@ const Header = (props: Props) => {
         <button
           type='button'
           onClick={() => {
-            dispatch(PrevPage());
             navigate(-1);
           }}
         >
