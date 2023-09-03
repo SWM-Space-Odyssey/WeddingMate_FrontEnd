@@ -23,7 +23,12 @@ const CustomTag = <
   const text = props.text;
   const tagCountMax = props.tagCountMax;
   // form 의 경우
-
+  const selectedTag = {
+    fontWeight: "bold",
+    boxShadow: "0 0 0 1px #FF6A6A inset",
+    borderColor: "#FF6A6A",
+    color: "primary.main",
+  };
   if (props.formState) {
     const { setValue } = useFormContext();
     const formState = props.formState.state;
@@ -59,12 +64,7 @@ const CustomTag = <
         onClick={() => {
           onClickHandler();
         }}
-        sx={{
-          fontWeight: `${innerValue.includes(text) ? "bold" : ""}`,
-          border: `${innerValue.includes(text) ? "2px solid" : ""}`,
-          borderColor: `${innerValue.includes(text) ? "primary.main" : ""}`,
-          color: `${innerValue.includes(text) ? "primary.main" : ""}`,
-        }}
+        sx={innerValue.includes(text) ? selectedTag : {}}
       />
     );
   } else if (props.type === "sns") {
@@ -75,10 +75,7 @@ const CustomTag = <
           label={"@" + text}
           variant='outlined'
           sx={{
-            fontWeight: "bold",
-            border: "2px solid",
-            borderColor: "primary",
-            color: "primary.main",
+            ...selectedTag,
             cursor: "pointer",
           }}
         />
