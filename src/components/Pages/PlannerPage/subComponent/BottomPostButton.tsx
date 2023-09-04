@@ -10,7 +10,12 @@ const BottomPostButton = (props: Props) => {
   return (
     <IconButton
       color='primary'
-      sx={{ borderColor: "primary", border: "2px solid", p: 0.5 }}
+      sx={{
+        borderColor: "primary",
+        border: "2px solid",
+        p: 0.5,
+        bgcolor: "white",
+      }}
       onClick={() => {
         navigate("/create/portfolio");
       }}

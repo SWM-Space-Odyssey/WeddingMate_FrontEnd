@@ -1,5 +1,6 @@
 import { Box, ImageList, ImageListItem, Skeleton } from "@mui/material";
 import { isError, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import * as amplitude from "@amplitude/analytics-browser";
 import axios from "axios";
 import React, {
   useCallback,
@@ -16,7 +17,8 @@ import {
 } from "../../../../common/constants";
 import { getFeedImage } from "../../../../api/Item";
 import { useNavigate } from "react-router-dom";
-import LodingSpinner from "../../../Modules/LodingSpinner";
+import LoadingSpinner from "../../../Modules/LoadingSpinner";
+import ProgressiveImg from "../../../Modules/ProgressiveImg";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -59,21 +61,14 @@ const useIntersect = (
 };
 const useFetchUsers = (param?: string) =>
   useInfiniteQuery(
-    ["picsum"],
+    ["Feed", MY_ACCESS_KEY],
     ({ pageParam = 0 }) => {
-      return getFeedImage(pageParam, 6);
-      // return axios.get(`${SERVER_URL}/api/v1/file`, {
-      //   headers: {
-      //     Authorization: `Bearer ${MY_ACCESS_KEY}`,
-      //   },
-      //   params: { page: pageParam, size: 6 },
-      //   withCredentials: true,
-      // });
+      const response = getFeedImage(pageParam, 12);
+      return response;
     },
     {
       refetchOnWindowFocus: false,
       getNextPageParam: (lastPage) =>
-        // !lastPage.data.data.last ? lastPage.config.params.page + 1 : undefined,
         lastPage.status === "SUCCESS" &&
         lastPage.data.typeTag === "feed" &&
         !lastPage.data.last
@@ -97,6 +92,9 @@ const MasonryImage = (props: Props) => {
         )
       : [];
   }, [data]);
+
+  // amplitude.init("KEY");
+  // amplitude.track("Sign Up");
   const realRender = useMemo(() => {
     return renderData.map((item, index) => {
       let imageNav = "";
@@ -109,14 +107,20 @@ const MasonryImage = (props: Props) => {
 
       if (!item) return;
       return (
-        <img
+        <ProgressiveImg
           onClick={() => navigate(imageNav)}
-          src={SERVER_IMAGE_URL + item.url}
+          src={item.url}
           alt={String(item.url)}
           key={index}
           loading='lazy'
-          className='pb-2 cursor-pointer'
         />
+        // <img
+        //   src={SERVER_IMAGE_URL + item.url}
+        //   alt={String(item.url)}
+        //   key={index}
+        //   loading='lazy'
+        //   className='pb-2 cursor-pointer'
+        // />
       );
     });
   }, [renderData]);
@@ -138,7 +142,7 @@ const MasonryImage = (props: Props) => {
       </Masonry>
       {isError && (
         <div className='h-3/4'>
-          <LodingSpinner />
+          <LoadingSpinner />
         </div>
       )}
     </div>

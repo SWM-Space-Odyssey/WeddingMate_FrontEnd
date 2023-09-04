@@ -26,3 +26,9 @@ export const dateFormatter = (date: Date) => {
   const day = date.getDate();
   return `${year}.${month}.${day}`;
 };
+
+export const getAccessToken = () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return;
+  return accessToken;
+};

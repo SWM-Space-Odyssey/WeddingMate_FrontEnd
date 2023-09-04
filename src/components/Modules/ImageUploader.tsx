@@ -79,15 +79,28 @@ const ImageUploader = (props: Props) => {
     return response;
   };
 
+  const badgeContent = (index: number) => {
+    return (
+      <Clear
+        onClick={() => {
+          imageDelete(index);
+        }}
+        sx={{ p: 0, fontSize: ".8rem" }}
+        className='cursor-pointer'
+      />
+    );
+  };
   const imageSpread = () => {
     return pictures?.map((item, index) => {
       return (
         <Badge
-          sx={{ p: 0 }}
-          badgeContent='X'
+          badgeContent={badgeContent(index)}
           color='primary'
           key={index}
-          onClick={() => imageDelete(index)}
+          // onClick={(e) => {
+          //   console.log(e);
+          //   imageDelete(index);
+          // }}
         >
           <img
             className='w-16 h-16'
@@ -168,7 +181,9 @@ const ImageUploader = (props: Props) => {
         <span className='tracking-widest font-bold text-sm'>
           ({pictures?.length ?? 0}/{maxCount})
         </span>
-        {props.required && <span className='text-[#FF6A6A]'>*</span>}
+        <span className='text-[#FF6A6A] font-bold text-xs'>
+          필수{maxCount > 1 ? " 1개 이상" : ""}*
+        </span>
       </div>
       <div className='flex gap-1.5 flex-wrap'>
         <label>

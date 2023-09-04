@@ -6,7 +6,7 @@ type Props = {
   redirect?: boolean;
 };
 
-const LodingSpinner = (props: Props) => {
+const LoadingSpinner = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const timeOut = useParams().timeout;
@@ -50,4 +50,4 @@ const LodingSpinner = (props: Props) => {
   );
 };
 
-export default LodingSpinner;
+export default LoadingSpinner;

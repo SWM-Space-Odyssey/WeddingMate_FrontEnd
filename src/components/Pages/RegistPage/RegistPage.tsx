@@ -28,113 +28,112 @@ const RegistComponent = () => {
         plannerTagList: plannerTagList?.join(","),
       };
       plannerRegist(planner).then((res) => {
-        if (res.status === 200 && res.data.data === "SUCCESS") {
-          alert("회원가입이 완료되었습니다.");
+        console.log(res);
+        if (res.status === 201) {
+          if (res.data.status === "conflict") {
+            alert("이미 회원가입이 되어있는 계정입니다.");
+          } else {
+            alert("회원가입이 완료되었습니다.");
+          }
           navigate("/");
+        } else {
+          alert("회원가입에 실패하였습니다.");
+          console.log(res.data.data);
         }
       });
     } else {
-      // NOT YET
-      // const couple = {
-      //   company,
-      //   nickname,
-      //   position,
-      //   region,
-      //   plannerTagList
-      // }
+      // 예비부부의 경우
     }
   };
-  const transitionClass = "absolute left-0 right-0 h-full";
+  const transitionClass = "absolute left-0 right-0 h-full overflow-y-scroll";
   return (
-    <Slide
-      className='overflow-y-scroll px-4'
-      direction='left'
-      in
-      mountOnEnter
-      unmountOnExit
-    >
-      <div className='flex flex-col w-full justify-between'>
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className='flex flex-col'
-          >
-            <div className='z-10'>
-              <Header main='regist' />
-            </div>
-            <Slide
-              className='overflow-y-scroll px-4'
-              direction={
-                page === 0
-                  ? prevPage < 0
-                    ? "left"
-                    : "right"
-                  : prevPage < 0
-                  ? "left"
-                  : "right"
-              }
-              in={page === 0}
-            >
-              <div className={transitionClass}>
-                <RegistUserType />
-              </div>
-            </Slide>
-            <Slide
-              className='overflow-y-scroll px-4'
-              direction={
-                page === 1
-                  ? prevPage < 1
-                    ? "left"
-                    : "right"
-                  : page > 1
-                  ? "right"
-                  : "left"
-              }
-              in={page === 1}
-            >
-              <div className={transitionClass}>
-                <RegistUserInfo />
-              </div>
-            </Slide>
-
-            <Slide
-              className='overflow-y-scroll px-4'
-              direction={
-                page === 2
-                  ? prevPage < 2 // 들어올 때
-                    ? "left"
-                    : "right"
-                  : page > 2 // 나갈 때
-                  ? "right"
-                  : "left"
-              }
-              in={page === 2}
-            >
-              <div className={transitionClass}>
-                <RegistUserTag formElement={"plannerTagList"} />
-              </div>
-            </Slide>
-            <Slide
-              className='overflow-y-scroll px-4'
-              direction={
-                page === 3
-                  ? prevPage < 3
-                    ? "left"
-                    : "right"
-                  : page < 3
-                  ? "left"
-                  : "right"
-              }
-              in={page === 3}
-            >
-              <div className={transitionClass}>
-                <RegistSuccess />
-              </div>
-            </Slide>
-          </form>
-        </FormProvider>
+    <>
+      <div className='absolute w-full z-10'>
+        <Header main='regist' />
       </div>
-    </Slide>
+      <Slide
+        className='overflow-y-scroll px-4'
+        direction='left'
+        in
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className='flex flex-col w-full justify-between'>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className='flex flex-col'
+            >
+              <Slide
+                direction={
+                  page === 0
+                    ? prevPage < 0
+                      ? "left"
+                      : "right"
+                    : prevPage < 0
+                    ? "left"
+                    : "right"
+                }
+                in={page === 0}
+              >
+                <div className={transitionClass}>
+                  <RegistUserType />
+                </div>
+              </Slide>
+              <Slide
+                direction={
+                  page === 1
+                    ? prevPage < 1
+                      ? "left"
+                      : "left"
+                    : page > 1
+                    ? "right"
+                    : "left"
+                }
+                in={page === 1}
+              >
+                <div className={transitionClass}>
+                  <RegistUserInfo />
+                </div>
+              </Slide>
+
+              <Slide
+                direction={
+                  page === 2
+                    ? prevPage < 2 // 들어올 때
+                      ? "left"
+                      : "right"
+                    : page > 2 // 나갈 때
+                    ? "right"
+                    : "left"
+                }
+                in={page === 2}
+              >
+                <div className={transitionClass}>
+                  <RegistUserTag formElement={"plannerTagList"} />
+                </div>
+              </Slide>
+              <Slide
+                direction={
+                  page === 3
+                    ? prevPage < 3
+                      ? "left"
+                      : "right"
+                    : page < 3
+                    ? "left"
+                    : "right"
+                }
+                in={page === 3}
+              >
+                <div className={transitionClass}>
+                  <RegistSuccess />
+                </div>
+              </Slide>
+            </form>
+          </FormProvider>
+        </div>
+      </Slide>
+    </>
   );
 };
 

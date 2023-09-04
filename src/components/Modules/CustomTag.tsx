@@ -1,23 +1,34 @@
+import { Instagram } from "@mui/icons-material";
 import { Chip } from "@mui/material";
 import React from "react";
 import { FieldValues, useFormContext } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-interface Props<T extends registStates | portfolioStates | itemStates> {
+interface Props<
+  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+> {
   text: string;
   formState?: {
     state: T;
     tagState: [string[], React.Dispatch<React.SetStateAction<string[]>>];
   };
-
+  type?: "sns" | "item";
   tagCountMax?: number;
 }
-const CustomTag = <T extends registStates | portfolioStates | itemStates>(
+const CustomTag = <
+  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+>(
   props: Props<T>
 ) => {
   const text = props.text;
   const tagCountMax = props.tagCountMax;
-
   // form 의 경우
+  const selectedTag = {
+    fontWeight: "bold",
+    boxShadow: "0 0 0 1px #FF6A6A inset",
+    borderColor: "#FF6A6A",
+    color: "primary.main",
+  };
   if (props.formState) {
     const { setValue } = useFormContext();
     const formState = props.formState.state;
@@ -53,12 +64,29 @@ const CustomTag = <T extends registStates | portfolioStates | itemStates>(
         onClick={() => {
           onClickHandler();
         }}
-        sx={{
-          fontWeight: `${innerValue.includes(text) ? "bold" : ""}`,
-          border: `${innerValue.includes(text) ? "2px solid" : ""}`,
-          borderColor: `${innerValue.includes(text) ? "primary.main" : ""}`,
-          color: `${innerValue.includes(text) ? "primary.main" : ""}`,
-        }}
+        sx={innerValue.includes(text) ? selectedTag : {}}
+      />
+    );
+  } else if (props.type === "sns") {
+    return (
+      <a href={"https://instagram.com/" + text}>
+        <Chip
+          icon={<Instagram color='primary' />}
+          label={"@" + text}
+          variant='outlined'
+          sx={{
+            ...selectedTag,
+            cursor: "pointer",
+          }}
+        />
+      </a>
+    );
+  } else if (props.type === "item") {
+    return (
+      <Chip
+        variant='outlined'
+        label={`${text}`}
+        sx={{ fontSize: "12px", py: "10px" }}
       />
     );
   }

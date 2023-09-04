@@ -13,7 +13,12 @@ interface MappingInterface<T, I> {
     placeholder: string;
   };
 }
-type stateLiteral = registStates | portfolioStates | itemStates;
+type stateLiteral =
+  | registStates
+  | portfolioStates
+  | itemStates
+  | plannerProfileStates
+  | contactFormState;
 
 interface API_STATUS {
   status: "SUCCESS" | "FAIL";
@@ -90,11 +95,11 @@ type ItemBody = {
   itemRecord: string;
   itemTagList: string;
   imageList: string[];
-  date: string;
-  company: string;
   portfolioId: number;
-  order: number;
   category: string;
+  date?: string;
+  company?: string;
+  order?: number;
   isWriter?: boolean;
 };
 
@@ -109,14 +114,29 @@ type itemStates =
 type cardData = {
   itemRecord: string;
   portfolioId: number;
-  itemTagList: string[];
-  categoryContent: string;
+  itemTagList: string;
+  category: string;
   imageList: string[];
   order: number;
   itemId: number;
   company: string;
   date: string;
 };
+// ========================================================================≈≈
+// PlannerProfile===============================================================
+// ========================================================================≈≈
+type plannerProfileStates =
+  | "nickname"
+  | "company"
+  | "position"
+  | "region"
+  | "tagList"
+  | "bio"
+  | "sns";
+// ========================================================================≈≈
+// React Query ===============================================================
+// ========================================================================≈≈
+type contactFormState = "message" | "contact";
 // ========================================================================≈≈
 // React Query ===============================================================
 // ========================================================================≈≈

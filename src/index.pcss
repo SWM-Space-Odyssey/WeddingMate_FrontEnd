@@ -1,8 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "Inter";
+}
+
 :root {
-  font-family: AppleSDGothicNeo, Inter, system-ui, Avenir, Helvetica, Arial,
+  font-family: AppleSDGothicKR, Noto Sans KR, Avenir, Helvetica, Arial,
     sans-serif;
 }
 html,
@@ -27,6 +31,17 @@ body {
   overflow: hidden;
   position: fixed;
   background-color: #ffffff;
+  --swiper-theme-color: #ff6a6a;
+  --swiper-navigation-size: 32px;
+}
+
+.loadingImg {
+  filter: blur(10px);
+  clip-path: inset(0);
+}
+.loadedImg {
+  filter: blur(0px);
+  transition: filter 0.5s linear;
 }
 
 .registRoot {

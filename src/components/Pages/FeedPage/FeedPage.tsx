@@ -1,4 +1,4 @@
-import { Button, Modal, Slide } from "@mui/material";
+import { Button, Fade, Modal, Slide } from "@mui/material";
 import React, {
   Suspense,
   useCallback,
@@ -16,6 +16,8 @@ import CustomSearchForm from "../../Modules/CustomSearchForm";
 import Header from "../../Header/Header";
 import CustomText from "../../Modules/CustomText";
 import kakaoLogin from "../../../assets/kakaoLogin.png";
+import { useNavigate } from "react-router-dom";
+import { AccountCircle } from "@mui/icons-material";
 
 type Props = {
   guide?: boolean;
@@ -30,11 +32,17 @@ type loremPicsum = {
   width: number;
 };
 const madalStyle = "flex flex-col justify-center items-center ";
+
 const FeedPage = (props: Props) => {
   const user = useSelector((state: RootState) => state.view.currentView);
-
+  const navigate = useNavigate();
   // useQuery 작성
   const [loginMadal, setLoginMadal] = useState(props.guide ? true : false);
+  const myPageButton = (
+    <button onClick={() => navigate("/plannermypage")}>
+      <AccountCircle fontSize='large' sx={{ color: "white" }} />
+    </button>
+  );
   return (
     <>
       <Modal open={loginMadal} className={madalStyle}>
@@ -54,10 +62,10 @@ const FeedPage = (props: Props) => {
         </div>
       </Modal>
       <div>
-        <Header main='main' />
+        <Header main='main' rightButton={myPageButton} />
       </div>
-      <Slide
-        direction='right'
+      <Fade
+        // direction='right'
         in
         mountOnEnter
         unmountOnExit
@@ -67,7 +75,7 @@ const FeedPage = (props: Props) => {
           <CustomSearchForm />
           <MasonryImage />
         </div>
-      </Slide>
+      </Fade>
     </>
   );
 };

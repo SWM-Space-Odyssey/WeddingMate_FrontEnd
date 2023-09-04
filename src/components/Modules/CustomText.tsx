@@ -7,6 +7,8 @@ type Props = {
     | "Title"
     | "Description"
     | "Content"
+    | "SubContent"
+    | "Content-underlined"
     | "Content-small";
   text: string;
   required?: boolean;
@@ -33,6 +35,12 @@ const CustomText = (props: Props) => {
       break;
     case "Content-small":
       textClassName = "text-xs";
+      break;
+    case "Content-underlined":
+      textClassName = "text-xs underline underline-offset-2";
+      break;
+    case "SubContent":
+      textClassName = "text-xs text-gray-600";
       break;
   }
 

@@ -1,8 +1,7 @@
 import axios, { Axios, AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
-// import { MY_ACCESS_KEY } from "../common/constants";
-import { getURL, handleError } from "../hooks/apiHook";
-const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+// import { getAccessToken } from "../common/constants";
+import { getAccessToken, getURL, handleError } from "../hooks/apiHook";
 
 type ItemResponse =
   | {
@@ -49,6 +48,7 @@ type feedContent = {
   portfolioId: number | null;
   url: string;
 };
+
 type pageable = {
   sort: {
     empty: boolean;
@@ -70,6 +70,7 @@ type portfolioData = {
   repImgUrl: string;
   tagResDtoList: tagResDtoList[];
 };
+
 type tagResDtoList = {
   tagId: number;
   content: string;
@@ -80,60 +81,62 @@ type ItemData = ItemBody & {
   typeTag: "item";
 };
 
-/**
- * props object안에 itemType 과 itemId 를 받아서 requestURL 을 구성한 후 axios 를 통해 get요청을 보내는 함수입니다
- * @itemType 은 "portfolio" 와 같이 /api/v1/ 뒤에 붙어야하는 string형식입니다,
- * @itemId 는 해당 아이템의 id 를 의미합니다. itemId 를 number으로 주는것을 잊지 마세요!
- * @returns {object} axios 를 통해 받은 response 를 반환합니다.
- */
-export const getItem = async (
-  itemType: "portfolio" | "item",
-  itemId: number
+const fetchData = async <RT>(
+  url: string,
+  method: "get" | "post" | "put" | "delete",
+  body?: any
 ) => {
-  const reqURL = getURL(itemType, `${itemId}`);
-  if (!reqURL) return;
-  const response = await axios
-    .get<ItemResponse>(reqURL, {
-      headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
-      },
-      withCredentials: true,
-    })
-    .then((res) => {
-      if (res.data.status === "SUCCESS") {
-        res.data.data.typeTag = itemType;
-      }
-      return res.data;
-    })
-    .catch((err: AxiosError) => {
-      return handleError(err) as ItemResponse;
-    });
+  const axiosOption = {
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
+    withCredentials: true,
+  };
+  switch (method) {
+    case "get":
+      return await axios
+        .get<RT>(url, axiosOption)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err: AxiosError) => {
+          return handleError(err);
+        });
+    case "post":
+      return await axios.post(url, body, axiosOption);
+    case "put":
+      return await axios.put(url, body, axiosOption);
+    case "delete":
+      return await axios.delete(url, axiosOption);
+    default:
+      break;
+  }
+};
 
+export const fetchItems = async (itemId: number) => {
+  const reqURL = getURL("item", `${itemId}`);
+  if (!reqURL) return;
+  const response = await fetchData<ItemResponse>(reqURL, "get");
+  if (response?.data.status === "SUCCESS") {
+    response.data.data.typeTag = "item";
+  }
   return response;
 };
 
 export const getTagList = async (category: string) => {
-  const response = await axios
-    .get<ItemResponse>(`${SERVER_URL}/api/v1/tag/all?category=${category}`, {
-      headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
-      },
-      withCredentials: true,
-    })
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err: AxiosError) => {
-      return handleError(err) as ItemResponse;
-    });
+  const reqURL = `${SERVER_URL}/api/v1/tag/all?category=${category}`;
+  const response = await fetchData(reqURL, "get");
+
   return response;
 };
 
 export const getFeedImage = async (pageParam: number, size: number) => {
+  const accessToken = getAccessToken();
+  if (!accessToken) return { status: "FAIL" as const, data: null };
   const response = await axios
     .get<ItemResponse>(`${SERVER_URL}/api/v1/file`, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       params: { page: pageParam, size: size },
       withCredentials: true,
@@ -155,7 +158,7 @@ export const postImageAndGetURI = (formData: FormData) => {
   const response = axios
     .post(`${SERVER_URL}/api/v1/portfolio/item/file`, formData, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
         "Content-Type": "multipart/form-data",
       },
       withCredentials: true,
@@ -174,7 +177,7 @@ export const postItem = async (body: ItemBody) => {
   const response = await axios
     .post(`${SERVER_URL}/api/v1/portfolio/item/save`, body, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -195,7 +198,7 @@ export const putItem = async (itemId: number, body: ItemBody) => {
   const response = await axios
     .put(`${SERVER_URL}/api/v1/portfolio/item/${itemId}`, body, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })
@@ -216,7 +219,7 @@ export const deleteItem = async (itemId: number) => {
   const response = await axios
     .delete(`${SERVER_URL}/api/v1/portfolio/item/${itemId}`, {
       headers: {
-        Authorization: `Bearer ${MY_ACCESS_KEY}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
     })

@@ -3,10 +3,10 @@ import CustomText from "../../../Modules/CustomText";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
 import axios from "axios";
-import { getOwnPortfolio } from "../../../../api/portfolio";
+import { getPortfolio } from "../../../../api/portfolio";
 import { useQuery } from "@tanstack/react-query";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type Props = {
   mypage?: boolean;
@@ -40,9 +40,14 @@ const mockData = [
 
 const PlannerPortfolio = (props: Props) => {
   const navigate = useNavigate();
-  const { data } = useQuery(["myPortfolio"], () => getOwnPortfolio(), {
-    refetchOnWindowFocus: false,
-  });
+  const portfolioId = parseInt(useParams().Id ?? "0");
+  const { data } = useQuery(
+    ["portfolio"],
+    () => getPortfolio(portfolioId, props.mypage),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
   if (data?.status === "FAIL" || !data)
     return (
       <div>

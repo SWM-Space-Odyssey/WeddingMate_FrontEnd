@@ -5,8 +5,15 @@ import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
 import { useQuery } from "@tanstack/react-query";
 import { getTagList } from "../../../api/Item";
-
-const ITEM_TAGS = ["비즈", "실크"];
+import {
+  bouquetTagList,
+  dressTagList,
+  groomSuitTagList,
+  hallTagList,
+  jewelryTagList,
+  makeupTagList,
+  studioTagList,
+} from "../../../common/TagList";
 
 type Props = {
   formState: itemStates;
@@ -18,34 +25,74 @@ const ItemTags = (props: Props) => {
   const [spreadValues, setSpreadValue] = useState<string[]>([]);
   const formState = props.formState;
   const { control } = useFormContext();
-  const contentText = useWatch({
-    control: control,
-    name: "categoryContentText",
-  });
   const content = useWatch({
     control: control,
     name: "categoryContent",
   });
 
   useEffect(() => {
-    if (content) {
-      // getTagList(content).then((res) => {
-      //   if (
-      //     res.status === "SUCCESS" &&
-      //     res.data.typeTag === "itemTag" &&
-      //     res.data.tagList
-      //   ) {
-      //     setSpreadValue(res.data.tagList);
-      //     return;
-      //   }
-      //   // 현재 DB 에 저장된 태그리스트가 없어서 목데이터 보여줄 겸 이렇게 해두었음
-      // });
-      setSpreadValue(ITEM_TAGS);
+    switch (content) {
+      case "드레스":
+        setSpreadValue(dressTagList);
+        break;
+      case "메이크업":
+        setSpreadValue(makeupTagList);
+        break;
+      case "스튜디오":
+        setSpreadValue(studioTagList);
+        break;
+      case "웨딩홀":
+        setSpreadValue(hallTagList);
+        break;
+      case "부케":
+        setSpreadValue(bouquetTagList);
+        break;
+      case "예물":
+        setSpreadValue(jewelryTagList);
+        break;
+      case "남성예복":
+        setSpreadValue(groomSuitTagList);
+        break;
+      default:
+        break;
     }
-  }, [contentText, content]);
+  }, [content]);
   useEffect(() => {
     if (props.initValue) {
-      setSpreadValue([...spreadValues, ...props.initValue]);
+      switch (content) {
+        case "드레스":
+          setSpreadValue([...dressTagList]);
+          break;
+        case "메이크업":
+          setSpreadValue([...makeupTagList]);
+          break;
+        case "스튜디오":
+          setSpreadValue([...studioTagList]);
+          break;
+        case "웨딩홀":
+          setSpreadValue([...hallTagList]);
+          break;
+        case "부케":
+          setSpreadValue([...bouquetTagList]);
+          break;
+        case "예물":
+          setSpreadValue([...jewelryTagList]);
+          break;
+        case "남성예복":
+          setSpreadValue([...groomSuitTagList]);
+          break;
+        default:
+          break;
+      }
+      // if (content === "드레스") {
+      //   setSpreadValue([...dressTagList]);
+      // } else if (content === "메이크업") {
+      //   setSpreadValue([...makeupTagList]);
+      // } else if (content === "스튜디오") {
+      //   setSpreadValue([...studioTagList]);
+      // }
+
+      // setSpreadValue([...spreadValues, ...props.initValue]);
     }
   }, [props.initValue]);
   return (
@@ -54,7 +101,7 @@ const ItemTags = (props: Props) => {
         spreadValues={spreadValues}
         formState={formState}
         title='아이템 태그'
-        isAddable={true}
+        maxTag={3}
         required={props.required}
         initValue={props.initValue}
       />
