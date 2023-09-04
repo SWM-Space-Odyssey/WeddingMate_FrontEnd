@@ -1,5 +1,6 @@
 import { Box, ImageList, ImageListItem, Skeleton } from "@mui/material";
 import { isError, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import * as amplitude from "@amplitude/analytics-browser";
 import axios from "axios";
 import React, {
   useCallback,
@@ -91,6 +92,9 @@ const MasonryImage = (props: Props) => {
         )
       : [];
   }, [data]);
+
+  // amplitude.init("KEY");
+  // amplitude.track("Sign Up");
   const realRender = useMemo(() => {
     return renderData.map((item, index) => {
       let imageNav = "";

@@ -7,7 +7,9 @@ import { tokenRefresh, userCheck } from "../api/user";
 type option = "all" | "planner" | "customer" | "unregistered" | null;
 const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const navigate = useNavigate();
+  let dep = new Date();
   const RefreshToken = async (accessToken: string) => {
+    // 여기가 문제인 듯?
     const { status, data } = await tokenRefresh(accessToken);
     if (status === 200) {
       localStorage.setItem("accessToken", data.accessToken);
@@ -15,28 +17,17 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       return;
     } else {
       alert("오류가 발생했습니다! 다시 로그인해주세요");
+      console.log(status, data);
       localStorage.removeItem("accessToken");
       navigate("/login");
       return;
     }
   };
-  let foo: {
-    readonly bar: number;
-  } = {
-    bar: 123,
-  };
 
-  function iMutateFoo(foo: { bar: number }) {
-    foo.bar = 456;
-  }
-
-  iMutateFoo(foo);
-  console.log(foo.bar); // 456!
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    const admin = localStorage.getItem("admin"); // 나중에 지우기
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
-    if (accessToken && !admin) {
+    if (accessToken) {
       userCheck(accessToken)
         .then((res) => {
           if (res.status === 200) {
@@ -69,9 +60,9 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
             }
           } else {
             // 토큰이 만료된 경우
-            console.log("??");
             if (res.status === 401) {
               RefreshToken(accessToken);
+              dep = new Date();
             }
           }
         })
@@ -80,12 +71,10 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
           RefreshToken(accessToken);
         });
     } else {
-      if (admin) return; // 나중에 지워줘야함
       if (option === null) return;
-      alert("로그인이 만료되었습니다! 다시 로그인해주세요.");
       navigate("/login");
     }
-  }, []);
+  }, [dep]);
 
   return <Component {...props} />;
 };

@@ -12,7 +12,7 @@ import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
 import { useParams } from "react-router-dom";
 import LikeButton from "../../Modules/LikeButton";
-import ContactForm from "../../Modules/contactForm";
+import ContactForm from "../../Modules/ContactForm";
 import PlannerOptions from "../../Header/PlannerOptions";
 
 type Props = {
