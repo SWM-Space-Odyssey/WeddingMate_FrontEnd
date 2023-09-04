@@ -25,7 +25,7 @@ type Props = {
     plannerInfo: {
       company: string;
       position: string;
-      region: string;
+      regionList: string;
       tagList: string;
     };
     plannerProfileInfo: {
@@ -38,7 +38,7 @@ type plannerProfile = {
   nickname: string;
   company: string;
   position: string;
-  region: string[];
+  regionList: string[];
   tagList: string[];
   sns: string;
   bio: string;
@@ -76,7 +76,7 @@ const positionContent = {
   required: true,
 };
 const regionContent = {
-  state: "region" as const,
+  state: "regionList" as const,
   title: "활동 지역",
   placeholder: "활동 지역을 입력해주세요",
 };
@@ -95,14 +95,14 @@ const ProfileDialog = (props: Props) => {
     setOpen(true);
   };
   const validChecker = (data: plannerProfile) => {
-    const { nickname, company, position, region, tagList } = data;
+    const { nickname, company, position, regionList, tagList } = data;
     if (
       !nickname ||
       !company ||
       !position ||
-      !region ||
+      !regionList ||
       !tagList ||
-      region.length === 0 ||
+      regionList.length === 0 ||
       tagList.length === 0
     ) {
       setSnackbarOpen(true);
@@ -118,15 +118,14 @@ const ProfileDialog = (props: Props) => {
 
   const onSubmit: SubmitHandler<plannerProfile> = async (data) => {
     const isValid = validChecker(data);
-    console.log(data);
-    const { nickname, company, position, region, tagList, sns, bio } = data;
+    const { nickname, company, position, regionList, tagList, sns, bio } = data;
     if (!isValid) return;
     const body = {
       nickname,
       plannerInfo: {
         company,
         position,
-        region: region[0],
+        regionList: regionList.join(","),
         tagList: tagList.join(","),
       },
       plannerProfileInfo: {
@@ -146,15 +145,15 @@ const ProfileDialog = (props: Props) => {
   useEffect(() => {
     if (props.data) {
       const { nickname, plannerInfo, plannerProfileInfo } = props.data;
-      const { company, position, region, tagList } = plannerInfo;
+      const { company, position, regionList, tagList } = plannerInfo;
       const { sns, bio } = plannerProfileInfo;
-      setInitPlannerRegion([region]);
+      setInitPlannerRegion(regionList.split(","));
       setInitPlannerTag(tagList.split(","));
       const form = {
         nickname,
         company,
         position,
-        region: [region],
+        regionList: regionList.split(","),
         tagList: tagList.split(","),
         sns,
         bio,
@@ -200,7 +199,7 @@ const ProfileDialog = (props: Props) => {
                   <CustomTagBlock
                     title='활동 지역'
                     spreadValues={CountryList}
-                    formState='region'
+                    formState='regionList'
                     initValue={initPlannerRegion}
                     required
                   />

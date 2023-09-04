@@ -40,7 +40,7 @@ const PlannerInfo = (props: Props) => {
   );
   const { nickname, profileImageUrl, plannerInfo, plannerProfileInfo } =
     data?.data.data;
-  const { company, region, tagList, position } = plannerInfo;
+  const { company, regionList, tagList, position } = plannerInfo;
   const spreadValues = tagList.split(",");
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -111,7 +111,7 @@ const PlannerInfo = (props: Props) => {
           <div className='flex flex-col items-center gap-0.5'>
             <CustomText text={`${nickname} 플래너`} type='Title-large' />
             <CustomText
-              text={`${company} / ${position} / ${region}`}
+              text={`${company} / ${position} / ${regionList}`}
               type='Description'
             />
           </div>

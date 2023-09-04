@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import { NextPage } from "../../../../store/viewSlice";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
+import CustomText from "../../../Modules/CustomText";
 
 const RegistUserInfo = () => {
   const dispatch = useDispatch();
@@ -44,8 +45,8 @@ const RegistUserInfo = () => {
     name: "position",
     defaultValue: "",
   });
-  const region2 = useWatch({
-    name: "region",
+  const regionList2 = useWatch({
+    name: "regionList",
   });
 
   return (
@@ -55,8 +56,13 @@ const RegistUserInfo = () => {
         <CustomInput content={stateMapping.userCompany} />
         <CustomInput content={stateMapping.userGrade} />
         <div>
-          <div className='font-bold mb-1'>지역</div>
-          <CustomTagBlock spreadValues={CountryList} formState={"region"} />
+          <CustomTagBlock
+            title='지역'
+            renderCounter
+            spreadValues={CountryList}
+            maxTag={3}
+            formState={"regionList"}
+          />
         </div>
       </div>
       <Button
@@ -67,7 +73,9 @@ const RegistUserInfo = () => {
           dispatch(NextPage());
         }}
         disabled={
-          region2?.length > 0 && position && company && nickname ? false : true
+          regionList2?.length > 0 && position && company && nickname
+            ? false
+            : true
         }
       >
         다음

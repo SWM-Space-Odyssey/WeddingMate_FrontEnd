@@ -18,15 +18,19 @@ const RegistComponent = () => {
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<registRegister> = (data) => {
     // alert(JSON.stringify(data));
-    const { type, company, nickname, position, region, plannerTagList } = data;
+    const { type, company, nickname, position, regionList, plannerTagList } =
+      data;
     if (type === "planner") {
       const planner = {
         nickname,
         company,
         position,
-        region: region[0],
+        regionList: regionList?.join(","),
         plannerTagList: plannerTagList?.join(","),
       };
+      if (planner.regionList === "") return alert("지역을 선택해주세요");
+      else if (planner.plannerTagList === "")
+        return alert("태그를 선택해주세요");
       plannerRegist(planner).then((res) => {
         console.log(res);
         if (res.status === 201) {
@@ -52,7 +56,7 @@ const RegistComponent = () => {
         <Header main='regist' />
       </div>
       <Slide
-        className='overflow-y-scroll px-4'
+        className='overflow-y-scroll px-4 overflow-x-clip'
         direction='left'
         in
         mountOnEnter

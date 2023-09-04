@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 
@@ -15,15 +15,24 @@ type Props = {
 
 const ImageSlider = (props: Props) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>();
-
+  const progressCircle = useRef<any>(null);
+  const progressContent = useRef<any>(null);
+  const onAutoplayTimeLeft = (time: number, progress: number) => {
+    progressCircle.current.style.setProperty("--progress", 1 - progress);
+    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
   return (
     <div>
       <Swiper
         loop={true}
         spaceBetween={10}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
         navigation={true}
         thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Navigation, Thumbs]}
+        modules={[FreeMode, Navigation, Thumbs, Autoplay]}
         className='mySwiper2'
       >
         {props.images.map((image, index) => {

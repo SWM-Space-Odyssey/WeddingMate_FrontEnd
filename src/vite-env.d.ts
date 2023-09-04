@@ -32,7 +32,7 @@ interface registRegister {
   nickname: string;
   company: string;
   position: string;
-  region: string[];
+  regionList: string[];
   plannerTagList?: string[];
 }
 type registStates =
@@ -40,7 +40,7 @@ type registStates =
   | "nickname"
   | "company"
   | "position"
-  | "region"
+  | "regionList"
   | "plannerTagList";
 
 type registRegisterType = {

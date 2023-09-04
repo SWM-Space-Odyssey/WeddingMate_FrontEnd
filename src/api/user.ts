@@ -8,7 +8,7 @@ type plannerBody = {
   nickname: string;
   company: string;
   position: string;
-  region: string;
+  regionList: string;
   plannerTagList: string | undefined;
 };
 type plannerProfileBody = {
@@ -16,7 +16,7 @@ type plannerProfileBody = {
   plannerInfo: {
     company: string;
     position: string;
-    region: string;
+    regionList: string;
     tagList: string;
   };
   plannerProfileInfo: {

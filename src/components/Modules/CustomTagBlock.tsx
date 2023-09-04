@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CustomTag from "./CustomTag";
 import { Chip, Collapse } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
+import CustomText from "./CustomText";
 
 interface Props<
   T extends registStates | portfolioStates | itemStates | plannerProfileStates
@@ -38,7 +39,10 @@ const CustomTagBlock = <
         <div className='pb-1'>
           <span className='font-bold text-sm'>{props.title}</span>
           {props.renderCounter ? (
-            <span>{` ${componentValue.length} / ${tagCountMax}`}</span>
+            <CustomText
+              type='SubContent'
+              text={` ${componentValue.length} / ${tagCountMax}`}
+            />
           ) : (
             ""
           )}
