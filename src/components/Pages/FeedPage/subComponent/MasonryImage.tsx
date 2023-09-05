@@ -63,7 +63,7 @@ const useFetchUsers = (param?: string) =>
   useInfiniteQuery(
     ["Feed", MY_ACCESS_KEY],
     ({ pageParam = 0 }) => {
-      const response = getFeedImage(pageParam, 12);
+      const response = getFeedImage(pageParam);
       return response;
     },
     {
@@ -71,8 +71,8 @@ const useFetchUsers = (param?: string) =>
       getNextPageParam: (lastPage) =>
         lastPage.status === "SUCCESS" &&
         lastPage.data.typeTag === "feed" &&
-        !lastPage.data.last
-          ? lastPage.data.pageable.pageNumber + 1
+        !lastPage.data.nextCursor
+          ? lastPage.data.nextCursor
           : undefined,
     }
   );
@@ -87,7 +87,7 @@ const MasonryImage = (props: Props) => {
     return data
       ? data.pages.flatMap(({ data, status }) =>
           status === "SUCCESS" && data.typeTag === "feed"
-            ? data.content
+            ? data.imageListResDtoList
             : undefined
         )
       : [];
@@ -100,7 +100,7 @@ const MasonryImage = (props: Props) => {
       let imageNav = "";
       if (!item) return;
       if (item.itemId === null) {
-        imageNav = `/portfolio/${item.portfolioId}`;
+        imageNav = `/portfolio/${item.fileId}`;
       } else {
         imageNav = `/item/${item.itemId}`;
       }

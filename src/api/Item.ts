@@ -27,39 +27,14 @@ type itemTagData = {
 
 export type feedData = {
   typeTag: "feed";
-  content: feedContent[];
-  pageable: pageable;
-  totalElements: number;
-  totalPages: number;
-  last: boolean;
-  size: number;
-  number: number;
-  sort: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
-  first: boolean;
-  numberOfElements: number;
-  empty: boolean;
+  imageListResDtoList: feedContent[];
+  nextCursor: number;
+  pageSize: number;
 };
 type feedContent = {
   itemId: number | null;
-  portfolioId: number | null;
+  fileId: number | null;
   url: string;
-};
-
-type pageable = {
-  sort: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
-  offset: number;
-  pageNumber: number;
-  pageSize: number;
-  paged: boolean;
-  unpaged: boolean;
 };
 
 type portfolioData = {
@@ -130,7 +105,7 @@ export const getTagList = async (category: string) => {
   return response;
 };
 
-export const getFeedImage = async (pageParam: number, size: number) => {
+export const getFeedImage = async (pageParam: number) => {
   const accessToken = getAccessToken();
   if (!accessToken) return { status: "FAIL" as const, data: null };
   const response = await axios
@@ -138,7 +113,7 @@ export const getFeedImage = async (pageParam: number, size: number) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: { page: pageParam, size: size },
+      params: { cursor: pageParam },
       withCredentials: true,
     })
     .then((res) => {
