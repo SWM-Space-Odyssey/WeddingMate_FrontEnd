@@ -14,6 +14,7 @@ import ItemCreate from "./components/Pages/CreatePage/ItemCreate";
 import ItemPage from "./components/Pages/ItemPage/ItemPage";
 import { Suspense } from "react";
 import Auth from "./hoc/auth";
+import EarlyAccessPage from "./components/Pages/EarlyAcccessPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,14 +25,15 @@ const queryClient = new QueryClient({
   },
 });
 const AuthFeedPage = Auth(FeedPage, "all");
-const AuthPlannerPage = Auth(PlannerPage, "all");
-const AuthPlannerMyPage = Auth(PlannerPage, "planner");
-const AuthRegisterPage = Auth(RegisterPage, "unregistered");
-const AuthPortfolioPage = Auth(PortfolioPage, "all");
 const AuthItemPage = Auth(ItemPage, "all");
+const AuthPlannerPage = Auth(PlannerPage, "all");
+const AuthPortfolioPage = Auth(PortfolioPage, "all");
+const AuthRegisterPage = Auth(RegisterPage, "unregistered");
 const AuthItemCreate = Auth(ItemCreate, "planner");
+const AuthPlannerMyPage = Auth(PlannerPage, "planner");
 const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
 const AuthLoginGuidePage = Auth(FeedPage, null);
+const AuthEarlyAccessPage = Auth(EarlyAccessPage, "all");
 
 function App() {
   return (
@@ -42,6 +44,7 @@ function App() {
             <div className='flex-1 relative flex overflow-y-scroll flex-col'>
               <Routes>
                 <Route path='/' element={<AuthFeedPage />} />
+                <Route path='/earlyaccess' element={<AuthEarlyAccessPage />} />
                 <Route path='/regist' element={<AuthRegisterPage />} />
                 <Route path='/planner/:Id' element={<AuthPlannerPage />} />
                 <Route

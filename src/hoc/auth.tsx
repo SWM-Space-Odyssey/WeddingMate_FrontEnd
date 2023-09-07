@@ -26,8 +26,10 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+    const admin = localStorage.getItem("admin");
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
     if (accessToken) {
+      if (admin) return;
       userCheck(accessToken)
         .then((res) => {
           if (res.status === 200) {
