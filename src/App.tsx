@@ -15,6 +15,7 @@ import ItemPage from "./components/Pages/ItemPage/ItemPage";
 import { Suspense } from "react";
 import Auth from "./hoc/auth";
 import EarlyAccessPage from "./components/Pages/EarlyAcccessPage";
+import RedirectPage from "./components/Pages/RedirectPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,7 +33,6 @@ const AuthRegisterPage = Auth(RegisterPage, "unregistered");
 const AuthItemCreate = Auth(ItemCreate, "planner");
 const AuthPlannerMyPage = Auth(PlannerPage, "planner");
 const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
-const AuthLoginGuidePage = Auth(FeedPage, null);
 const AuthEarlyAccessPage = Auth(EarlyAccessPage, "customer");
 
 function App() {
@@ -69,9 +69,10 @@ function App() {
                   path='/oauth2/redirect'
                   element={<LoadingSpinner redirect />}
                 />
-                <Route path='/login' element={<AuthLoginGuidePage guide />} />
+                <Route path='/login' element={<FeedPage guide />} />
                 <Route path='/admin' element={<MainPage />} />
                 {/* <Route path='/spinner/:timeout' element={<LodingSpinner />} /> */}
+                <Route path='/redirect' element={<RedirectPage />} />
               </Routes>
               {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </div>

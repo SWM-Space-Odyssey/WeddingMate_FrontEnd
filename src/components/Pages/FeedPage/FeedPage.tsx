@@ -19,6 +19,7 @@ import kakaoLogin from "../../../assets/kakaoLogin.png";
 import { useNavigate } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
 import * as amplitude from "@amplitude/analytics-browser";
+import { SERVER_URL } from "../../../common/constants";
 type Props = {
   guide?: boolean;
 };
@@ -58,7 +59,7 @@ const FeedPage = (props: Props) => {
           <div className='text-lg'>로그인이 필요합니다</div>
           <Button
             className='bg-[#FEE500] text-[#000000 85%] w-4/6 mt-4 rounded-md'
-            href='https://api.weddingmate.co.kr/oauth2/authorization/kakao'
+            href={`${SERVER_URL}/oauth2/authorization/kakao`}
           >
             <img src={kakaoLogin} className='w-full h-full' />
           </Button>
