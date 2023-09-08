@@ -18,7 +18,7 @@ import CustomText from "../../Modules/CustomText";
 import kakaoLogin from "../../../assets/kakaoLogin.png";
 import { useNavigate } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
-
+import * as amplitude from "@amplitude/analytics-browser";
 type Props = {
   guide?: boolean;
 };
@@ -38,6 +38,9 @@ const FeedPage = (props: Props) => {
   const navigate = useNavigate();
   // useQuery 작성
   const [loginMadal, setLoginMadal] = useState(props.guide ? true : false);
+  if (props.guide) {
+    amplitude.track("Journey Start");
+  }
   const myPageButton = (
     <button onClick={() => navigate("/plannermypage")}>
       <AccountCircle fontSize='large' sx={{ color: "white" }} />

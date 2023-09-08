@@ -21,10 +21,13 @@ export const userSlice = createSlice({
       state.accessToken = action.payload;
       localStorage.setItem("accessToken", action.payload);
     },
+    setUserType: (state, action: PayloadAction<"planner" | "couple">) => {
+      state.type = action.payload;
+    },
   },
 });
 
-export const { setAccessToken } = userSlice.actions;
+export const { setAccessToken, setUserType } = userSlice.actions;
 
 export const selectUsers = (state: RootState) => state.user;
 

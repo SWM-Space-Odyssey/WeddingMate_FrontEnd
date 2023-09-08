@@ -29,6 +29,11 @@ export const dateFormatter = (date: Date) => {
 
 export const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) return;
+  if (!accessToken) return false;
   return accessToken;
+};
+export const getUUID = () => {
+  const UUID = localStorage.getItem("UUID");
+  if (!UUID) return;
+  return UUID;
 };

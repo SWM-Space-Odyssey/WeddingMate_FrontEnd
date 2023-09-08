@@ -14,7 +14,7 @@ interface MappingInterface<T, I> {
   };
 }
 type stateLiteral =
-  | registStates
+  | plannerRegistStates
   | portfolioStates
   | itemStates
   | plannerProfileStates
@@ -27,31 +27,60 @@ interface API_STATUS {
 // ========================================================================≈≈
 // UserRegist============================================================≈≈
 // ========================================================================≈≈
-interface registRegister {
-  type: string;
+interface plannerRegister {
+  type: "planner";
   nickname: string;
   company: string;
   position: string;
   regionList: string[];
   plannerTagList?: string[];
 }
-type registStates =
+
+interface coupleRegister {
+  type: "couple";
+  nickname: string;
+  region: string[];
+  weddingDate: string;
+  weddingDateConfirmed: boolean;
+  budget: string[];
+  portfolioTagList: string[];
+  plannerTagList: string[];
+  dressTagList: string[];
+  studioTypeTagList: string[];
+  makeupTagList: string[];
+  studioFocusTagList: string[];
+}
+type plannerRegistStates =
   | "type"
   | "nickname"
   | "company"
   | "position"
   | "regionList"
   | "plannerTagList";
+type coupleRegistStates =
+  | "type"
+  | "nickname"
+  | "region"
+  | "weddingDate"
+  | "weddingDateConfirmed"
+  | "budget"
+  | "customerTagList"
+  | "portfolioTagList"
+  | "plannerTagList"
+  | "dressTagList"
+  | "makeupTagList"
+  | "studioTypeTagList"
+  | "studioFocusTagList";
 
 type registRegisterType = {
-  register: UseFormRegister<registRegister>;
+  register: UseFormRegister<plannerRegister>;
 };
 
-type RegistInputProp = {
-  state: registStates;
+type RegistInputProp<T extends plannerRegistStates | coupleRegistStates> = {
+  state: T;
   title: string;
   placeholder: string;
-  register: UseFormRegister<registRegister>;
+  register: UseFormRegister<T>;
 };
 // ========================================================================≈≈
 // PortFolio===============================================================≈≈
