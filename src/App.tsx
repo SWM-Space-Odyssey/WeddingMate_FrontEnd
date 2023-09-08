@@ -33,9 +33,10 @@ const AuthItemCreate = Auth(ItemCreate, "planner");
 const AuthPlannerMyPage = Auth(PlannerPage, "planner");
 const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
 const AuthLoginGuidePage = Auth(FeedPage, null);
-const AuthEarlyAccessPage = Auth(EarlyAccessPage, "all");
+const AuthEarlyAccessPage = Auth(EarlyAccessPage, "customer");
 
 function App() {
+  console.log("CONNECTED TO SERVER" + import.meta.env.VITE_SERVER_URL);
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

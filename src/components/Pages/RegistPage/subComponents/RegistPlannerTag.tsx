@@ -3,17 +3,29 @@ import { PlannerTagList } from "../../../../common/TagList";
 import { useDispatch } from "react-redux";
 import { NextPage } from "../../../../store/viewSlice";
 import { Button } from "@mui/material";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
+import { useEffect, useState } from "react";
 
 type Props = {
-  formElement: registStates;
+  formElement: plannerRegistStates;
 };
-const RegistUserTag = (props: Props) => {
+const RegistPlannerTag = (props: Props) => {
   const dispatch = useDispatch();
+  const { control, getValues, setValue } = useFormContext();
+  const page = useSelector((state: RootState) => state.view.page);
+  const [userType, setUserType] = useState<"couple" | "planner">("couple");
   const formElement = props.formElement;
   const tags = useWatch({
     name: formElement,
   });
+  useEffect(() => {
+    if (page === 2) {
+      setUserType(getValues("type"));
+    }
+  }, [page]);
+  if (userType === "couple") return <></>;
   const tagMax = 3;
   return (
     <div className='px-4 flex flex-col h-full justify-between'>
@@ -52,4 +64,4 @@ const RegistUserTag = (props: Props) => {
   );
 };
 
-export default RegistUserTag;
+export default RegistPlannerTag;

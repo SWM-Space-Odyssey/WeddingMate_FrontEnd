@@ -1,26 +1,42 @@
 import { Slide } from "@mui/material";
-import RegistUserTag from "./subComponents/RegistUserTag";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import RegistPlannerTag from "./subComponents/RegistPlannerTag";
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from "react-hook-form";
 import RegistUserInfo from "./subComponents/RegistUserInfo";
 import RegistUserType from "./subComponents/RegistUserType";
 import RegistSuccess from "./subComponents/RegistSuccess";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { plannerRegist } from "../../../api/user";
+import { coupleRegister, plannerRegist } from "../../../api/user";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
+import {
+  RegistCoupleTag1,
+  RegistCoupleTag2,
+} from "./subComponents/RegistCoupleTag";
+import * as amplitude from "@amplitude/analytics-browser";
 
+const parseArray = (data: string[]) => {
+  console.log(data);
+  if (data.length === 0) return "";
+  else return data.join(",");
+};
 const RegistComponent = () => {
+  amplitude.track("regist_in");
   const view = useSelector((state: RootState) => state.view.currentView);
   const page = useSelector((state: RootState) => state.view.page);
   const prevPage = useSelector((state: RootState) => state.view.prevPage);
-  const methods = useForm<registRegister>();
+  const userType = useSelector((state: RootState) => state.user.type);
+  const methods = useForm<plannerRegister | coupleRegister>();
   const navigate = useNavigate();
-  const onSubmit: SubmitHandler<registRegister> = (data) => {
+  const onSubmit: SubmitHandler<plannerRegister | coupleRegister> = (data) => {
     // alert(JSON.stringify(data));
-    const { type, company, nickname, position, regionList, plannerTagList } =
-      data;
-    if (type === "planner") {
+    if (data.type === "planner") {
+      const { company, nickname, position, regionList, plannerTagList } = data;
       const planner = {
         nickname,
         company,
@@ -45,8 +61,46 @@ const RegistComponent = () => {
           console.log(res.data.data);
         }
       });
-    } else {
+    } else if (data.type === "couple") {
       // 예비부부의 경우
+      console.log("im here", data);
+      const {
+        weddingDateConfirmed,
+        weddingDate,
+        region,
+        nickname,
+        budget,
+        dressTagList,
+        makeupTagList,
+        plannerTagList,
+        studioFocusTagList,
+        studioTypeTagList,
+        portfolioTagList,
+      } = data;
+      const date = weddingDate ? weddingDate : "미정";
+      const body = {
+        nickname,
+        weddingDateConfirmed,
+        weddingDate: date,
+        region: parseArray(region),
+        budget: parseArray(budget),
+        customerTagList: {
+          portfolioTagList: parseArray(portfolioTagList),
+          plannerTagList: parseArray(plannerTagList),
+          dressTagList: parseArray(dressTagList),
+          studioTypeTagList: parseArray(studioTypeTagList),
+          studioFocusTagList: parseArray(studioFocusTagList),
+          makeupTagList: parseArray(makeupTagList),
+        },
+      };
+      coupleRegister(body).then((res: any) => {
+        console.log(res);
+        if (res.status === "SUCCESS") {
+          alert("회원가입이 완료되었습니다.");
+          navigate("/earlyAccess");
+          amplitude.track("regist_success");
+        }
+      });
     }
   };
   const transitionClass = "absolute left-0 right-0 h-full overflow-y-scroll";
@@ -71,10 +125,10 @@ const RegistComponent = () => {
               <Slide
                 direction={
                   page === 0
-                    ? prevPage < 0
-                      ? "left"
+                    ? prevPage < 1
+                      ? "right"
                       : "right"
-                    : prevPage < 0
+                    : prevPage >= 1
                     ? "left"
                     : "right"
                 }
@@ -87,10 +141,10 @@ const RegistComponent = () => {
               <Slide
                 direction={
                   page === 1
-                    ? prevPage < 1
+                    ? prevPage < 2
                       ? "left"
-                      : "left"
-                    : page > 1
+                      : "right"
+                    : page >= 2
                     ? "right"
                     : "left"
                 }
@@ -114,7 +168,11 @@ const RegistComponent = () => {
                 in={page === 2}
               >
                 <div className={transitionClass}>
-                  <RegistUserTag formElement={"plannerTagList"} />
+                  {userType === "couple" ? (
+                    <RegistCoupleTag1 />
+                  ) : (
+                    <RegistPlannerTag formElement={"plannerTagList"} />
+                  )}
                 </div>
               </Slide>
               <Slide
@@ -128,6 +186,26 @@ const RegistComponent = () => {
                     : "right"
                 }
                 in={page === 3}
+              >
+                <div className={transitionClass}>
+                  {userType === "couple" ? (
+                    <RegistCoupleTag2 />
+                  ) : (
+                    <RegistSuccess />
+                  )}
+                </div>
+              </Slide>
+              <Slide
+                direction={
+                  page === 4
+                    ? prevPage < 4
+                      ? "left"
+                      : "right"
+                    : page < 4
+                    ? "left"
+                    : "right"
+                }
+                in={page === 4}
               >
                 <div className={transitionClass}>
                   <RegistSuccess />

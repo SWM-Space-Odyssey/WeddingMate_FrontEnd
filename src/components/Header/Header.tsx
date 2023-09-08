@@ -61,12 +61,14 @@ const Header = (props: Props) => {
     }
   };
   const centerContent = () => {
+    const type = useSelector((state: RootState) => state.user.type);
+    const maxPage = type === "planner" ? 3 : 4;
     if (props.main === "regist") {
       return (
         <>
-          {page < 3 && (
+          {page < maxPage && (
             <Typography color={"secondary"}>
-              회원가입 ({page + 1}/{3})
+              회원가입 ({page + 1}/{maxPage})
             </Typography>
           )}
         </>

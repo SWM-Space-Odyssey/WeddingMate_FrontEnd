@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from "react";
 import CustomTag from "./CustomTag";
-import { Chip, Collapse } from "@mui/material";
-import { useFormContext, useWatch } from "react-hook-form";
 import CustomText from "./CustomText";
 
 interface Props<
-  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+  T extends
+    | plannerRegistStates
+    | portfolioStates
+    | itemStates
+    | plannerProfileStates
+    | coupleRegistStates
 > {
   spreadValues: string[];
   formState?: T;
   initValue?: string[];
   maxTag?: number;
   title?: string;
+  subtitle?: string;
   renderCounter?: boolean;
   required?: boolean;
   type?: "item" | "sns";
 }
 
 const CustomTagBlock = <
-  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+  T extends
+    | plannerRegistStates
+    | portfolioStates
+    | itemStates
+    | plannerProfileStates
+    | coupleRegistStates
 >(
   props: Props<T>
 ) => {
@@ -37,16 +46,23 @@ const CustomTagBlock = <
     <div>
       {props.title && (
         <div className='pb-1'>
-          <span className='font-bold text-sm'>{props.title}</span>
-          {props.renderCounter ? (
-            <CustomText
-              type='SubContent'
-              text={` ${componentValue.length} / ${tagCountMax}`}
-            />
-          ) : (
-            ""
+          <div>
+            <span className='font-bold text-sm'>{props.title}</span>
+            {props.renderCounter ? (
+              <CustomText
+                type='SubContent'
+                text={` ${componentValue.length} / ${tagCountMax}`}
+              />
+            ) : (
+              ""
+            )}
+            {props.required && <span className='text-[#FF6A6A]'>*</span>}
+          </div>
+          {props.subtitle && (
+            <div>
+              <CustomText type='Description' text={props.subtitle} />
+            </div>
           )}
-          {props.required && <span className='text-[#FF6A6A]'>*</span>}
         </div>
       )}
       <div className='flex flex-wrap gap-1.5'>
