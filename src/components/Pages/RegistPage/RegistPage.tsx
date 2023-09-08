@@ -19,6 +19,8 @@ import {
   RegistCoupleTag2,
 } from "./subComponents/RegistCoupleTag";
 import * as amplitude from "@amplitude/analytics-browser";
+import { useDispatch } from "react-redux";
+import { setUserNickname } from "../../../store/userSlice";
 
 const parseArray = (data: string[]) => {
   console.log(data);
@@ -33,6 +35,7 @@ const RegistComponent = () => {
   const userType = useSelector((state: RootState) => state.user.type);
   const methods = useForm<plannerRegister | coupleRegister>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onSubmit: SubmitHandler<plannerRegister | coupleRegister> = (data) => {
     // alert(JSON.stringify(data));
     if (data.type === "planner") {
@@ -93,12 +96,17 @@ const RegistComponent = () => {
           makeupTagList: parseArray(makeupTagList),
         },
       };
+      dispatch(setUserNickname(nickname));
       coupleRegister(body).then((res: any) => {
         console.log(res);
         if (res.status === "SUCCESS") {
           alert("회원가입이 완료되었습니다.");
           navigate("/earlyAccess");
           amplitude.track("regist_success");
+        } else {
+          alert("회원가입에 실패하였습니다. 모든 항목을 다시 확인해주세요!");
+          amplitude.track("regist_fail", { error: res.data.data });
+          navigate(0);
         }
       });
     }

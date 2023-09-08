@@ -3,13 +3,16 @@ import React from "react";
 import CustomText from "../../Modules/CustomText";
 import "./index.pcss";
 import { EditNote } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 type Props = {};
 
 const EarlyAccessPage = (props: Props) => {
   const twCenter = "flex flex-col justify-center items-center";
+  const nickname = useSelector((state: RootState) => state.user.nickname);
   return (
-    <div className={`w-full h-full p-10 ${twCenter}`}>
+    <div className={`w-full h-full p-4 ${twCenter}`}>
       <Paper
         elevation={4}
         sx={{
@@ -20,19 +23,23 @@ const EarlyAccessPage = (props: Props) => {
       >
         <div className={`${twCenter} gap-2`}>
           <span className='text-[5rem] bounce'>🥳</span>
+          <CustomText type='Title-large' text={`${nickname} 예비부부님!`} />
           <CustomText type='Title-large' text='사전예약 감사합니다!' />
-          <CustomText type='Title-base' text='본 화면을 캡쳐하셔서' />
           <CustomText
-            type='Title-base'
-            text='구글폼에 업로드 해주시면 추첨을 통해'
+            type='Title'
+            text='본 화면을 캡쳐하셔서 구글폼에 업로드하면'
           />
-          <CustomText type='Title-base' text=' 노보텔 앰배서더 스위트' />
+          <CustomText type='Title' text='1️⃣ 100% 스타벅스 기프티콘' />
           <CustomText
-            type='Description'
-            text='평일(월-금) 주니어 스위트 객실'
+            type='Title'
+            text='2️⃣ 추첨을 통해 노보텔 앰버서더 스위트 평일 숙박권'
           />
-          <CustomText type='Title-base' text='1박2일 숙박권 을 드립니다!' />
-          <Button variant='contained' sx={{ color: "white" }}>
+          <CustomText type='Title' text='을 드립니다!' />
+          <Button
+            variant='contained'
+            sx={{ color: "white" }}
+            href='https://forms.gle/YFDcRNkFJZMtmQtJ6'
+          >
             <EditNote />
             <CustomText type='Title' text='구글폼 바로가기' />
           </Button>

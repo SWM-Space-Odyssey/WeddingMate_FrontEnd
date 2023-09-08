@@ -6,23 +6,27 @@ import { tokenRefresh, userCheck } from "../api/user";
 import { getAccessToken } from "../hooks/apiHook";
 import * as amplitude from "@amplitude/analytics-browser";
 import { v4 as uuidv4 } from "uuid";
+import { resetAccessToken, setAccessToken } from "../store/userSlice";
 
 type option = "all" | "planner" | "customer" | "unregistered" | null;
 const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   let dep = new Date();
   const RefreshToken = async () => {
     // 여기가 문제인 듯?
     const response = await tokenRefresh();
     console.log(response);
-    if (response && response.status === 200) {
+    if (response && response.data.status === "SUCCESS") {
       localStorage.setItem("accessToken", response.data.accessToken);
+      dispatch(setAccessToken(response.data.accessToken));
       navigate(0);
       return;
     } else {
-      console.log(response);
-      localStorage.removeItem("accessToken");
-      navigate("/login");
+      if (localStorage.getItem("accessToken")) {
+        dispatch(resetAccessToken());
+        navigate("/login");
+      }
       return;
     }
   };
@@ -48,6 +52,7 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       if (admin) return;
       userCheck(accessToken)
         .then((res) => {
+          console.log(res.data);
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;

@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
+import store, { RootState } from "../store/store";
 
 export const handleError = (err: AxiosError) => {
   return {
@@ -28,9 +29,11 @@ export const dateFormatter = (date: Date) => {
 };
 
 export const getAccessToken = () => {
+  const reduxToken = store.getState().user.accessToken;
   const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) return false;
-  return accessToken;
+  const token = accessToken ?? reduxToken;
+  if (!token) return false;
+  return token;
 };
 export const getUUID = () => {
   const UUID = localStorage.getItem("UUID");

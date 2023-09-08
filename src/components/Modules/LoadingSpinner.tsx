@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import "./LoadingSpinner.css";
+import { setAccessToken } from "../../store/userSlice";
 type Props = {
   redirect?: boolean;
 };
@@ -10,11 +11,10 @@ const LoadingSpinner = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const timeOut = useParams().timeout;
-  const accessToken = localStorage.getItem("accessToken");
   const queryToken = new URLSearchParams(location.search).get("accessToken");
   useEffect(() => {
     if (props.redirect && queryToken) {
-      localStorage.setItem("accessToken", queryToken);
+      dispatch(setAccessToken(queryToken));
     }
     // if (!accessToken) {
     //   alert("잘못된 접근입니다. - Spinner ");
