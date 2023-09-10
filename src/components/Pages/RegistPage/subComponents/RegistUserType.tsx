@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Button, Radio, Stack } from "@mui/material";
 import { NextPage } from "../../../../store/viewSlice";
 import { useDispatch } from "react-redux";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
+import { setUserType } from "../../../../store/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
+import * as amplitude from "@amplitude/analytics-browser";
 
 const RegistUserType = () => {
   const dispatch = useDispatch();
-  const { register } = useFormContext();
-  const [userType, setUserType] = useState("");
+  const userType = useSelector((state: RootState) => state.user.type);
+  const { register, reset } = useFormContext();
   // 사용되는 상수구역
   const GuideText = "가입 유형을 선택해주세요";
   const CoupleString = "couple";
@@ -17,10 +21,10 @@ const RegistUserType = () => {
     planner: "플래너 회원가입",
   };
   const buttonClass = "text-sm w-full";
-
   const onClickHandler = (type: typeof CoupleString | typeof PlannerString) => {
-    setUserType(type);
+    reset();
     register("type", { value: type });
+    dispatch(setUserType(type));
   };
   // userType에서만 사용되는 Component여서 따로 Unit화 하지 않았습니다.
   const buttonComponent = (
@@ -31,7 +35,7 @@ const RegistUserType = () => {
         className={buttonClass}
         variant='outlined'
         onClick={() => onClickHandler(str)}
-        disabled={str === CoupleString ? true : false}
+        disabled={str === PlannerString ? true : false}
         sx={{
           display: "flex",
           fontWeight: `${userType === str ? 700 : 400}`,
@@ -63,6 +67,7 @@ const RegistUserType = () => {
         sx={{ fontSize: "1rem", my: 1, color: "white" }}
         disabled={userType ? false : true}
         onClick={() => {
+          amplitude.track("regist_step1");
           dispatch(NextPage());
         }}
       >

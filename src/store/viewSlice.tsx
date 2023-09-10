@@ -38,8 +38,9 @@ export const viewSlice = createSlice({
     },
     PrevPage: (state) => {
       if (state.page !== 0) {
+        state.prevPage = state.page;
         state.page -= 1;
-        state.prevPage -= 1;
+        // state.prevPage -= 1;
         return;
       }
 

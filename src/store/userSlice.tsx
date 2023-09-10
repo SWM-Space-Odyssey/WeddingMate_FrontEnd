@@ -5,11 +5,13 @@ import type { RootState } from "./store";
 interface userState {
   accessToken: string | null;
   type: "planner" | "couple" | null;
+  nickname: string;
   plannerId?: number | null;
 }
 
 const initialState: userState = {
   accessToken: null,
+  nickname: "",
   type: null,
 };
 
@@ -17,14 +19,29 @@ export const userSlice = createSlice({
   name: "nicknameChanger",
   initialState,
   reducers: {
+    resetAccessToken: (state) => {
+      state.accessToken = null;
+      localStorage.removeItem("accessToken");
+    },
     setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
       localStorage.setItem("accessToken", action.payload);
     },
+    setUserType: (state, action: PayloadAction<"planner" | "couple">) => {
+      state.type = action.payload;
+    },
+    setUserNickname: (state, action: PayloadAction<string>) => {
+      state.nickname = action.payload;
+    },
   },
 });
 
-export const { setAccessToken } = userSlice.actions;
+export const {
+  setAccessToken,
+  setUserType,
+  resetAccessToken,
+  setUserNickname,
+} = userSlice.actions;
 
 export const selectUsers = (state: RootState) => state.user;
 

@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 // import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
 import { SERVER_URL } from "../common/constants";
-import { getAccessToken } from "../hooks/apiHook";
+import { getAccessToken, handleError } from "../hooks/apiHook";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type plannerBody = {
@@ -25,6 +25,45 @@ type plannerProfileBody = {
   };
 };
 
+const fetchData = async <RT>(
+  url: string,
+  method: "get" | "post" | "put" | "delete",
+  body?: any
+) => {
+  const axiosOption = {
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
+    withCredentials: true,
+  };
+  switch (method) {
+    case "get":
+      return await axios
+        .get<RT>(url, axiosOption)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err: AxiosError) => {
+          return handleError(err);
+        });
+    case "post":
+      return await axios
+        .post<RT>(url, body, axiosOption)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err: AxiosError) => {
+          return handleError(err);
+        });
+    case "put":
+      return await axios.put(url, body, axiosOption);
+    case "delete":
+      return await axios.delete(url, axiosOption);
+    default:
+      break;
+  }
+};
+
 export const plannerRegist = async (body: plannerBody) => {
   const response: AxiosResponse = await axios
     .post(`${SERVER_URL}/api/v1/signup/planner`, body, {
@@ -41,6 +80,12 @@ export const plannerRegist = async (body: plannerBody) => {
     });
   return response;
 };
+export const coupleRegister = async (body: any) => {
+  const reqURL = `${SERVER_URL}/api/v1/signup/customer`;
+  const response = await fetchData(reqURL, "post", body);
+  return response;
+};
+
 export const editProfileImg = async (formData: FormData) => {
   const response: AxiosResponse = await axios
     .post(`${SERVER_URL}/api/v1/profile/file`, formData, {
@@ -98,18 +143,12 @@ export const userCheck = async (token: string) => {
   return response;
 };
 
-export const tokenRefresh = async (accessToken: string) => {
-  const storageToken = getAccessToken();
-  const token: string = accessToken ?? storageToken;
-
+export const tokenRefresh = async () => {
   const response: AxiosResponse = await axios
     .post(
       `${SERVER_URL}/api/v1/token/refresh`,
       {},
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         withCredentials: true,
       }
     )

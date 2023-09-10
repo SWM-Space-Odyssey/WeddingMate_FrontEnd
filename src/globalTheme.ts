@@ -2,6 +2,14 @@ import { createTheme } from "@mui/material/styles";
 
 export const globalTheme = createTheme({
   components: {
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          color: "#FFFFFF",
+        },
+      },
+    },
+
     MuiBadge: {
       styleOverrides: {
         badge: {

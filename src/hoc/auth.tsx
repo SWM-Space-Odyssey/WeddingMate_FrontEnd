@@ -3,31 +3,48 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
 import { tokenRefresh, userCheck } from "../api/user";
+import { getAccessToken, useUUID } from "../hooks/apiHook";
+import * as amplitude from "@amplitude/analytics-browser";
+import { resetAccessToken, setAccessToken } from "../store/userSlice";
 
 type option = "all" | "planner" | "customer" | "unregistered" | null;
 const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   let dep = new Date();
-  const RefreshToken = async (accessToken: string) => {
+  const RefreshToken = async () => {
     // 여기가 문제인 듯?
-    const { status, data } = await tokenRefresh(accessToken);
-    if (status === 200) {
-      localStorage.setItem("accessToken", data.accessToken);
+    const response = await tokenRefresh();
+    console.log(response);
+    if (response && response.data.status === "SUCCESS") {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      dispatch(setAccessToken(response.data.accessToken));
       navigate(0);
       return;
     } else {
-      alert("오류가 발생했습니다! 다시 로그인해주세요");
-      console.log(status, data);
-      localStorage.removeItem("accessToken");
-      navigate("/login");
+      if (!localStorage.getItem("accessToken")) {
+        dispatch(resetAccessToken());
+        navigate("/login");
+      }
       return;
     }
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = getAccessToken();
+    const admin = localStorage.getItem("admin");
+    const amp = sessionStorage.getItem("amp_init");
+    if (!amp) {
+      sessionStorage.setItem("amp_init", "true");
+      const uuid = useUUID();
+      const ampId = import.meta.env.VITE_AMPLITUDE_KEY;
+      amplitude.init(ampId, uuid as string, {
+        defaultTracking: true,
+      });
+    }
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
     if (accessToken) {
+      if (admin) return;
       userCheck(accessToken)
         .then((res) => {
           if (res.status === 200) {
@@ -41,13 +58,16 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
                 }
                 break;
               case "CUSTOMER":
-                if (option === "unregistered") {
-                  alert("잘못 된 접근입니다.");
-                  navigate("/");
-                } else if (option === "planner") {
-                  alert("플래너만 사용할 수 있는 기능입니다.");
-                  navigate("/");
+                if (option !== "customer") {
+                  navigate("/earlyAccess");
                 }
+                // if (option === "unregistered") {
+                //   alert("잘못 된 접근입니다.");
+                //   navigate("/");
+                // } else if (option === "planner") {
+                //   alert("플래너만 사용할 수 있는 기능입니다.");
+                //   navigate("/");
+                // }
                 break;
               case "UNREGISTERED":
                 if (option !== "unregistered") {
@@ -61,18 +81,18 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
           } else {
             // 토큰이 만료된 경우
             if (res.status === 401) {
-              RefreshToken(accessToken);
+              RefreshToken();
               dep = new Date();
             }
           }
         })
         .catch((err) => {
           // 토큰이 만료된 경우
-          RefreshToken(accessToken);
+          RefreshToken();
         });
     } else {
       if (option === null) return;
-      navigate("/login");
+      RefreshToken();
     }
   }, [dep]);
 

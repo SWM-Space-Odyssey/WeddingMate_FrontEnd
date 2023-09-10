@@ -18,7 +18,8 @@ import CustomText from "../../Modules/CustomText";
 import kakaoLogin from "../../../assets/kakaoLogin.png";
 import { useNavigate } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
-
+import * as amplitude from "@amplitude/analytics-browser";
+import { SERVER_URL } from "../../../common/constants";
 type Props = {
   guide?: boolean;
 };
@@ -38,6 +39,9 @@ const FeedPage = (props: Props) => {
   const navigate = useNavigate();
   // useQuery 작성
   const [loginMadal, setLoginMadal] = useState(props.guide ? true : false);
+  if (props.guide) {
+    amplitude.track("Journey Start");
+  }
   const myPageButton = (
     <button onClick={() => navigate("/plannermypage")}>
       <AccountCircle fontSize='large' sx={{ color: "white" }} />
@@ -55,7 +59,7 @@ const FeedPage = (props: Props) => {
           <div className='text-lg'>로그인이 필요합니다</div>
           <Button
             className='bg-[#FEE500] text-[#000000 85%] w-4/6 mt-4 rounded-md'
-            href='https://api.weddingmate.co.kr/oauth2/authorization/kakao'
+            href={`${SERVER_URL}/oauth2/authorization/kakao`}
           >
             <img src={kakaoLogin} className='w-full h-full' />
           </Button>

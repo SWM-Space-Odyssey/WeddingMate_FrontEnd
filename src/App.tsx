@@ -14,6 +14,8 @@ import ItemCreate from "./components/Pages/CreatePage/ItemCreate";
 import ItemPage from "./components/Pages/ItemPage/ItemPage";
 import { Suspense } from "react";
 import Auth from "./hoc/auth";
+import EarlyAccessPage from "./components/Pages/EarlyAcccessPage";
+import RedirectPage from "./components/Pages/RedirectPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,14 +26,14 @@ const queryClient = new QueryClient({
   },
 });
 const AuthFeedPage = Auth(FeedPage, "all");
-const AuthPlannerPage = Auth(PlannerPage, "all");
-const AuthPlannerMyPage = Auth(PlannerPage, "planner");
-const AuthRegisterPage = Auth(RegisterPage, "unregistered");
-const AuthPortfolioPage = Auth(PortfolioPage, "all");
 const AuthItemPage = Auth(ItemPage, "all");
+const AuthPlannerPage = Auth(PlannerPage, "all");
+const AuthPortfolioPage = Auth(PortfolioPage, "all");
+const AuthRegisterPage = Auth(RegisterPage, "unregistered");
 const AuthItemCreate = Auth(ItemCreate, "planner");
+const AuthPlannerMyPage = Auth(PlannerPage, "planner");
 const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
-const AuthLoginGuidePage = Auth(FeedPage, null);
+const AuthEarlyAccessPage = Auth(EarlyAccessPage, "customer");
 
 function App() {
   return (
@@ -42,6 +44,7 @@ function App() {
             <div className='flex-1 relative flex overflow-y-scroll flex-col'>
               <Routes>
                 <Route path='/' element={<AuthFeedPage />} />
+                <Route path='/earlyaccess' element={<AuthEarlyAccessPage />} />
                 <Route path='/regist' element={<AuthRegisterPage />} />
                 <Route path='/planner/:Id' element={<AuthPlannerPage />} />
                 <Route
@@ -65,9 +68,10 @@ function App() {
                   path='/oauth2/redirect'
                   element={<LoadingSpinner redirect />}
                 />
-                <Route path='/login' element={<AuthLoginGuidePage guide />} />
+                <Route path='/login' element={<FeedPage guide />} />
                 <Route path='/admin' element={<MainPage />} />
                 {/* <Route path='/spinner/:timeout' element={<LodingSpinner />} /> */}
+                <Route path='/redirect' element={<RedirectPage />} />
               </Routes>
               {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </div>

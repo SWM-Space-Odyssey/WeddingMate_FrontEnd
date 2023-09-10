@@ -5,7 +5,12 @@ import { FieldValues, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 interface Props<
-  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+  T extends
+    | plannerRegistStates
+    | portfolioStates
+    | itemStates
+    | plannerProfileStates
+    | coupleRegistStates
 > {
   text: string;
   formState?: {
@@ -16,7 +21,12 @@ interface Props<
   tagCountMax?: number;
 }
 const CustomTag = <
-  T extends registStates | portfolioStates | itemStates | plannerProfileStates
+  T extends
+    | plannerRegistStates
+    | portfolioStates
+    | itemStates
+    | plannerProfileStates
+    | coupleRegistStates
 >(
   props: Props<T>
 ) => {
