@@ -36,7 +36,6 @@ const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
 const AuthEarlyAccessPage = Auth(EarlyAccessPage, "customer");
 
 function App() {
-  console.log("CONNECTED TO SERVER" + import.meta.env.VITE_SERVER_URL);
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

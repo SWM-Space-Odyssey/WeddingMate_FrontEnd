@@ -20,8 +20,8 @@ type Props = {};
 const wrapperDiv = "px-4 flex flex-col h-full justify-between";
 const innerDiv = "flex flex-col mt-20 gap-y-7";
 
-const NextButton = (disableFlag: any, text?: string, submit?: boolean) => {
-  const buttonText = text && text?.length > 0 ? text : "다음";
+const NextButton = (disableFlag: any, text: string, submit?: boolean) => {
+  const buttonText = disableFlag ? text : "태그를 선택해주세요";
   const dispatch = useDispatch();
   return (
     <Button
@@ -42,11 +42,31 @@ const NextButton = (disableFlag: any, text?: string, submit?: boolean) => {
   );
 };
 export const RegistCoupleTag1 = (props: Props) => {
+  const { control } = useFormContext();
+  const budget = useWatch({
+    control,
+    name: "budget",
+  });
+  const portfolioTagList = useWatch({
+    control,
+    name: "portfolioTagList",
+  });
+  const plannerTagList = useWatch({
+    control,
+    name: "plannerTagList",
+  });
+
+  const buttonFlag =
+    budget &&
+    portfolioTagList &&
+    plannerTagList &&
+    budget.length > 0 &&
+    portfolioTagList.length > 0 &&
+    plannerTagList.length > 0;
   return (
     <div className={wrapperDiv}>
       <div className={innerDiv}>
         <div className='font-bold text-2xl'>웨딩 플랜을 선택해주세요</div>
-
         <CustomTagBlock
           title='예산'
           spreadValues={registBudgetTagList}
@@ -66,12 +86,12 @@ export const RegistCoupleTag1 = (props: Props) => {
           formState='plannerTagList'
         />
       </div>
-      <NextButton disableFlag={true} />
+      {NextButton(buttonFlag, "다음")}
     </div>
   );
 };
 export const RegistCoupleTag2 = (props: Props) => {
-  const { control, getValues, setValue } = useFormContext();
+  const { control } = useFormContext();
 
   const dressTagList = useWatch({
     control,

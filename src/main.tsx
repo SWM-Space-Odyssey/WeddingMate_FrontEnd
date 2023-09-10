@@ -8,7 +8,7 @@ import { globalTheme } from "./globalTheme.ts";
 import { ThemeProvider } from "@mui/material/styles";
 import ChannelService from "./hooks/ChannelService.ts";
 import { CHANNEL_PLUGIN_KEY } from "./common/constants.ts";
-ChannelService.loadScript();
+// ChannelService.loadScript();
 ChannelService.boot({
   pluginKey: `${CHANNEL_PLUGIN_KEY}`,
 });

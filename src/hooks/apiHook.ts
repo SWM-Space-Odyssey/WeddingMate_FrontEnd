@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
 import store, { RootState } from "../store/store";
+import { v4 as uuidv4 } from "uuid";
 
 export const handleError = (err: AxiosError) => {
   return {
@@ -35,8 +36,13 @@ export const getAccessToken = () => {
   if (!token) return false;
   return token;
 };
-export const getUUID = () => {
+
+export const useUUID = () => {
   const UUID = localStorage.getItem("UUID");
-  if (!UUID) return;
+  if (!UUID) {
+    const newUUID = uuidv4();
+    localStorage.setItem("uuid", newUUID);
+    return newUUID;
+  }
   return UUID;
 };

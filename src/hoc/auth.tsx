@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
 import { tokenRefresh, userCheck } from "../api/user";
-import { getAccessToken } from "../hooks/apiHook";
+import { getAccessToken, useUUID } from "../hooks/apiHook";
 import * as amplitude from "@amplitude/analytics-browser";
-import { v4 as uuidv4 } from "uuid";
 import { resetAccessToken, setAccessToken } from "../store/userSlice";
 
 type option = "all" | "planner" | "customer" | "unregistered" | null;
@@ -23,7 +22,7 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       navigate(0);
       return;
     } else {
-      if (localStorage.getItem("accessToken")) {
+      if (!localStorage.getItem("accessToken")) {
         dispatch(resetAccessToken());
         navigate("/login");
       }
@@ -34,25 +33,20 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
   useEffect(() => {
     const accessToken = getAccessToken();
     const admin = localStorage.getItem("admin");
-    const uuid = localStorage.getItem("uuid");
     const amp = sessionStorage.getItem("amp_init");
-    if (!uuid) {
-      const uuid4 = uuidv4();
-      console.log("hi", uuid4);
-      localStorage.setItem("uuid", uuid4);
-    }
     if (!amp) {
       sessionStorage.setItem("amp_init", "true");
-      const uuid = localStorage.getItem("uuid");
+      const uuid = useUUID();
       const ampId = import.meta.env.VITE_AMPLITUDE_KEY;
-      amplitude.init(ampId, uuid as string);
+      amplitude.init(ampId, uuid as string, {
+        defaultTracking: true,
+      });
     }
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
     if (accessToken) {
       if (admin) return;
       userCheck(accessToken)
         .then((res) => {
-          console.log(res.data);
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;
