@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import MasonryImage from "./subComponent/MasonryImage";
+import MasonryImage from "../../Modules/MasonryImage";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonImages from "../../Modules/SkeletonImages";

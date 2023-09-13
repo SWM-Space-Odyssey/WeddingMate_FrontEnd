@@ -12,8 +12,14 @@ type ItemResponse =
       status: "FAIL";
       data: failDatas;
     };
-type successDatas = itemTagData | portfolioData | feedData | URI | ItemData;
-type failDatas = AxiosError;
+type successDatas =
+  | itemTagData
+  | portfolioData
+  | feedData
+  | searchFeedData
+  | URI
+  | ItemData;
+type failDatas = AxiosError | null;
 
 type URI = {
   typeTag: "URI";
@@ -31,6 +37,35 @@ export type feedData = {
   nextCursor: number;
   pageSize: number;
 };
+interface searchFeedData {
+  content: any[];
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+  pageable: {
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    pageNumber: number;
+    pageSize: number;
+    paged: boolean;
+  };
+  size: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
+  typeTag: "search";
+}
+
 type feedContent = {
   itemId: number | null;
   fileId: number | null;
@@ -56,23 +91,39 @@ type ItemData = ItemBody & {
   typeTag: "item";
 };
 
+type params = { [key: string]: string | number };
+type fetchAxiosOption = {
+  headers: {
+    Authorization: string;
+    charset: string;
+  };
+  withCredentials: boolean;
+  params?: params;
+};
+
 const fetchData = async <RT>(
   url: string,
   method: "get" | "post" | "put" | "delete",
-  body?: any
+  body?: any,
+  params?: params
 ) => {
-  const axiosOption = {
+  const axiosOption: fetchAxiosOption = {
     headers: {
       Authorization: `Bearer ${getAccessToken()}`,
+      charset: "utf-8",
     },
     withCredentials: true,
   };
+  if (params) {
+    axiosOption.params = params;
+  }
   switch (method) {
     case "get":
       return await axios
         .get<RT>(url, axiosOption)
         .then((res) => {
-          return res.data;
+          const data = res.data;
+          return data;
         })
         .catch((err: AxiosError) => {
           return handleError(err);
@@ -107,26 +158,52 @@ export const getTagList = async (category: string) => {
 
 export const getFeedImage = async (pageParam: number) => {
   const accessToken = getAccessToken();
+  const reqURL = `${SERVER_URL}/api/v1/file`;
   if (!accessToken) return { status: "FAIL" as const, data: null };
-  const response = await axios
-    .get<ItemResponse>(`${SERVER_URL}/api/v1/file`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      params: { cursor: pageParam },
-      withCredentials: true,
-    })
-    .then((res) => {
-      // return res.data;
-      const successData = res.data as { status: "SUCCESS"; data: feedData };
-      successData.data.typeTag = "feed";
-      return successData;
-    })
-    .catch((err) => {
-      // throw new Error(err);
-      return handleError(err) as ItemResponse;
-    });
-  return response;
+  const res = await fetchData<ItemResponse>(reqURL, "get", null, {
+    cursor: pageParam,
+  });
+  if (!res) return { status: "FAIL" as const, data: null };
+  if (res?.status === "SUCCESS") {
+    res.data.typeTag = "feed";
+  }
+  return res;
+  // const response = await axios
+  //   .get<ItemResponse>(reqURL, {
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //     },
+  //     params: { cursor: pageParam },
+  //     withCredentials: true,
+  //   })
+  //   .then((res) => {
+  //     // return res.data;
+  //     const successData = res.data as { status: "SUCCESS"; data: feedData };
+  //     successData.data.typeTag = "feed";
+  //     return successData;
+  //   })
+  //   .catch((err) => {
+  //     // throw new Error(err);
+  //     return handleError(err) as ItemResponse;
+  //   });
+  // return response;
+};
+export const getSearchFeedImage = async (
+  pageParam: number,
+  keyword: string
+) => {
+  const accessToken = getAccessToken();
+  const reqURL = `${SERVER_URL}/api/v1/portfolio/item/search`;
+  if (!accessToken) return { status: "FAIL" as const, data: null };
+  const res = await fetchData<ItemResponse>(reqURL, "get", null, {
+    // keyword: "소피텔",
+    keyword: keyword,
+  });
+  if (!res) return { status: "FAIL" as const, data: null };
+  if (res?.status === "SUCCESS") {
+    res.data.typeTag = "search";
+  }
+  return res;
 };
 
 export const postImageAndGetURI = (formData: FormData) => {

@@ -15,11 +15,14 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const RefreshToken = async () => {
     // 여기가 문제인 듯?
     const response = await tokenRefresh();
-    console.log(response);
-    if (response && response.data.status === "SUCCESS") {
-      localStorage.setItem("accessToken", response.data.accessToken);
-      dispatch(setAccessToken(response.data.accessToken));
-      navigate(0);
+    console.log(response.data.data);
+    if (response && response.data.data.status === "SUCCESS") {
+      dispatch(setAccessToken(response.data.data.accessToken));
+      // navigate(0);
+      return;
+    } else if (response.data.data.status === "UNAUTHORIZED") {
+      dispatch(resetAccessToken());
+      navigate("/login");
       return;
     } else {
       if (!localStorage.getItem("accessToken")) {

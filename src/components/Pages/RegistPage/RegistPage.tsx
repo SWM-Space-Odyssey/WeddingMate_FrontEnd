@@ -51,7 +51,6 @@ const RegistComponent = () => {
       else if (planner.plannerTagList === "")
         return alert("태그를 선택해주세요");
       plannerRegist(planner).then((res) => {
-        console.log(res);
         if (res.status === 201) {
           if (res.data.status === "conflict") {
             alert("이미 회원가입이 되어있는 계정입니다.");
@@ -66,7 +65,6 @@ const RegistComponent = () => {
       });
     } else if (data.type === "couple") {
       // 예비부부의 경우
-      console.log("im here", data);
       const {
         weddingDateConfirmed,
         weddingDate,

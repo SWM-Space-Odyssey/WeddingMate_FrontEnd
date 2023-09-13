@@ -14,21 +14,15 @@ import {
   // MY_ACCESS_KEY,
   SERVER_IMAGE_URL,
   SERVER_URL,
-} from "../../../../common/constants";
-import { getFeedImage } from "../../../../api/Item";
+} from "../../common/constants";
+import { getFeedImage, getSearchFeedImage } from "../../api/Item";
 import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../../../Modules/LoadingSpinner";
-import ProgressiveImg from "../../../Modules/ProgressiveImg";
+import LoadingSpinner from "./LoadingSpinner";
+import ProgressiveImg from "./ProgressiveImg";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
-type Props = {};
-type loremPicsum = {
-  author: string;
-  download_url: string;
-  height: number;
-  id: string;
-  url: string;
-  width: number;
+type Props = {
+  search?: string;
 };
 
 type IntersectHandler = (
@@ -59,31 +53,53 @@ const useIntersect = (
 
   return ref;
 };
-const useFetchUsers = (param?: string) =>
-  useInfiniteQuery(
-    ["Feed", MY_ACCESS_KEY],
+const useFetchUsers = (param?: string) => {
+  return useInfiniteQuery(
+    ["Feed", param, MY_ACCESS_KEY],
     ({ pageParam = 0 }) => {
-      const response = getFeedImage(pageParam);
-      return response;
+      if (typeof param === "string") {
+        const response = getSearchFeedImage(pageParam, param);
+        return response;
+      } else {
+        const response = getFeedImage(pageParam);
+        return response;
+      }
     },
     {
       refetchOnWindowFocus: false,
       getNextPageParam: (lastPage) =>
-        lastPage.status === "SUCCESS" &&
-        lastPage.data.typeTag === "feed" &&
-        !lastPage.data.nextCursor
+        param
+          ? lastPage.data.last
+            ? undefined
+            : lastPage.data.pageable.pageNumber + 1
+          : lastPage.data.nextCursor &&
+            lastPage.status === "SUCCESS" &&
+            lastPage.data.typeTag === "feed" &&
+            !lastPage.data.nextCursor
           ? lastPage.data.nextCursor
           : undefined,
     }
   );
+};
 
 const MasonryImage = (props: Props) => {
-  const { data, isLoading, fetchNextPage } = useFetchUsers();
+  const { data, isLoading, fetchNextPage } = useFetchUsers(props.search);
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+
   const renderData = useMemo(() => {
+    console.log("??", data);
     if (data?.pages[0].status === "FAIL") setIsError(true);
     // return data ? data.pages.flatMap(({ data }) => data.data.content) : [];
+    if (props.search) {
+      return data
+        ? data.pages.flatMap(({ data, status }) =>
+            status === "SUCCESS" && data.typeTag === "search"
+              ? data.content
+              : undefined
+          )
+        : [];
+    }
     return data
       ? data.pages.flatMap(({ data, status }) =>
           status === "SUCCESS" && data.typeTag === "feed"
@@ -96,6 +112,7 @@ const MasonryImage = (props: Props) => {
   // amplitude.init("KEY");
   // amplitude.track("Sign Up");
   const realRender = useMemo(() => {
+    console.log(renderData);
     return renderData.map((item, index) => {
       let imageNav = "";
       if (!item) return;
@@ -114,16 +131,9 @@ const MasonryImage = (props: Props) => {
           key={index}
           loading='lazy'
         />
-        // <img
-        //   src={SERVER_IMAGE_URL + item.url}
-        //   alt={String(item.url)}
-        //   key={index}
-        //   loading='lazy'
-        //   className='pb-2 cursor-pointer'
-        // />
       );
     });
-  }, [renderData]);
+  }, [renderData, props.search]);
   const ref = useIntersect(async (entry, observer) => {
     if (entry.isIntersecting) {
       await fetchNextPage();
@@ -133,7 +143,7 @@ const MasonryImage = (props: Props) => {
   return (
     <div className='flex-1'>
       <Masonry
-        breakpointCols={3}
+        breakpointCols={2}
         className='my-masonry-grid'
         columnClassName='my-masonry-grid_column'
       >

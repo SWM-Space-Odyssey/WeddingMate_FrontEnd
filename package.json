@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:dev": "tsc && vite build --mode development",
     "build:prod": "tsc && vite build --mode production",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -29,6 +30,7 @@
     "react-masonry-css": "^1.0.16",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1",
+    "redux-persist": "^6.0.0",
     "swiper": "^10.0.4",
     "uuid": "^9.0.0",
     "vite-plugin-mkcert": "^1.16.0"
