@@ -72,10 +72,9 @@ const useFetchUsers = (param?: string) => {
           ? lastPage.data.last
             ? undefined
             : lastPage.data.pageable.pageNumber + 1
-          : lastPage.data?.nextCursor &&
+          : lastPage.data &&
             lastPage.status === "SUCCESS" &&
-            lastPage.data.typeTag === "feed" &&
-            !lastPage.data.nextCursor
+            lastPage.data.typeTag === "feed"
           ? lastPage.data.nextCursor
           : undefined,
     }
@@ -83,12 +82,11 @@ const useFetchUsers = (param?: string) => {
 };
 
 const MasonryImage = (props: Props) => {
-  const { data, isLoading, fetchNextPage } = useFetchUsers(props.search);
+  const { data, isLoading, fetchNextPage } = useFetchUsers(props?.search);
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
   const renderData = useMemo(() => {
-    console.log("??", data);
     if (data?.pages[0].status === "FAIL") setIsError(true);
     // return data ? data.pages.flatMap(({ data }) => data.data.content) : [];
     if (props.search) {
