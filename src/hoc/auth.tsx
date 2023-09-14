@@ -47,12 +47,14 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
     }
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
     if (accessToken) {
+      console.log("hihii");
       if (admin) return;
       userCheck(accessToken)
         .then((res) => {
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;
+            console.log(type);
             switch (type) {
               case "PLANNER":
                 if (option === "unregistered") {

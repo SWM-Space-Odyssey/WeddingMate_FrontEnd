@@ -83,7 +83,7 @@ const RegistComponent = () => {
         nickname,
         weddingDateConfirmed,
         weddingDate: date,
-        region: parseArray(region),
+        regionList: parseArray(region),
         budget: parseArray(budget),
         customerTagList: {
           portfolioTagList: parseArray(portfolioTagList),

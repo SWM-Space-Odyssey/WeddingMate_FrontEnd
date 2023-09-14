@@ -33,6 +33,10 @@ export const userSlice = createSlice({
     setUserNickname: (state, action: PayloadAction<string>) => {
       state.nickname = action.payload;
     },
+    persistTest: (state) => {
+      console.log("h");
+      state.nickname = "persist";
+    },
   },
 });
 
@@ -41,6 +45,7 @@ export const {
   setUserType,
   resetAccessToken,
   setUserNickname,
+  persistTest,
 } = userSlice.actions;
 
 export const selectUsers = (state: RootState) => state.user;

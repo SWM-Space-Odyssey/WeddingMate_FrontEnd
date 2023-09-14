@@ -72,7 +72,7 @@ const useFetchUsers = (param?: string) => {
           ? lastPage.data.last
             ? undefined
             : lastPage.data.pageable.pageNumber + 1
-          : lastPage.data.nextCursor &&
+          : lastPage.data?.nextCursor &&
             lastPage.status === "SUCCESS" &&
             lastPage.data.typeTag === "feed" &&
             !lastPage.data.nextCursor
