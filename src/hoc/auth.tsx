@@ -15,8 +15,8 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const RefreshToken = async () => {
     // 여기가 문제인 듯?
     const response = await tokenRefresh();
-    console.log(response.data.data);
-    if (response && response.data.data.status === "SUCCESS") {
+    console.log(response.data);
+    if (response && response.data.status === "SUCCESS") {
       dispatch(setAccessToken(response.data.data.accessToken));
       // navigate(0);
       return;
@@ -47,14 +47,12 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
     }
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
     if (accessToken) {
-      console.log("hihii");
       if (admin) return;
       userCheck(accessToken)
         .then((res) => {
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;
-            console.log(type);
             switch (type) {
               case "PLANNER":
                 if (option === "unregistered") {

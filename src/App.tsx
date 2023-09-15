@@ -14,6 +14,7 @@ import Auth from "./hoc/auth";
 import EarlyAccessPage from "./components/Pages/EarlyAcccessPage";
 import RedirectPage from "./components/Pages/RedirectPage";
 import SearchPage from "./components/Pages/SearchPage/SearchPage";
+import NavBar from "./components/NavBar/NavBar";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -75,6 +76,7 @@ function App() {
               </Routes>
               {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </div>
+            <NavBar />
           </div>
           {/* <NavBar /> */}
         </Suspense>

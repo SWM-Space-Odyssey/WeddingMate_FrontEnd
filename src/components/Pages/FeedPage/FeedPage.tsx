@@ -42,11 +42,7 @@ const FeedPage = (props: Props) => {
   if (props.guide) {
     amplitude.track("Journey Start");
   }
-  const myPageButton = (
-    <button onClick={() => navigate("/plannermypage")}>
-      <AccountCircle fontSize='large' sx={{ color: "white" }} />
-    </button>
-  );
+
   return (
     <>
       <Modal open={loginMadal} className={madalStyle}>
@@ -66,7 +62,7 @@ const FeedPage = (props: Props) => {
         </div>
       </Modal>
       <div>
-        <Header main='main' rightButton={myPageButton} />
+        <Header main='main' />
       </div>
       <Fade
         // direction='right'

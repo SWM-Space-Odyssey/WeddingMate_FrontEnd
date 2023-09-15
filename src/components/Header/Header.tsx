@@ -17,7 +17,6 @@ type Props = {
   main?: "main" | "regist";
   rightButton?: JSX.Element;
 };
-
 const Header = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -79,14 +78,11 @@ const Header = (props: Props) => {
   };
 
   const rightButton = () => {
-    if (props.rightButton) {
-      return props.rightButton;
-    }
     return <></>;
   };
 
   return (
-    <div className='sticky h-12 py-1 px-2 justify-center border-b-2 bg-[#FF6A6A]'>
+    <div className='sticky h-12 py-1 px-2 justify-center'>
       <Grid className='h-10 items-center' container>
         <Grid item xs={2} className='flex justify-center'>
           {leftButton()}

@@ -6,15 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { intoView } from "../../store/viewSlice";
 
 type Props = {};
-type PageList =
-  | "Regist"
-  | "LandingPage"
-  | "PortfolioCreate"
-  | "Portfolio"
-  | "Item"
-  | "ItemCreate"
-  | "Planner"
-  | "Feed";
+
 const pageMap: { [key in PageList]: string } = {
   Regist: "/regist",
   LandingPage: "/",
@@ -24,6 +16,7 @@ const pageMap: { [key in PageList]: string } = {
   ItemCreate: "/item/create",
   Planner: "/planner",
   Feed: "/feed",
+  PlannerMypage: "/plannermypage",
 };
 
 const NavBar = (props: Props) => {
@@ -38,7 +31,7 @@ const NavBar = (props: Props) => {
 
   return (
     <div
-      className={`absolute w-full h-14 bottom-0 ${
+      className={`w-full h-14 bottom-0 ${
         location === "/kakaoAuth" ? "hidden" : ""
       }`}
     >
@@ -64,7 +57,7 @@ const NavBar = (props: Props) => {
           icon={<Sms />}
         />
         <BottomNavigationAction
-          onClick={() => handleNavigate("Planner")}
+          onClick={() => handleNavigate("PlannerMypage")}
           label='마이웨딩'
           icon={<Interests />}
         />

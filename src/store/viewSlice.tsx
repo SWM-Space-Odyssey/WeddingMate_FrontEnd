@@ -3,16 +3,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { useNavigate } from "react-router-dom";
 
-type PageList =
-  | "Regist"
-  | "LandingPage"
-  | "PortfolioCreate"
-  | "Portfolio"
-  | "Item"
-  | "ItemCreate"
-  | "Planner"
-  | "Feed";
-
 interface viewState {
   currentView: PageList;
   viewStack: PageList[];
