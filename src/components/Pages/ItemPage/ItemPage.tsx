@@ -11,7 +11,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { deleteItem, fetchItems } from "../../../api/Item";
 import HeaderOptionButton from "../../Modules/HeaderOptionButton";
 import { Delete, Edit } from "@mui/icons-material";
-import InfoIndicator from "../../Modules/InfoIndicator";
 
 type Props = {};
 
@@ -101,7 +100,6 @@ const ItemPage = (props: Props) => {
           {data && (
             <>
               <div className='flex flex-col'>
-                <InfoIndicator portfolioId={`${portfolioId}`} type='item' />
                 <div className='flex justify-between'>
                   <div className={defaultClassName}>
                     <CustomText type='Title' text='카테고리' />

@@ -112,9 +112,9 @@ const RegistComponent = () => {
   const transitionClass = "absolute left-0 right-0 h-full overflow-y-scroll";
   return (
     <>
-      <div className='absolute w-full z-10'>
+      {/* <div className='absolute w-full z-10'>
         <Header main='regist' />
-      </div>
+      </div> */}
       <Slide
         className='overflow-y-scroll px-4 overflow-x-clip'
         direction='left'

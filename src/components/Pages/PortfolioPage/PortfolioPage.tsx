@@ -75,9 +75,9 @@ const PortfolioPage = (props: Props) => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <Header />
-      </div>
+      </div> */}
       <Slide
         className='overflow-y-scroll px-4  pb-4'
         direction='left'

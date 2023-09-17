@@ -17,7 +17,7 @@ const CustomButton = (props: props) => {
     <Button
       className='h-11 w-full'
       variant='contained'
-      sx={{ fontSize: "1rem", my: 1, color: "white" }}
+      sx={{ fontSize: "1rem", my: 1, color: "white", borderRadius: "6px" }}
       disabled={props.flag}
       onClick={() => onClickHandler()}
       type={type}

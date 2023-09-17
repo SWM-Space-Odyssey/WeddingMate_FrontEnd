@@ -181,9 +181,9 @@ const ItemCreate = (props: Props) => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <Header />
-      </div>
+      </div> */}
 
       <Slide
         className='overflow-y-scroll px-4 mb-2 flex-1 flex'

@@ -15,6 +15,7 @@ const pageMap: { [key in PageList]: string } = {
   Item: "/item",
   ItemCreate: "/item/create",
   Planner: "/planner",
+  Search: "/search",
   Feed: "/feed",
   PlannerMypage: "/plannermypage",
 };
@@ -47,7 +48,7 @@ const NavBar = (props: Props) => {
           icon={<Home />}
         />
         <BottomNavigationAction
-          onClick={() => handleNavigate("Feed")}
+          onClick={() => handleNavigate("Search")}
           label='검색'
           icon={<Search />}
         />

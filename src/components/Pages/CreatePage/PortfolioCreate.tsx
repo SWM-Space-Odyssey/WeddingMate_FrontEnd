@@ -197,9 +197,9 @@ const PortfolioCreate = (props: Props) => {
   }, [param]);
   return (
     <>
-      <div>
+      {/* <div>
         <Header />
-      </div>
+      </div> */}
       <Slide
         className='overflow-y-scroll px-4 flex-1 flex'
         direction='left'

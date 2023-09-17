@@ -42,9 +42,6 @@ const PlannerPage = (props: Props) => {
   const response = data?.data.data;
   return (
     <>
-      <div>
-        <Header rightButton={props.mypage ? <PlannerOptions /> : undefined} />
-      </div>
       <Slide
         className='overflow-y-scroll px-4 flex-1'
         direction={`${view === "Planner" ? "right" : "left"}`}

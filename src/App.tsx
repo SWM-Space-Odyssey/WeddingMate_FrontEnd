@@ -15,6 +15,7 @@ import EarlyAccessPage from "./components/Pages/EarlyAcccessPage";
 import RedirectPage from "./components/Pages/RedirectPage";
 import SearchPage from "./components/Pages/SearchPage/SearchPage";
 import NavBar from "./components/NavBar/NavBar";
+import Header from "./components/Header/Header";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,6 +41,7 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={<LoadingSpinner />}>
           <div className='h-full flex flex-col'>
+            <Header />
             <div className='flex-1 relative flex overflow-y-scroll flex-col'>
               <Routes>
                 <Route path='/' element={<AuthFeedPage />} />
@@ -69,7 +71,7 @@ function App() {
                 />
                 <Route path='/login' element={<FeedPage guide />} />
                 <Route path='/admin' element={<MainPage />} />
-                <Route path='/search' element={<AuthSearchPage />} />
+                <Route path='/search/:search?' element={<AuthSearchPage />} />
 
                 {/* <Route path='/spinner/:timeout' element={<LodingSpinner />} /> */}
                 <Route path='/redirect' element={<RedirectPage />} />

@@ -4,6 +4,9 @@ export const globalTheme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
+        root: {
+          borderRadius: 6,
+        },
         contained: {
           color: "#FFFFFF",
         },

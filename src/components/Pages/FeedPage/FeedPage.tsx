@@ -61,9 +61,6 @@ const FeedPage = (props: Props) => {
           </Button>
         </div>
       </Modal>
-      <div>
-        <Header main='main' />
-      </div>
       <Fade
         // direction='right'
         in

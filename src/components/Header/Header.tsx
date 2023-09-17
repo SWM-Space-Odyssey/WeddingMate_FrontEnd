@@ -4,14 +4,9 @@ import { useDispatch } from "react-redux";
 import { PrevPage } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import {
-  AccountBox,
-  AccountCircle,
-  ArrowBackIos,
-  Settings,
-} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { logo } from "../../assets/logo";
+import { arrow_back } from "../../assets/arrow_back";
 
 type Props = {
   main?: "main" | "regist";
@@ -22,42 +17,19 @@ const Header = (props: Props) => {
   const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.viewStack);
   const page = useSelector((state: RootState) => state.view.page);
+
   const leftButton = () => {
-    if (props.main === "regist") {
-      return (
-        <button
-          type='button'
-          onClick={() => {
-            if (page === 0) {
-              if (
-                confirm(
-                  "이전 기록은 없어집니다. 그래도 회원가입을 중단하시겠습니까?"
-                )
-              ) {
-                navigate(-1);
-              }
-            } else {
-              dispatch(PrevPage());
-            }
-          }}
-        >
-          <ArrowBackIos color='secondary' />
-        </button>
-      );
-    } else if (props.main === "main") {
-      return <></>;
-    } else {
-      return (
-        <button
-          type='button'
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <ArrowBackIos color='secondary' />
-        </button>
-      );
-    }
+    return (
+      <button
+        type='button'
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <div>{arrow_back}</div>
+        {/* <ArrowBackIos color='secondary' /> */}
+      </button>
+    );
   };
   const centerContent = () => {
     const type = useSelector((state: RootState) => state.user.type);
