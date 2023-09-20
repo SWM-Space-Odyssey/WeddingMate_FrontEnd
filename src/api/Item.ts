@@ -143,8 +143,8 @@ export const fetchItems = async (itemId: number) => {
   const reqURL = getURL("item", `${itemId}`);
   if (!reqURL) return;
   const response = await fetchData<ItemResponse>(reqURL, "get");
-  if (response?.data.status === "SUCCESS") {
-    response.data.data.typeTag = "item";
+  if (response?.status === "SUCCESS") {
+    response.data.typeTag = "item";
   }
   return response;
 };

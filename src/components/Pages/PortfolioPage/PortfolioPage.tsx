@@ -13,6 +13,7 @@ import {
   SERVER_URL,
 } from "../../../common/constants";
 import Header from "../../Header/Header";
+import { setAdjData, setIsLike, setIsWriter } from "../../../store/viewSlice";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -23,13 +24,14 @@ type tagResDtoList = {
   categoryContent: string;
 };
 type headerData = {
-  id: string;
+  id: number;
   title: string;
   itemResDtoList: cardData[];
   repImgUrl: string;
   tagList: string;
   region: string;
   isWriter: boolean;
+  isLiked: boolean;
   plannerId: number;
 };
 type portfolioData = {
@@ -43,9 +45,11 @@ type GetPortfolioResponse = portfolioData & {
 const PortfolioPage = (props: Props) => {
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [headerData, setHeaderData] = useState<headerData>();
   const [ItemCard, setItemCard] = useState<cardData[]>();
-  const [isWriter, setIsWriter] = useState<boolean>(false);
+  const isWriter = useSelector((state: RootState) => state.view.isWriter);
+  // const [isWriter, setIsWriter] = useState<boolean>(false);
   const itemId = params.itemId;
   const fetchPortfolio = () => {
     axios
@@ -57,8 +61,17 @@ const PortfolioPage = (props: Props) => {
         if (data.status === "SUCCESS") {
           setHeaderData(data.data);
           setItemCard(data.data.itemResDtoList);
+          const adjData = {
+            portfolioId: data.data.id,
+            itemId: 0,
+            order: 0,
+          };
+          dispatch(setAdjData(adjData));
           if (data.data.isWriter) {
-            setIsWriter(true);
+            dispatch(setIsWriter(data.data.isWriter));
+          }
+          if (data.data.isLiked) {
+            dispatch(setIsLike(true));
           }
         } else {
           console.log("error");
@@ -75,9 +88,6 @@ const PortfolioPage = (props: Props) => {
 
   return (
     <>
-      {/* <div>
-        <Header />
-      </div> */}
       <Slide
         className='overflow-y-scroll px-4  pb-4'
         direction='left'

@@ -110,7 +110,6 @@ const MasonryImage = (props: Props) => {
   // amplitude.init("KEY");
   // amplitude.track("Sign Up");
   const realRender = useMemo(() => {
-    console.log(renderData);
     return renderData.map((item, index) => {
       let imageNav = "";
       if (!item) return;

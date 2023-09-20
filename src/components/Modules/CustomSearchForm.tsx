@@ -28,12 +28,11 @@ const CustomSearchForm = (props: Props) => {
       }}
     >
       <Collapse in={focus}>
-        <div className='flex w-full items-center gap-1'>
-          <Search sx={{ color: "#ACACAC" }} />
+        <div className='flex w-full items-center gap-1 h-5'>
+          <Search fontSize='small' sx={{ color: "#ACACAC" }} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               className='outline-none text-sm flex-1 bg-[#F5F5F5] text-[#000000]'
-              // {...methods.register("search")}
               {...rest}
               name='search'
               ref={(e) => {

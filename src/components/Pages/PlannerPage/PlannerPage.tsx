@@ -10,10 +10,13 @@ import ProfileDialog from "../CreatePage/ProfileDialog";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LikeButton from "../../Modules/LikeButton";
 import ContactForm from "../../Modules/ContactForm";
 import PlannerOptions from "../../Header/PlannerOptions";
+import Divider from "../../Modules/Divider";
+import CustomText from "../../Modules/CustomText";
+import { Add, Edit } from "@mui/icons-material";
 
 type Props = {
   mypage?: boolean;
@@ -21,6 +24,7 @@ type Props = {
 
 const PlannerPage = (props: Props) => {
   const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.currentView);
   const plannerId = parseInt(useParams().Id ?? "0");
   const requestURL = props.mypage
@@ -50,18 +54,28 @@ const PlannerPage = (props: Props) => {
         unmountOnExit
       >
         <div className='w-full h-full px-4 flex flex-col '>
-          <div className='sticky pb-5'>
+          <div className='sticky pb-3'>
             <PlannerInfo mypage={props.mypage} />
           </div>
+          <Divider height={2} />
           {/* <LikeButton
             isLiked={response?.isLiked}
             type='PLANNER'
             targetId={plannerId}
           /> */}
+          <div className='flex justify-between py-2'>
+            <span>내 웨딩 피드</span>
+            <Button
+              variant='outlined'
+              onClick={() => navigate("/create/portfolio")}
+            >
+              <Edit fontSize='small' />글 쓰기
+            </Button>
+          </div>
           <div className='overflow-y-scroll'>
             <PlannerPortfolio mypage={props.mypage} />
           </div>
-          {props.mypage ? (
+          {/* {props.mypage ? (
             <p className='absolute right-4 bottom-10 z-10'>
               <BottomPostButton />
             </p>
@@ -69,7 +83,7 @@ const PlannerPage = (props: Props) => {
             <span className='absolute right-4 bottom-10 z-10'>
               <ContactForm />
             </span>
-          )}
+          )} */}
         </div>
       </Slide>
     </>

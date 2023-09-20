@@ -27,7 +27,7 @@ const parseArray = (data: string[]) => {
   if (data.length === 0) return "";
   else return data.join(",");
 };
-const RegistComponent = () => {
+const RegistPage = () => {
   amplitude.track("regist_in");
   const view = useSelector((state: RootState) => state.view.currentView);
   const page = useSelector((state: RootState) => state.view.page);
@@ -112,9 +112,6 @@ const RegistComponent = () => {
   const transitionClass = "absolute left-0 right-0 h-full overflow-y-scroll";
   return (
     <>
-      {/* <div className='absolute w-full z-10'>
-        <Header main='regist' />
-      </div> */}
       <Slide
         className='overflow-y-scroll px-4 overflow-x-clip'
         direction='left'
@@ -225,4 +222,4 @@ const RegistComponent = () => {
   );
 };
 
-export default RegistComponent;
+export default RegistPage;

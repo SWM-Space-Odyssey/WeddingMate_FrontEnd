@@ -109,13 +109,13 @@ const PlannerInfo = (props: Props) => {
             />
           )}
           <div className='flex flex-col items-center gap-0.5'>
-            <CustomText text={`${nickname} 플래너`} type='Title-large' />
-            <CustomText
+            <CustomText text={`${nickname}`} type='Title-large' />
+            {/* <CustomText
               text={`${company} / ${position} / ${regionList}`}
               type='Description'
-            />
+            /> */}
           </div>
-          {plannerProfileInfo.sns && (
+          {/* {plannerProfileInfo.sns && (
             <CustomTag type='sns' text={plannerProfileInfo.sns} />
           )}
           {plannerProfileInfo.bio && (
@@ -127,7 +127,7 @@ const PlannerInfo = (props: Props) => {
           <CustomTagBlock spreadValues={spreadValues} />
           {plannerProfileInfo.bio && (
             <div className='border-b-[1px] border-gray-200 w-full' />
-          )}
+          )} */}
         </div>
       )}
     </div>

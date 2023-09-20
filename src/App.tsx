@@ -1,21 +1,27 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./components/Pages/MainPage";
-import RegisterPage from "./components/Pages/RegistPage/RegistPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FeedPage from "./components/Pages/FeedPage/FeedPage";
-import PlannerPage from "./components/Pages/PlannerPage/PlannerPage";
 import LoadingSpinner from "./components/Modules/LoadingSpinner";
-import PortfolioCreate from "./components/Pages/CreatePage/PortfolioCreate";
-import PortfolioPage from "./components/Pages/PortfolioPage/PortfolioPage";
-import ItemCreate from "./components/Pages/CreatePage/ItemCreate";
-import ItemPage from "./components/Pages/ItemPage/ItemPage";
 import { Suspense } from "react";
-import Auth from "./hoc/auth";
-import EarlyAccessPage from "./components/Pages/EarlyAcccessPage";
 import RedirectPage from "./components/Pages/RedirectPage";
-import SearchPage from "./components/Pages/SearchPage/SearchPage";
 import NavBar from "./components/NavBar/NavBar";
 import Header from "./components/Header/Header";
+import CommunityPage from "./components/Pages/CommutityPage/CommunityPage";
+import {
+  AuthEarlyAccessPage,
+  AuthFeedPage,
+  AuthItemCreate,
+  AuthItemPage,
+  AuthPlannerMyPage,
+  AuthPlannerPage,
+  AuthPortfolioCreate,
+  AuthPortfolioPage,
+  AuthRegisterPage,
+  AuthSearchPage,
+} from "./hoc/AuthPages";
+import ChannelService from "./hooks/ChannelService";
+import { CHANNEL_PLUGIN_KEY } from "./common/constants";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,16 +31,9 @@ const queryClient = new QueryClient({
     },
   },
 });
-const AuthFeedPage = Auth(FeedPage, "all");
-const AuthItemPage = Auth(ItemPage, "all");
-const AuthPlannerPage = Auth(PlannerPage, "all");
-const AuthPortfolioPage = Auth(PortfolioPage, "all");
-const AuthSearchPage = Auth(SearchPage, "all");
-const AuthRegisterPage = Auth(RegisterPage, "unregistered");
-const AuthItemCreate = Auth(ItemCreate, "planner");
-const AuthPlannerMyPage = Auth(PlannerPage, "planner");
-const AuthPortfolioCreate = Auth(PortfolioCreate, "planner");
-const AuthEarlyAccessPage = Auth(EarlyAccessPage, "customer");
+ChannelService.boot({
+  pluginKey: CHANNEL_PLUGIN_KEY, // fill your plugin key
+});
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -73,14 +72,12 @@ function App() {
                 <Route path='/admin' element={<MainPage />} />
                 <Route path='/search/:search?' element={<AuthSearchPage />} />
 
-                {/* <Route path='/spinner/:timeout' element={<LodingSpinner />} /> */}
                 <Route path='/redirect' element={<RedirectPage />} />
+                <Route path='/community' element={<CommunityPage />} />
               </Routes>
-              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </div>
             <NavBar />
           </div>
-          {/* <NavBar /> */}
         </Suspense>
       </BrowserRouter>
     </QueryClientProvider>

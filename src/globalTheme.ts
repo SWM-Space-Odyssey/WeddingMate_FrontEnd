@@ -29,4 +29,7 @@ export const globalTheme = createTheme({
       main: "#FFFFFF",
     },
   },
+  typography: {
+    fontFamily: ["AppleSDGothicKR", "Noto Sans KR", "sans-serif"].join(","),
+  },
 });

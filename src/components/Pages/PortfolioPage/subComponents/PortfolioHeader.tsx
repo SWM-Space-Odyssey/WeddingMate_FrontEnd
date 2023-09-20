@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { deletePortfolio } from "../../../../api/portfolio";
 import HeaderOptionButton from "../../../Modules/HeaderOptionButton";
 import CustomText from "../../../Modules/CustomText";
+import InfoIndicator from "../../../Modules/InfoIndicator";
 
 type tagResDtoList = {
   tagId: number;
@@ -70,6 +71,9 @@ const PortfolioHeader = (props: Props) => {
   const tagSplit = tagList.split(",");
   return (
     <div className='flex flex-col justify-between mt-4'>
+      {portfolioId && (
+        <InfoIndicator portfolioId={portfolioId} type='portfolio' />
+      )}
       <div className='flex flex-row justify-between'>
         <div className='flex gap-2.5 '>
           <div>
@@ -92,7 +96,7 @@ const PortfolioHeader = (props: Props) => {
             </div>
           </div>
         </div>
-        {props.data.isWriter && <HeaderOptionButton data={{ menuItems }} />}
+        {/* {props.data.isWriter && <HeaderOptionButton data={{ menuItems }} />} */}
       </div>
     </div>
   );

@@ -13,14 +13,12 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const dispatch = useDispatch();
   let dep = new Date();
   const RefreshToken = async () => {
-    // 여기가 문제인 듯?
     const response = await tokenRefresh();
-    console.log(response.data);
     if (response && response.data.status === "SUCCESS") {
       dispatch(setAccessToken(response.data.data.accessToken));
-      // navigate(0);
+      navigate(0);
       return;
-    } else if (response.data.data.status === "UNAUTHORIZED") {
+    } else if (response && response.data?.status === "UNAUTHORIZED") {
       dispatch(resetAccessToken());
       navigate("/login");
       return;

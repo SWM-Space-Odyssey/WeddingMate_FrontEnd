@@ -67,7 +67,7 @@ const PlannerPortfolio = (props: Props) => {
       <img
         src={SERVER_IMAGE_URL + data.repImgUrl}
         alt='Planner Portfolio Image'
-        className='w-full max-h-44 flex-1 object-cover rounded-sm'
+        className='w-full max-h-44 flex-1 object-cover rounded-lg'
       />
       <CustomText text={data.title} type='Content-small' />
     </button>
