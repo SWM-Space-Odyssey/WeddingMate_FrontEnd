@@ -4,19 +4,25 @@ import { useDispatch } from "react-redux";
 import { PrevPage } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { logo } from "../../assets/logo";
 import { arrow_back } from "../../assets/arrow_back";
+import LeftButton from "./Sections/LeftButton";
+import { tokenRefresh } from "../../api/user";
+import RightButton from "./Sections/RightButton";
 
 type Props = {
   main?: "main" | "regist";
   rightButton?: JSX.Element;
 };
+
 const Header = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.viewStack);
   const page = useSelector((state: RootState) => state.view.page);
+
+  const location = useLocation().pathname.split("/")[1];
 
   const leftButton = () => {
     return (
@@ -49,15 +55,15 @@ const Header = (props: Props) => {
     }
   };
 
-  const rightButton = () => {
-    return <></>;
-  };
-
   return (
-    <div className='sticky h-12 py-1 px-2 justify-center'>
+    <div
+      className={`sticky h-12 py-1 px-2 justify-center ${
+        location === "search" ? "hidden" : ""
+      }`}
+    >
       <Grid className='h-10 items-center' container>
         <Grid item xs={2} className='flex justify-center'>
-          {leftButton()}
+          <LeftButton />
         </Grid>
         <Grid item xs={8} className='flex justify-center'>
           <div onClick={() => navigate("/")} className='cursor-pointer'>
@@ -65,7 +71,7 @@ const Header = (props: Props) => {
           </div>
         </Grid>
         <Grid item xs={2} className='flex justify-center'>
-          {rightButton()}
+          <RightButton />
         </Grid>
       </Grid>
     </div>

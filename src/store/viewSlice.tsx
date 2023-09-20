@@ -9,6 +9,13 @@ interface viewState {
   requestParam: string | number;
   page: number;
   prevPage: number;
+  isWriter: boolean;
+  isLike: boolean;
+  adjData: {
+    portfolioId: number;
+    itemId: number;
+    order: number;
+  };
 }
 
 const initialState: viewState = {
@@ -17,6 +24,13 @@ const initialState: viewState = {
   requestParam: "",
   page: 0,
   prevPage: 0,
+  isWriter: false,
+  isLike: false,
+  adjData: {
+    portfolioId: 0,
+    itemId: 0,
+    order: 0,
+  },
 };
 export const viewSlice = createSlice({
   name: "viewChanger",
@@ -31,13 +45,28 @@ export const viewSlice = createSlice({
         state.prevPage = state.page;
         state.page -= 1;
         // state.prevPage -= 1;
-        return;
       }
 
       const prevPage = state.viewStack.pop();
       if (prevPage) {
         state.currentView = prevPage;
       }
+    },
+    setIsWriter: (state, action: PayloadAction<boolean>) => {
+      state.isWriter = action.payload;
+    },
+    setIsLike: (state, action: PayloadAction<boolean>) => {
+      state.isLike = action.payload;
+    },
+    setAdjData: (
+      state,
+      action: PayloadAction<{
+        portfolioId: number;
+        itemId: number;
+        order: number;
+      }>
+    ) => {
+      state.adjData = action.payload;
     },
     intoView: (
       state,
@@ -50,7 +79,14 @@ export const viewSlice = createSlice({
   },
 });
 
-export const { NextPage, PrevPage, intoView } = viewSlice.actions;
+export const {
+  NextPage,
+  PrevPage,
+  intoView,
+  setIsWriter,
+  setIsLike,
+  setAdjData,
+} = viewSlice.actions;
 
 export const selectUsers = (state: RootState) => state.user;
 
