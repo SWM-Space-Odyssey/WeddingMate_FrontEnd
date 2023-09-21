@@ -35,7 +35,7 @@ const RegistUserType = () => {
         className={buttonClass}
         variant='outlined'
         onClick={() => onClickHandler(str)}
-        disabled={str === PlannerString ? true : false}
+        // disabled={str === PlannerString ? true : false}
         sx={{
           display: "flex",
           fontWeight: `${userType === str ? 700 : 400}`,
@@ -54,7 +54,7 @@ const RegistUserType = () => {
 
   return (
     <div className='flex flex-col px-4 h-full justify-between'>
-      <div className='mt-20'>
+      <div className='mt-10'>
         <div className='font-bold text-2xl'>{GuideText}</div>
         <Stack spacing={1} className='mt-10'>
           {buttonComponent(CoupleString)}

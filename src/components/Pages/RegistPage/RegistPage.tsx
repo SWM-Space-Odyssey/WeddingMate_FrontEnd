@@ -27,7 +27,7 @@ const parseArray = (data: string[]) => {
   if (data.length === 0) return "";
   else return data.join(",");
 };
-const RegistComponent = () => {
+const RegistPage = () => {
   amplitude.track("regist_in");
   const view = useSelector((state: RootState) => state.view.currentView);
   const page = useSelector((state: RootState) => state.view.page);
@@ -51,7 +51,6 @@ const RegistComponent = () => {
       else if (planner.plannerTagList === "")
         return alert("태그를 선택해주세요");
       plannerRegist(planner).then((res) => {
-        console.log(res);
         if (res.status === 201) {
           if (res.data.status === "conflict") {
             alert("이미 회원가입이 되어있는 계정입니다.");
@@ -66,7 +65,6 @@ const RegistComponent = () => {
       });
     } else if (data.type === "couple") {
       // 예비부부의 경우
-      console.log("im here", data);
       const {
         weddingDateConfirmed,
         weddingDate,
@@ -85,7 +83,7 @@ const RegistComponent = () => {
         nickname,
         weddingDateConfirmed,
         weddingDate: date,
-        region: parseArray(region),
+        regionList: parseArray(region),
         budget: parseArray(budget),
         customerTagList: {
           portfolioTagList: parseArray(portfolioTagList),
@@ -114,9 +112,6 @@ const RegistComponent = () => {
   const transitionClass = "absolute left-0 right-0 h-full overflow-y-scroll";
   return (
     <>
-      <div className='absolute w-full z-10'>
-        <Header main='regist' />
-      </div>
       <Slide
         className='overflow-y-scroll px-4 overflow-x-clip'
         direction='left'
@@ -227,4 +222,4 @@ const RegistComponent = () => {
   );
 };
 
-export default RegistComponent;
+export default RegistPage;

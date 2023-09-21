@@ -4,14 +4,12 @@ import { useDispatch } from "react-redux";
 import { PrevPage } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import {
-  AccountBox,
-  AccountCircle,
-  ArrowBackIos,
-  Settings,
-} from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { logo } from "../../assets/logo";
+import { arrow_back } from "../../assets/arrow_back";
+import LeftButton from "./Sections/LeftButton";
+import { tokenRefresh } from "../../api/user";
+import RightButton from "./Sections/RightButton";
 
 type Props = {
   main?: "main" | "regist";
@@ -23,42 +21,21 @@ const Header = (props: Props) => {
   const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.viewStack);
   const page = useSelector((state: RootState) => state.view.page);
+
+  const location = useLocation().pathname.split("/")[1];
+
   const leftButton = () => {
-    if (props.main === "regist") {
-      return (
-        <button
-          type='button'
-          onClick={() => {
-            if (page === 0) {
-              if (
-                confirm(
-                  "이전 기록은 없어집니다. 그래도 회원가입을 중단하시겠습니까?"
-                )
-              ) {
-                navigate(-1);
-              }
-            } else {
-              dispatch(PrevPage());
-            }
-          }}
-        >
-          <ArrowBackIos color='secondary' />
-        </button>
-      );
-    } else if (props.main === "main") {
-      return <></>;
-    } else {
-      return (
-        <button
-          type='button'
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <ArrowBackIos color='secondary' />
-        </button>
-      );
-    }
+    return (
+      <button
+        type='button'
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <div>{arrow_back}</div>
+        {/* <ArrowBackIos color='secondary' /> */}
+      </button>
+    );
   };
   const centerContent = () => {
     const type = useSelector((state: RootState) => state.user.type);
@@ -78,18 +55,15 @@ const Header = (props: Props) => {
     }
   };
 
-  const rightButton = () => {
-    if (props.rightButton) {
-      return props.rightButton;
-    }
-    return <></>;
-  };
-
   return (
-    <div className='sticky h-12 py-1 px-2 justify-center border-b-2 bg-[#FF6A6A]'>
+    <div
+      className={`sticky h-12 py-1 px-2 justify-center ${
+        location === "search" ? "hidden" : ""
+      }`}
+    >
       <Grid className='h-10 items-center' container>
         <Grid item xs={2} className='flex justify-center'>
-          {leftButton()}
+          <LeftButton />
         </Grid>
         <Grid item xs={8} className='flex justify-center'>
           <div onClick={() => navigate("/")} className='cursor-pointer'>
@@ -97,7 +71,7 @@ const Header = (props: Props) => {
           </div>
         </Grid>
         <Grid item xs={2} className='flex justify-center'>
-          {rightButton()}
+          <RightButton />
         </Grid>
       </Grid>
     </div>

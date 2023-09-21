@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import CustomText from "../../Modules/CustomText";
 import ImageSlider from "./subComponent/ImageSlider";
 import CustomTagBlock from "../../Modules/CustomTagBlock";
@@ -12,6 +12,8 @@ import { deleteItem, fetchItems } from "../../../api/Item";
 import HeaderOptionButton from "../../Modules/HeaderOptionButton";
 import { Delete, Edit } from "@mui/icons-material";
 import InfoIndicator from "../../Modules/InfoIndicator";
+import { useDispatch } from "react-redux";
+import { setAdjData, setIsLike, setIsWriter } from "../../../store/viewSlice";
 
 type Props = {};
 
@@ -21,6 +23,7 @@ const ItemPage = (props: Props) => {
   const view = useSelector((state: RootState) => state.view.currentView);
   const viewId = useSelector((state: RootState) => state.view.requestParam);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   if (viewId) {
   }
   const itemId = useParams().itemId;
@@ -35,6 +38,19 @@ const ItemPage = (props: Props) => {
       refetchOnWindowFocus: false,
     }
   );
+  useEffect(() => {
+    if (data?.data) {
+      const { isWriter } = data?.data as ItemBody;
+      dispatch(setIsWriter(isWriter as boolean));
+      const adjData = {
+        portfolioId: data.data.portfolioId,
+        itemId: data.data.itemId,
+        order: data.data.order,
+      };
+      dispatch(setAdjData(adjData));
+      dispatch(setIsLike(data.data.isLiked));
+    }
+  }, [data, itemId]);
 
   const deleteHandler = async () => {
     if (!portfolioId) return;
@@ -86,9 +102,9 @@ const ItemPage = (props: Props) => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <Header />
-      </div>
+      </div> */}
       <Slide
         className='overflow-y-scroll px-4 pt-6 gap-6 flex flex-col'
         direction='left'
@@ -107,7 +123,7 @@ const ItemPage = (props: Props) => {
                     <CustomText type='Title' text='카테고리' />
                     <CustomText type='Content' text={category} />
                   </div>
-                  {isWriter && <HeaderOptionButton data={{ menuItems }} />}
+                  {/* {isWriter && <HeaderOptionButton data={{ menuItems }} />} */}
                 </div>
               </div>
               <div className='max-w-lg'>
@@ -115,7 +131,7 @@ const ItemPage = (props: Props) => {
               </div>
               <CustomTagBlock
                 title='태그'
-                spreadValues={itemTagList.split(",")}
+                spreadValues={itemTagList?.split(",")}
                 type='item'
               />
               <div className={defaultClassName}>

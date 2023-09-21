@@ -23,7 +23,18 @@ type stateLiteral =
 interface API_STATUS {
   status: "SUCCESS" | "FAIL";
 }
-
+type PageList =
+  | "Regist"
+  | "LandingPage"
+  | "PortfolioCreate"
+  | "Portfolio"
+  | "Item"
+  | "ItemCreate"
+  | "Planner"
+  | "Feed"
+  | "Search"
+  | "Community"
+  | "PlannerMypage";
 // ========================================================================≈≈
 // UserRegist============================================================≈≈
 // ========================================================================≈≈

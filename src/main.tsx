@@ -6,16 +6,15 @@ import { Provider } from "react-redux";
 import store from "./store/store.ts";
 import { globalTheme } from "./globalTheme.ts";
 import { ThemeProvider } from "@mui/material/styles";
-import ChannelService from "./hooks/ChannelService.ts";
-import { CHANNEL_PLUGIN_KEY } from "./common/constants.ts";
-// ChannelService.loadScript();
-ChannelService.boot({
-  pluginKey: `${CHANNEL_PLUGIN_KEY}`,
-});
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+export const persistor = persistStore(store);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
-    <ThemeProvider theme={globalTheme}>
-      <App />
-    </ThemeProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <ThemeProvider theme={globalTheme}>
+        <App />
+      </ThemeProvider>
+    </PersistGate>
   </Provider>
 );

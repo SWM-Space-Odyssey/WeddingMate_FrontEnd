@@ -83,6 +83,7 @@ const ItemCreate = (props: Props) => {
   const getInitData = async (itemId: number) => {
     setIsEdit(itemId);
     const res = await fetchItems(itemId);
+    console.log(res);
     if (res?.status === "SUCCESS" && res.data.typeTag === "item") {
       const data = res.data;
       const itemTagList = data.itemTagList.split(",");
@@ -181,9 +182,9 @@ const ItemCreate = (props: Props) => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <Header />
-      </div>
+      </div> */}
 
       <Slide
         className='overflow-y-scroll px-4 mb-2 flex-1 flex'

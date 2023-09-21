@@ -26,7 +26,7 @@ const ProgressiveImg = ({ src, ...props }: Props) => {
   return (
     <img
       {...{ src: imgSrc, ...props }}
-      className={`image ${customClass} pb-2 cursor-pointer`}
+      className={`image ${customClass} mb-2 cursor-pointer rounded-lg`}
     />
   );
 };

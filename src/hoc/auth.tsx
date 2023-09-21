@@ -13,13 +13,14 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const dispatch = useDispatch();
   let dep = new Date();
   const RefreshToken = async () => {
-    // 여기가 문제인 듯?
     const response = await tokenRefresh();
-    console.log(response);
     if (response && response.data.status === "SUCCESS") {
-      localStorage.setItem("accessToken", response.data.accessToken);
-      dispatch(setAccessToken(response.data.accessToken));
+      dispatch(setAccessToken(response.data.data.accessToken));
       navigate(0);
+      return;
+    } else if (response && response.data?.status === "UNAUTHORIZED") {
+      dispatch(resetAccessToken());
+      navigate("/login");
       return;
     } else {
       if (!localStorage.getItem("accessToken")) {
@@ -50,6 +51,7 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;
+            console.log(type);
             switch (type) {
               case "PLANNER":
                 if (option === "unregistered") {
@@ -58,16 +60,13 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
                 }
                 break;
               case "CUSTOMER":
-                if (option !== "customer") {
-                  navigate("/earlyAccess");
+                if (option === "unregistered") {
+                  alert("잘못 된 접근입니다.");
+                  navigate("/");
+                } else if (option === "planner") {
+                  alert("사용하실 수 없는 기능입니다.");
+                  navigate("/");
                 }
-                // if (option === "unregistered") {
-                //   alert("잘못 된 접근입니다.");
-                //   navigate("/");
-                // } else if (option === "planner") {
-                //   alert("플래너만 사용할 수 있는 기능입니다.");
-                //   navigate("/");
-                // }
                 break;
               case "UNREGISTERED":
                 if (option !== "unregistered") {

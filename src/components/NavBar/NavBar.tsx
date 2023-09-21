@@ -1,20 +1,13 @@
-import { Home, Interests, Search, Sms } from "@mui/icons-material";
+import { Groups, Home, Interests, Search, Sms } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { intoView } from "../../store/viewSlice";
+import { PIVOT_PAGES } from "../../common/constants";
 
 type Props = {};
-type PageList =
-  | "Regist"
-  | "LandingPage"
-  | "PortfolioCreate"
-  | "Portfolio"
-  | "Item"
-  | "ItemCreate"
-  | "Planner"
-  | "Feed";
+
 const pageMap: { [key in PageList]: string } = {
   Regist: "/regist",
   LandingPage: "/",
@@ -23,25 +16,47 @@ const pageMap: { [key in PageList]: string } = {
   Item: "/item",
   ItemCreate: "/item/create",
   Planner: "/planner",
+  Search: "/search",
   Feed: "/feed",
+  Community: "/community",
+  PlannerMypage: "/plannermypage",
 };
 
 const NavBar = (props: Props) => {
   const navigate = useNavigate();
-  const location = useLocation().pathname;
+  const location = useLocation().pathname.split("/")[1];
   const dispatch = useDispatch();
   const [seleceted, setSelected] = useState(0);
   const handleNavigate = (view: PageList) => {
     dispatch(intoView({ view }));
     navigate(`${pageMap[view]}`);
   };
-
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    if (PIVOT_PAGES.includes(location)) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+    switch (location) {
+      case "":
+        setSelected(0);
+        break;
+      case "search":
+        setSelected(1);
+        break;
+      case "feed":
+        setSelected(2);
+        break;
+      case "plannermypage":
+        setSelected(3);
+        break;
+      default:
+        break;
+    }
+  }, [location]);
   return (
-    <div
-      className={`absolute w-full h-14 bottom-0 ${
-        location === "/kakaoAuth" ? "hidden" : ""
-      }`}
-    >
+    <div className={`w-full h-14 bottom-0 ${visible ? "" : "hidden"}`}>
       <BottomNavigation
         showLabels
         value={seleceted}
@@ -54,17 +69,17 @@ const NavBar = (props: Props) => {
           icon={<Home />}
         />
         <BottomNavigationAction
-          onClick={() => handleNavigate("Feed")}
+          onClick={() => handleNavigate("Search")}
           label='검색'
           icon={<Search />}
         />
         <BottomNavigationAction
-          onClick={() => handleNavigate("LandingPage")}
-          label='웨딩톡'
-          icon={<Sms />}
+          onClick={() => handleNavigate("Community")}
+          label='커뮤니티'
+          icon={<Groups />}
         />
         <BottomNavigationAction
-          onClick={() => handleNavigate("Planner")}
+          onClick={() => handleNavigate("PlannerMypage")}
           label='마이웨딩'
           icon={<Interests />}
         />

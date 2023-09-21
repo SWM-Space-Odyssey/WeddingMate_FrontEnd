@@ -4,6 +4,9 @@ export const globalTheme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
+        root: {
+          borderRadius: 6,
+        },
         contained: {
           color: "#FFFFFF",
         },
@@ -25,5 +28,8 @@ export const globalTheme = createTheme({
     secondary: {
       main: "#FFFFFF",
     },
+  },
+  typography: {
+    fontFamily: ["AppleSDGothicKR", "Noto Sans KR", "sans-serif"].join(","),
   },
 });

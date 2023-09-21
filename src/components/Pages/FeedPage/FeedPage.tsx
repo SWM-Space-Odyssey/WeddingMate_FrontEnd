@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import MasonryImage from "./subComponent/MasonryImage";
+import MasonryImage from "../../Modules/MasonryImage";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonImages from "../../Modules/SkeletonImages";
@@ -42,11 +42,7 @@ const FeedPage = (props: Props) => {
   if (props.guide) {
     amplitude.track("Journey Start");
   }
-  const myPageButton = (
-    <button onClick={() => navigate("/plannermypage")}>
-      <AccountCircle fontSize='large' sx={{ color: "white" }} />
-    </button>
-  );
+
   return (
     <>
       <Modal open={loginMadal} className={madalStyle}>
@@ -65,9 +61,6 @@ const FeedPage = (props: Props) => {
           </Button>
         </div>
       </Modal>
-      <div>
-        <Header main='main' rightButton={myPageButton} />
-      </div>
       <Fade
         // direction='right'
         in

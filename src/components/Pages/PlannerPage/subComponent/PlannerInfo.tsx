@@ -40,8 +40,6 @@ const PlannerInfo = (props: Props) => {
   );
   const { nickname, profileImageUrl, plannerInfo, plannerProfileInfo } =
     data?.data.data;
-  const { company, regionList, tagList, position } = plannerInfo;
-  const spreadValues = tagList.split(",");
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const formData = new FormData();
@@ -109,13 +107,13 @@ const PlannerInfo = (props: Props) => {
             />
           )}
           <div className='flex flex-col items-center gap-0.5'>
-            <CustomText text={`${nickname} 플래너`} type='Title-large' />
-            <CustomText
+            <CustomText text={`${nickname}`} type='Title-large' />
+            {/* <CustomText
               text={`${company} / ${position} / ${regionList}`}
               type='Description'
-            />
+            /> */}
           </div>
-          {plannerProfileInfo.sns && (
+          {/* {plannerProfileInfo.sns && (
             <CustomTag type='sns' text={plannerProfileInfo.sns} />
           )}
           {plannerProfileInfo.bio && (
@@ -127,7 +125,7 @@ const PlannerInfo = (props: Props) => {
           <CustomTagBlock spreadValues={spreadValues} />
           {plannerProfileInfo.bio && (
             <div className='border-b-[1px] border-gray-200 w-full' />
-          )}
+          )} */}
         </div>
       )}
     </div>

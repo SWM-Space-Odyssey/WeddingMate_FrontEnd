@@ -6,17 +6,16 @@ import { postLike } from "../../api/like";
 type Props = {
   isLiked: boolean | null;
   targetId: number;
-  type: "PORTFOLIO" | "ITEM" | "PLANNER";
+  type: "portfolio" | "item" | "PLANNER";
 };
 
 const LikeButton = (props: Props) => {
   const [like, setLike] = React.useState(props.isLiked ?? false);
-  console.log(props);
   const onClickLike = () => {
     setLike(!like);
     const body = {
       id: `${props.targetId}`,
-      likeType: props.type,
+      likeType: props.type.toUpperCase() as "PORTFOLIO" | "ITEM" | "PLANNER",
     };
     const response = postLike(body);
     console.log(response);

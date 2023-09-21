@@ -29,7 +29,7 @@ const RegistPlannerTag = (props: Props) => {
   const tagMax = 3;
   return (
     <div className='px-4 flex flex-col h-full justify-between'>
-      <div className='mt-20'>
+      <div className='mt-10'>
         <div className='font-bold text-2xl'>
           키워드를 {tagMax}개 선택해 주세요
         </div>

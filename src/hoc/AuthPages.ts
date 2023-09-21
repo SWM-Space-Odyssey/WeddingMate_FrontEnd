@@ -1,0 +1,21 @@
+import ItemCreate from "../components/Pages/CreatePage/ItemCreate";
+import PortfolioCreate from "../components/Pages/CreatePage/PortfolioCreate";
+import EarlyAccessPage from "../components/Pages/EarlyAcccessPage";
+import FeedPage from "../components/Pages/FeedPage/FeedPage";
+import ItemPage from "../components/Pages/ItemPage/ItemPage";
+import PlannerPage from "../components/Pages/PlannerPage/PlannerPage";
+import PortfolioPage from "../components/Pages/PortfolioPage/PortfolioPage";
+import RegistPage from "../components/Pages/RegistPage/RegistPage";
+import SearchPage from "../components/Pages/SearchPage/SearchPage";
+import Auth from "./auth";
+
+export const AuthFeedPage = Auth(FeedPage, "all");
+export const AuthItemPage = Auth(ItemPage, "all");
+export const AuthPlannerPage = Auth(PlannerPage, "all");
+export const AuthPortfolioPage = Auth(PortfolioPage, "all");
+export const AuthSearchPage = Auth(SearchPage, "all");
+export const AuthRegisterPage = Auth(RegistPage, "unregistered");
+export const AuthItemCreate = Auth(ItemCreate, "all");
+export const AuthPlannerMyPage = Auth(PlannerPage, "all");
+export const AuthPortfolioCreate = Auth(PortfolioCreate, "all");
+export const AuthEarlyAccessPage = Auth(EarlyAccessPage, "customer");
