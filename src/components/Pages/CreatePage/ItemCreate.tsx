@@ -208,7 +208,7 @@ const ItemCreate = (props: Props) => {
                 <ItemCategories required />
                 <ImageUploader
                   title='image'
-                  maxCount={5}
+                  maxCount={10}
                   isImmediately={true}
                   required
                 />

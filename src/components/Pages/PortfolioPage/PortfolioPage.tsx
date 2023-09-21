@@ -32,7 +32,7 @@ type headerData = {
   region: string;
   isWriter: boolean;
   isLiked: boolean;
-  plannerId: number;
+  userId: number;
 };
 type portfolioData = {
   typeTag: "portfolio";
@@ -117,7 +117,7 @@ const PortfolioPage = (props: Props) => {
               {!isWriter && (
                 <div className='mt-12'>
                   <Button
-                    onClick={() => navigate(`/planner/${headerData.plannerId}`)}
+                    onClick={() => navigate(`/planner/${headerData.userId}`)}
                     sx={{ height: "38px", width: "100%", color: "#fff" }}
                     variant='contained'
                   >
