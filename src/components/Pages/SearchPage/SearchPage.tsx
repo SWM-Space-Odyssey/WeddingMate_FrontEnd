@@ -60,7 +60,7 @@ const SearchPage = (props: Props) => {
               autoComplete='off'
             />
           </form>
-          <button>
+          <button onClick={() => methods.reset()}>
             <Cancel
               fontSize='small'
               sx={{

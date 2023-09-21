@@ -40,8 +40,6 @@ const PlannerInfo = (props: Props) => {
   );
   const { nickname, profileImageUrl, plannerInfo, plannerProfileInfo } =
     data?.data.data;
-  const { company, regionList, tagList, position } = plannerInfo;
-  const spreadValues = tagList.split(",");
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const formData = new FormData();

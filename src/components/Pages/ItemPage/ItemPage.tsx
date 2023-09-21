@@ -131,7 +131,7 @@ const ItemPage = (props: Props) => {
               </div>
               <CustomTagBlock
                 title='태그'
-                spreadValues={itemTagList.split(",")}
+                spreadValues={itemTagList?.split(",")}
                 type='item'
               />
               <div className={defaultClassName}>

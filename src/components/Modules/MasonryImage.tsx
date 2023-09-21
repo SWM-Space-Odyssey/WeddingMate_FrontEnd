@@ -62,6 +62,7 @@ const useFetchUsers = (param?: string) => {
         return response;
       } else {
         const response = getFeedImage(pageParam);
+        console.log(response);
         return response;
       }
     },
@@ -73,6 +74,7 @@ const useFetchUsers = (param?: string) => {
             ? undefined
             : lastPage.data.pageable.pageNumber + 1
           : lastPage.data &&
+            lastPage.data?.pageSize > 0 &&
             lastPage.status === "SUCCESS" &&
             lastPage.data.typeTag === "feed"
           ? lastPage.data.nextCursor

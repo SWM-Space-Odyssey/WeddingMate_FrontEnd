@@ -35,7 +35,7 @@ const ImageSlider = (props: Props) => {
         modules={[FreeMode, Navigation, Thumbs, Autoplay]}
         className='mySwiper2'
       >
-        {props.images.map((image, index) => {
+        {props?.images.map((image, index) => {
           return (
             <SwiperSlide key={index}>
               <img

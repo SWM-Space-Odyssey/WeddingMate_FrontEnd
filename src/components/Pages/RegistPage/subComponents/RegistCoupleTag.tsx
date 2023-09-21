@@ -18,7 +18,7 @@ import * as amplitude from "@amplitude/analytics-browser";
 type Props = {};
 
 const wrapperDiv = "px-4 flex flex-col h-full justify-between";
-const innerDiv = "flex flex-col mt-20 gap-y-7";
+const innerDiv = "flex flex-col mt-10 gap-y-7";
 
 const NextButton = (disableFlag: any, text: string, submit?: boolean) => {
   const buttonText = disableFlag ? text : "태그를 선택해주세요";
