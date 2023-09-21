@@ -27,9 +27,10 @@ const PlannerPage = (props: Props) => {
   const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.currentView);
   const plannerId = parseInt(useParams().Id ?? "0");
+
   const requestURL = props.mypage
-    ? `/api/v1/profile/planner`
-    : `/api/v1/planner/${plannerId}`;
+    ? `/api/v1/profile/customer`
+    : `/api/v1/customer/${plannerId}`;
   const { data, isLoading } = useQuery(
     ["plannerInfo", plannerId],
     () =>

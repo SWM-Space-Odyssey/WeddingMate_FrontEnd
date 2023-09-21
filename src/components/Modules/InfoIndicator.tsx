@@ -15,7 +15,7 @@ type Props = {
   type: "item" | "portfolio";
 };
 
-const plannerURL = SERVER_URL + "/api/v1/planner/";
+const plannerURL = SERVER_URL + "/api/v1/customer/";
 const portfolioURL = SERVER_URL + "/api/v1/portfolio/";
 const plannerLink = "/planner/";
 const portfolioLink = "/portfolio/";
@@ -76,7 +76,8 @@ const InfoIndicator = (props: Props) => {
         portfolioRes.data.data.id,
       ]);
     }
-    const plannerId = portfolioRes.data.data.plannerId;
+    const plannerId = portfolioRes.data.data.userId;
+  
     const plannerRes = await axios.get(plannerURL + plannerId, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -86,7 +87,7 @@ const InfoIndicator = (props: Props) => {
       setPlannerInfo([
         plannerRes.data.data.profileImageUrl,
         plannerRes.data.data.nickname,
-        plannerRes.data.data.plannerProfileId,
+        plannerRes.data.data.userId,
       ]);
     }
     setLoading(false);

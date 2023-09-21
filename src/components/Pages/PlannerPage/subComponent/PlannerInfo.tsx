@@ -23,8 +23,8 @@ const PlannerInfo = (props: Props) => {
   const [imgURL, setImgURL] = useState("");
   const plannerId = parseInt(useParams().Id ?? "0");
   const requestURL = props.mypage
-    ? `/api/v1/profile/planner`
-    : `/api/v1/planner/${plannerId}`;
+    ? `/api/v1/profile/customer`
+    : `/api/v1/customer/${plannerId}`;
   const { data, isLoading } = useQuery(
     ["plannerInfo", plannerId],
     () =>
