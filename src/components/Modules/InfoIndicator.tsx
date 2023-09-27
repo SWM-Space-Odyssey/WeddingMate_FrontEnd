@@ -1,11 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  PROGRESSIVE_IMAGE_URL,
-  SERVER_IMAGE_URL,
-  SERVER_URL,
-} from "../../common/constants";
-import { getPortfolio } from "../../api/portfolio";
+import { PROGRESSIVE_IMAGE_URL, SERVER_URL } from "../../common/constants";
 import CustomText from "./CustomText";
 import { ArrowRight, ChevronRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -77,12 +72,13 @@ const InfoIndicator = (props: Props) => {
       ]);
     }
     const plannerId = portfolioRes.data.data.userId;
-  
+
     const plannerRes = await axios.get(plannerURL + plannerId, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
+    console.log(plannerRes);
     if (plannerRes.status === 200 && plannerRes.data.status === "SUCCESS") {
       setPlannerInfo([
         plannerRes.data.data.profileImageUrl,

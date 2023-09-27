@@ -10,7 +10,7 @@ import ProfileDialog from "../CreatePage/ProfileDialog";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LikeButton from "../../Modules/LikeButton";
 import ContactForm from "../../Modules/ContactForm";
 import PlannerOptions from "../../Header/PlannerOptions";
@@ -27,6 +27,7 @@ const PlannerPage = (props: Props) => {
   const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.currentView);
   const plannerId = parseInt(useParams().Id ?? "0");
+  const location = useLocation().pathname.split("/")[1];
 
   const requestURL = props.mypage
     ? `/api/v1/profile/customer`
@@ -45,6 +46,7 @@ const PlannerPage = (props: Props) => {
     }
   );
   const response = data?.data.data;
+  console.log(response);
   return (
     <>
       <Slide
@@ -66,12 +68,14 @@ const PlannerPage = (props: Props) => {
           /> */}
           <div className='flex justify-between py-2'>
             <span>내 웨딩 피드</span>
-            <Button
-              variant='outlined'
-              onClick={() => navigate("/create/portfolio")}
-            >
-              <Edit fontSize='small' />글 쓰기
-            </Button>
+            {location === "plannermypage" && (
+              <Button
+                variant='outlined'
+                onClick={() => navigate("/create/portfolio")}
+              >
+                <Edit fontSize='small' />글 쓰기
+              </Button>
+            )}
           </div>
           <div className='overflow-y-scroll'>
             <PlannerPortfolio mypage={props.mypage} />

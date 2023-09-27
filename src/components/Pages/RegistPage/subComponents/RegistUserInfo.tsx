@@ -14,7 +14,7 @@ import CustomDatePicker from "../../../Modules/CustomDatePicker";
 import * as amplitude from "@amplitude/analytics-browser";
 
 const wrapperDiv = "px-4 flex flex-col h-full justify-between";
-const innerDiv = "flex flex-col mt-10 gap-y-7";
+const innerDiv = "flex flex-col mt-6 gap-y-7";
 
 const RegistUserInfo = () => {
   const dispatch = useDispatch();

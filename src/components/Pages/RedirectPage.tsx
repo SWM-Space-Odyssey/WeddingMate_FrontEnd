@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const RedirectPage = (props: Props) => {
+  const navigate = useNavigate();
   useEffect(() => {
-    window.location.href = "https://forms.gle/YFDcRNkFJZMtmQtJ6";
+    navigate("/");
+    // window.location.href = "https://www.weddingmate.co.kr/";
   }, []);
   return (
     <div className='loading items-center justify-center w-full h-full'>

@@ -21,54 +21,53 @@ type Props = {
     tagList: string;
     repImgUrl: string;
     region: string;
-    isWriter: boolean;
-    plannerId: number;
   };
 };
 
 const Mock = ["화려한", "사람많은", "야외"];
 
 const PortfolioHeader = (props: Props) => {
-  const { title, tagList, region, repImgUrl, isWriter, plannerId } = props.data;
+  const { title, tagList, region, repImgUrl } = props.data;
   const portfolioId = useParams().itemId;
-  const navigate = useNavigate();
-  const deleteHandler = async () => {
-    if (!portfolioId) return;
-    const response = await deletePortfolio(parseInt(portfolioId));
-    if (response.data.status === "SUCCESS") {
-      navigate(-1);
-    } else {
-      alert("삭제에 실패했습니다. - PortfolioHeader");
-    }
-  };
-  const menuItems = [
-    {
-      content: (
-        <>
-          <Edit />
-          포트폴리오 수정하기
-        </>
-      ),
-      onClick: () => {
-        navigate(`/create/portfolio/${portfolioId}`);
-      },
-    },
-    {
-      content: (
-        <>
-          <Delete />
-          포트폴리오 삭제하기
-        </>
-      ),
-      onClick: () => {
-        if (confirm("정말로 삭제하시겠습니까?")) {
-          deleteHandler();
-        }
-      },
-    },
-  ];
-
   const tagSplit = tagList.split(",");
+  const navigate = useNavigate();
+
+  // const deleteHandler = async () => {
+  //   if (!portfolioId) return;
+  //   const response = await deletePortfolio(parseInt(portfolioId));
+  //   if (response.data.status === "SUCCESS") {
+  //     navigate(-1);
+  //   } else {
+  //     alert("삭제에 실패했습니다. - PortfolioHeader");
+  //   }
+  // };
+  // const menuItems = [
+  //   {
+  //     content: (
+  //       <>
+  //         <Edit />
+  //         포트폴리오 수정하기
+  //       </>
+  //     ),
+  //     onClick: () => {
+  //       navigate(`/create/portfolio/${portfolioId}`);
+  //     },
+  //   },
+  //   {
+  //     content: (
+  //       <>
+  //         <Delete />
+  //         포트폴리오 삭제하기
+  //       </>
+  //     ),
+  //     onClick: () => {
+  //       if (confirm("정말로 삭제하시겠습니까?")) {
+  //         deleteHandler();
+  //       }
+  //     },
+  //   },
+  // ];
+
   return (
     <div className='flex flex-col justify-between mt-4'>
       {portfolioId && (
@@ -78,9 +77,7 @@ const PortfolioHeader = (props: Props) => {
         <div className='flex gap-2.5 '>
           <div>
             <img
-              src={`${SERVER_IMAGE_URL}${repImgUrl}?edit=${
-                isWriter ?? Date.now()
-              }`}
+              src={`${SERVER_IMAGE_URL}${repImgUrl}?edit=${Date.now()}`}
               className='w-[5.5rem] h-[5.5rem] rounded-sm'
             />
           </div>
@@ -96,7 +93,6 @@ const PortfolioHeader = (props: Props) => {
             </div>
           </div>
         </div>
-        {/* {props.data.isWriter && <HeaderOptionButton data={{ menuItems }} />} */}
       </div>
     </div>
   );

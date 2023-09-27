@@ -129,6 +129,7 @@ const MasonryImage = (props: Props) => {
           alt={String(item.url)}
           key={index}
           loading='lazy'
+          tailwind='mb-2 rounded-lg'
         />
       );
     });

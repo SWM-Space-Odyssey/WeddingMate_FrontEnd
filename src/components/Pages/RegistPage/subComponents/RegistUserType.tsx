@@ -21,12 +21,13 @@ const RegistUserType = () => {
     planner: "플래너 회원가입",
   };
   const buttonClass = "text-sm w-full";
+
   const onClickHandler = (type: typeof CoupleString | typeof PlannerString) => {
     reset();
     register("type", { value: type });
     dispatch(setUserType(type));
   };
-  // userType에서만 사용되는 Component여서 따로 Unit화 하지 않았습니다.
+
   const buttonComponent = (
     str: typeof CoupleString | typeof PlannerString
   ): JSX.Element => {
@@ -54,9 +55,9 @@ const RegistUserType = () => {
 
   return (
     <div className='flex flex-col px-4 h-full justify-between'>
-      <div className='mt-10'>
+      <div className='mt-6'>
         <div className='font-bold text-2xl'>{GuideText}</div>
-        <Stack spacing={1} className='mt-10'>
+        <Stack spacing={1} className='mt-6'>
           {buttonComponent(CoupleString)}
           {buttonComponent(PlannerString)}
         </Stack>

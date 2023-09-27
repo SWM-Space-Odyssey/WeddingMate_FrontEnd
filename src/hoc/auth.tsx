@@ -9,6 +9,7 @@ import { resetAccessToken, setAccessToken } from "../store/userSlice";
 
 type option = "all" | "planner" | "customer" | "unregistered" | null;
 const Auth = (Component: FC<any>, option: option) => (props: any) => {
+  console.log("TOKEN CHECK");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let dep = new Date();
@@ -23,10 +24,8 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       navigate("/login");
       return;
     } else {
-      if (!localStorage.getItem("accessToken")) {
-        dispatch(resetAccessToken());
-        navigate("/login");
-      }
+      dispatch(resetAccessToken());
+      navigate("/login");
       return;
     }
   };

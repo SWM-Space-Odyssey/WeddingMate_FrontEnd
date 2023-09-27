@@ -6,7 +6,6 @@ import PortfolioPage from "./PortfolioPage/PortfolioPage";
 import ItemPage from "./ItemPage/ItemPage";
 import ItemCreate from "./CreatePage/ItemCreate";
 import { useDispatch } from "react-redux";
-import { intoView } from "../../store/viewSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import axios from "axios";

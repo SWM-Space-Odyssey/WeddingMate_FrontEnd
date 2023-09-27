@@ -22,6 +22,8 @@ import {
 } from "./hoc/AuthPages";
 import ChannelService from "./hooks/ChannelService";
 import { CHANNEL_PLUGIN_KEY } from "./common/constants";
+import CompanyPage from "./components/Pages/CompanyPage/CompanyPage";
+import LikePage from "./components/Pages/LikePage/LikePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +49,7 @@ function App() {
                 <Route path='/earlyaccess' element={<AuthEarlyAccessPage />} />
                 <Route path='/regist' element={<AuthRegisterPage />} />
                 <Route path='/planner/:Id' element={<AuthPlannerPage />} />
+
                 <Route
                   path='/plannermypage'
                   element={<AuthPlannerMyPage mypage />}
@@ -56,6 +59,7 @@ function App() {
                   path='/portfolio/:itemId'
                   element={<AuthPortfolioPage />}
                 />
+
                 <Route
                   path='/create/portfolio/:portfolioId?'
                   element={<AuthPortfolioCreate />}
@@ -64,6 +68,9 @@ function App() {
                   path='/create/item/:portfolioId/:order/:itemId?'
                   element={<AuthItemCreate />}
                 />
+                <Route path='/company' element={<CompanyPage />} />
+                <Route path='/like' element={<LikePage />} />
+
                 <Route
                   path='/oauth2/redirect'
                   element={<LoadingSpinner redirect />}
@@ -71,9 +78,9 @@ function App() {
                 <Route path='/login' element={<FeedPage guide />} />
                 <Route path='/admin' element={<MainPage />} />
                 <Route path='/search/:search?' element={<AuthSearchPage />} />
-
                 <Route path='/redirect' element={<RedirectPage />} />
                 <Route path='/community' element={<CommunityPage />} />
+                <Route path='*' element={<RedirectPage />} />
               </Routes>
             </div>
             <NavBar />

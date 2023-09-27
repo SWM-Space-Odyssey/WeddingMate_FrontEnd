@@ -1,4 +1,11 @@
-import { Groups, Home, Interests, Search, Sms } from "@mui/icons-material";
+import {
+  Favorite,
+  Groups,
+  Home,
+  Interests,
+  Search,
+  Sms,
+} from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,6 +26,7 @@ const pageMap: { [key in PageList]: string } = {
   Search: "/search",
   Feed: "/feed",
   Community: "/community",
+  Like: "/like",
   PlannerMypage: "/plannermypage",
 };
 
@@ -45,11 +53,14 @@ const NavBar = (props: Props) => {
       case "search":
         setSelected(1);
         break;
-      case "feed":
+      case "like":
         setSelected(2);
         break;
-      case "plannermypage":
+      case "community":
         setSelected(3);
+        break;
+      case "plannermypage":
+        setSelected(4);
         break;
       default:
         break;
@@ -72,6 +83,11 @@ const NavBar = (props: Props) => {
           onClick={() => handleNavigate("Search")}
           label='검색'
           icon={<Search />}
+        />
+        <BottomNavigationAction
+          onClick={() => handleNavigate("Like")}
+          label='찜'
+          icon={<Favorite />}
         />
         <BottomNavigationAction
           onClick={() => handleNavigate("Community")}

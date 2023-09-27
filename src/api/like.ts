@@ -2,14 +2,22 @@ import axios, { Axios, AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
 import { getAccessToken, getURL, handleError } from "../hooks/apiHook";
 
-interface poseLikeResponse {
-  status: "SUCCESS" | "FAIL";
+type status = "SUCCESS" | "FAIL";
+type getLikeResponse = status & {
+  data: {
+    id: string;
+    title: string;
+    reqImgUrl: string;
+  }[];
+};
+
+type poseLikeResponse = status & {
   data: string;
-}
-interface postLikeBody {
+};
+type postLikeBody = {
   id: string;
   likeType: "PLANNER" | "ITEM" | "PORTFOLIO";
-}
+};
 
 const fetchData = async <RT>(
   url: string,
@@ -53,5 +61,11 @@ const fetchData = async <RT>(
 export const postLike = async (body: postLikeBody) => {
   const reqURL = `${SERVER_URL}/api/v1/like`;
   const response = await fetchData<poseLikeResponse>(reqURL, "post", body);
+  return response;
+};
+
+export const getLike = async (likeType: "company" | "portfolio" | "item") => {
+  const reqURL = `${SERVER_URL}/api/v1/like/${likeType}`;
+  const response = await fetchData<getLikeResponse>(reqURL, "get");
   return response;
 };

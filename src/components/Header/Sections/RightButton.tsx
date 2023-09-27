@@ -71,10 +71,14 @@ const RightButton = (props: Props) => {
       return <LikeButton targetId={portfolioId} isLiked={isLike} type={type} />;
     }
   };
-
-  {
-    /* <LikeButton targetId={1} isLiked={isLike} type={type} /> */
+  if (isWriter && ["item", "portfolio"].includes(type)) {
+    return <WriterButtonSet />;
+  } else if (!isWriter && ["item", "portfolio"].includes(type)) {
+    return <LikeButtonSet />;
+  } else {
+    return <div className='w-10' />;
   }
+
   return (
     <div>
       {isWriter && ["item", "portfolio"].includes(type) && <WriterButtonSet />}

@@ -41,10 +41,10 @@ export const viewSlice = createSlice({
       state.page += 1;
     },
     PrevPage: (state) => {
+      console.log("hh");
       if (state.page !== 0) {
         state.prevPage = state.page;
         state.page -= 1;
-        // state.prevPage -= 1;
       }
 
       const prevPage = state.viewStack.pop();

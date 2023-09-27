@@ -7,6 +7,7 @@ import {
 type Props = {
   src: string;
   [x: string]: any;
+  tailwind?: string;
 };
 
 const ProgressiveImg = ({ src, ...props }: Props) => {
@@ -16,6 +17,7 @@ const ProgressiveImg = ({ src, ...props }: Props) => {
   useEffect(() => {
     // 이미지를 업데이트 합니다.
     const img = new Image();
+    console.log("hghh");
     img.src = SERVER_IMAGE_URL + src;
     img.onload = () => {
       setImgSrc(SERVER_IMAGE_URL + src);
@@ -26,7 +28,7 @@ const ProgressiveImg = ({ src, ...props }: Props) => {
   return (
     <img
       {...{ src: imgSrc, ...props }}
-      className={`image ${customClass} mb-2 cursor-pointer rounded-lg`}
+      className={`image ${customClass}cursor-pointer ${props.tailwind} `}
     />
   );
 };

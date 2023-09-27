@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
+import { tokenRefresh } from "../api/user";
 
 interface userState {
   accessToken: string | null;
@@ -33,6 +34,7 @@ export const userSlice = createSlice({
     setUserNickname: (state, action: PayloadAction<string>) => {
       state.nickname = action.payload;
     },
+
     persistTest: (state) => {
       console.log("h");
       state.nickname = "persist";

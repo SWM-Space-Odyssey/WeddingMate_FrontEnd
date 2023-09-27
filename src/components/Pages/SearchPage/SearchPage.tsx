@@ -7,6 +7,7 @@ import { ArrowBack, Cancel, Search } from "@mui/icons-material";
 import MasonryImage from "../../Modules/MasonryImage";
 import SearchFeed from "./subComponent/SearchFeed";
 import SearchPlanner from "./subComponent/SearchPlanner";
+import { arrow_back } from "../../../assets/arrow_back";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 type SearchKeyword = {
@@ -40,9 +41,13 @@ const SearchPage = (props: Props) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex  items-center gap-1.5 px-1.5 py-2'>
-        <button className='p-2 w-10 h-10 flex' onClick={() => navigate(-1)}>
-          <ArrowBack className='w-6 h-6' />
+      <div className='flex  items-center gap-1.5 px-2 py-1.5'>
+        <button
+          type='button'
+          className='w-10 h-10 flex'
+          onClick={() => navigate(-1)}
+        >
+          <div className='p-2'>{arrow_back}</div>
         </button>
         <Box
           className='flex items-center h-10 flex-1 gap-1 py-2.5 px-3 mr-2.5'

@@ -29,7 +29,7 @@ const RegistPlannerTag = (props: Props) => {
   const tagMax = 3;
   return (
     <div className='px-4 flex flex-col h-full justify-between'>
-      <div className='mt-10'>
+      <div className='mt-6'>
         <div className='font-bold text-2xl'>
           키워드를 {tagMax}개 선택해 주세요
         </div>
@@ -39,7 +39,7 @@ const RegistPlannerTag = (props: Props) => {
           선택한 키워드는 프로필에 노출됩니다. 예비 부부의 플래너 선택에 도움을
           줄 수 있어요
         </div>
-        <div className='mt-10'>
+        <div className='mt-6'>
           <CustomTagBlock
             spreadValues={PlannerTagList}
             formState={formElement}

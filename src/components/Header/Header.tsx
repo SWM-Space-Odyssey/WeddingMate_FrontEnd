@@ -10,6 +10,7 @@ import { arrow_back } from "../../assets/arrow_back";
 import LeftButton from "./Sections/LeftButton";
 import { tokenRefresh } from "../../api/user";
 import RightButton from "./Sections/RightButton";
+import CenterContent from "./Sections/CenterContent";
 
 type Props = {
   main?: "main" | "regist";
@@ -24,56 +25,54 @@ const Header = (props: Props) => {
 
   const location = useLocation().pathname.split("/")[1];
 
-  const leftButton = () => {
-    return (
-      <button
-        type='button'
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        <div>{arrow_back}</div>
-        {/* <ArrowBackIos color='secondary' /> */}
-      </button>
-    );
-  };
-  const centerContent = () => {
-    const type = useSelector((state: RootState) => state.user.type);
-    const maxPage = type === "planner" ? 3 : 4;
-    if (props.main === "regist") {
-      return (
-        <>
-          {page < maxPage && (
-            <Typography color={"secondary"}>
-              회원가입 ({page + 1}/{maxPage})
-            </Typography>
-          )}
-        </>
-      );
-    } else {
-      return logo;
-    }
-  };
+  // const leftButton = () => {
+  //   return (
+  //     <button
+  //       type='button'
+  //       onClick={() => {
+  //         navigate(-1);
+  //       }}
+  //     >
+  //       <div>{arrow_back}</div>
+  //       {/* <ArrowBackIos color='secondary' /> */}
+  //     </button>
+  //   );
+  // };
+  // const centerContent = () => {
+  //   const type = useSelector((state: RootState) => state.user.type);
+  //   const maxPage = type === "planner" ? 3 : 4;
+  //   if (props.main === "regist") {
+  //     return (
+  //       <>
+  //         {page < maxPage && (
+  //           <Typography color={"secondary"}>
+  //             회원가입 ({page + 1}/{maxPage})
+  //           </Typography>
+  //         )}
+  //       </>
+  //     );
+  //   } else {
+  //     return logo;
+  //   }
+  // };
 
   return (
     <div
-      className={`sticky h-12 py-1 px-2 justify-center ${
+      className={`sticky h-14 py-1.5 px-2 justify-center ${
         location === "search" ? "hidden" : ""
       }`}
     >
-      <Grid className='h-10 items-center' container>
-        <Grid item xs={2} className='flex justify-center'>
+      <div className='h-10 items-center flex'>
+        <div className='flex justify-center'>
           <LeftButton />
-        </Grid>
-        <Grid item xs={8} className='flex justify-center'>
-          <div onClick={() => navigate("/")} className='cursor-pointer'>
-            {centerContent()}
-          </div>
-        </Grid>
-        <Grid item xs={2} className='flex justify-center'>
+        </div>
+        <div className='flex flex-1'>
+          <CenterContent />
+        </div>
+        <div className='flex justify-center'>
           <RightButton />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };

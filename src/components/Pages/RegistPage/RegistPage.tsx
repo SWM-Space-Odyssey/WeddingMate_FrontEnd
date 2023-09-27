@@ -21,6 +21,7 @@ import {
 import * as amplitude from "@amplitude/analytics-browser";
 import { useDispatch } from "react-redux";
 import { setUserNickname } from "../../../store/userSlice";
+import { useEffect } from "react";
 
 const parseArray = (data: string[]) => {
   console.log(data);
@@ -37,7 +38,6 @@ const RegistPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onSubmit: SubmitHandler<plannerRegister | coupleRegister> = (data) => {
-    // alert(JSON.stringify(data));
     if (data.type === "planner") {
       const { company, nickname, position, regionList, plannerTagList } = data;
       const planner = {
@@ -63,7 +63,8 @@ const RegistPage = () => {
           console.log(res.data.data);
         }
       });
-    } else if (data.type === "couple") {
+    } else {
+      data.type = "couple";
       // 예비부부의 경우
       const {
         weddingDateConfirmed,
@@ -110,6 +111,7 @@ const RegistPage = () => {
     }
   };
   const transitionClass = "absolute left-0 right-0 h-full overflow-y-scroll";
+
   return (
     <>
       <Slide
