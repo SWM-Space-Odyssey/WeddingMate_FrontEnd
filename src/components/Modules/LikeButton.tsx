@@ -18,7 +18,6 @@ const LikeButton = (props: Props) => {
       likeType: props.type.toUpperCase() as "PORTFOLIO" | "ITEM" | "PLANNER",
     };
     const response = postLike(body);
-    console.log(response);
   };
 
   return (

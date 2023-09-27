@@ -46,7 +46,6 @@ const PlannerPage = (props: Props) => {
     }
   );
   const response = data?.data.data;
-  console.log(response);
   return (
     <>
       <Slide

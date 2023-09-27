@@ -24,7 +24,6 @@ import { setUserNickname } from "../../../store/userSlice";
 import { useEffect } from "react";
 
 const parseArray = (data: string[]) => {
-  console.log(data);
   if (data.length === 0) return "";
   else return data.join(",");
 };
@@ -97,7 +96,6 @@ const RegistPage = () => {
       };
       dispatch(setUserNickname(nickname));
       coupleRegister(body).then((res: any) => {
-        console.log(res);
         if (res.status === "SUCCESS") {
           alert("회원가입이 완료되었습니다.");
           navigate("/earlyAccess");

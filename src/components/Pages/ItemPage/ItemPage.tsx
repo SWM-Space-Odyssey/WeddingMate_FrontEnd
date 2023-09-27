@@ -64,7 +64,7 @@ const ItemPage = (props: Props) => {
 
   const {
     category,
-    company,
+    companyName,
     date,
     imageList,
     itemRecord,
@@ -73,40 +73,15 @@ const ItemPage = (props: Props) => {
     portfolioId,
     isWriter,
   } = data?.data as ItemBody;
-  const menuItems = [
-    {
-      content: (
-        <>
-          <Edit />
-          아이템 수정하기
-        </>
-      ),
-      onClick: () => {
-        navigate(`/create/item/${portfolioId}/${order}/${itemId}`);
-      },
-    },
-    {
-      content: (
-        <>
-          <Delete />
-          아이템 삭제하기
-        </>
-      ),
-      onClick: () => {
-        if (confirm("정말로 삭제하시겠습니까?")) {
-          deleteHandler();
-        }
-      },
-    },
-  ];
 
   return (
     <>
       {/* <div>
         <Header />
       </div> */}
+      <InfoIndicator portfolioId={`${portfolioId}`} type='item' />
       <Slide
-        className='overflow-y-scroll px-4 pt-6 gap-6 flex flex-col'
+        className='px-4 pt-6 pb-10 gap-6 flex flex-col  overflow-y-scroll'
         direction='left'
         in
         mountOnEnter
@@ -117,13 +92,11 @@ const ItemPage = (props: Props) => {
           {data && (
             <>
               <div className='flex flex-col'>
-                <InfoIndicator portfolioId={`${portfolioId}`} type='item' />
                 <div className='flex justify-between'>
                   <div className={defaultClassName}>
                     <CustomText type='Title' text='카테고리' />
                     <CustomText type='Content' text={category} />
                   </div>
-                  {/* {isWriter && <HeaderOptionButton data={{ menuItems }} />} */}
                 </div>
               </div>
               <div className='max-w-lg'>
@@ -144,10 +117,10 @@ const ItemPage = (props: Props) => {
                   <CustomText type='Content' text={date} />
                 </div>
               )}
-              {company && (
+              {companyName && (
                 <div className={defaultClassName}>
                   <CustomText type='Title' text='업체명' />
-                  <CustomText type='Content' text={company} />
+                  <CustomText type='Content' text={companyName} />
                 </div>
               )}
             </>

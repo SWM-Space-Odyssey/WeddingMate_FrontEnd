@@ -8,7 +8,6 @@ type Props = {
 
 const SearchFeed = (props: Props) => {
   const { search } = props;
-  console.log(search);
   return (
     <div className='px-4'>
       <div className='py-3'>

@@ -9,10 +9,10 @@ import NavBar from "./components/NavBar/NavBar";
 import Header from "./components/Header/Header";
 import CommunityPage from "./components/Pages/CommutityPage/CommunityPage";
 import {
-  AuthEarlyAccessPage,
   AuthFeedPage,
   AuthItemCreate,
   AuthItemPage,
+  AuthLikePage,
   AuthPlannerMyPage,
   AuthPlannerPage,
   AuthPortfolioCreate,
@@ -46,7 +46,6 @@ function App() {
             <div className='flex-1 relative flex overflow-y-scroll flex-col'>
               <Routes>
                 <Route path='/' element={<AuthFeedPage />} />
-                <Route path='/earlyaccess' element={<AuthEarlyAccessPage />} />
                 <Route path='/regist' element={<AuthRegisterPage />} />
                 <Route path='/planner/:Id' element={<AuthPlannerPage />} />
 
@@ -69,7 +68,7 @@ function App() {
                   element={<AuthItemCreate />}
                 />
                 <Route path='/company' element={<CompanyPage />} />
-                <Route path='/like' element={<LikePage />} />
+                <Route path='/like' element={<AuthLikePage />} />
 
                 <Route
                   path='/oauth2/redirect'

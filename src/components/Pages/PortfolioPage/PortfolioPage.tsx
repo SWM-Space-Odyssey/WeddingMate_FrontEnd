@@ -14,6 +14,7 @@ import {
 } from "../../../common/constants";
 import Header from "../../Header/Header";
 import { setAdjData, setIsLike, setIsWriter } from "../../../store/viewSlice";
+import InfoIndicator from "../../Modules/InfoIndicator";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -44,6 +45,7 @@ type GetPortfolioResponse = portfolioData & {
 
 const PortfolioPage = (props: Props) => {
   const params = useParams();
+  const portfolioId = useParams().itemId;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [headerData, setHeaderData] = useState<headerData>();
@@ -88,6 +90,9 @@ const PortfolioPage = (props: Props) => {
 
   return (
     <>
+      {portfolioId && (
+        <InfoIndicator portfolioId={portfolioId} type='portfolio' />
+      )}
       <Slide
         className='overflow-y-scroll px-4  pb-4'
         direction='left'

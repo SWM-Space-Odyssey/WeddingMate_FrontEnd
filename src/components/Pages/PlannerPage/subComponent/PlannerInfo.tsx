@@ -50,7 +50,6 @@ const PlannerInfo = (props: Props) => {
         if (props.mypage) {
           responseURL += `?key=${Date.now()}`;
         }
-        console.log(responseURL);
         setImgURL(responseURL);
       }
     }

@@ -5,6 +5,7 @@ import LikeButton from "../../../Modules/LikeButton";
 import ProgressiveImg from "../../../Modules/ProgressiveImg";
 import { useQuery } from "@tanstack/react-query";
 import { getLike } from "../../../../api/like";
+import EmptyLike from "./EmptyLike";
 
 type Props = {};
 
@@ -82,7 +83,11 @@ const ItemLike = (props: Props) => {
       });
     });
   };
-  return <div className='flex-1 flex-col'>{spreadElements(data.data)}</div>;
+  if (data && data.data?.length > 0) {
+    return <div className='flex-1 flex-col'>{spreadElements(data.data)}</div>;
+  } else {
+    return <EmptyLike />;
+  }
 };
 
 export default ItemLike;

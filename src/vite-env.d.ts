@@ -139,7 +139,7 @@ type ItemBody = {
   portfolioId: number;
   category: string;
   date?: string;
-  company?: string;
+  companyName?: string;
   order?: number;
   isWriter?: boolean;
 };

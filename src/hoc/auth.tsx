@@ -9,7 +9,6 @@ import { resetAccessToken, setAccessToken } from "../store/userSlice";
 
 type option = "all" | "planner" | "customer" | "unregistered" | null;
 const Auth = (Component: FC<any>, option: option) => (props: any) => {
-  console.log("TOKEN CHECK");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let dep = new Date();
@@ -50,7 +49,6 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
           if (res.status === 200) {
             // 토큰이 만료되지 않은 경우
             const type = res.data.data;
-            console.log(type);
             switch (type) {
               case "PLANNER":
                 if (option === "unregistered") {

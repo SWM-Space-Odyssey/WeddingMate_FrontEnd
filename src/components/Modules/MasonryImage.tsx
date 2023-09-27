@@ -62,7 +62,6 @@ const useFetchUsers = (param?: string) => {
         return response;
       } else {
         const response = getFeedImage(pageParam);
-        console.log(response);
         return response;
       }
     },

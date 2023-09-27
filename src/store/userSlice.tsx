@@ -36,7 +36,6 @@ export const userSlice = createSlice({
     },
 
     persistTest: (state) => {
-      console.log("h");
       state.nickname = "persist";
     },
   },

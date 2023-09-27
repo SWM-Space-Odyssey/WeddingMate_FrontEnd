@@ -53,7 +53,6 @@ export const useUUID = () => {
 };
 
 const setReduxAccessToken = (token: string) => {
-  console.log("setReduxAccessToken");
   const dispatch = useDispatch();
   dispatch(setAccessToken(token));
 };

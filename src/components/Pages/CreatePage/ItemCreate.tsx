@@ -83,7 +83,6 @@ const ItemCreate = (props: Props) => {
   const getInitData = async (itemId: number) => {
     setIsEdit(itemId);
     const res = await fetchItems(itemId);
-    console.log(res);
     if (res?.status === "SUCCESS" && res.data.typeTag === "item") {
       const data = res.data;
       const itemTagList = data.itemTagList.split(",");
@@ -104,8 +103,8 @@ const ItemCreate = (props: Props) => {
       if (data.date) {
         form.date = new Date(data.date);
       }
-      if (data.company) {
-        form.company = data.company;
+      if (data.companyName) {
+        form.company = data.companyName;
       }
 
       setForm(form);
@@ -114,7 +113,6 @@ const ItemCreate = (props: Props) => {
 
   const onSubmit: SubmitHandler<itemRegister> = async (data) => {
     if (!portfolioId) return alert("잘못된 접근입니다. - itemCreate");
-    console.log(data);
     const category = data.categoryContent;
     if (!data.itemTagList || data.itemTagList.length === 0) {
       setOpenSnackbar(true);
@@ -137,7 +135,7 @@ const ItemCreate = (props: Props) => {
       order: data.order,
     };
     if (data.company) {
-      body.company = data.company;
+      body.companyName = data.company;
     }
     if (data.date) {
       body.date = dateFormatter(data.date);

@@ -17,7 +17,6 @@ const ProgressiveImg = ({ src, ...props }: Props) => {
   useEffect(() => {
     // 이미지를 업데이트 합니다.
     const img = new Image();
-    console.log("hghh");
     img.src = SERVER_IMAGE_URL + src;
     img.onload = () => {
       setImgSrc(SERVER_IMAGE_URL + src);

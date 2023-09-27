@@ -78,7 +78,6 @@ const InfoIndicator = (props: Props) => {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
-    console.log(plannerRes);
     if (plannerRes.status === 200 && plannerRes.data.status === "SUCCESS") {
       setPlannerInfo([
         plannerRes.data.data.profileImageUrl,
@@ -92,7 +91,7 @@ const InfoIndicator = (props: Props) => {
     getInfo();
   }, []);
   return (
-    <div className='pb-2 mb-3 flex gap-3 items-center border-b'>
+    <div className='pb-2 px-4 mb-3 flex gap-3 items-center border-b sticky top-0'>
       {loading && loadingElement}
       {!loading && plannerInfo && infoElement(plannerInfo, "planner")}
       {props.type === "item" && portfolioInfo && (

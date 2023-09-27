@@ -28,7 +28,6 @@ const Mock = ["화려한", "사람많은", "야외"];
 
 const PortfolioHeader = (props: Props) => {
   const { title, tagList, region, repImgUrl } = props.data;
-  const portfolioId = useParams().itemId;
   const tagSplit = tagList.split(",");
   const navigate = useNavigate();
 
@@ -70,9 +69,6 @@ const PortfolioHeader = (props: Props) => {
 
   return (
     <div className='flex flex-col justify-between mt-4'>
-      {portfolioId && (
-        <InfoIndicator portfolioId={portfolioId} type='portfolio' />
-      )}
       <div className='flex flex-row justify-between'>
         <div className='flex gap-2.5 '>
           <div>
