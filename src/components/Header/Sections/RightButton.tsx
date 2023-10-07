@@ -1,4 +1,4 @@
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Settings } from "@mui/icons-material";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LikeButton from "../../Modules/LikeButton";
@@ -19,7 +19,7 @@ const RightButton = (props: Props) => {
     (state: RootState) => state.view.adjData
   );
   const navigate = useNavigate();
-  const type = location[1] as "item" | "portfolio";
+  const type = location[1] as "item" | "portfolio" | "plannermypage";
   let adjURL: string;
   if (type === "item") {
     adjURL = `/create/item/${portfolioId}/${order}/${itemId}`;
@@ -64,27 +64,38 @@ const RightButton = (props: Props) => {
       </div>
     );
   };
+  const MyPageSetting = () => {
+    return (
+      <IconButton
+        onClick={() => {
+          navigate("/plannermypage/setting");
+        }}
+      >
+        <Settings fontSize='small' />
+      </IconButton>
+    );
+  };
+
   const LikeButtonSet = () => {
     if (type === "item") {
       return <LikeButton targetId={itemId} isLiked={isLike} type={type} />;
-    } else {
+    } else if (type === "portfolio") {
       return <LikeButton targetId={portfolioId} isLiked={isLike} type={type} />;
     }
   };
+
   if (isWriter && ["item", "portfolio"].includes(type)) {
     return <WriterButtonSet />;
   } else if (!isWriter && ["item", "portfolio"].includes(type)) {
     return <LikeButtonSet />;
+  } else if (type === "plannermypage") {
+    if (location.length > 2) {
+      return <div className='w-10' />;
+    }
+    return <MyPageSetting />;
   } else {
     return <div className='w-10' />;
   }
-
-  return (
-    <div>
-      {isWriter && ["item", "portfolio"].includes(type) && <WriterButtonSet />}
-      {!isWriter && ["item", "portfolio"].includes(type) && <LikeButtonSet />}
-    </div>
-  );
 };
 
 export default RightButton;

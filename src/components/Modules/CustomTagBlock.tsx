@@ -35,10 +35,13 @@ const CustomTagBlock = <
   const state = props.formState;
   const tagCountMax = props.maxTag ? props.maxTag : 1;
   const initValue = props.initValue;
-  const [componentValue, setComponentValue] = useState<string[]>([]);
 
+  const [componentValue, setComponentValue] = useState<string[]>([]);
+  const [initFlag, setInitFlag] = useState<boolean>(false);
   useEffect(() => {
     if (!initValue || !initValue[0]) return;
+    if (initFlag) return;
+    setInitFlag(true);
     setComponentValue([...initValue]);
   }, [initValue]);
 

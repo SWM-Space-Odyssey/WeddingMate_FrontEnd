@@ -33,6 +33,7 @@ const pageMap: { [key in PageList]: string } = {
 const NavBar = (props: Props) => {
   const navigate = useNavigate();
   const location = useLocation().pathname.split("/")[1];
+  const subLocation = useLocation().pathname.split("/")[2];
   const dispatch = useDispatch();
   const [seleceted, setSelected] = useState(0);
   const handleNavigate = (view: PageList) => {
@@ -42,7 +43,11 @@ const NavBar = (props: Props) => {
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     if (PIVOT_PAGES.includes(location)) {
-      setVisible(true);
+      if (location === "plannermypage" && subLocation === "setting") {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
     } else {
       setVisible(false);
     }
@@ -65,7 +70,7 @@ const NavBar = (props: Props) => {
       default:
         break;
     }
-  }, [location]);
+  }, [location, subLocation]);
   return (
     <div className={`w-full h-14 bottom-0 ${visible ? "" : "hidden"}`}>
       <BottomNavigation

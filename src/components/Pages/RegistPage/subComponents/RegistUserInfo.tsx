@@ -16,10 +16,12 @@ import * as amplitude from "@amplitude/analytics-browser";
 const wrapperDiv = "px-4 flex flex-col h-full justify-between";
 const innerDiv = "flex flex-col mt-6 gap-y-7";
 
-const RegistUserInfo = () => {
+type Props = {
+  adjust?: boolean;
+};
+const RegistUserInfo = (props: Props) => {
   const dispatch = useDispatch();
   const { control, getValues, setValue } = useFormContext();
-  const [flag, setFlag] = useState<boolean>(true);
   const page = useSelector((state: RootState) => state.view.page);
   const [userType, setUserType] = useState<"couple" | "planner">("couple");
   const [dateConfirmed, setDateConfirmed] = useState<boolean | null>(null);
@@ -41,31 +43,6 @@ const RegistUserInfo = () => {
       state: "position",
       title: "직급",
       placeholder: "사원, 대리, 과장 등",
-    },
-  };
-  const coupleStateMapping: MappingInterface<
-    coupleRegistStates,
-    coupleRegister
-  > = {
-    userNickname: {
-      state: "nickname",
-      title: "닉네임",
-      placeholder: "사용할 닉네임을 입력해주세요",
-    },
-    userWeddingDateConfirmed: {
-      state: "weddingDateConfirmed",
-      title: "예식일 확정 여부",
-      placeholder: "예식일 확정 여부를 선택해주세요",
-    },
-    userWeddingDate: {
-      state: "weddingDate",
-      title: "예식일",
-      placeholder: "예식일을 선택해주세요",
-    },
-    userRegion: {
-      state: "region",
-      title: "지역",
-      placeholder: "예식 지역을 선택해주세요",
     },
   };
 
@@ -102,7 +79,9 @@ const RegistUserInfo = () => {
       setUserType(getValues("type"));
     }
   }, [page]);
-
+  useEffect(() => {
+    setDateConfirmed(weddingDateConfirmed);
+  }, [weddingDateConfirmed]);
   const nextButtonFlag = {
     planner:
       regionList?.length > 0 &&
@@ -113,28 +92,43 @@ const RegistUserInfo = () => {
         ? false
         : true,
     couple:
-      region?.length !== 0 &&
       region !== undefined &&
+      region?.length !== 0 &&
       (dateConfirmed === false || (dateConfirmed === true && weddingDate)) &&
       nickname
         ? false
         : true,
   };
 
-  const nextButton = (type: typeof userType) => (
-    <Button
-      className='h-11 w-full'
-      variant='contained'
-      sx={{ fontSize: "1rem", my: 1 }}
-      onClick={() => {
-        amplitude.track("regist_step2");
-        dispatch(NextPage());
-      }}
-      disabled={nextButtonFlag[type]}
-    >
-      다음
-    </Button>
-  );
+  const nextButton = (type: typeof userType) => {
+    if (props.adjust) {
+      return (
+        <Button
+          className='h-11 w-full'
+          type='submit'
+          variant='contained'
+          sx={{ fontSize: "1rem", my: 1 }}
+        >
+          완료
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          className='h-11 w-full'
+          variant='contained'
+          sx={{ fontSize: "1rem", my: 1 }}
+          onClick={() => {
+            amplitude.track("regist_step2");
+            dispatch(NextPage());
+          }}
+          disabled={nextButtonFlag[type]}
+        >
+          다음
+        </Button>
+      );
+    }
+  };
   const onClickConfirmed = (flag: boolean) => {
     setDateConfirmed(flag);
     setValue("weddingDateConfirmed", flag);
@@ -153,7 +147,11 @@ const RegistUserInfo = () => {
         <Button
           className='w-1/2 h-11'
           variant={
-            dateConfirmed !== null && !dateConfirmed ? "contained" : "outlined"
+            dateConfirmed !== undefined &&
+            dateConfirmed !== null &&
+            !dateConfirmed
+              ? "contained"
+              : "outlined"
           }
           onClick={() => onClickConfirmed(false)}
         >
@@ -192,12 +190,14 @@ const RegistUserInfo = () => {
             <CustomDatePicker
               state={"weddingDate"}
               placeholder='예식 예정일을 선택해주세요'
+              init={props?.adjust ? weddingDate : undefined}
             />
           </Collapse>
           <CustomTagBlock
             title='예식 지역'
             spreadValues={CountryList}
             formState='region'
+            initValue={[regionList]}
           />
         </div>
         {nextButton(userType)}

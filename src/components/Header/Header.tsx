@@ -25,37 +25,6 @@ const Header = (props: Props) => {
 
   const location = useLocation().pathname.split("/")[1];
 
-  // const leftButton = () => {
-  //   return (
-  //     <button
-  //       type='button'
-  //       onClick={() => {
-  //         navigate(-1);
-  //       }}
-  //     >
-  //       <div>{arrow_back}</div>
-  //       {/* <ArrowBackIos color='secondary' /> */}
-  //     </button>
-  //   );
-  // };
-  // const centerContent = () => {
-  //   const type = useSelector((state: RootState) => state.user.type);
-  //   const maxPage = type === "planner" ? 3 : 4;
-  //   if (props.main === "regist") {
-  //     return (
-  //       <>
-  //         {page < maxPage && (
-  //           <Typography color={"secondary"}>
-  //             회원가입 ({page + 1}/{maxPage})
-  //           </Typography>
-  //         )}
-  //       </>
-  //     );
-  //   } else {
-  //     return logo;
-  //   }
-  // };
-
   return (
     <div
       className={`sticky h-14 py-1.5 px-2 justify-center ${

@@ -15,7 +15,9 @@ import {
 import { useFormContext, useWatch } from "react-hook-form";
 import * as amplitude from "@amplitude/analytics-browser";
 
-type Props = {};
+type Props = {
+  adjust?: boolean;
+};
 
 const wrapperDiv = "px-4 flex flex-col h-full justify-between";
 const innerDiv = "flex flex-col mt-6 gap-y-7";
@@ -55,6 +57,16 @@ export const RegistCoupleTag1 = (props: Props) => {
     control,
     name: "plannerTagList",
   });
+  const initHandler = (data: string | string[]) => {
+    if (typeof data === "string") {
+      return data.split(",");
+    } else {
+      if (typeof data === "object" && data.length > 0) {
+        return data;
+      }
+      return [];
+    }
+  };
 
   const buttonFlag =
     budget &&
@@ -71,22 +83,25 @@ export const RegistCoupleTag1 = (props: Props) => {
           title='예산'
           spreadValues={registBudgetTagList}
           formState='budget'
+          initValue={props.adjust ? [budget] : []}
         />
         <CustomTagBlock
           title='분위기'
-          subtitle='선택한 키워드에 맞춰 플래너를 추천해드립니다!'
+          subtitle='선택한 키워드에 맞춰 게시물을 추천해드립니다!'
           maxTag={3}
           spreadValues={registMoodTagList}
           formState='portfolioTagList'
+          initValue={initHandler(portfolioTagList)}
         />
         <CustomTagBlock
           title='이런 플래너를 원해요 !'
           maxTag={3}
           spreadValues={registPlannerTagList}
           formState='plannerTagList'
+          initValue={initHandler(plannerTagList)}
         />
       </div>
-      {NextButton(buttonFlag, "다음")}
+      {!props?.adjust ? NextButton(buttonFlag, "다음") : <></>}
     </div>
   );
 };
@@ -124,31 +139,37 @@ export const RegistCoupleTag2 = (props: Props) => {
       <div className={innerDiv}>
         <div className='font-bold text-2xl'>
           <div>선호하는 스/드/메 스타일을</div>
-          선택해주세요
+          <div>선택해주세요</div>
         </div>
 
         <CustomTagBlock
           title='드레스 소재'
           spreadValues={registDressTagList}
           formState='dressTagList'
+          initValue={[dressTagList]}
         />
         <CustomTagBlock
           title='스튜디오 종류'
           spreadValues={registStudioTypeTagList}
           formState='studioTypeTagList'
+          initValue={[studioTypeTagList]}
         />
         <CustomTagBlock
           title='스튜디오 특징'
           spreadValues={registStudioFocusTagList}
           formState='studioFocusTagList'
+          initValue={[studioFocusTagList]}
         />
         <CustomTagBlock
           title='메이크업'
           spreadValues={registMakeupTagList}
           formState='makeupTagList'
+          initValue={[makeupTagList]}
         />
       </div>
-      {NextButton(buttonFlag, "가입하기", true)}
+      {props?.adjust
+        ? NextButton(true, "수정", true)
+        : NextButton(buttonFlag, "가입하기", true)}
     </div>
   );
 };

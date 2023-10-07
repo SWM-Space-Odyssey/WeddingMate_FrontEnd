@@ -36,7 +36,7 @@ const RegistUserType = () => {
         className={buttonClass}
         variant='outlined'
         onClick={() => onClickHandler(str)}
-        // disabled={str === PlannerString ? true : false}
+        disabled={str === PlannerString ? true : false}
         sx={{
           display: "flex",
           fontWeight: `${userType === str ? 700 : 400}`,

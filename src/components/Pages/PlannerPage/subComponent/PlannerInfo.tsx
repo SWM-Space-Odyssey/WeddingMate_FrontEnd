@@ -36,6 +36,7 @@ const PlannerInfo = (props: Props) => {
       }),
     {
       refetchOnWindowFocus: false,
+      staleTime: 1000 * 60,
     }
   );
   const { nickname, profileImageUrl, plannerInfo, plannerProfileInfo } =
@@ -101,30 +102,13 @@ const PlannerInfo = (props: Props) => {
           )}
           {!props.mypage && ( // PlannerPage
             <img
-              src={`${SERVER_IMAGE_URL}${profileImageUrl}`}
+              src={`${SERVER_IMAGE_URL}${imgURL}`}
               className='w-[84px] h-[84px] rounded-full  object-cover'
             />
           )}
           <div className='flex flex-col items-center gap-0.5'>
             <CustomText text={`${nickname}`} type='Title-large' />
-            {/* <CustomText
-              text={`${company} / ${position} / ${regionList}`}
-              type='Description'
-            /> */}
           </div>
-          {/* {plannerProfileInfo.sns && (
-            <CustomTag type='sns' text={plannerProfileInfo.sns} />
-          )}
-          {plannerProfileInfo.bio && (
-            <>
-              <div className='border-b-[1px] border-gray-200 w-full max-h-10 overflow-y-scroll' />
-              <CustomText text={plannerProfileInfo.bio} type='SubContent' />
-            </>
-          )}
-          <CustomTagBlock spreadValues={spreadValues} />
-          {plannerProfileInfo.bio && (
-            <div className='border-b-[1px] border-gray-200 w-full' />
-          )} */}
         </div>
       )}
     </div>

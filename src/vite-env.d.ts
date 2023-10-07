@@ -52,6 +52,7 @@ interface coupleRegister {
   type: "couple";
   nickname: string;
   region: string[];
+  regionList: string;
   weddingDate: string;
   weddingDateConfirmed: boolean;
   budget: string[];

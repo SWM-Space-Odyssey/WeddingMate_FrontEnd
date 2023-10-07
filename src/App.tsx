@@ -19,6 +19,7 @@ import {
   AuthPortfolioPage,
   AuthRegisterPage,
   AuthSearchPage,
+  AuthSettingPage,
 } from "./hoc/AuthPages";
 import ChannelService from "./hooks/ChannelService";
 import { CHANNEL_PLUGIN_KEY } from "./common/constants";
@@ -53,6 +54,11 @@ function App() {
                   path='/plannermypage'
                   element={<AuthPlannerMyPage mypage />}
                 />
+                <Route
+                  path='/plannermypage/setting'
+                  element={<AuthSettingPage />}
+                />
+
                 <Route path='/item/:itemId' element={<AuthItemPage />} />
                 <Route
                   path='/portfolio/:itemId'
