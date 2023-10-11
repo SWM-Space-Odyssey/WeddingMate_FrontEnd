@@ -18,10 +18,10 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       dispatch(setAccessToken(response.data.data.accessToken));
       navigate(0);
       return;
-    } else if (response && response.data?.status === "UNAUTHORIZED") {
-      dispatch(resetAccessToken());
-      navigate("/login");
-      return;
+      // } else if (response && response.data?.status === "UNAUTHORIZED") {
+      //   dispatch(resetAccessToken());
+      //   navigate("/login");
+      //   return;
     } else {
       dispatch(resetAccessToken());
       navigate("/login");

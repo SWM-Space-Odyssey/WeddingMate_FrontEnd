@@ -20,6 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
 import * as amplitude from "@amplitude/analytics-browser";
 import { SERVER_URL } from "../../../common/constants";
+import { getPortfolio, usePortfolioCheck } from "../../../api/portfolio";
+import Blocker from "../../Blocker/Blocker";
 type Props = {
   guide?: boolean;
 };
@@ -37,15 +39,13 @@ const madalStyle = "flex flex-col justify-center items-center ";
 const FeedPage = (props: Props) => {
   const user = useSelector((state: RootState) => state.view.currentView);
   const navigate = useNavigate();
-  // useQuery 작성
-  const [loginMadal, setLoginMadal] = useState(props.guide ? true : false);
+  const [loginModal, setLoginModal] = useState(props.guide ? true : false);
   if (props.guide) {
     amplitude.track("Journey Start");
   }
-
   return (
     <>
-      <Modal open={loginMadal} className={madalStyle}>
+      <Modal open={loginModal} className={madalStyle}>
         <div
           className={
             madalStyle + "shadow-sm h-48 w-64 bg-zinc-100 rounded-3xl mb-20"
@@ -62,7 +62,6 @@ const FeedPage = (props: Props) => {
         </div>
       </Modal>
       <Fade
-        // direction='right'
         in
         mountOnEnter
         unmountOnExit
@@ -70,7 +69,7 @@ const FeedPage = (props: Props) => {
       >
         <div>
           <CustomSearchForm />
-          <MasonryImage />
+          <Blocker SpecificComponent={() => <MasonryImage />} />
         </div>
       </Fade>
     </>

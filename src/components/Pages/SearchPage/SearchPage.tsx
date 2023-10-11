@@ -9,6 +9,7 @@ import SearchFeed from "./subComponent/SearchFeed";
 import SearchPlanner from "./subComponent/SearchPlanner";
 import { arrow_back } from "../../../assets/arrow_back";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import Blocker from "../../Blocker/Blocker";
 
 type SearchKeyword = {
   search: string;
@@ -40,7 +41,7 @@ const SearchPage = (props: Props) => {
   }, [param]);
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col h-full'>
       <div className='flex  items-center gap-1.5 px-2 py-1.5'>
         <button
           type='button'
@@ -77,8 +78,14 @@ const SearchPage = (props: Props) => {
           </button>
         </Box>
       </div>
-      <SearchPlanner search={search} />
-      <SearchFeed search={search} />
+      <Blocker
+        SpecificComponent={() => (
+          <>
+            <SearchPlanner search={search} />
+            <SearchFeed search={search} />
+          </>
+        )}
+      />
     </div>
   );
 };

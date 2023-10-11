@@ -3,7 +3,7 @@ import CustomText from "../../../Modules/CustomText";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
 import axios from "axios";
-import { getPortfolio } from "../../../../api/portfolio";
+import { getPortfolio, usePortfolioCheck } from "../../../../api/portfolio";
 import { useQuery } from "@tanstack/react-query";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 import { useNavigate, useParams } from "react-router-dom";
@@ -41,14 +41,8 @@ const mockData = [
 const PlannerPortfolio = (props: Props) => {
   const navigate = useNavigate();
   const portfolioId = parseInt(useParams().Id ?? "0");
-  const { data } = useQuery(
-    ["portfolio"],
-    () => getPortfolio(portfolioId, props.mypage),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
-  if (data?.status === "FAIL" || !data)
+  const { data } = usePortfolioCheck(portfolioId, props.mypage);
+  if (data?.status === "FAIL" || data?.data.length === 0)
     return (
       <div className='flex flex-col items-center justify-center'>
         <span className='text-[5rem]'>🐾</span>
