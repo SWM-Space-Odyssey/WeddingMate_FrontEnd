@@ -77,9 +77,8 @@ const Blocker = (props: Props) => {
         </div>
       );
     }
-  } else {
-    return <props.SpecificComponent />;
   }
+  return <props.SpecificComponent />;
 };
 
 export default Blocker;

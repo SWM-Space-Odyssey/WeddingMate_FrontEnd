@@ -59,7 +59,7 @@ const RegistUserType = () => {
         <div className='font-bold text-2xl'>{GuideText}</div>
         <Stack spacing={1} className='mt-6'>
           {buttonComponent(CoupleString)}
-          {buttonComponent(PlannerString)}
+          {/* {buttonComponent(PlannerString)} */}
         </Stack>
       </div>
       <Button
