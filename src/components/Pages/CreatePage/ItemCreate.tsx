@@ -15,8 +15,7 @@ import { Alert, Slide, Snackbar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
-import { PrevPage } from "../../../store/viewSlice";
-import Header from "../../Header/Header";
+import * as amplitude from "@amplitude/analytics-browser";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchItems, postItem, putItem } from "../../../api/Item";
 import { dateFormatter } from "../../../hooks/apiHook";
@@ -152,6 +151,7 @@ const ItemCreate = (props: Props) => {
       if (res.status === "SUCCESS") {
         if (!guide.item) {
           dispatch(setGuide("item"));
+          amplitude.track("Event-item");
         }
         setLoading(true);
         setForm();

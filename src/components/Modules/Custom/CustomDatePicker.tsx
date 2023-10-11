@@ -38,7 +38,6 @@ const CustomDatePicker = (props: Props) => {
               {...field}
               onChange={(e) => {
                 field.onChange(e);
-                console.log(e);
               }}
               selected={props.init ? initValue() : field.value}
               autoComplete='off'

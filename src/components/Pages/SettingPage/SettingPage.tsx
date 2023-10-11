@@ -99,7 +99,6 @@ const SettingPage = (props: Props) => {
         return true;
       }
     };
-    console.log(data);
     const customerRegion = data.region
       ? data.region.join(",")
       : data.regionList;
@@ -132,9 +131,7 @@ const SettingPage = (props: Props) => {
         studioFocusTagList: data.studioFocusTagList,
       },
     };
-    console.log(body);
     editCustomerProfile(body).then((res) => {
-      console.log(res);
       if (res?.status === "SUCCESS") {
         navigate("/plannermypage/setting");
       } else {

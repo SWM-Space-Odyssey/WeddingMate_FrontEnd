@@ -8,6 +8,7 @@ import { Alert, Button, Slide, Snackbar } from "@mui/material";
 import ImageUploader from "../../Modules/ImageUploader";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import * as amplitude from "@amplitude/analytics-browser";
 import axios from "axios";
 import { fetchItems } from "../../../api/Item";
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -185,6 +186,7 @@ const PortfolioCreate = (props: Props) => {
       if (postData.status === "SUCCESS") {
         if (!guide.portfolio) {
           dispatch(setGuide("portfolio"));
+          amplitude.track("Event-portfolio");
         }
         setLoading(true);
         setForm();

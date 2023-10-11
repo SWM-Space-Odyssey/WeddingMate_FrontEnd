@@ -59,7 +59,6 @@ const RegistPage = () => {
           navigate("/");
         } else {
           alert("회원가입에 실패하였습니다.");
-          console.log(res.data.data);
         }
       });
     } else {

@@ -69,7 +69,6 @@ const ContactForm = (props: Props) => {
       message,
     };
     handleClose(true);
-    console.log(body);
     // const response = await editPlannerProfile(body);
     // if (response.status === 200 && response.data.status === "SUCCESS") {
     //   alert("회원정보가 수정되었습니다.");
