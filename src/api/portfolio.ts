@@ -52,7 +52,6 @@ export const getPortfolio = async (
   isMypage: boolean | undefined
 ) => {
   // 현재 ACCESS 토큰을 사용해서 작성 Portfolio List 를 받아오는 것 같음
-
   const requestUrl = isMypage
     ? `${SERVER_URL}/api/v1/portfolio/`
     : `${SERVER_URL}/api/v1/planner/${portfolioId}/portfolio`;
@@ -65,6 +64,23 @@ export const getPortfolio = async (
         typeTag: "portfolio",
         ...res.data,
       } as GetPlannerPortfolioResponse;
+    })
+    .catch((err: AxiosError) => {
+      return handleError(err);
+    });
+  return response;
+};
+
+const getPortfolioDetail = async (portfolioId: number) => {
+  const response = await axios
+    .get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    })
+    .then((res) => {
+      return {
+        typeTag: "portfolio",
+        ...res.data,
+      } as GetPortfolioResponse;
     })
     .catch((err: AxiosError) => {
       return handleError(err);
@@ -169,4 +185,23 @@ export const deletePortfolio = async (portfolioId: number) => {
       return handleError(err) as ItemResponse;
     });
   return response;
+};
+
+export const usePortfolioCheck = (
+  portfolioId: number,
+  isMypage: boolean | undefined
+) => {
+  return useQuery(
+    ["portfolioCheck", portfolioId, isMypage],
+    () => getPortfolio(portfolioId, isMypage),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+};
+
+export const usePortfolioDetail = (portfolioId: number) => {
+  return useQuery(["portfolioDetail"], () => getPortfolioDetail(portfolioId), {
+    refetchOnWindowFocus: false,
+  });
 };

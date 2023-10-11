@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 // import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
 import { SERVER_URL } from "../common/constants";
 import { getAccessToken, handleError } from "../hooks/apiHook";
+import { useQuery } from "@tanstack/react-query";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 type nickname = {
   nickname: string;
