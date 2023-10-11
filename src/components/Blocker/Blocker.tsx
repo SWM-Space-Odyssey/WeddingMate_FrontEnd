@@ -9,6 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import { usePortfolioCheck, usePortfolioDetail } from "../../hooks/QueryHooks";
 
 type Props = {
   SpecificComponent: () => JSX.Element;

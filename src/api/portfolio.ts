@@ -71,7 +71,7 @@ export const getPortfolio = async (
   return response;
 };
 
-const getPortfolioDetail = async (portfolioId: number) => {
+export const getPortfolioDetail = async (portfolioId: number) => {
   const response = await axios
     .get(`${SERVER_URL}/api/v1/portfolio/${portfolioId}`, {
       headers: { Authorization: `Bearer ${getAccessToken()}` },
@@ -187,21 +187,21 @@ export const deletePortfolio = async (portfolioId: number) => {
   return response;
 };
 
-export const usePortfolioCheck = (
-  portfolioId: number,
-  isMypage: boolean | undefined
-) => {
-  return useQuery(
-    ["portfolioCheck", portfolioId, isMypage],
-    () => getPortfolio(portfolioId, isMypage),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
-};
+// export const usePortfolioCheck = (
+//   portfolioId: number,
+//   isMypage: boolean | undefined
+// ) => {
+//   return useQuery(
+//     ["portfolioCheck", portfolioId, isMypage],
+//     () => getPortfolio(portfolioId, isMypage),
+//     {
+//       refetchOnWindowFocus: false,
+//     }
+//   );
+// };
 
-export const usePortfolioDetail = (portfolioId: number) => {
-  return useQuery(["portfolioDetail"], () => getPortfolioDetail(portfolioId), {
-    refetchOnWindowFocus: false,
-  });
-};
+// export const usePortfolioDetail = (portfolioId: number) => {
+//   return useQuery(["portfolioDetail"], () => getPortfolioDetail(portfolioId), {
+//     refetchOnWindowFocus: false,
+//   });
+// };

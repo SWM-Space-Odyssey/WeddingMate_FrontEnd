@@ -2,7 +2,6 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 // import { MY_ACCESS_KEY, SERVER_URL } from "../common/constants";
 import { SERVER_URL } from "../common/constants";
 import { getAccessToken, handleError } from "../hooks/apiHook";
-import { useQuery } from "@tanstack/react-query";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 type nickname = {
   nickname: string;
@@ -45,6 +44,7 @@ type IuserProfile = nickname & {
   customerTagList: customerTagList;
 };
 type IformProfile = customerInfo & customerTagList & nickname;
+
 const fetchData = async <RT>(
   url: string,
   method: "get" | "post" | "put" | "delete",
@@ -92,21 +92,11 @@ const fetchData = async <RT>(
 };
 
 export const plannerRegist = async (body: plannerBody) => {
-  const response: AxiosResponse = await axios
-    .post(`${SERVER_URL}/api/v1/signup/planner`, body, {
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
-      withCredentials: true,
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return err.response;
-    });
+  const reqURL = `${SERVER_URL}/api/v1/signup/planner`;
+  const response = await fetchData(reqURL, "post", body);
   return response;
 };
+
 export const coupleRegister = async (body: any) => {
   const reqURL = `${SERVER_URL}/api/v1/signup/customer`;
   const response = await fetchData(reqURL, "post", body);
@@ -114,19 +104,21 @@ export const coupleRegister = async (body: any) => {
 };
 
 export const editProfileImg = async (formData: FormData) => {
-  const response: AxiosResponse = await axios
-    .post(`${SERVER_URL}/api/v1/profile/file`, formData, {
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
-      withCredentials: true,
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return err.response;
-    });
+  const reqURL = `${SERVER_URL}/api/v1/profile/file`;
+  const response = await fetchData(reqURL, "post", formData);
+  return response;
+};
+
+export const getUserInfo = async (plannerId?: number) => {
+  const getURL = (plannerId?: number) => {
+    if (plannerId) {
+      return `${SERVER_URL}/api/v1/customer/${plannerId}`;
+    } else {
+      return `${SERVER_URL}/api/v1/profile/customer`;
+    }
+  };
+  const reqURL = getURL(plannerId);
+  const response = await fetchData(reqURL, "get");
   return response;
 };
 
