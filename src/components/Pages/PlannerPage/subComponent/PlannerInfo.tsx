@@ -107,7 +107,10 @@ const PlannerInfo = (props: Props) => {
             />
           )}
           <div className='flex flex-col items-center gap-0.5'>
-            <CustomText text={`${nickname}`} type='Title-large' />
+            <CustomText
+              text={`${nickname ? nickname : "사용자이름"}`}
+              type='Title-large'
+            />
           </div>
         </div>
       )}
