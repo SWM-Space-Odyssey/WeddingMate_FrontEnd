@@ -221,7 +221,8 @@ const PortfolioCreate = (props: Props) => {
               <div className='flex flex-col gap-6 pt-6'>
                 <CustomInput content={InputContent} />
                 <CustomTagBlock
-                  title='MOOD'
+                  title='분위기'
+                  subtitle='작성하시는 글에 맞는 분위기를 선택해주세요'
                   renderCounter={true}
                   spreadValues={MoodTagList}
                   formState='Mood'
@@ -229,7 +230,8 @@ const PortfolioCreate = (props: Props) => {
                   initValue={initMood}
                 />
                 <CustomTagBlock
-                  title='Location'
+                  title='지역'
+                  subtitle='대략적인 지역을 입력해주세요'
                   spreadValues={CountryList}
                   formState='region'
                   initValue={[initRegion]}

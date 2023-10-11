@@ -60,7 +60,7 @@ const PlannerPage = (props: Props) => {
           </div>
           <Divider height={2} />
           <div className='flex justify-between py-2'>
-            <span>내 웨딩 피드</span>
+            <span className='flex items-center'>내 웨딩 피드</span>
             {location === "plannermypage" && (
               <Button
                 variant='outlined'

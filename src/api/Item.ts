@@ -2,6 +2,7 @@ import axios, { Axios, AxiosError } from "axios";
 import { SERVER_URL } from "../common/constants";
 // import { getAccessToken } from "../common/constants";
 import { getAccessToken, getURL, handleError } from "../hooks/apiHook";
+import { useQuery } from "@tanstack/react-query";
 
 type ItemResponse =
   | {

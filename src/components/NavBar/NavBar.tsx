@@ -72,7 +72,11 @@ const NavBar = (props: Props) => {
     }
   }, [location, subLocation]);
   return (
-    <div className={`w-full h-14 bottom-0 ${visible ? "" : "hidden"}`}>
+    <div
+      className={`w-full h-14 bottom-0 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] ${
+        visible ? "" : "hidden"
+      }`}
+    >
       <BottomNavigation
         showLabels
         value={seleceted}

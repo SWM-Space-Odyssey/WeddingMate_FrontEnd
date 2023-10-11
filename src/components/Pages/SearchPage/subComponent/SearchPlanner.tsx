@@ -18,7 +18,7 @@ const SearchPlanner = (props: Props) => {
       <CustomText type='Title-large' text='업체' />
       <div className='flex justify-center'>
         <button className='text-xs border rounded-3xl w-fit py-2 px-4'>
-          <span className=''>'{search}'</span> 검색결과 더 보기
+          <span className='  '>' {search} '</span> 검색결과 더 보기
           <ArrowForwardIos fontSize='inherit' />
         </button>
       </div>

@@ -50,13 +50,14 @@ const PlannerPortfolio = (props: Props) => {
   );
   if (data?.status === "FAIL" || !data)
     return (
-      <div>
-        <div>포트폴리오가 없습니다!</div>
-        <div>포트폴리오를 생성해보세요!</div>
+      <div className='flex flex-col items-center justify-center'>
+        <span className='text-[5rem]'>🐾</span>
+        <div>아직 작성된 글이 없습니다!</div>
+        <div>글을 작성해보세요!</div>
       </div>
     );
 
-  const portfolioList = data.data.map((data) => (
+  const portfolioList = data?.data.map((data) => (
     <button
       onClick={() => {
         navigate(`/portfolio/${data.portfolioId}`);

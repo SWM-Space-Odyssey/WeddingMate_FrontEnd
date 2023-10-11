@@ -16,27 +16,16 @@ const LoadingSpinner = (props: Props) => {
     if (props.redirect && queryToken) {
       dispatch(setAccessToken(queryToken));
     }
-    // if (!accessToken) {
-    //   alert("잘못된 접근입니다. - Spinner ");
-    //   navigate("/");
-    //   return;
-    // }
     if (props.redirect) {
       setTimeout(() => {
-        navigate("/");
+        navigate("/plannermypage");
       }, 2000);
     }
     if (timeOut) {
       setTimeout(() => {
-        navigate("/");
+        navigate("/plannermypage");
       }, parseInt(timeOut) * 1000);
     }
-    // tokenRefresh(accessToken).then((res) => {
-    //   if (res.status === 200) {
-    //     localStorage.setItem("accessToken", res.data.accessToken);
-    //     dispatch(setAccessToken(res.data.accessToken));
-    //   }
-    // });
   }, []);
 
   return (

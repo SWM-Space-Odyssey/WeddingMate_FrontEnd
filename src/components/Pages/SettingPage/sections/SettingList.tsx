@@ -21,6 +21,7 @@ const Gap = (props: { height: number }) => (
 const SettingList = (props: Props) => {
   const navigate = useNavigate();
   const LogOutHandler = () => {
+    if (window.confirm("로그아웃 하시겠습니까?") === false) return;
     userLogOut().then((res) => {
       if (res.status === "SUCCESS") {
         localStorage.removeItem("accessToken");
