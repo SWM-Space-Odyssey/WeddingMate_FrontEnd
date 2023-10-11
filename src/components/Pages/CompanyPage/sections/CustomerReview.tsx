@@ -1,5 +1,5 @@
 import React from "react";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import ImageCard from "../../../Modules/ImageCard";
 import SectionHeader from "../../../Modules/SectionHeader";
 

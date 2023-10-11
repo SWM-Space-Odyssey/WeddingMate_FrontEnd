@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../../Modules/CustomInput";
+import CustomInput from "../../../Modules/Custom/CustomInput";
 import { UseFormRegister, useFormContext } from "react-hook-form";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 
 interface itemFormRegister {
   Title: string;

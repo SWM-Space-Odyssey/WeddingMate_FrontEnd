@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import CustomInput from "../../Modules/CustomInput";
+import CustomInput from "../../Modules/Custom/CustomInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "./index.pcss";
 import { ArrowBack, Cancel, Search } from "@mui/icons-material";

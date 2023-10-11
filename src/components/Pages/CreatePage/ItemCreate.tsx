@@ -8,9 +8,9 @@ import {
 } from "react-hook-form";
 import ImageUploader from "../../Modules/ImageUploader";
 import ItemTags from "./ItemTags";
-import CustomInput from "../../Modules/CustomInput";
-import CustomDatePicker from "../../Modules/CustomDatePicker";
-import CustomButton from "../../Modules/CustomButton";
+import CustomInput from "../../Modules/Custom/CustomInput";
+import CustomDatePicker from "../../Modules/Custom/CustomDatePicker";
+import CustomButton from "../../Modules/Custom/CustomButton";
 import { Alert, Slide, Snackbar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
@@ -22,6 +22,7 @@ import { fetchItems, postItem, putItem } from "../../../api/Item";
 import { dateFormatter } from "../../../hooks/apiHook";
 import LoadingSpinner from "../../Modules/LoadingSpinner";
 import { Edit } from "@mui/icons-material";
+import { setGuide } from "../../../store/userSlice";
 
 type Props = {
   adjust?: itemRegister;
@@ -53,7 +54,9 @@ const alertMessage = {
   inputs: "입력되지 않은 항목이 있습니다!",
 };
 const ItemCreate = (props: Props) => {
+  const guide = useSelector((state: RootState) => state.user.guide);
   const methods = useForm<itemRegister>({});
+
   const [isEdit, setIsEdit] = useState<null | number>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [initTags, setInitTags] = useState<string[]>([]);
@@ -66,6 +69,7 @@ const ItemCreate = (props: Props) => {
   const order = useParams().order;
   const portfolioId = useParams().portfolioId;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const snackbarClose = () => {
     setOpenSnackbar(false);
@@ -146,6 +150,9 @@ const ItemCreate = (props: Props) => {
       body.order = parseInt(order);
       const res = await postItem(body);
       if (res.status === "SUCCESS") {
+        if (!guide.item) {
+          dispatch(setGuide("item"));
+        }
         setLoading(true);
         setForm();
         setTimeout(() => {

@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
-import CustomText from "../../Modules/CustomText";
+import CustomText from "../../Modules/Custom/CustomText";
 import ImageSlider from "./subComponent/ImageSlider";
-import CustomTagBlock from "../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../Modules/Custom/CustomTagBlock";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { Slide } from "@mui/material";

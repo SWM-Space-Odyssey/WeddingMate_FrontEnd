@@ -1,4 +1,4 @@
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../../Modules/Custom/CustomTagBlock";
 import { PlannerTagList } from "../../../../common/TagList";
 import { useDispatch } from "react-redux";
 import { NextPage } from "../../../../store/viewSlice";

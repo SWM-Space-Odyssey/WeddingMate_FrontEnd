@@ -32,6 +32,8 @@ const mockData = {
   },
 };
 
+// 더 이상 사용되지 않는 Component
+// From /PlannerPage/subComponent/ContactList.tsx
 const ContactList = (props: Props) => {
   const [open, setOpen] = useState(false);
 

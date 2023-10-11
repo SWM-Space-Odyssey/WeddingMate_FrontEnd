@@ -1,12 +1,12 @@
 import React from "react";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
 import axios from "axios";
-import { getPortfolio, usePortfolioCheck } from "../../../../api/portfolio";
 import { useQuery } from "@tanstack/react-query";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 import { useNavigate, useParams } from "react-router-dom";
+import { usePortfolioCheck } from "../../../../hooks/QueryHooks";
 
 type Props = {
   mypage?: boolean;

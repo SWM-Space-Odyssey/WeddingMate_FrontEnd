@@ -1,6 +1,6 @@
 import React from "react";
-import CustomText from "../../../Modules/CustomText";
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import CustomText from "../../../Modules/Custom/CustomText";
+import CustomTagBlock from "../../../Modules/Custom/CustomTagBlock";
 
 type Props = {
   data: {

@@ -2,7 +2,7 @@ import { Add, Clear } from "@mui/icons-material";
 import { Badge, Button, Input } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { set, useController, useFormContext, useWatch } from "react-hook-form";
-import CustomText from "./CustomText";
+import CustomText from "./Custom/CustomText";
 import { useMutation, useQueries } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { postImageAndGetURI } from "../../api/Item";

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CustomText from "./CustomText";
+import CustomText from "./Custom/CustomText";
 import { ArrowForward, ArrowForwardIos } from "@mui/icons-material";
 
 type Props = {

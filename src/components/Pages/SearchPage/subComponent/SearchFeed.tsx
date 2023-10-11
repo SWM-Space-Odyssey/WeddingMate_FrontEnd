@@ -1,6 +1,6 @@
 import React from "react";
 import MasonryImage from "../../../Modules/MasonryImage";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 
 type Props = {
   search: string;

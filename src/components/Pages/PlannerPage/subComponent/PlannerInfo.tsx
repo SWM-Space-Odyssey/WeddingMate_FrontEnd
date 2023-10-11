@@ -1,19 +1,14 @@
 import React, { Suspense, useEffect, useState } from "react";
-import CustomText from "../../../Modules/CustomText";
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
-import { useQuery } from "@tanstack/react-query";
+import CustomText from "../../../Modules/Custom/CustomText";
 import {
   // MY_ACCESS_KEY,
   SERVER_IMAGE_URL,
-  SERVER_URL,
 } from "../../../../common/constants";
-import axios, { AxiosResponse } from "axios";
 import { useParams } from "react-router-dom";
 import { Badge, Button, IconButton } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { editProfileImg } from "../../../../api/user";
-import CustomTag from "../../../Modules/CustomTag";
-const mockTag = ["친절한", "답변이빠른", "꼼꼼한"];
+import { useUserInfo } from "../../../../hooks/QueryHooks";
 
 type Props = {
   mypage?: boolean;
@@ -22,25 +17,26 @@ const PlannerInfo = (props: Props) => {
   const MY_ACCESS_KEY = localStorage.getItem("accessToken");
   const [imgURL, setImgURL] = useState("");
   const plannerId = parseInt(useParams().Id ?? "0");
-  const requestURL = props.mypage
-    ? `/api/v1/profile/customer`
-    : `/api/v1/customer/${plannerId}`;
-  const { data, isLoading } = useQuery(
-    ["plannerInfo", plannerId],
-    () =>
-      axios.get(`${SERVER_URL}${requestURL}`, {
-        headers: {
-          Authorization: `Bearer ${MY_ACCESS_KEY}`,
-        },
-        withCredentials: true,
-      }),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60,
-    }
-  );
+  const { data, isLoading } = useUserInfo(plannerId);
+  // const requestURL = props.mypage
+  //   ? `/api/v1/profile/customer`
+  //   : `/api/v1/customer/${plannerId}`;
+  // const { data, isLoading } = useQuery(
+  //   ["plannerInfo", plannerId],
+  //   () =>
+  //     axios.get(`${SERVER_URL}${requestURL}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${MY_ACCESS_KEY}`,
+  //       },
+  //       withCredentials: true,
+  //     }),
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     staleTime: 1000 * 60,
+  //   }
+  // );
   const { nickname, profileImageUrl, plannerInfo, plannerProfileInfo } =
-    data?.data.data;
+    data?.data;
   const imageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const formData = new FormData();

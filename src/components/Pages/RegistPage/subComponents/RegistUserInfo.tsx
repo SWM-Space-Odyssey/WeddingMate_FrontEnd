@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
 import { CountryList } from "../../../../common/CountryLIst";
-import CustomInput from "../../../Modules/CustomInput";
+import CustomInput from "../../../Modules/Custom/CustomInput";
 
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../../Modules/Custom/CustomTagBlock";
 import { Button, Collapse } from "@mui/material";
 import { NextPage } from "../../../../store/viewSlice";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect, useState } from "react";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
-import CustomDatePicker from "../../../Modules/CustomDatePicker";
+import CustomDatePicker from "../../../Modules/Custom/CustomDatePicker";
 import * as amplitude from "@amplitude/analytics-browser";
 
 const wrapperDiv = "px-4 flex flex-col h-full justify-between";

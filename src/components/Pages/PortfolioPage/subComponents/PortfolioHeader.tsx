@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../../Modules/Custom/CustomTagBlock";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
 import { deletePortfolio } from "../../../../api/portfolio";
 import HeaderOptionButton from "../../../Modules/HeaderOptionButton";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import InfoIndicator from "../../../Modules/InfoIndicator";
 
 type tagResDtoList = {

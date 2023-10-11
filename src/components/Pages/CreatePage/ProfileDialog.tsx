@@ -10,9 +10,9 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../Modules/CustomInput";
+import CustomInput from "../../Modules/Custom/CustomInput";
 import { FormProvider, SubmitHandler, set, useForm } from "react-hook-form";
-import CustomTagBlock from "../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../Modules/Custom/CustomTagBlock";
 import { PlannerTagList } from "../../../common/TagList";
 import { CountryList } from "../../../common/CountryLIst";
 import { editPlannerProfile } from "../../../api/user";

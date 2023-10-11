@@ -9,7 +9,7 @@ import {
   Slide,
 } from "@mui/material";
 import React from "react";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import { useNavigate } from "react-router-dom";
 import { userLogOut } from "../../../../api/user";
 

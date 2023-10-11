@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
+// 더 이상 사용되지 않는 Component
+// From /PlannerPage/subComponent/PlannerPortfolio.tsx
 const BottomPostButton = (props: Props) => {
   const navigate = useNavigate();
   return (

@@ -7,7 +7,7 @@ import axios from "axios";
 import { getAccessToken } from "../../hooks/apiHook";
 import { useQuery } from "@tanstack/react-query";
 import { SERVER_URL } from "../../common/constants";
-import ContactList from "../Pages/PlannerPage/subComponent/ContactList";
+import ContactList from "../../Deprecated/ContactList";
 
 type MenuItemInfo = {
   content: JSX.Element;

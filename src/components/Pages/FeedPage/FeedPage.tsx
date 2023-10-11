@@ -11,16 +11,14 @@ import { RootState } from "../../../store/store";
 import MasonryImage from "../../Modules/MasonryImage";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import SkeletonImages from "../../Modules/SkeletonImages";
-import CustomSearchForm from "../../Modules/CustomSearchForm";
+import CustomSearchForm from "../../Modules/Custom/CustomSearchForm";
 import Header from "../../Header/Header";
-import CustomText from "../../Modules/CustomText";
+import CustomText from "../../Modules/Custom/CustomText";
 import kakaoLogin from "../../../assets/kakaoLogin.png";
 import { useNavigate } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
 import * as amplitude from "@amplitude/analytics-browser";
 import { SERVER_URL } from "../../../common/constants";
-import { getPortfolio, usePortfolioCheck } from "../../../api/portfolio";
 import Blocker from "../../Blocker/Blocker";
 type Props = {
   guide?: boolean;

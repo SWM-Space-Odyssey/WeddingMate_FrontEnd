@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../Modules/CustomInput";
+import CustomInput from "../../Modules/Custom/CustomInput";
 import { FormProvider, SubmitHandler, set, useForm } from "react-hook-form";
-import CustomTagBlock from "../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../Modules/Custom/CustomTagBlock";
 import { MoodTagList } from "../../../common/TagList";
 import { CountryList } from "../../../common/CountryLIst";
 import { Alert, Button, Slide, Snackbar } from "@mui/material";
@@ -21,6 +21,8 @@ import {
 // import { MY_ACCESS_KEY, SERVER_URL } from "../../../common/constants";
 import { SERVER_URL } from "../../../common/constants";
 import LoadingSpinner from "../../Modules/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { setGuide } from "../../../store/userSlice";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
 
 type Props = {};
@@ -69,8 +71,9 @@ type JsonData = {
   itemOrderList?: ItemOrderList[];
 };
 const PortfolioCreate = (props: Props) => {
-  const view = useSelector((state: RootState) => state.view.currentView);
+  const guide = useSelector((state: RootState) => state.user.guide);
   const methods = useForm<portfolioRegister>();
+
   const [isEdit, setIsEdit] = useState<null | number>(null);
   const [initMood, setInitMood] = useState<string[]>([]);
   const [initRegion, setInitRegion] = useState<string>("");
@@ -78,8 +81,11 @@ const PortfolioCreate = (props: Props) => {
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
   const param = useParams().portfolioId;
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const snackbarOpenFunc = (message: string) => {
     setSnackbarMessage(message);
@@ -177,6 +183,9 @@ const PortfolioCreate = (props: Props) => {
       body.append("portfolioSaveReqDto", blob);
       const postData = await postPortfolio({ itemType: "portfolio", body });
       if (postData.status === "SUCCESS") {
+        if (!guide.portfolio) {
+          dispatch(setGuide("portfolio"));
+        }
         setLoading(true);
         setForm();
         setTimeout(() => {

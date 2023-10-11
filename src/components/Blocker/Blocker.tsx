@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import CustomText from "../Modules/CustomText";
-import { usePortfolioCheck, usePortfolioDetail } from "../../api/portfolio";
+import CustomText from "../Modules/Custom/CustomText";
 import {
   Button,
   Dialog,

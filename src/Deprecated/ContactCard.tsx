@@ -10,6 +10,8 @@ type Props = {
   };
 };
 
+// 더이상 사용되지 않는 Component
+// From /PlannerPage/subComponent/ContactCard.tsx
 const ContactCard = (props: Props) => {
   const { writer, message, contact } = props.body;
   return (

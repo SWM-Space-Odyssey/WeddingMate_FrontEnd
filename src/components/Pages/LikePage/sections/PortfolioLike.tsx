@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import LikeButton from "../../../Modules/LikeButton";
 import ProgressiveImg from "../../../Modules/ProgressiveImg";
 import { useQuery } from "@tanstack/react-query";

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NextPage } from "../../../../store/viewSlice";
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../../Modules/Custom/CustomTagBlock";
 import {
   registBudgetTagList,
   registDressTagList,

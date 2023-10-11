@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { PROGRESSIVE_IMAGE_URL, SERVER_URL } from "../../common/constants";
-import CustomText from "./CustomText";
+import CustomText from "./Custom/CustomText";
 import { ArrowRight, ChevronRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 

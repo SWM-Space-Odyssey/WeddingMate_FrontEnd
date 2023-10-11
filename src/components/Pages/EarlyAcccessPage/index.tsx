@@ -1,6 +1,6 @@
 import { Button, Paper } from "@mui/material";
 import React from "react";
-import CustomText from "../../Modules/CustomText";
+import CustomText from "../../Modules/Custom/CustomText";
 import "./index.pcss";
 import { EditNote } from "@mui/icons-material";
 import { useSelector } from "react-redux";

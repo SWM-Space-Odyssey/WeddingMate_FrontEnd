@@ -1,5 +1,5 @@
 import React from "react";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import { ArrowForwardIos } from "@mui/icons-material";
 
 type Props = {

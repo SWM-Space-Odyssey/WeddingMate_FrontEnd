@@ -1,10 +1,10 @@
 import React from "react";
-import CustomText from "../../../Modules/CustomText";
+import CustomText from "../../../Modules/Custom/CustomText";
 import { useDispatch } from "react-redux";
 import { intoView } from "../../../../store/viewSlice";
 import { SERVER_IMAGE_URL } from "../../../../common/constants";
 import { useNavigate } from "react-router-dom";
-import CustomTagBlock from "../../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../../Modules/Custom/CustomTagBlock";
 
 type Props = {
   cardData: cardData[];

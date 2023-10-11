@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CustomTagBlock from "../../Modules/CustomTagBlock";
+import CustomTagBlock from "../../Modules/Custom/CustomTagBlock";
 import { useFormContext, useWatch } from "react-hook-form";
 import axios from "axios";
 import { SERVER_URL } from "../../../common/constants";
