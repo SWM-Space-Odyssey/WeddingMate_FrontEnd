@@ -39,7 +39,10 @@ const CustomTagBlock = <
   const [componentValue, setComponentValue] = useState<string[]>([]);
   const [initFlag, setInitFlag] = useState<boolean>(false);
   useEffect(() => {
-    if (!initValue || !initValue[0]) return;
+    if (!initValue || !initValue[0]) {
+      setInitFlag(true);
+      return;
+    }
     if (initFlag) return;
     setInitFlag(true);
     setComponentValue([...initValue]);

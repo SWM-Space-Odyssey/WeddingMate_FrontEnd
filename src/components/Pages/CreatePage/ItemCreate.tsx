@@ -151,7 +151,7 @@ const ItemCreate = (props: Props) => {
       if (res.status === "SUCCESS") {
         if (!guide.item) {
           dispatch(setGuide("item"));
-          amplitude.track("Event-item");
+          amplitude.track("OpenEvent-item");
         }
         setLoading(true);
         setForm();

@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import CustomText from "../../../Modules/Custom/CustomText";
 import { Edit } from "@mui/icons-material";
+import * as amplitude from "@amplitude/analytics-browser";
 import { useDispatch } from "react-redux";
 import { setGuide } from "../../../../store/userSlice";
 
@@ -50,9 +51,16 @@ const EventLevel1 = () => {
             </div>
           </div>
           <div className='flex items-center'>
-            <Button variant='outlined' size='small' sx={{ mr: 1 }}>
-              <Edit />글 쓰기
-            </Button>
+            <a href='/create/portfolio'>
+              <Button
+                onClick={() => amplitude.track("OpenEvent-init")}
+                variant='outlined'
+                size='small'
+                sx={{ mr: 1 }}
+              >
+                <Edit />글 쓰기
+              </Button>
+            </a>
             <CustomText type='Title-base' text='버튼 누르고 참여하기!' />
           </div>
         </div>

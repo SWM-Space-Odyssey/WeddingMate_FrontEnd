@@ -186,7 +186,7 @@ const PortfolioCreate = (props: Props) => {
       if (postData.status === "SUCCESS") {
         if (!guide.portfolio) {
           dispatch(setGuide("portfolio"));
-          amplitude.track("Event-portfolio");
+          amplitude.track("OpenEvent-portfolio");
         }
         setLoading(true);
         setForm();
