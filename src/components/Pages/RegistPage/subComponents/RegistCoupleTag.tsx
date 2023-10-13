@@ -53,10 +53,10 @@ export const RegistCoupleTag1 = (props: Props) => {
     control,
     name: "portfolioTagList",
   });
-  const plannerTagList = useWatch({
-    control,
-    name: "plannerTagList",
-  });
+  // const plannerTagList = useWatch({
+  //   control,
+  //   name: "plannerTagList",
+  // });
   const initHandler = (data: string | string[]) => {
     if (typeof data === "string") {
       return data.split(",");
@@ -71,10 +71,10 @@ export const RegistCoupleTag1 = (props: Props) => {
   const buttonFlag =
     budget &&
     portfolioTagList &&
-    plannerTagList &&
+    // plannerTagList &&
     budget.length > 0 &&
-    portfolioTagList.length > 0 &&
-    plannerTagList.length > 0;
+    portfolioTagList.length > 0;
+  // plannerTagList.length > 0;
   return (
     <div className={wrapperDiv}>
       <div className={innerDiv}>
@@ -86,20 +86,20 @@ export const RegistCoupleTag1 = (props: Props) => {
           initValue={props.adjust ? [budget] : []}
         />
         <CustomTagBlock
-          title='분위기'
+          title='선호하는 분위기'
           subtitle='선택한 키워드에 맞춰 게시물을 추천해드립니다!'
           maxTag={3}
           spreadValues={registMoodTagList}
           formState='portfolioTagList'
           initValue={initHandler(portfolioTagList)}
         />
-        <CustomTagBlock
+        {/* <CustomTagBlock
           title='이런 플래너를 원해요 !'
           maxTag={3}
           spreadValues={registPlannerTagList}
           formState='plannerTagList'
           initValue={initHandler(plannerTagList)}
-        />
+        /> */}
       </div>
       {!props?.adjust ? NextButton(buttonFlag, "다음") : <></>}
     </div>

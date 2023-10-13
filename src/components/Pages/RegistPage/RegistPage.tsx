@@ -72,7 +72,6 @@ const RegistPage = () => {
         budget,
         dressTagList,
         makeupTagList,
-        plannerTagList,
         studioFocusTagList,
         studioTypeTagList,
         portfolioTagList,
@@ -86,7 +85,6 @@ const RegistPage = () => {
         budget: parseArray(budget),
         customerTagList: {
           portfolioTagList: parseArray(portfolioTagList),
-          plannerTagList: parseArray(plannerTagList),
           dressTagList: parseArray(dressTagList),
           studioTypeTagList: parseArray(studioTypeTagList),
           studioFocusTagList: parseArray(studioFocusTagList),
