@@ -19,8 +19,8 @@ type Props = {};
 
 const EventModal = (props: Props) => {
   const guide = useSelector((state: RootState) => state.user.guide);
-  if (!guide.portfolio) return <EventLevel1 />;
-  if (!guide.item) return <EventLevel2 />;
+  if (!guide?.portfolio) return <EventLevel1 />;
+  if (!guide?.item) return <EventLevel2 />;
 };
 
 export default EventModal;

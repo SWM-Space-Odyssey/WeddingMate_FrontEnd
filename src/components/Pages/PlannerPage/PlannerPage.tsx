@@ -49,7 +49,7 @@ const PlannerPage = (props: Props) => {
   // const response = data?.data.data;
   return (
     <>
-      {(!guide.portfolio || !guide.item) && <EventModal />}
+      {(!guide?.portfolio || !guide?.item) && <EventModal />}
       <Slide
         className='overflow-y-scroll px-4 flex-1'
         direction={`${view === "Planner" ? "right" : "left"}`}
