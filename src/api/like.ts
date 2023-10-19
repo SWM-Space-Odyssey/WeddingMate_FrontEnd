@@ -16,7 +16,7 @@ type poseLikeResponse = status & {
 };
 type postLikeBody = {
   id: string;
-  likeType: "PLANNER" | "ITEM" | "PORTFOLIO";
+  likeType: "planner"| "item" | "portfolio";
 };
 
 const fetchData = async <RT>(
@@ -59,13 +59,13 @@ const fetchData = async <RT>(
 };
 
 export const postLike = async (body: postLikeBody) => {
-  const reqURL = `${SERVER_URL}/api/v1/like`;
+  const reqURL = `${SERVER_URL}/api/v1/likes`;
   const response = await fetchData<poseLikeResponse>(reqURL, "post", body);
   return response;
 };
 
 export const getLike = async (likeType: "company" | "portfolio" | "item") => {
-  const reqURL = `${SERVER_URL}/api/v1/like/${likeType}`;
+  const reqURL = `${SERVER_URL}/api/v1/likes/by-user-id/${likeType}`;
   const response = await fetchData<getLikeResponse>(reqURL, "get");
   return response;
 };
