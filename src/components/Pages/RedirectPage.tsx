@@ -6,7 +6,7 @@ type Props = {};
 const RedirectPage = (props: Props) => {
   const navigate = useNavigate();
   useEffect(() => {
-    navigate("/plannermypage");
+    navigate("/mypage");
     // window.location.href = "https://www.weddingmate.co.kr/";
   }, []);
   return (

@@ -7,7 +7,7 @@ import { logo } from "../../../assets/logo";
 
 type Props = {};
 const headerText = {
-  plannermypage: "마이웨딩",
+  mypage: "마이웨딩",
   setting: "설정",
   info: "예식 정보",
   type: "웨딩 플랜 / 스드메",

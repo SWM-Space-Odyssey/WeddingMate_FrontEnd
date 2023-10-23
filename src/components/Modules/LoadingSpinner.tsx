@@ -18,12 +18,12 @@ const LoadingSpinner = (props: Props) => {
     }
     if (props.redirect) {
       setTimeout(() => {
-        navigate("/plannermypage");
+        navigate("/mypage");
       }, 2000);
     }
     if (timeOut) {
       setTimeout(() => {
-        navigate("/plannermypage");
+        navigate("/mypage");
       }, parseInt(timeOut) * 1000);
     }
   }, []);

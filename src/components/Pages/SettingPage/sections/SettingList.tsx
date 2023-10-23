@@ -34,9 +34,7 @@ const SettingList = (props: Props) => {
   return (
     <div>
       <List>
-        <ListItemButton
-          onClick={() => navigate("/plannermypage/setting/?type=info")}
-        >
+        <ListItemButton onClick={() => navigate("/mypage/setting/?type=info")}>
           <div className='flex justify-between w-full'>
             <div className='flex flex-col'>
               <CustomText type='Title-base' text='예식 정보' />
@@ -48,9 +46,7 @@ const SettingList = (props: Props) => {
           </div>
         </ListItemButton>
         <Gap height={1} />
-        <ListItemButton
-          onClick={() => navigate("/plannermypage/setting/?type=tags")}
-        >
+        <ListItemButton onClick={() => navigate("/mypage/setting/?type=tags")}>
           <div className='flex justify-between w-full'>
             <div className='flex flex-col'>
               <CustomText type='Title-base' text='웨딩 플랜 / 스드메' />

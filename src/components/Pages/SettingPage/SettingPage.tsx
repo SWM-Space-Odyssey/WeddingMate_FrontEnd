@@ -133,7 +133,7 @@ const SettingPage = (props: Props) => {
     };
     editCustomerProfile(body).then((res) => {
       if (res?.status === "SUCCESS") {
-        navigate("/plannermypage/setting");
+        navigate("/mypage/setting");
       } else {
         alert("회원정보 수정에 실패하였습니다!");
       }

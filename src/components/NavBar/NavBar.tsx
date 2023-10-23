@@ -27,7 +27,7 @@ const pageMap: { [key in PageList]: string } = {
   Feed: "/feed",
   Community: "/community",
   Like: "/like",
-  PlannerMypage: "/plannermypage",
+  PlannerMypage: "/mypage",
 };
 
 const NavBar = (props: Props) => {
@@ -43,7 +43,7 @@ const NavBar = (props: Props) => {
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     if (PIVOT_PAGES.includes(location)) {
-      if (location === "plannermypage" && subLocation === "setting") {
+      if (location === "mypage" && subLocation === "setting") {
         setVisible(false);
       } else {
         setVisible(true);
@@ -64,7 +64,7 @@ const NavBar = (props: Props) => {
       case "community":
         setSelected(3);
         break;
-      case "plannermypage":
+      case "mypage":
         setSelected(4);
         break;
       default:

@@ -192,7 +192,7 @@ const PortfolioCreate = (props: Props) => {
         setForm();
         setTimeout(() => {
           setLoading(false);
-          navigate("/plannermypage");
+          navigate("/mypage");
         }, 1000);
         return;
       }

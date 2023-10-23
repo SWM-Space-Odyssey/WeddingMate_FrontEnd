@@ -51,14 +51,8 @@ function App() {
                 <Route path='/regist' element={<AuthRegisterPage />} />
                 <Route path='/planner/:Id' element={<AuthPlannerPage />} />
 
-                <Route
-                  path='/plannermypage'
-                  element={<AuthPlannerMyPage mypage />}
-                />
-                <Route
-                  path='/plannermypage/setting'
-                  element={<AuthSettingPage />}
-                />
+                <Route path='/mypage' element={<AuthPlannerMyPage mypage />} />
+                <Route path='/mypage/setting' element={<AuthSettingPage />} />
 
                 <Route path='/item/:itemId' element={<AuthItemPage />} />
                 <Route

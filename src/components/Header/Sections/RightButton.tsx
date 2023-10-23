@@ -19,7 +19,7 @@ const RightButton = (props: Props) => {
     (state: RootState) => state.view.adjData
   );
   const navigate = useNavigate();
-  const type = location[1] as "item" | "portfolio" | "plannermypage";
+  const type = location[1] as "item" | "portfolio" | "mypage";
   let adjURL: string;
   if (type === "item") {
     adjURL = `/create/item/${portfolioId}/${order}/${itemId}`;
@@ -68,7 +68,7 @@ const RightButton = (props: Props) => {
     return (
       <IconButton
         onClick={() => {
-          navigate("/plannermypage/setting");
+          navigate("/mypage/setting");
         }}
       >
         <Settings fontSize='small' />
@@ -88,7 +88,7 @@ const RightButton = (props: Props) => {
     return <WriterButtonSet />;
   } else if (!isWriter && ["item", "portfolio"].includes(type)) {
     return <LikeButtonSet />;
-  } else if (type === "plannermypage") {
+  } else if (type === "mypage") {
     if (location.length > 2) {
       return <div className='w-10' />;
     }
