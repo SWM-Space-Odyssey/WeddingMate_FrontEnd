@@ -25,6 +25,7 @@ import ChannelService from "./hooks/ChannelService";
 import { CHANNEL_PLUGIN_KEY } from "./common/constants";
 import CompanyPage from "./components/Pages/CompanyPage/CompanyPage";
 import LikePage from "./components/Pages/LikePage/LikePage";
+import LoginError from "./components/Modules/LoginError";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -85,6 +86,7 @@ function App() {
                 <Route path='/search/:search?' element={<AuthSearchPage />} />
                 <Route path='/redirect' element={<RedirectPage />} />
                 <Route path='/community' element={<CommunityPage />} />
+                <Route path='/oauth2/error' element={<LoginError />} />
                 <Route path='*' element={<RedirectPage />} />
               </Routes>
             </div>

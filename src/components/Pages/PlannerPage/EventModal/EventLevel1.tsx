@@ -25,7 +25,7 @@ const EventLevel1 = () => {
     setOpen(false);
   };
   return (
-    <Dialog open={open}>
+    <Dialog open={open} sx={{ minWidth: "290px" }}>
       <DialogTitle>
         <div className='center'>
           <CustomText type='Title-large' text='🎉  웨딩메이트 오픈이벤트  🎉' />

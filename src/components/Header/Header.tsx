@@ -28,7 +28,7 @@ const Header = (props: Props) => {
   return (
     <div
       className={`sticky h-14 py-1.5 px-2 justify-center ${
-        location === "search" ? "hidden" : ""
+        location === "search" || location == "oauth2" ? "hidden" : ""
       }`}
     >
       <div className='h-10 items-center flex'>

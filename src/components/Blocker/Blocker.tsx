@@ -15,6 +15,7 @@ type Props = {
 };
 
 const Blocker = (props: Props) => {
+  const isAdmin = localStorage.getItem("isAdmin");
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,7 +25,7 @@ const Blocker = (props: Props) => {
     setOpen(false);
   };
   const { status, data } = usePortfolioCheck(0, true);
-  if (status === "success" && data?.status === "SUCCESS") {
+  if (!isAdmin && status === "success" && data?.status === "SUCCESS") {
     if (data?.data.length === 0) {
       return (
         <div className='center pb-40'>
@@ -41,6 +42,7 @@ const Blocker = (props: Props) => {
       data?.data[0]?.portfolioId ?? 0
     );
     if (
+      !isAdmin &&
       detailStatus === "success" &&
       detailData.status === "SUCCESS" &&
       detailData.data.itemResDtoList.length === 0
