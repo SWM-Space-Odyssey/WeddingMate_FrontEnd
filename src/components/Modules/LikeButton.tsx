@@ -6,7 +6,7 @@ import { postLike } from "../../api/like";
 type Props = {
   isLiked: boolean | null;
   targetId: number;
-  type: "portfolio" | "item" | "PLANNER";
+  type: "portfolio" | "item" | "planner";
 };
 
 const LikeButton = (props: Props) => {
@@ -15,7 +15,7 @@ const LikeButton = (props: Props) => {
     setLike(!like);
     const body = {
       id: `${props.targetId}`,
-      likeType: props.type.toUpperCase() as "PORTFOLIO" | "ITEM" | "PLANNER",
+      likeType: props.type,
     };
     const response = postLike(body);
   };
