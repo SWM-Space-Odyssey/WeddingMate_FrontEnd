@@ -155,7 +155,7 @@ export const editCustomerProfile = async (body: IuserProfile) => {
 
 export const userCheck = async (token: string) => {
   const response: AxiosResponse = await axios
-    .get(`${SERVER_URL}/api/v1/signup`, {
+    .get(`${SERVER_URL}/api/v1/signup/check-registration`, {
       headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     })
@@ -165,7 +165,6 @@ export const userCheck = async (token: string) => {
     .catch((err) => {
       return err.response;
     });
-
   return response;
 };
 
