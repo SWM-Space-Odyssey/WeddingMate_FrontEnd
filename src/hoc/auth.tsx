@@ -15,6 +15,12 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
   const RefreshToken = async () => {
     const response = await tokenRefresh();
     if (response && response.data.status === "SUCCESS") {
+      const check = await userCheck(response.data.data.accessToken);
+      if (check.status === 401) {
+        dispatch(resetAccessToken());
+        navigate("/login");
+        return;
+      }
       dispatch(setAccessToken(response.data.data.accessToken));
       navigate(0);
       return;
@@ -70,8 +76,13 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
                   navigate("/regist");
                 }
                 break;
+              default:
+                console.log(option, type);
+                navigate("/oauth2/error");
+                break;
             }
             if (option === null) {
+              alert("h");
               navigate("/");
             }
           } else {
