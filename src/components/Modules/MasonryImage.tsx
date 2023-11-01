@@ -89,7 +89,6 @@ const MasonryImage = (props: Props) => {
 
   const renderData = useMemo(() => {
     if (data?.pages[0].status === "FAIL") setIsError(true);
-    // return data ? data.pages.flatMap(({ data }) => data.data.content) : [];
     if (props.search) {
       return data
         ? data.pages.flatMap(({ data, status }) =>
@@ -108,8 +107,6 @@ const MasonryImage = (props: Props) => {
       : [];
   }, [data]);
 
-  // amplitude.init("KEY");
-  // amplitude.track("Sign Up");
   const realRender = useMemo(() => {
     return renderData.map((item, index) => {
       let imageNav = "";
@@ -125,7 +122,7 @@ const MasonryImage = (props: Props) => {
         <ProgressiveImg
           onClick={() => navigate(imageNav)}
           src={item.url}
-          alt={String(item.url)}
+          alt={"weddingImage"}
           key={index}
           loading='lazy'
           tailwind='mb-2 rounded-lg'

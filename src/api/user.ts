@@ -198,3 +198,5 @@ export const tokenRefresh = async () => {
 export const userDelete = async () => {
   const reqURL = `${SERVER_URL}/api/v1/user`;
 };
+
+export const userReport = async <T>(body: T) => {};

@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { intoView } from "../../store/viewSlice";
 import { PIVOT_PAGES } from "../../common/constants";
+import ChannelService from "../../hooks/ChannelService";
 
 type Props = {};
 
@@ -28,6 +29,12 @@ const pageMap: { [key in PageList]: string } = {
   Community: "/community",
   Like: "/like",
   PlannerMypage: "/mypage",
+};
+const channelButtonShow = () => {
+  ChannelService.showChannelButton();
+};
+const channelButtonHide = () => {
+  ChannelService.hideChannelButton();
 };
 
 const NavBar = (props: Props) => {
@@ -71,6 +78,12 @@ const NavBar = (props: Props) => {
         break;
     }
   }, [location, subLocation]);
+
+  useEffect(() => {
+    if (visible) channelButtonShow();
+    else channelButtonHide();
+  }, [visible]);
+
   return (
     <div
       className={`w-full h-14 bottom-0 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] ${

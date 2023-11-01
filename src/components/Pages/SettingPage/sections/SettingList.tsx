@@ -12,6 +12,7 @@ import React from "react";
 import CustomText from "../../../Modules/Custom/CustomText";
 import { useNavigate } from "react-router-dom";
 import { userLogOut } from "../../../../api/user";
+import UserPolicy from "../../../Modules/UserPolicy";
 
 type Props = {};
 const Gap = (props: { height: number }) => (
@@ -32,7 +33,7 @@ const SettingList = (props: Props) => {
     });
   };
   return (
-    <div>
+    <div className='flex flex-col'>
       <List>
         <ListItemButton onClick={() => navigate("/mypage/setting/?type=info")}>
           <div className='flex justify-between w-full'>
@@ -73,13 +74,20 @@ const SettingList = (props: Props) => {
         </ListItemButton>
         <Gap height={1} />
       </List>
-      <Button sx={{ pl: 2 }}>
-        <div className='flex justify-between w-full'>
-          <div className='flex flex-col'>
-            <CustomText type='Description' text='탈퇴하기' />
-          </div>
-        </div>
-      </Button>
+      <div className='flex flex-col pl-2'>
+        <span>
+          <UserPolicy />
+        </span>
+        <span>
+          <Button>
+            <div className='flex justify-between w-full'>
+              <div className='flex flex-col'>
+                <CustomText type='Description' text='탈퇴하기' />
+              </div>
+            </div>
+          </Button>
+        </span>
+      </div>
     </div>
   );
 };
