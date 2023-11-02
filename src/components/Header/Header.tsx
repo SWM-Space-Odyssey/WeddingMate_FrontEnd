@@ -14,7 +14,6 @@ import CenterContent from "./Sections/CenterContent";
 
 type Props = {
   main?: "main" | "regist";
-  rightButton?: JSX.Element;
 };
 
 const Header = (props: Props) => {

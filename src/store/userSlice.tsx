@@ -7,6 +7,7 @@ interface userState {
   accessToken: string | null;
   type: "planner" | "couple" | null;
   nickname: string;
+  reportTargetId: number | null;
   guide: {
     portfolio: boolean;
     item: boolean;
@@ -18,6 +19,7 @@ const initialState: userState = {
   accessToken: null,
   nickname: "",
   type: null,
+  reportTargetId: null,
   guide: {
     portfolio: false,
     item: false,
@@ -42,6 +44,9 @@ export const userSlice = createSlice({
     setUserNickname: (state, action: PayloadAction<string>) => {
       state.nickname = action.payload;
     },
+    setReportTargetId: (state, action: PayloadAction<number>) => {
+      state.reportTargetId = action.payload;
+    },
     setGuide: (state, action: PayloadAction<"portfolio" | "item">) => {
       if (action.payload === "portfolio") {
         state.guide.portfolio = true;
@@ -63,6 +68,7 @@ export const {
   setUserNickname,
   persistTest,
   setGuide,
+  setReportTargetId,
 } = userSlice.actions;
 
 export const selectUsers = (state: RootState) => state.user;

@@ -7,6 +7,7 @@ import { RootState } from "../../../store/store";
 import { Icon, IconButton } from "@mui/material";
 import { deleteItem } from "../../../api/Item";
 import { deletePortfolio } from "../../../api/portfolio";
+import ReportButton from "../../Modules/ReportButton";
 
 type Props = {};
 
@@ -19,7 +20,8 @@ const RightButton = (props: Props) => {
     (state: RootState) => state.view.adjData
   );
   const navigate = useNavigate();
-  const type = location[1] as "item" | "portfolio" | "mypage";
+  const type = location[1] as "item" | "portfolio" | "mypage" | "planner";
+  const contentId = location[2];
   let adjURL: string;
   if (type === "item") {
     adjURL = `/create/item/${portfolioId}/${order}/${itemId}`;
@@ -77,10 +79,38 @@ const RightButton = (props: Props) => {
   };
 
   const LikeButtonSet = () => {
+    const integerId = parseInt(contentId);
+    const reportBody: {
+      reportedItemId: number;
+      reportItemType: "PORTFOLIO" | "ITEM" | "USER" | null;
+    } = {
+      reportedItemId: integerId,
+      reportItemType: null,
+    };
     if (type === "item") {
-      return <LikeButton targetId={itemId} isLiked={isLike} type={type} />;
+      reportBody.reportItemType = "ITEM";
+      return (
+        <>
+          <ReportButton body={reportBody} />
+          <LikeButton targetId={integerId} isLiked={isLike} type={type} />
+        </>
+      );
     } else if (type === "portfolio") {
-      return <LikeButton targetId={portfolioId} isLiked={isLike} type={type} />;
+      reportBody.reportItemType = "PORTFOLIO";
+      return (
+        <>
+          <ReportButton body={reportBody} />
+          <LikeButton targetId={integerId} isLiked={isLike} type={type} />;
+        </>
+      );
+    } else if (type === "planner") {
+      reportBody.reportItemType = "USER";
+      return (
+        <>
+          <LikeButton targetId={integerId} isLiked={isLike} type={type} />;
+          <ReportButton body={reportBody} />
+        </>
+      );
     }
   };
 

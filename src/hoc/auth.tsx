@@ -5,13 +5,26 @@ import { RootState } from "../store/store";
 import { tokenRefresh, userCheck } from "../api/user";
 import { getAccessToken, useUUID } from "../hooks/apiHook";
 import * as amplitude from "@amplitude/analytics-browser";
-import { resetAccessToken, setAccessToken } from "../store/userSlice";
+import {
+  resetAccessToken,
+  setAccessToken,
+  setReportTargetId,
+} from "../store/userSlice";
+import { useUserInfo } from "../hooks/QueryHooks";
 
 type option = "all" | "planner" | "customer" | "unregistered" | null;
 const Auth = (Component: FC<any>, option: option) => (props: any) => {
+  const userId = useSelector((state: RootState) => state.user.reportTargetId);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let dep = new Date();
+  if (!userId) {
+    const { data, isSuccess } = useUserInfo();
+    if (isSuccess) {
+      dispatch(setReportTargetId(data?.data.userId));
+    }
+  }
   const RefreshToken = async () => {
     const response = await tokenRefresh();
     if (response && response.data.status === "SUCCESS") {
@@ -48,6 +61,7 @@ const Auth = (Component: FC<any>, option: option) => (props: any) => {
       });
     }
     // 지금은 매번 요청을 하고 나중엔 만료시간을 만들어두는건 어떨까?
+
     if (accessToken) {
       if (admin) return;
       userCheck(accessToken)

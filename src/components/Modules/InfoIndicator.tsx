@@ -4,6 +4,8 @@ import { PROGRESSIVE_IMAGE_URL, SERVER_URL } from "../../common/constants";
 import CustomText from "./Custom/CustomText";
 import { ArrowRight, ChevronRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setReportTargetId } from "../../store/userSlice";
 
 type Props = {
   portfolioId: string;
@@ -30,6 +32,7 @@ const InfoIndicator = (props: Props) => {
   const [portfolioInfo, setPortfolioInfo] =
     useState<[string, string, number]>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const infoElement = (
     data: [string, string, number | string],
     type: "planner" | "portfolio"
@@ -72,7 +75,7 @@ const InfoIndicator = (props: Props) => {
       ]);
     }
     const plannerId = portfolioRes.data.data.userId;
-
+    dispatch(setReportTargetId(plannerId));
     const plannerRes = await axios.get(plannerURL + plannerId, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -89,6 +92,7 @@ const InfoIndicator = (props: Props) => {
   };
   useEffect(() => {
     getInfo();
+    return () => {};
   }, []);
   return (
     <div className='pb-2 px-4 mb-3 flex gap-3 items-center border-b sticky top-0'>

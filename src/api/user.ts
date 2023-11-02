@@ -199,4 +199,8 @@ export const userDelete = async () => {
   const reqURL = `${SERVER_URL}/api/v1/user`;
 };
 
-export const userReport = async <T>(body: T) => {};
+export const userReport = async <T>(body: T) => {
+  const reqURL = `${SERVER_URL}/api/v1/report`;
+  const response = await fetchData(reqURL, "post", body);
+  return response;
+};
