@@ -31,7 +31,7 @@ const ProgressiveImg = ({ src, ...props }: Props) => {
   return (
     <img
       {...{ src: imgSrc, ...props }}
-      className={`image ${customClass}cursor-pointer ${props.tailwind} `}
+      className={`image object-contain ${customClass}cursor-pointer ${props.tailwind} `}
     />
   );
 };

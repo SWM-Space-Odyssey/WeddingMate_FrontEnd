@@ -10,11 +10,7 @@ import React, {
   useState,
 } from "react";
 import Masonry from "react-masonry-css";
-import {
-  // MY_ACCESS_KEY,
-  SERVER_IMAGE_URL,
-  SERVER_URL,
-} from "../../common/constants";
+import { SERVER_IMAGE_URL, SERVER_URL } from "../../common/constants";
 import { getFeedImage, getSearchFeedImage } from "../../api/Item";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
