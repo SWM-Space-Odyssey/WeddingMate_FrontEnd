@@ -21,14 +21,16 @@ const Header = (props: Props) => {
   const navigate = useNavigate();
   const view = useSelector((state: RootState) => state.view.viewStack);
   const page = useSelector((state: RootState) => state.view.page);
-
+  const isNative = /Mobi/i.test(window.navigator.userAgent);
   const location = useLocation().pathname.split("/")[1];
-
+  console.log(isNative);
   return (
     <div
       className={`sticky h-14 py-1.5 px-2 justify-center ${
         location === "search" || location == "oauth2" ? "hidden" : ""
-      }`}
+      }
+      ${isNative ? "mt-1" : ""}
+      `}
     >
       <div className='h-10 items-center flex'>
         <div className='flex justify-center'>

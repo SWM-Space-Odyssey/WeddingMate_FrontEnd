@@ -184,7 +184,8 @@ const PortfolioCreate = (props: Props) => {
       body.append("portfolioSaveReqDto", blob);
       const postData = await postPortfolio({ itemType: "portfolio", body });
       if (postData.status === "SUCCESS") {
-        if (!guide.portfolio) {
+        console.log(guide);
+        if (guide && !guide?.portfolio) {
           dispatch(setGuide("portfolio"));
           amplitude.track("OpenEvent-portfolio");
         }

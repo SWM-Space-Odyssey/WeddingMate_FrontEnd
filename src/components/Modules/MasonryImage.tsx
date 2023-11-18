@@ -79,12 +79,16 @@ const useFetchUsers = (param?: string) => {
 };
 
 const MasonryImage = (props: Props) => {
-  const { data, isLoading, fetchNextPage } = useFetchUsers(props?.search);
-  const [isError, setIsError] = useState(false);
+  const { data, isLoading, fetchNextPage, isError } = useFetchUsers(
+    props?.search
+  );
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const renderData = useMemo(() => {
-    if (data?.pages[0].status === "FAIL") setIsError(true);
+    if (data?.pages[0].status === "FAIL") setError(true);
+    if (isError) return [];
+    if (error) return [];
     if (props.search) {
       return data
         ? data.pages.flatMap(({ data, status }) =>
@@ -104,6 +108,7 @@ const MasonryImage = (props: Props) => {
   }, [data]);
 
   const realRender = useMemo(() => {
+    if (!renderData) return <div>Error</div>;
     return renderData.map((item, index) => {
       let imageNav = "";
       if (!item) return;
@@ -126,6 +131,7 @@ const MasonryImage = (props: Props) => {
       );
     });
   }, [renderData, props.search]);
+
   const ref = useIntersect(async (entry, observer) => {
     if (entry.isIntersecting) {
       await fetchNextPage();

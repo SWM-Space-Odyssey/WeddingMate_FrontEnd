@@ -149,7 +149,8 @@ const ItemCreate = (props: Props) => {
       body.order = parseInt(order);
       const res = await postItem(body);
       if (res.status === "SUCCESS") {
-        if (!guide.item) {
+        console.log(guide);
+        if (guide && !guide?.item) {
           dispatch(setGuide("item"));
           amplitude.track("OpenEvent-item");
         }

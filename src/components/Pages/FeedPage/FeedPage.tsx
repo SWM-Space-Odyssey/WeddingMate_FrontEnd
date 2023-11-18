@@ -56,8 +56,8 @@ const FeedPage = (props: Props) => {
   return (
     <>
       <Modal open={accepeted} className={modalStyle}>
-        <div className='shadow-sm h-48 w-64 bg-zinc-100 rounded-3xl mb-20'>
-          <div className='flex flex-col items-center py-2'>
+        <div className='flex flex-col justify-center shadow-sm h-56 w-72 bg-zinc-100 rounded-3xl mb-20'>
+          <div className='flex justify-center flex-col items-center py-2'>
             <div className='text-base font-bold pb-1'>! 잠시만요 !</div>
 
             <div className='text-sm font-sans text-red-800 flex flex-col items-center'>

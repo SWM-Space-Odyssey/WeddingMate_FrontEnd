@@ -40,7 +40,7 @@ const ImageSlider = (props: Props) => {
             <SwiperSlide key={index}>
               <img
                 src={SERVER_IMAGE_URL + image}
-                className='w-full aspect-square object-cover'
+                className='w-full aspect-square object-contain'
               />
             </SwiperSlide>
           );

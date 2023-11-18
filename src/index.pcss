@@ -6,9 +6,19 @@
 }
 
 :root {
-  font-family: AppleSDGothicKR, Noto Sans KR, Avenir, Helvetica, Arial,
-    sans-serif;
+  font-family: AppleSDGothicKR, Noto Sans KR, Avenir, Helvetica, Arial;
+  /* iOS 11.2 이상 */
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  /* iOS 11.0 버전 */
+  padding-top: constant(safe-area-inset-top);
+  padding-right: constant(safe-area-inset-right);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-left: constant(safe-area-inset-left);
 }
+
 html,
 body {
   margin: 0;
@@ -30,6 +40,7 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
 #root {
   height: 100%;
   width: 100%;
