@@ -1,6 +1,5 @@
 import React from "react";
 import CompanyInfo from "./sections/CompanyInfo";
-import ImageCard from "../../Modules/ImageCard";
 import CustomerReview from "./sections/CustomerReview";
 
 type Props = {};

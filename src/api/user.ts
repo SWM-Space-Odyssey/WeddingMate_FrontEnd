@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { SERVER_URL } from "../common/constants";
 import { getAccessToken, handleError } from "../hooks/apiHook";
 const MY_ACCESS_KEY = localStorage.getItem("accessToken");
+
 type nickname = {
   nickname: string;
 };
@@ -13,16 +14,19 @@ type plannerInfo = {
   regionList: string;
   tagList: string;
 };
+
 type plannerProfileInfo = {
   sns: string;
   bio: string;
 };
+
 type customerInfo = {
   weddingDate: string;
   weddingDateConfirmed: string;
   regionList: string;
   budget: string;
 };
+
 type customerTagList = {
   portfolioTagList: string;
   plannerTagList: string;
@@ -38,14 +42,17 @@ type plannerBody = nickname & {
   regionList: string;
   plannerTagList: string | undefined;
 };
+
 type plannerProfileBody = plannerInfo & plannerProfileInfo & nickname;
+
 type IuserProfile = nickname & {
   customerInfo: customerInfo;
   customerTagList: customerTagList;
 };
+
 type IformProfile = customerInfo & customerTagList & nickname;
 
-const fetchData = async <RT>(
+export const fetchData = async <RT>(
   url: string,
   method: "get" | "post" | "put" | "delete",
   body?: any

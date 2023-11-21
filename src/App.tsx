@@ -28,6 +28,7 @@ import LikePage from "./components/Pages/LikePage/LikePage";
 import LoginError from "./components/Modules/LoginError";
 import UserPolicy from "./components/Modules/UserPolicy";
 import PrivacyPolicy from "./common/PrivacyPolicy";
+import CommunityPostDetail from "./components/Pages/CommutityPage/sections/CommunityPostDetail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,9 +45,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Suspense fallback={<LoadingSpinner />}>
-          <div className='h-full flex flex-col'>
-            <Header />
+        <div className='h-full flex flex-col'>
+          <Header />
+          <Suspense fallback={<LoadingSpinner />}>
             <div className='flex-1 relative flex overflow-y-scroll flex-col'>
               <Routes>
                 <Route path='/' element={<AuthFeedPage />} />
@@ -81,15 +82,21 @@ function App() {
                 <Route path='/admin' element={<MainPage />} />
                 <Route path='/search/:search?' element={<AuthSearchPage />} />
                 <Route path='/redirect' element={<RedirectPage />} />
+
                 <Route path='/community' element={<CommunityPage />} />
+                <Route
+                  path='/community/:postId'
+                  element={<CommunityPostDetail />}
+                />
+
                 <Route path='/oauth2/error' element={<LoginError />} />
                 <Route path='/privacy' element={<PrivacyPolicy />} />
                 <Route path='*' element={<RedirectPage />} />
               </Routes>
             </div>
-            <NavBar />
-          </div>
-        </Suspense>
+          </Suspense>
+          <NavBar />
+        </div>
       </BrowserRouter>
     </QueryClientProvider>
   );

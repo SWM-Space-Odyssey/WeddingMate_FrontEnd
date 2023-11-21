@@ -15,14 +15,15 @@ const CompanyInfo = (props: Props) => {
   const { title, tagList, region, repImgUrl } = props.data;
   const tagSplit = tagList.split(",");
   return (
-    <div className='flex'>
+    <div className='flex px-4'>
       <div>
+        {/* 이미지 들어갈 자리 */}
         <div className='h-[88px] w-[88px]'></div>
       </div>
       <div className='flex flex-col justify-around'>
         <div className='font-bold leading-tight mb-1.5'>{title}</div>
         <div className='text-xs leading-tight mb-1'>
-          <CustomText type='Content-small' text={`Location : ${region}`} />
+          <CustomText type='Content-small' text={`지역 : ${region}`} />
         </div>
         <div>
           <div>

@@ -1,6 +1,6 @@
 import React from "react";
 import CustomText from "../../../Modules/Custom/CustomText";
-import ImageCard from "../../../Modules/ImageCard";
+import ImageCard from "./ImageCard";
 import SectionHeader from "../../../Modules/SectionHeader";
 
 type Props = {};
@@ -15,8 +15,10 @@ const dummyIC = {
 
 const CustomerReview = (props: Props) => {
   return (
-    <div className='flex flex-col'>
-      <SectionHeader title='후기' buttonURL='/' />
+    <div className='flex flex-col px-4'>
+      <div className='py-2.5 px-3'>
+        <SectionHeader title='후기' buttonURL='/' />
+      </div>
       <div>
         <ImageCard data={dummyIC} />
       </div>
