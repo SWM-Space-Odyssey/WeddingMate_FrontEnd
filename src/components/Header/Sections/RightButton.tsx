@@ -8,6 +8,7 @@ import { Icon, IconButton } from "@mui/material";
 import { deleteItem } from "../../../api/Item";
 import { deletePortfolio } from "../../../api/portfolio";
 import ReportButton from "../../Modules/ReportButton";
+import { deleteContent } from "../../../api/community";
 
 type Props = {};
 
@@ -37,12 +38,20 @@ const RightButton = (props: Props) => {
       } else {
         alert("삭제에 실패했습니다. - PortfolioHeader");
       }
-    } else {
+    } else if (type === "portfolio") {
       const response = await deletePortfolio(portfolioId);
       if (response.data.status === "SUCCESS") {
         navigate("/plannerMypage");
       } else {
         alert("삭제에 실패했습니다. - PortfolioHeader");
+      }
+    } else {
+      const { status, data } = await deleteContent(parseInt(contentId));
+      console.log(status, data);
+      if (status === "SUCCESS") {
+        navigate("/community");
+      } else {
+        alert("삭제에 실패했습니다. - CommunityHeader");
       }
     }
   };
@@ -114,7 +123,7 @@ const RightButton = (props: Props) => {
     }
   };
 
-  if (isWriter && ["item", "portfolio"].includes(type)) {
+  if (isWriter && ["item", "portfolio", "community"].includes(type)) {
     return <WriterButtonSet />;
   } else if (!isWriter && ["item", "portfolio"].includes(type)) {
     return <LikeButtonSet />;

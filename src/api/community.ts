@@ -87,3 +87,9 @@ export const deleteComment = async (commentId: number) => {
   const response = await fetchData(REQ_URL, "delete");
   return response;
 };
+
+export const deleteContent = async (contentId: number) => {
+  const REQ_URL = `${SERVER_URL}/api/v1/community/post/${contentId}`;
+  const response = await fetchData(REQ_URL, "delete");
+  return response;
+};

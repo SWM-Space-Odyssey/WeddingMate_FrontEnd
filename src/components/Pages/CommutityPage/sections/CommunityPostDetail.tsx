@@ -8,11 +8,13 @@ import {
   SERVER_IMAGE_URL,
 } from "../../../../common/constants";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { Delete, HighlightOff, Telegram } from "@mui/icons-material";
+import { Delete, EditNote, HighlightOff, Telegram } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/material";
 import { deleteComment, postComment } from "../../../../api/community";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
+import { useDispatch } from "react-redux";
+import { setIsWriter } from "../../../../store/viewSlice";
 
 type Props = {};
 type commentBody = {
@@ -42,8 +44,8 @@ const CommunityPostDetail = (props: Props) => {
   const isNative = /Mobi/i.test(window.navigator.userAgent);
   const { ref, ...rest } = methods.register("comment");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.reportTargetId);
-  console.log(userId);
   if (!postId) {
     return (
       <div className='flex flex-col flex-1'>
@@ -53,15 +55,20 @@ const CommunityPostDetail = (props: Props) => {
     );
   }
 
-  const { data, isSuccess } = useCommunityPost(parseInt(postId));
+  const { data } = useCommunityPost(parseInt(postId));
   const body: PostBody = data.data;
-  console.log(data.data);
   useEffect(() => {
     if (data.status === "FAIL") {
       alert("연결에 실패했습니다. 관리자에게 문의해주세요.");
       navigate("/community");
     }
-  }, [data]);
+    if (body.userId === userId) {
+      dispatch(setIsWriter(true));
+    }
+    return () => {
+      dispatch(setIsWriter(false));
+    };
+  }, [data, body]);
 
   const onSubmit: SubmitHandler<commentForm> = async (submit) => {
     if (submit.comment.trim() === "") return alert("댓글을 입력해주세요");
@@ -87,11 +94,23 @@ const CommunityPostDetail = (props: Props) => {
     <div className='flex flex-1 px-4'>
       <div className='mainContent flex-1 flex flex-col'>
         <div className='contentHeader flex justify-between'>
-          <div>
-            <div className='text-lg font-bold'>{body.title}</div>
-            <div className='text-xs text-gray-500'>{`${parseDateToYMD(
-              new Date(body.date)
-            )}`}</div>
+          <div className='flex gap-2'>
+            <div>
+              <div className='text-lg font-bold'>{body.title}</div>
+              <div className='text-xs text-gray-500'>{`${parseDateToYMD(
+                new Date(body.date)
+              )}`}</div>
+            </div>
+            {body.userId === userId && (
+              <div className='writerButtons flex justify-end'>
+                <IconButton>
+                  <Delete fontSize='small' />
+                </IconButton>
+                <IconButton>
+                  <EditNote fontSize='small' />
+                </IconButton>
+              </div>
+            )}
           </div>
           <div className='flex items-center gap-2'>
             <img
