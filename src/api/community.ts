@@ -71,6 +71,17 @@ export const postComment = async (postId: number, content: string) => {
   return response;
 };
 
+type ContentBody = {
+  title: string;
+  content: string;
+  category: string;
+};
+export const postContent = async (body: ContentBody) => {
+  const REQ_URL = `${SERVER_URL}/api/v1/community/post/save`;
+  const response = await fetchData(REQ_URL, "post", body);
+  return response;
+};
+
 export const deleteComment = async (commentId: number) => {
   const REQ_URL = `${SERVER_URL}/api/v1/community/post/comment/${commentId}`;
   const response = await fetchData(REQ_URL, "delete");

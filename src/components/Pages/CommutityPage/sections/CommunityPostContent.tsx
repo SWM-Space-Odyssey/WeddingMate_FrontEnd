@@ -3,12 +3,14 @@ import { FormProvider, useForm } from "react-hook-form";
 import CustomInput from "../../../Modules/Custom/CustomInput";
 import CustomButton from "../../../Modules/Custom/CustomButton";
 import { MenuItem, Select } from "@mui/material";
+import ItemCategories from "../../ItemPage/subComponent/ItemCategories";
+import { postContent } from "../../../../api/community";
 
 type Props = {};
 type contentRegister = {
   title: string;
   content: string;
-  category: string;
+  categoryContent: string;
 };
 
 const content = {
@@ -18,28 +20,38 @@ const content = {
   multiline: true,
   textCount: true,
 };
+const title = {
+  state: "title" as const,
+  title: "제목",
+  placeholder: "제목을 입력해주세요",
+};
 
 const CommunityPostContent = (props: Props) => {
   const methods = useForm<contentRegister>({});
 
-  const onSubmit = (data: contentRegister) => {
-    console.log(data);
+  const onSubmit = async (formData: contentRegister) => {
+    const body = {
+      title: formData.title,
+      content: formData.content,
+      category: formData.categoryContent,
+    };
+    const { status, data } = await postContent(body);
+    if (status === "SUCCESS") {
+      console.log("good");
+    }
+    console.log(formData);
   };
   return (
-    <div className='flex flex-col flex-1'>
+    <div className='flex flex-col flex-1 px-4'>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div>
-            <input
-              type='text'
-              className='border rounded-sm w-full py-2.5 px-3'
-              placeholder='하이'
-              {...methods.register("title")}
-            />
+        <form
+          className='flex-1 flex flex-col'
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          <div className='flex-1'>
+            <CustomInput content={title} />
             <CustomInput content={content} />
-            <Select>
-              <MenuItem>adgs</MenuItem>
-            </Select>
+            <ItemCategories standAlone required />
           </div>
           <CustomButton text='제출' buttonType='submit' flag={false} />
         </form>

@@ -84,7 +84,7 @@ const CommunityPostDetail = (props: Props) => {
   };
 
   return (
-    <div className='flex flex-1 px-8'>
+    <div className='flex flex-1 px-4'>
       <div className='mainContent flex-1 flex flex-col'>
         <div className='contentHeader flex justify-between'>
           <div>
