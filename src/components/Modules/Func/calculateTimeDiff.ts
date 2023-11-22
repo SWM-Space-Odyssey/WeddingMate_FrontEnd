@@ -1,6 +1,9 @@
 export const calculateTimeDiff = (date: Date) => {
   const parseDate = new Date(date);
+
   const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() - 9);
+
   const timeDifference = currentDate.getTime() - parseDate.getTime();
   const minutesDifference = Math.floor(timeDifference / (1000 * 60));
   const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));

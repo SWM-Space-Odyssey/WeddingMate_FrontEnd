@@ -42,7 +42,7 @@ const CommunityPostDetail = (props: Props) => {
   const isNative = /Mobi/i.test(window.navigator.userAgent);
   const { ref, ...rest } = methods.register("comment");
   const navigate = useNavigate();
-  const userId = useSelector((state: RootState) => state.user.userId);
+  const userId = useSelector((state: RootState) => state.user.reportTargetId);
   console.log(userId);
   if (!postId) {
     return (
