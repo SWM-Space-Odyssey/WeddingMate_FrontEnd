@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CustomInput from "../../../Modules/Custom/CustomInput";
 import CustomButton from "../../../Modules/Custom/CustomButton";
 import { MenuItem, Select } from "@mui/material";
 import ItemCategories from "../../ItemPage/subComponent/ItemCategories";
-import { postContent } from "../../../../api/community";
+import { postContent, putContent } from "../../../../api/community";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCommunityPost } from "../../../../hooks/QueryHooks";
 
 type Props = {};
 type contentRegister = {
   title: string;
   content: string;
   categoryContent: string;
+};
+type submitBody = {
+  title: string;
+  content: string;
+  category: string;
 };
 
 const content = {
@@ -28,32 +35,79 @@ const title = {
 
 const CommunityPostContent = (props: Props) => {
   const methods = useForm<contentRegister>({});
+  const postId = useParams()?.postId;
+  const navigate = useNavigate();
+  const setForm = (formData?: contentRegister) => {
+    if (formData) {
+      console.log(formData);
+      methods.reset(formData);
+    } else {
+      methods.reset();
+    }
+  };
 
-  const onSubmit = async (formData: contentRegister) => {
+  if (postId) {
+    const { data } = useCommunityPost(parseInt(postId));
+    console.log(data);
     const body = {
-      title: formData.title,
-      content: formData.content,
-      category: formData.categoryContent,
+      title: data?.data.title,
+      content: data?.data.content,
+      categoryContent: data?.data.category,
     };
+    setForm(body);
+  }
+
+  const createPost = async (body: submitBody) => {
     const { status, data } = await postContent(body);
     if (status === "SUCCESS") {
-      console.log("good");
+      navigate(`/community`);
+      return;
     }
-    console.log(formData);
+    alert("생성에 실패했습니다");
   };
+
+  const editPost = async (postId: number, body: submitBody) => {
+    const { status, data } = await putContent(postId, body);
+    if (status === "SUCCESS") {
+      navigate(`/community/${postId}`);
+      return;
+    }
+    alert("수정에 실패했습니다");
+  };
+
+  const onSubmit = (formData: contentRegister) => {
+    const { title, content, categoryContent } = formData;
+
+    if (!title || !content || categoryContent === "default") {
+      alert("모든 항목을 작성해주세요");
+      return;
+    }
+    const body = {
+      title: title,
+      content: content,
+      category: categoryContent,
+    };
+
+    if (postId) {
+      editPost(parseInt(postId), body);
+    } else {
+      createPost(body);
+    }
+  };
+
   return (
     <div className='flex flex-col flex-1 px-4'>
       <FormProvider {...methods}>
         <form
-          className='flex-1 flex flex-col'
+          className='flex-1 flex flex-col gap-2'
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div className='flex-1'>
             <CustomInput content={title} />
             <CustomInput content={content} />
-            <ItemCategories standAlone required />
+            <ItemCategories standAlone />
           </div>
-          <CustomButton text='제출' buttonType='submit' flag={false} />
+          <CustomButton text='확인' buttonType='submit' flag={false} />
         </form>
       </FormProvider>
     </div>

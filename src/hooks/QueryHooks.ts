@@ -43,6 +43,6 @@ export const useCommunityList = (params: number) => {
 export const useCommunityPost = (postId: number) => {
   return useQuery(["communityPost", postId], () => getCommunityPost(postId), {
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60,
+    staleTime: 0,
   });
 };

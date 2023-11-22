@@ -93,6 +93,10 @@ function App() {
                   path='/community/post'
                   element={<CommunityPostContent />}
                 />
+                <Route
+                  path='/community/post/:postId'
+                  element={<CommunityPostContent />}
+                />
 
                 <Route path='/oauth2/error' element={<LoginError />} />
                 <Route path='/privacy' element={<PrivacyPolicy />} />

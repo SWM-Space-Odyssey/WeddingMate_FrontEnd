@@ -4,6 +4,7 @@ import UserPost from "./modules/UserPost";
 import { Button, Pagination } from "@mui/material";
 import { getCommunityList } from "../../../api/community";
 import { useCommunityList } from "../../../hooks/QueryHooks";
+import { Edit } from "@mui/icons-material";
 
 type Props = {};
 const empty = (
@@ -31,7 +32,7 @@ const CommunityPage = (props: Props) => {
         <div className='flex justify-end'>
           <a href='/community/post'>
             <Button size='small' variant='outlined'>
-              글 쓰기
+              <Edit fontSize='small' sx={{ pr: 1 }} /> 글 쓰기
             </Button>
           </a>
         </div>

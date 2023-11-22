@@ -101,16 +101,6 @@ const CommunityPostDetail = (props: Props) => {
                 new Date(body.date)
               )}`}</div>
             </div>
-            {body.userId === userId && (
-              <div className='writerButtons flex justify-end'>
-                <IconButton>
-                  <Delete fontSize='small' />
-                </IconButton>
-                <IconButton>
-                  <EditNote fontSize='small' />
-                </IconButton>
-              </div>
-            )}
           </div>
           <div className='flex items-center gap-2'>
             <img
@@ -125,7 +115,7 @@ const CommunityPostDetail = (props: Props) => {
         </div>
 
         <div className='contentBody py-4 border-b-2'>
-          <p>{body.content}</p>
+          <p className='whitespace-pre-wrap'>{body.content}</p>
         </div>
 
         <div className='comment flex-1 py-2'>

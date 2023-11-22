@@ -33,7 +33,15 @@ const fetchData = async <RT>(
           return handleError(err);
         });
     case "put":
-      return await axios.put(url, body, axiosOption);
+      return await axios
+        .put(url, body, axiosOption)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err: AxiosError) => {
+          return handleError(err);
+        });
+
     case "delete":
       return await axios
         .delete(url, axiosOption)
@@ -79,6 +87,12 @@ type ContentBody = {
 export const postContent = async (body: ContentBody) => {
   const REQ_URL = `${SERVER_URL}/api/v1/community/post/save`;
   const response = await fetchData(REQ_URL, "post", body);
+  return response;
+};
+
+export const putContent = async (postId: number, body: ContentBody) => {
+  const REQ_URL = `${SERVER_URL}/api/v1/community/post/${postId}`;
+  const response = await fetchData(REQ_URL, "put", body);
   return response;
 };
 

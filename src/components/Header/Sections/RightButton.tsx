@@ -26,8 +26,10 @@ const RightButton = (props: Props) => {
   let adjURL: string;
   if (type === "item") {
     adjURL = `/create/item/${portfolioId}/${order}/${itemId}`;
-  } else {
+  } else if (type === "portfolio") {
     adjURL = `/create/portfolio/${portfolioId}`;
+  } else {
+    adjURL = `/community/post/${contentId}`;
   }
   const deleteHandler = async () => {
     if (!confirm("정말로 삭제하시겠습니까?")) return;
