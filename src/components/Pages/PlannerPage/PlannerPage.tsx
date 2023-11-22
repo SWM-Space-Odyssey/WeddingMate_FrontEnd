@@ -29,24 +29,7 @@ const PlannerPage = (props: Props) => {
   const guide = useSelector((state: RootState) => state.user.guide);
   const plannerId = parseInt(useParams().Id ?? "0");
   const location = useLocation().pathname.split("/")[1];
-  // const { data } = useUserInfo(plannerId);
-  // const requestURL = props.mypage
-  //   ? `/api/v1/profile/customer`
-  //   : `/api/v1/customer/${plannerId}`;
-  // const { data, isLoading } = useQuery(
-  //   ["plannerInfo", plannerId],
-  //   () =>
-  //     axios.get(`${SERVER_URL}${requestURL}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${MY_ACCESS_KEY}`,
-  //       },
-  //       withCredentials: true,
-  //     }),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //   }
-  // );
-  // const response = data?.data.data;
+  console.log(location);
   return (
     <>
       {(!guide?.portfolio || !guide?.item) && <EventModal />}
@@ -63,7 +46,9 @@ const PlannerPage = (props: Props) => {
           </div>
           <Divider height={2} />
           <div className='flex justify-between py-2'>
-            <span className='flex items-center'>내 웨딩 피드</span>
+            <span className='flex items-center'>
+              {location === "mypage" ? "내 " : ""}웨딩 피드
+            </span>
             {location === "mypage" && (
               <Button
                 variant='outlined'

@@ -37,6 +37,11 @@ const CustomInput = <T extends stateLiteral>(props: Props<T>) => {
       control,
       name: "message",
     });
+  } else if (state === "content") {
+    textCount = useWatch({
+      control,
+      name: "content",
+    });
   }
 
   const MultilineTextArea = (state: string) => {
@@ -44,9 +49,10 @@ const CustomInput = <T extends stateLiteral>(props: Props<T>) => {
       itemRecord: 300,
       message: 200,
       bio: 100,
+      content: 500,
     };
     const validLength = props.validate ?? 0;
-    if (["itemRecord", "bio", "message"].includes(state)) {
+    if (["itemRecord", "bio", "message", "content"].includes(state)) {
       let Length: number = textLength[state as keyof typeof textLength];
       return (
         <div>

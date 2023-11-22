@@ -18,7 +18,8 @@ type stateLiteral =
   | portfolioStates
   | itemStates
   | plannerProfileStates
-  | contactFormState;
+  | contactFormState
+  | communityFormState;
 
 interface API_STATUS {
   status: "SUCCESS" | "FAIL";
@@ -179,6 +180,7 @@ type plannerProfileStates =
 // React Query ===============================================================
 // ========================================================================≈≈
 type contactFormState = "message" | "contact";
+type communityFormState = "title" | "content" | "category";
 // ========================================================================≈≈
 // React Query ===============================================================
 // ========================================================================≈≈

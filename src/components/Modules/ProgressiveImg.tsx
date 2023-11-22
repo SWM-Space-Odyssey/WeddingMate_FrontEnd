@@ -11,7 +11,7 @@ type Props = {
 };
 
 const ProgressiveImg = ({ src, ...props }: Props) => {
-  const placeholderSrc = SERVER_IMAGE_URL + src;
+  const placeholderSrc = PROGRESSIVE_IMAGE_URL + src + `?q=1`;
   const mainSrc = `${SERVER_IMAGE_URL}${src}`;
 
   const [imgSrc, setImgSrc] = useState(placeholderSrc || mainSrc);
@@ -31,7 +31,8 @@ const ProgressiveImg = ({ src, ...props }: Props) => {
   return (
     <img
       {...{ src: imgSrc, ...props }}
-      className={`image object-contain ${customClass}cursor-pointer ${props.tailwind} `}
+      loading='lazy'
+      className={`image object-contain ${customClass} cursor-pointer ${props.tailwind} `}
     />
   );
 };

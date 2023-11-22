@@ -53,7 +53,7 @@ const InfoIndicator = (props: Props) => {
         }}
       >
         <img
-          src={PROGRESSIVE_IMAGE_URL + imageUrl + "?q=1"}
+          src={PROGRESSIVE_IMAGE_URL + imageUrl + "?q=10"}
           alt='plannerImage'
           className='h-8 w-8 rounded-2xl'
         />

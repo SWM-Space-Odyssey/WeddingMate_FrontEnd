@@ -18,6 +18,7 @@ type itemRegisterType = {
 
 type Props = {
   required?: boolean;
+  standAlone?: boolean;
 };
 
 const ItemCategories = (props: Props) => {
@@ -66,7 +67,9 @@ const ItemCategories = (props: Props) => {
           <option value={"남성예복"}>남성예복</option>
         </select>
       </div>
-      <CustomText type='Description' text='제목에 노출됩니다!' />
+      {!props.standAlone && (
+        <CustomText type='Description' text='제목에 노출됩니다!' />
+      )}
     </div>
   );
 };

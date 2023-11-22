@@ -3,8 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCommunityPost } from "../../../../hooks/QueryHooks";
 import { ItemContent } from "../modules/UserPost";
 import { parseDateToYMD } from "../../../Modules/Func/parseDateToYMD";
-import { SERVER_IMAGE_URL } from "../../../../common/constants";
+import {
+  PROGRESSIVE_IMAGE_URL,
+  SERVER_IMAGE_URL,
+} from "../../../../common/constants";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Delete, HighlightOff, Telegram } from "@mui/icons-material";
+import { Button, IconButton } from "@mui/material";
+import { deleteComment, postComment } from "../../../../api/community";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
 
 type Props = {};
 type commentBody = {
@@ -31,9 +39,11 @@ const CommunityPostDetail = (props: Props) => {
   const methods = useForm<commentForm>({});
   const { postId } = useParams();
   const focusRef = useRef<HTMLInputElement | null>(null);
+  const isNative = /Mobi/i.test(window.navigator.userAgent);
   const { ref, ...rest } = methods.register("comment");
   const navigate = useNavigate();
-
+  const userId = useSelector((state: RootState) => state.user.userId);
+  console.log(userId);
   if (!postId) {
     return (
       <div className='flex flex-col flex-1'>
@@ -45,7 +55,7 @@ const CommunityPostDetail = (props: Props) => {
 
   const { data, isSuccess } = useCommunityPost(parseInt(postId));
   const body: PostBody = data.data;
-
+  console.log(data.data);
   useEffect(() => {
     if (data.status === "FAIL") {
       alert("연결에 실패했습니다. 관리자에게 문의해주세요.");
@@ -53,8 +63,24 @@ const CommunityPostDetail = (props: Props) => {
     }
   }, [data]);
 
-  const onSubmit: SubmitHandler<commentForm> = async (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<commentForm> = async (submit) => {
+    if (submit.comment.trim() === "") return alert("댓글을 입력해주세요");
+    const { status, data } = await postComment(
+      parseInt(postId),
+      submit.comment
+    );
+    if (status === "SUCCESS") {
+      navigate(0);
+    }
+  };
+
+  const onDelete = async (commentId: number) => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      const { status, data } = await deleteComment(commentId);
+      if (status === "SUCCESS") {
+        navigate(0);
+      }
+    }
   };
 
   return (
@@ -69,44 +95,84 @@ const CommunityPostDetail = (props: Props) => {
           </div>
           <div className='flex items-center gap-2'>
             <img
-              src={SERVER_IMAGE_URL + body.profileImg}
+              src={PROGRESSIVE_IMAGE_URL + body.profileImg + "?q=10"}
               alt='writerImg'
-              className='w-10 h-10 rounded-full'
+              className='w-8 h-8 rounded-full'
             />
-            <a href={`/planner/${body.userId}`}></a>
-            <div className='text-sm'>{body.writer}</div>
+            <a href={`/planner/${body.userId}`}>
+              <div className='text-sm'>{body.writer}</div>
+            </a>
           </div>
         </div>
+
         <div className='contentBody py-4 border-b-2'>
           <p>{body.content}</p>
         </div>
-        <div className='comment flex-1 py-2'>asdg</div>
-        <div
-          className='h-10 py-2.5 px-2 mb-4 bg-[#F5F5F5] rounded-sm cursor-text flex'
-          onClick={() => {
-            if (focusRef.current) {
-              focusRef.current.focus();
-            }
-          }}
-        >
-          <div className='flex flex-1 items-center gap-1 h-5'>
-            <form
-              className='w-full flex'
-              onSubmit={methods.handleSubmit(onSubmit)}
+
+        <div className='comment flex-1 py-2'>
+          <ul className='flex flex-col gap-2'>
+            {body.commentList.map((item: commentBody, index: number) => (
+              <li key={index} className='flex gap-2'>
+                <img
+                  src={SERVER_IMAGE_URL + item.profileImg}
+                  alt='writerImg'
+                  className='w-5 h-5 rounded-full'
+                />
+                <div className='flex flex-col flex-1'>
+                  <div className='flex items-center justify-between gap-2'>
+                    <div className='text-sm'>{item.writer}</div>
+                    <div className='flex items-center text-xs text-gray-500 gap-1'>
+                      {parseDateToYMD(new Date(item.date))}
+                      {item.userId === userId && (
+                        <IconButton
+                          onClick={() => onDelete(item.commentId)}
+                          disableRipple
+                          color='primary'
+                          sx={{ p: 0 }}
+                        >
+                          <HighlightOff sx={{ fontSize: "1rem" }} />
+                        </IconButton>
+                      )}
+                    </div>
+                  </div>
+                  <div>{item.content}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={`commentForm flex ${isNative ? "mr-4" : ""}`}>
+          <form
+            className='flex flex-1 items-center'
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <div
+              className='h-10 py-2.5 px-2 my-4 bg-[#F5F5F5] rounded-sm cursor-text flex flex-1'
+              onClick={() => {
+                if (focusRef.current) {
+                  focusRef.current.focus();
+                }
+              }}
             >
-              <input
-                className='outline-none text-sm flex-1 bg-[#F5F5F5] text-[#000000]'
-                {...rest}
-                name='search'
-                ref={(e) => {
-                  ref(e);
-                  focusRef.current = e;
-                }}
-                placeholder='검색어를 입력해 주세요'
-                autoComplete='off'
-              />
-            </form>
-          </div>
+              <div className='flex flex-1 items-center gap-1 h-5'>
+                <input
+                  className='outline-none text-sm flex-1 bg-[#F5F5F5] text-[#000000]'
+                  {...rest}
+                  name='comment'
+                  ref={(e) => {
+                    ref(e);
+                    focusRef.current = e;
+                  }}
+                  placeholder='댓글을 입력해주세요'
+                  autoComplete='off'
+                />
+              </div>
+            </div>
+            <Button sx={{ height: "fit-content" }} type='submit'>
+              <Telegram />
+            </Button>
+          </form>
         </div>
       </div>
     </div>

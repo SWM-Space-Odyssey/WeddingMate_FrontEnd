@@ -12,6 +12,7 @@ interface userState {
     portfolio: boolean;
     item: boolean;
   };
+  userId?: number;
   plannerId?: number | null;
 }
 

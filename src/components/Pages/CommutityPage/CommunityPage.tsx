@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { IS_DEV } from "../../../common/constants";
 import UserPost from "./modules/UserPost";
-import { Pagination } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 import { getCommunityList } from "../../../api/community";
 import { useCommunityList } from "../../../hooks/QueryHooks";
 
@@ -26,12 +26,19 @@ const CommunityPage = (props: Props) => {
   return (
     <>
       {/* {empty} */}
-      <div className='flex flex-col h-full px-4'>
+      <div className='flex flex-col h-full px-4 gap-2'>
         {/* <button onClick={() => console.log(data)}>TEST BUTTON</button> */}
+        <div className='flex justify-end'>
+          <a href='/community/post'>
+            <Button size='small' variant='outlined'>
+              글 쓰기
+            </Button>
+          </a>
+        </div>
         <div className='flex-1'>
           <UserPost page={page} />
         </div>
-        <div className='flex justify-center pb-6 pt-4'>
+        <div className='flex justify-center pb-6'>
           <Pagination count={page} />
         </div>
       </div>

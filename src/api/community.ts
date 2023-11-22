@@ -35,7 +35,14 @@ const fetchData = async <RT>(
     case "put":
       return await axios.put(url, body, axiosOption);
     case "delete":
-      return await axios.delete(url, axiosOption);
+      return await axios
+        .delete(url, axiosOption)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err: AxiosError) => {
+          return handleError(err);
+        });
     default:
       break;
   }
@@ -55,5 +62,17 @@ export const getCommunityList = async (page?: number) => {
 export const getCommunityPost = async (postId: number) => {
   const REQ_URL = `${SERVER_URL}/api/v1/community/post/${postId}`;
   const response = await fetchData(REQ_URL, "get");
+  return response;
+};
+
+export const postComment = async (postId: number, content: string) => {
+  const REQ_URL = `${SERVER_URL}/api/v1/community/post/${postId}/comment`;
+  const response = await fetchData(REQ_URL, "post", { content });
+  return response;
+};
+
+export const deleteComment = async (commentId: number) => {
+  const REQ_URL = `${SERVER_URL}/api/v1/community/post/comment/${commentId}`;
+  const response = await fetchData(REQ_URL, "delete");
   return response;
 };

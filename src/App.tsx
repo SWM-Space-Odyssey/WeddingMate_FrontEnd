@@ -29,6 +29,7 @@ import LoginError from "./components/Modules/LoginError";
 import UserPolicy from "./components/Modules/UserPolicy";
 import PrivacyPolicy from "./common/PrivacyPolicy";
 import CommunityPostDetail from "./components/Pages/CommutityPage/sections/CommunityPostDetail";
+import CommunityPostContent from "./components/Pages/CommutityPage/sections/CommunityPostContent";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -87,6 +88,10 @@ function App() {
                 <Route
                   path='/community/:postId'
                   element={<CommunityPostDetail />}
+                />
+                <Route
+                  path='/community/post'
+                  element={<CommunityPostContent />}
                 />
 
                 <Route path='/oauth2/error' element={<LoginError />} />
