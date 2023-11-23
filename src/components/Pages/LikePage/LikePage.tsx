@@ -12,7 +12,7 @@ const LikePage = (props: Props) => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setPageValue(newValue);
   };
-  const TabPanelSX = { p: 0, overflow: "scroll" };
+  const TabPanelSX = { p: 0, overflow: "scroll", flexGrow: 1 };
   return (
     <div className='w-full h-full flex flex-col overflow-y-scroll'>
       <TabContext value={pageValue}>
@@ -26,9 +26,9 @@ const LikePage = (props: Props) => {
           }}
         >
           <TabList onChange={handleChange} variant='fullWidth'>
-            <Tab label='업체' value='1' />
+            <Tab label='아이템' value='1' />
             <Tab label='포트폴리오' value='2' />
-            <Tab label='아이템' value='3' />
+            <Tab label='업체' value='3' />
           </TabList>
         </Box>
         <TabPanel sx={TabPanelSX} value='1'>

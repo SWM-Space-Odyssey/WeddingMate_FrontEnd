@@ -11,7 +11,7 @@ import ItemTags from "./ItemTags";
 import CustomInput from "../../Modules/Custom/CustomInput";
 import CustomDatePicker from "../../Modules/Custom/CustomDatePicker";
 import CustomButton from "../../Modules/Custom/CustomButton";
-import { Alert, Slide, Snackbar } from "@mui/material";
+import { Alert, Autocomplete, Slide, Snackbar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
@@ -225,6 +225,10 @@ const ItemCreate = (props: Props) => {
                 />
                 <CustomInput content={itemRecord} required />
                 <CustomDatePicker state='date' />
+                {/* <Autocomplete renderInput={(param) =>
+
+                <CustomInput content={company} />
+                } /> */}
                 <CustomInput content={company} />
               </div>
               <CustomButton

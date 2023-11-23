@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { getAccessToken, handleError } from "../hooks/apiHook";
 import { SERVER_URL } from "../common/constants";
 
-const fetchData = async <RT>(
+export const fetchData = async <RT>(
   url: string,
   method: "get" | "post" | "put" | "delete",
   body?: any

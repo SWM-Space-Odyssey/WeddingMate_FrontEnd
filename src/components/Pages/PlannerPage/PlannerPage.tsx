@@ -33,36 +33,36 @@ const PlannerPage = (props: Props) => {
   return (
     <>
       {(!guide?.portfolio || !guide?.item) && <EventModal />}
-      <Slide
+      {/* <Slide
         className='overflow-y-scroll px-4 flex-1'
         direction={`${view === "Planner" ? "right" : "left"}`}
         in
         mountOnEnter
         unmountOnExit
-      >
-        <div className='w-full h-full px-4 flex flex-col '>
-          <div className='sticky pb-3'>
-            <PlannerInfo />
-          </div>
-          <Divider height={2} />
-          <div className='flex justify-between py-2'>
-            <span className='flex items-center'>
-              {location === "mypage" ? "내 " : ""}웨딩 피드
-            </span>
-            {location === "mypage" && (
-              <Button
-                variant='outlined'
-                onClick={() => navigate("/create/portfolio")}
-              >
-                <Edit fontSize='small' />글 쓰기
-              </Button>
-            )}
-          </div>
-          <div className='overflow-y-scroll'>
-            <PlannerPortfolio mypage={props.mypage} />
-          </div>
+      > */}
+      <div className='w-full h-full px-4 flex flex-col '>
+        <div className='sticky pb-3'>
+          <PlannerInfo />
         </div>
-      </Slide>
+        <Divider height={2} />
+        <div className='flex justify-between py-2'>
+          <span className='flex items-center'>
+            {location === "mypage" ? "내 " : ""}웨딩 피드
+          </span>
+          {location === "mypage" && (
+            <Button
+              variant='outlined'
+              onClick={() => navigate("/create/portfolio")}
+            >
+              <Edit fontSize='small' />글 쓰기
+            </Button>
+          )}
+        </div>
+        <div className='overflow-y-scroll'>
+          <PlannerPortfolio mypage={props.mypage} />
+        </div>
+      </div>
+      {/* </Slide> */}
     </>
   );
 };

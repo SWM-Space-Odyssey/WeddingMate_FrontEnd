@@ -72,7 +72,7 @@ function App() {
                   path='/create/item/:portfolioId/:order/:itemId?'
                   element={<AuthItemCreate />}
                 />
-                <Route path='/company' element={<CompanyPage />} />
+                <Route path='/company/:companyId' element={<CompanyPage />} />
                 <Route path='/like' element={<AuthLikePage />} />
 
                 <Route

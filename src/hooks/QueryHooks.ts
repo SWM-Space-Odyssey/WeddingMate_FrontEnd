@@ -6,6 +6,7 @@ import {
   getCommunityList,
   getCommunityPost,
 } from "../api/community";
+import { getCompanyDetail } from "../api/company";
 
 export const usePortfolioCheck = (
   portfolioId: number,
@@ -45,4 +46,15 @@ export const useCommunityPost = (postId: number) => {
     refetchOnWindowFocus: false,
     staleTime: 0,
   });
+};
+
+export const useCompanyDetail = (companyId: number) => {
+  return useQuery(
+    ["companyDetail", companyId],
+    () => getCompanyDetail(companyId),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60,
+    }
+  );
 };
