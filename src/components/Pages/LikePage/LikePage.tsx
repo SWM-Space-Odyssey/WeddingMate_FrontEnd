@@ -32,13 +32,13 @@ const LikePage = (props: Props) => {
           </TabList>
         </Box>
         <TabPanel sx={TabPanelSX} value='1'>
-          <CompanyLike />
+          <ItemLike />
         </TabPanel>
         <TabPanel sx={TabPanelSX} value='2'>
           <PortfolioLike />
         </TabPanel>
         <TabPanel sx={TabPanelSX} value='3'>
-          <ItemLike />
+          <CompanyLike />
         </TabPanel>
       </TabContext>
     </div>

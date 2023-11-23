@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import CustomInput from "../../Modules/Custom/CustomInput";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, set, useForm } from "react-hook-form";
 import "./index.pcss";
 import { ArrowBack, Cancel, Search } from "@mui/icons-material";
 import MasonryImage from "../../Modules/MasonryImage";
@@ -10,6 +10,7 @@ import SearchPlanner from "./subComponent/SearchPlanner";
 import { arrow_back } from "../../../assets/arrow_back";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Blocker from "../../Blocker/Blocker";
+import { getCompany } from "../../../api/Item";
 
 type SearchKeyword = {
   search: string;
@@ -19,7 +20,12 @@ const boxFocus = {
   boxShadow: "0 0 0 1px #D9D9D9 inset",
   borderRadius: "2px",
 };
-
+export type TCompanyData = {
+  name: string;
+  category: string;
+  companyId: number;
+  liked: boolean;
+};
 const SearchPage = (props: Props) => {
   const param = useParams();
   const methods = useForm<SearchKeyword>({
@@ -29,6 +35,7 @@ const SearchPage = (props: Props) => {
   });
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [plannerBody, setPlannerBody] = useState<TCompanyData[]>([]);
   const onSubmit: SubmitHandler<SearchKeyword> = (data) => {
     const { search } = data;
     navigate(`/search/${search}`);
@@ -39,6 +46,16 @@ const SearchPage = (props: Props) => {
       setSearch(param.search);
     }
   }, [param]);
+
+  useEffect(() => {
+    const DELAY = 500;
+    const timerId = setTimeout(async () => {
+      // fetch
+      const res: any = await getCompany(search);
+      setPlannerBody(res.data);
+    }, DELAY);
+    return () => clearTimeout(timerId);
+  }, [search]);
 
   return (
     <div className='flex flex-col h-full'>
@@ -81,7 +98,7 @@ const SearchPage = (props: Props) => {
       <Blocker
         SpecificComponent={() => (
           <>
-            <SearchPlanner search={search} />
+            <SearchPlanner search={search} data={plannerBody} />
             <SearchFeed search={search} />
           </>
         )}

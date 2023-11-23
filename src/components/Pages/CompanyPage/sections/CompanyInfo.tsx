@@ -15,6 +15,7 @@ type Props = {
 const CompanyInfo = (props: Props) => {
   const { name, tagList, adress, repImgUrl } = props.data;
   const dummyImgURL = PROGRESSIVE_IMAGE_URL + "userPolicy/icon.png";
+  const ImgURL = PROGRESSIVE_IMAGE_URL + repImgUrl + "?w=88&h=88";
   const tagSplit = tagList?.split(",");
   return (
     <div className='flex px-4 gap-2'>
@@ -22,7 +23,7 @@ const CompanyInfo = (props: Props) => {
         {/* 이미지 들어갈 자리 */}
         <div className='h-[88px] w-[88px] rounded-md'>
           <img
-            src={repImgUrl ?? dummyImgURL}
+            src={repImgUrl ? ImgURL : dummyImgURL}
             alt=''
             className='h-full w-full object-cover rounded-lg'
           />

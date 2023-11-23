@@ -6,7 +6,7 @@ import { postLike } from "../../api/like";
 type Props = {
   isLiked: boolean | null;
   targetId: number;
-  type: "portfolio" | "item" | "planner";
+  type: "portfolio" | "item" | "planner" | "company";
 };
 
 const LikeButton = (props: Props) => {
@@ -17,7 +17,7 @@ const LikeButton = (props: Props) => {
       id: `${props.targetId}`,
       likeType: props.type,
     };
-    const response = postLike(body);
+    const response = postLike(body as any);
   };
 
   return (

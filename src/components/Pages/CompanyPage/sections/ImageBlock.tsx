@@ -3,7 +3,7 @@ import SectionHeader from "../../../Modules/SectionHeader";
 import { Button, Modal } from "@mui/material";
 import { PROGRESSIVE_IMAGE_URL } from "../../../../common/constants";
 
-type Props = {};
+type Props = { image: string[] };
 const dummyImgURL = PROGRESSIVE_IMAGE_URL + "userPolicy/icon.png";
 
 const ImageBlock = (props: Props) => {
@@ -18,7 +18,7 @@ const ImageBlock = (props: Props) => {
       <img
         src={props.src}
         alt=''
-        className='w-[33%]'
+        className='w-[33%] object-cover aspect-square'
         onClick={() => handleOpen(props.src)}
       />
     );
@@ -38,12 +38,22 @@ const ImageBlock = (props: Props) => {
       <div className='py-2.5 px-4'>
         <SectionHeader title='사진' />
       </div>
-      <div className='flex flex-1 flex-wrap gap-[1px] px-[0.5%]'>
-        <ImageElement src={dummyImgURL} />
-        <ImageElement src={dummyImgURL} />
-        <ImageElement src={dummyImgURL} />
-        <ImageElement src={dummyImgURL} />
-      </div>
+      {props.image.length > 0 && (
+        <div className='flex flex-1 flex-wrap gap-[1px] px-[0.5%]'>
+          {props.image.map((src, index) =>
+            index < 9 ? (
+              <ImageElement key={index} src={PROGRESSIVE_IMAGE_URL + src} />
+            ) : (
+              <></>
+            )
+          )}
+        </div>
+      )}
+      {props.image.length === 0 && (
+        <div className='px-4 flex flex-col justify-center items-center text-lg'>
+          아직 등록된 사진이 없어요
+        </div>
+      )}
     </div>
   );
 };

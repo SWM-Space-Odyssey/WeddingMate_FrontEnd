@@ -10,37 +10,31 @@ import EmptyLike from "./EmptyLike";
 type Props = {};
 
 interface CompanyLikeElementProps {
-  imageURL: string;
-  title: string;
-  location: string;
+  name: string;
+  address: string;
   id: number;
-  index: number;
 }
-const companyLikeElement = ({
-  imageURL,
-  title,
-  location,
-  id,
-  index,
-}: CompanyLikeElementProps) => {
-  if (title.length > 25) {
-    title = title.slice(0, 25) + " ...";
+const companyLikeElement = ({ name, id, address }: CompanyLikeElementProps) => {
+  if (name && name.length > 25) {
+    name = name.slice(0, 25) + " ...";
   }
   return (
-    <div className='flex p-3' key={`CompanyImg-${index}`}>
-      <div className='w-10 mr-1'>
-        <ProgressiveImg
+    <a href={`/company/${id}`}>
+      <div className='flex p-3' key={`CompanyImg-${id}`}>
+        <div className='w-10 mr-1'>
+          {/* <ProgressiveImg
           src={imageURL}
           alt='companyImage'
           tailwind='rounded-full h-10 w-10'
-        />
+        /> */}
+        </div>
+        <div className='flex flex-1 flex-col'>
+          <CustomText type='Title' text={name} />
+          <div className='text-xs leading-tight mb-1'>{address}</div>
+        </div>
+        {/* <LikeButton isLiked targetId={id} type='item' /> */}
       </div>
-      <div className='flex flex-1 flex-col'>
-        <CustomText type='Title' text={title} />
-        <div className='text-xs leading-tight mb-1'>{location}</div>
-      </div>
-      {/* <LikeButton isLiked targetId={id} type='item' /> */}
-    </div>
+    </a>
   );
 };
 
@@ -66,31 +60,24 @@ const dummydata = [
     repImgUrl: "portfolio/13/드레스/20230925-1433692.jpg",
   },
 ];
-type spreadElementsProps = {
-  id: number;
-  title: string;
-  repImgUrl: string;
-}[];
+type spreadElementsProps = CompanyLikeElementProps[];
 const CompanyLike = (props: Props) => {
   const { data } = useQuery(["companyLike"], () => getLike("company"));
 
   const spreadElements = (data: spreadElementsProps) => {
+    console.log(data);
     return data.map((element, index) => {
+      console.log(element);
       return companyLikeElement({
-        imageURL: element.repImgUrl,
-        title: element.title,
-        location: "서울",
+        name: element.name,
+        address: element.address,
         id: element.id,
-        index: index,
       });
     });
   };
   if (data && data.data?.length > 0) {
-    return (
-      <div className='flex-1 flex-col'>
-        <a href='/'>{spreadElements(data.data)}</a>
-      </div>
-    );
+    console.log(data);
+    return <div className='flex-1 flex-col'>{spreadElements(data.data)}</div>;
   } else {
     return <EmptyLike />;
   }

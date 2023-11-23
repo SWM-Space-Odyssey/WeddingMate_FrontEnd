@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import CompanyInfo from "./sections/CompanyInfo";
-import CustomerReview from "./sections/CustomerReview";
+import CustomerReview, { ReviewData } from "./sections/CustomerReview";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCompanyDetail } from "../../../hooks/QueryHooks";
 import ImageBlock from "./sections/ImageBlock";
@@ -9,7 +9,7 @@ type Props = {};
 type TCompanyData = {
   address: string;
   imageList: string[];
-  itemList: string[];
+  itemList: ReviewData[];
   isMoreThanNineImages: boolean;
   name: string;
 };
@@ -27,7 +27,6 @@ const CompanyPage = (props: Props) => {
       return;
     }
   }, [body]);
-  console.log(body);
   const companyInfo = {
     adress: body.address,
     name: body.name,
@@ -38,6 +37,7 @@ const CompanyPage = (props: Props) => {
     tagList: "화려한,사람많은,야외",
     region: "서울 여의도",
   };
+  const { itemList, isMoreThanNineImages, imageList, name, address } = body;
 
   return (
     <div className='flex flex-col h-full'>
@@ -45,10 +45,10 @@ const CompanyPage = (props: Props) => {
         <CompanyInfo data={companyInfo} />
       </div>
       <div className='ImageBlock'>
-        <ImageBlock />
+        <ImageBlock image={imageList} />
       </div>
       <div className='flex-1'>
-        <CustomerReview />
+        <CustomerReview ReviewData={itemList} />
       </div>
     </div>
   );

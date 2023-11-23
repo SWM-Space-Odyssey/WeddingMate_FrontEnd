@@ -23,7 +23,6 @@ const Header = (props: Props) => {
   const page = useSelector((state: RootState) => state.view.page);
   const isNative = /Mobi/i.test(window.navigator.userAgent);
   const location = useLocation().pathname.split("/")[1];
-  console.log(isNative);
   return (
     <div
       className={`sticky h-14 py-1.5 px-2 justify-center ${

@@ -72,6 +72,7 @@ const ItemPage = (props: Props) => {
     order,
     portfolioId,
     isWriter,
+    companyId,
   } = data?.data as ItemBody;
 
   return (
@@ -120,7 +121,17 @@ const ItemPage = (props: Props) => {
               {companyName && (
                 <div className={defaultClassName}>
                   <CustomText type='Title' text='업체명' />
-                  <CustomText type='Content' text={companyName} />
+                  <div className='flex gap-2'>
+                    <CustomText type='Content' text={companyName} />
+                    {companyId && (
+                      <a
+                        href={`/company/${companyId}`}
+                        className='text-sm font-light text-[#395DDF]'
+                      >
+                        자세히 보기 &gt;
+                      </a>
+                    )}
+                  </div>
                 </div>
               )}
             </>

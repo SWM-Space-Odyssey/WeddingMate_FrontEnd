@@ -3,7 +3,13 @@ import CustomText from "../../../Modules/Custom/CustomText";
 import ReviewCard from "./ReviewCard";
 import SectionHeader from "../../../Modules/SectionHeader";
 
-type Props = {};
+export type ReviewData = {
+  repImgUrl: string;
+  itemRecord: string;
+  itemDate: string;
+  userId: number;
+};
+type Props = { ReviewData: ReviewData[] };
 const dummyIC = {
   content: "후기",
   date: "2021-09-09",
@@ -20,7 +26,10 @@ const CustomerReview = (props: Props) => {
         <SectionHeader title='후기' buttonURL='/' />
       </div>
       <div>
-        <ReviewCard data={dummyIC} />
+        {props?.ReviewData &&
+          props.ReviewData.map((review, index) => {
+            return <ReviewCard key={index} review={review} />;
+          })}
       </div>
     </div>
   );

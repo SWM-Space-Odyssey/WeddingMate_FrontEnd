@@ -11,17 +11,18 @@ import ItemTags from "./ItemTags";
 import CustomInput from "../../Modules/Custom/CustomInput";
 import CustomDatePicker from "../../Modules/Custom/CustomDatePicker";
 import CustomButton from "../../Modules/Custom/CustomButton";
-import { Alert, Autocomplete, Slide, Snackbar } from "@mui/material";
+import { Alert, Autocomplete, Slide, Snackbar, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import * as amplitude from "@amplitude/analytics-browser";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchItems, postItem, putItem } from "../../../api/Item";
+import { fetchItems, getCompany, postItem, putItem } from "../../../api/Item";
 import { dateFormatter } from "../../../hooks/apiHook";
 import LoadingSpinner from "../../Modules/LoadingSpinner";
 import { Edit } from "@mui/icons-material";
 import { setGuide } from "../../../store/userSlice";
+import CustomText from "../../Modules/Custom/CustomText";
 
 type Props = {
   adjust?: itemRegister;
@@ -34,6 +35,7 @@ interface itemRegister {
   date?: Date;
   company?: string;
   order?: number;
+  companyId?: number;
 }
 const itemRecord = {
   state: "itemRecord" as const,
@@ -52,10 +54,27 @@ const alertMessage = {
   tag: "태그를 한 개 이상 선택해주세요!",
   inputs: "입력되지 않은 항목이 있습니다!",
 };
+
+const dummyAutoComplete = [
+  { label: "지타워컨벤션", id: 1 },
+  { label: "참좋은웨딩", id: 2 },
+  { label: "더파티움", id: 3 },
+  { label: "프리미엄웨딩", id: 4 },
+  { label: "더플라자", id: 5 },
+];
+type CompanyList = {
+  name: string;
+  companyId: number | undefined;
+  liked: boolean;
+  category: string | undefined;
+}[];
+
 const ItemCreate = (props: Props) => {
   const guide = useSelector((state: RootState) => state.user.guide);
   const methods = useForm<itemRegister>({});
 
+  const [companyValue, setCompanyValue] = useState<string>("");
+  const [companyLIst, setCompanyList] = useState<CompanyList>([]);
   const [isEdit, setIsEdit] = useState<null | number>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [initTags, setInitTags] = useState<string[]>([]);
@@ -113,6 +132,9 @@ const ItemCreate = (props: Props) => {
       setForm(form);
     }
   };
+  const companySearch = (e: string) => {
+    setCompanyValue(e);
+  };
 
   const onSubmit: SubmitHandler<itemRegister> = async (data) => {
     if (!portfolioId) return alert("잘못된 접근입니다. - itemCreate");
@@ -139,6 +161,9 @@ const ItemCreate = (props: Props) => {
     };
     if (data.company) {
       body.companyName = data.company;
+    }
+    if (data.companyId) {
+      body.companyId = data.companyId;
     }
     if (data.date) {
       body.date = dateFormatter(data.date);
@@ -186,6 +211,29 @@ const ItemCreate = (props: Props) => {
     getInitData(isValidItemId);
   }, [itemId]);
 
+  useEffect(() => {
+    const DELAY = 500;
+    const timerId = setTimeout(async () => {
+      // fetch
+      console.log("debounce!");
+      const res: any = await getCompany(companyValue);
+      console.log(res);
+      if (res?.data.length === 0) {
+        setCompanyList([
+          {
+            name: `${companyValue}`,
+            companyId: undefined,
+            liked: false,
+            category: undefined,
+          },
+        ]);
+      } else {
+        setCompanyList([...res?.data]);
+      }
+    }, DELAY);
+    return () => clearTimeout(timerId);
+  }, [companyValue]);
+
   return (
     <>
       {/* <div>
@@ -214,7 +262,7 @@ const ItemCreate = (props: Props) => {
                 <ItemCategories required />
                 <ImageUploader
                   title='image'
-                  maxCount={10}
+                  maxCount={5}
                   isImmediately={true}
                   required
                 />
@@ -224,12 +272,30 @@ const ItemCreate = (props: Props) => {
                   required
                 />
                 <CustomInput content={itemRecord} required />
+                <div className='flex flex-col flex-1'>
+                  <div className='mb-1'>
+                    <CustomText type='Title' text={"업체명"} />
+                  </div>
+                  <Autocomplete
+                    options={companyLIst}
+                    getOptionLabel={(option) => option.name}
+                    onChange={(e, v) => {
+                      console.log(e, v);
+                      methods.setValue("companyId", v?.companyId);
+                      methods.setValue("company", v?.name);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        onChange={(e) => {
+                          companySearch(e.target.value);
+                        }}
+                      />
+                    )}
+                  />
+                </div>
                 <CustomDatePicker state='date' />
-                {/* <Autocomplete renderInput={(param) =>
-
-                <CustomInput content={company} />
-                } /> */}
-                <CustomInput content={company} />
+                {/* <CustomInput content={company} /> */}
               </div>
               <CustomButton
                 text='아이템 추가'

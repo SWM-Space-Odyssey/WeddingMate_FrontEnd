@@ -157,6 +157,12 @@ export const getTagList = async (category: string) => {
   return response;
 };
 
+export const getCompany = async (companyId: string) => {
+  const reqURL = `${SERVER_URL}/api/v1/company/search?keyword=${companyId}`;
+  const response = await fetchData(reqURL, "get");
+  return response;
+};
+
 export const getFeedImage = async (pageParam: number) => {
   const accessToken = getAccessToken();
   const reqURL = `${SERVER_URL}/api/v1/file`;

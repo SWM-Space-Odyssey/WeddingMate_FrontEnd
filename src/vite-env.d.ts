@@ -142,6 +142,7 @@ type ItemBody = {
   category: string;
   date?: string;
   companyName?: string;
+  companyId?: number;
   order?: number;
   isWriter?: boolean;
 };
