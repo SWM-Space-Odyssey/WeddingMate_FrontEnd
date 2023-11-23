@@ -9,6 +9,9 @@ import NavBar from "./components/NavBar/NavBar";
 import Header from "./components/Header/Header";
 import CommunityPage from "./components/Pages/CommutityPage/CommunityPage";
 import {
+  AuthCommunityContentPage,
+  AuthCommunityDetailPage,
+  AuthCommunityPage,
   AuthFeedPage,
   AuthItemCreate,
   AuthItemPage,
@@ -84,18 +87,18 @@ function App() {
                 <Route path='/search/:search?' element={<AuthSearchPage />} />
                 <Route path='/redirect' element={<RedirectPage />} />
 
-                <Route path='/community' element={<CommunityPage />} />
+                <Route path='/community' element={<AuthCommunityPage />} />
                 <Route
                   path='/community/:postId'
-                  element={<CommunityPostDetail />}
+                  element={<AuthCommunityDetailPage />}
                 />
                 <Route
                   path='/community/post'
-                  element={<CommunityPostContent />}
+                  element={<AuthCommunityContentPage />}
                 />
                 <Route
                   path='/community/post/:postId'
-                  element={<CommunityPostContent />}
+                  element={<AuthCommunityContentPage />}
                 />
 
                 <Route path='/oauth2/error' element={<LoginError />} />

@@ -10,6 +10,9 @@ import PortfolioPage from "../components/Pages/PortfolioPage/PortfolioPage";
 import RegistPage from "../components/Pages/RegistPage/RegistPage";
 import SearchPage from "../components/Pages/SearchPage/SearchPage";
 import Auth from "./auth";
+import CommunityPage from "../components/Pages/CommutityPage/CommunityPage";
+import CommunityPostDetail from "../components/Pages/CommutityPage/sections/CommunityPostDetail";
+import CommunityPostContent from "../components/Pages/CommutityPage/sections/CommunityPostContent";
 
 export const AuthFeedPage = Auth(FeedPage, "all");
 export const AuthItemPage = Auth(ItemPage, "customer");
@@ -23,3 +26,6 @@ export const AuthPlannerMyPage = Auth(PlannerPage, "all");
 export const AuthLikePage = Auth(LikePage, "all");
 export const AuthCompanyPage = Auth(CompanyPage, "all");
 export const AuthSettingPage = Auth(SettingPage, "all");
+export const AuthCommunityPage = Auth(CommunityPage, "all");
+export const AuthCommunityDetailPage = Auth(CommunityPostDetail, "all");
+export const AuthCommunityContentPage = Auth(CommunityPostContent, "all");

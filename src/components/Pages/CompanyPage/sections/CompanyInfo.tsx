@@ -24,7 +24,7 @@ const CompanyInfo = (props: Props) => {
           <img
             src={repImgUrl ?? dummyImgURL}
             alt=''
-            className='h-full w-full rounded-lg'
+            className='h-full w-full object-cover rounded-lg'
           />
         </div>
       </div>
